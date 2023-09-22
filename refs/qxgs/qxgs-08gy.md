@@ -16,11 +16,11 @@ import Mypara from '@site/src/components/myp';
 ---
 ## 第八十四节课
 
-- [《大圆满前行》讲解第84课.mp4 - 视频](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第84课.mp4)
+- [《大圆满前行》讲解第84课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第84课.mp4)
 
-- [《大圆满前行》讲解第84课.mp3 - 音频](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第84课.mp3)
+- [《大圆满前行》讲解第84课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第84课.mp3)
 
-- [前行第084节课(仅供参考).ppt](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第084节课(仅供参考).ppt)
+- [前行第084节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第084节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-08gy#前行广释第84课辅导资料)
 
@@ -180,11 +180,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第八十五节课
 
-- [《大圆满前行》讲解第85课.mp4 - 视频](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第85课.mp4)
+- [《大圆满前行》讲解第85课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第85课.mp4)
 
-- [《大圆满前行》讲解第85课.mp3 - 音频](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第85课.mp3)
+- [《大圆满前行》讲解第85课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第85课.mp3)
 
-- [前行第085节课(仅供参考).ppt](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第085节课(仅供参考).ppt)
+- [前行第085节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第085节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-08gy#前行广释第85课辅导资料)
 
@@ -384,11 +384,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第八十六节课
 
-- [《大圆满前行》讲解第86课.mp4 - 视频](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第86课.mp4)
+- [《大圆满前行》讲解第86课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第86课.mp4)
 
-- [《大圆满前行》讲解第86课.mp3 - 音频](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第86课.mp3)
+- [《大圆满前行》讲解第86课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第86课.mp3)
 
-- [前行第086节课(仅供参考).ppt](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第086节课(仅供参考).ppt)
+- [前行第086节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第086节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-08gy#前行广释第86课辅导资料)
 
@@ -602,11 +602,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第八十七节课
 
-- [《大圆满前行》讲解第87课.mp4 - 视频](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第87课.mp4)
+- [《大圆满前行》讲解第87课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第87课.mp4)
 
-- [《大圆满前行》讲解第87课.mp3 - 音频](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第87课.mp3)
+- [《大圆满前行》讲解第87课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第87课.mp3)
 
-- [前行第087节课(仅供参考).ppt](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第087节课(仅供参考).ppt)
+- [前行第087节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第087节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-08gy#前行广释第87课辅导资料)
 
@@ -846,11 +846,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第八十八节课
 
-- [《大圆满前行》讲解第88课.mp4 - 视频](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第88课.mp4)
+- [《大圆满前行》讲解第88课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第88课.mp4)
 
-- [《大圆满前行》讲解第88课.mp3 - 音频](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第88课.mp3)
+- [《大圆满前行》讲解第88课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第88课.mp3)
 
-- [前行第088节课(仅供参考).ppt](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第088节课(仅供参考).ppt)
+- [前行第088节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第088节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-08gy#前行广释第88课辅导资料)
 
@@ -1020,11 +1020,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第八十九节课
 
-- [《大圆满前行》讲解第89课.mp4 - 视频](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第89课.mp4)
+- [《大圆满前行》讲解第89课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第89课.mp4)
 
-- [《大圆满前行》讲解第89课.mp3 - 音频](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第89课.mp3)
+- [《大圆满前行》讲解第89课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第89课.mp3)
 
-- [前行第089节课(仅供参考).ppt](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第089节课(仅供参考).ppt)
+- [前行第089节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第089节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-08gy#前行广释第89课辅导资料)
 
@@ -1168,11 +1168,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第九十节课
 
-- [《大圆满前行》讲解第90课.mp4 - 视频](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第90课.mp4)
+- [《大圆满前行》讲解第90课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第90课.mp4)
 
-- [《大圆满前行》讲解第90课.mp3 - 音频](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第90课.mp3)
+- [《大圆满前行》讲解第90课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第90课.mp3)
 
-- [前行第090节课(仅供参考).ppt](https://f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第090节课(仅供参考).ppt)
+- [前行第090节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第090节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-08gy#前行广释第90课辅导资料)
 

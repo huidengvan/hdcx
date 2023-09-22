@@ -21,8 +21,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解脱利益01课
 
-- [qianxingyindaowen190-jtly01.docx](https://f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen190-jtly01.docx)    50K
-- [qianxingyindaowen190-jtly01.mp3](https://f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen190-jtly01.mp3)     43M
+- [qianxingyindaowen190-jtly01.docx](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen190-jtly01.docx)    50K
+- [qianxingyindaowen190-jtly01.mp3](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen190-jtly01.mp3)     43M
 
 
 敬礼偈
@@ -139,8 +139,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解脱利益02课
 
-- [qianxingyindaowen191-jtly02.docx](https://f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen191-jtly02.docx)    51K
-- [qianxingyindaowen191-jtly02.mp3](https://f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen191-jtly02.mp3)     45M
+- [qianxingyindaowen191-jtly02.docx](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen191-jtly02.docx)    51K
+- [qianxingyindaowen191-jtly02.mp3](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen191-jtly02.mp3)     45M
 
 
 二、具体怎样思惟的指点
@@ -257,8 +257,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解脱利益03课
 
-- [qianxingyindaowen192-jtly03.docx](https://f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen192-jtly03.docx)    48K
-- [qianxingyindaowen192-jtly03.mp3](https://f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen192-jtly03.mp3)     30M
+- [qianxingyindaowen192-jtly03.docx](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen192-jtly03.docx)    48K
+- [qianxingyindaowen192-jtly03.mp3](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen192-jtly03.mp3)     30M
 
 
 （三）思惟轮回过患
@@ -329,8 +329,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解脱利益04课
 
-- [qianxingyindaowen193-jtly04.docx](https://f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen193-jtly04.docx)    47K
-- [qianxingyindaowen193-jtly04.mp3](https://f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen193-jtly04.mp3)     24M
+- [qianxingyindaowen193-jtly04.docx](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen193-jtly04.docx)    47K
+- [qianxingyindaowen193-jtly04.mp3](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen193-jtly04.mp3)     24M
 
 （四）思惟业行因果
 
@@ -398,8 +398,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解脱利益05课
 
-- [qianxingyindaowen194-jtly05.docx](https://f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen194-jtly05.docx)    50K
-- [qianxingyindaowen194-jtly05.mp3](https://f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen194-jtly05.mp3)     45M
+- [qianxingyindaowen194-jtly05.docx](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen194-jtly05.docx)    50K
+- [qianxingyindaowen194-jtly05.mp3](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen194-jtly05.mp3)     45M
 
 首先补充讲解“思惟解脱之因的利益”中，思惟业行因果的利益。
 
@@ -499,8 +499,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解脱利益06课
 
-- [qianxingyindaowen195-jtly06.docx](https://f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen195-jtly06.docx)    51K
-- [qianxingyindaowen195-jtly06.mp3](https://f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen195-jtly06.mp3)     49M
+- [qianxingyindaowen195-jtly06.docx](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen195-jtly06.docx)    51K
+- [qianxingyindaowen195-jtly06.mp3](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s3/06/qianxingyindaowen195-jtly06.mp3)     49M
 
 
 六、思惟从饿鬼饥渴苦海中解脱的大利益

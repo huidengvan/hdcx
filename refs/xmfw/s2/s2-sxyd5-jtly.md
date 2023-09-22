@@ -20,9 +20,9 @@ import Mypara from '@site/src/components/myp';
 
 ## 法轨解脱利益01
 
-- [提纲-法轨•解脱利益01.doc](https://f.huidengchanxiu.net/jmy/xmfw/s2/%e6%8f%90%e7%ba%b2-%e6%b3%95%e8%bd%a8%e2%80%a2%e8%a7%a3%e8%84%b1%e5%88%a9%e7%9b%8a01.doc)
-- [法轨•解脱利益01（未定稿）.doc](https://f.huidengchanxiu.net/jmy/xmfw/s2/%e6%b3%95%e8%bd%a8%e2%80%a2%e8%a7%a3%e8%84%b1%e5%88%a9%e7%9b%8a01%ef%bc%88%e6%9c%aa%e5%ae%9a%e7%a8%bf%ef%bc%89.doc)
-- [前行实修引导之法轨——思惟解脱利益.mp3](https://f.huidengchanxiu.net/jmy/xmfw/s2/%e5%89%8d%e8%a1%8c%e5%ae%9e%e4%bf%ae%e5%bc%95%e5%af%bc%e4%b9%8b%e6%b3%95%e8%bd%a8%e2%80%94%e2%80%94%e6%80%9d%e6%83%9f%e8%a7%a3%e8%84%b1%e5%88%a9%e7%9b%8a.mp3)
+- [提纲-法轨•解脱利益01.doc](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s2/%e6%8f%90%e7%ba%b2-%e6%b3%95%e8%bd%a8%e2%80%a2%e8%a7%a3%e8%84%b1%e5%88%a9%e7%9b%8a01.doc)
+- [法轨•解脱利益01（未定稿）.doc](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s2/%e6%b3%95%e8%bd%a8%e2%80%a2%e8%a7%a3%e8%84%b1%e5%88%a9%e7%9b%8a01%ef%bc%88%e6%9c%aa%e5%ae%9a%e7%a8%bf%ef%bc%89.doc)
+- [前行实修引导之法轨——思惟解脱利益.mp3](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s2/%e5%89%8d%e8%a1%8c%e5%ae%9e%e4%bf%ae%e5%bc%95%e5%af%bc%e4%b9%8b%e6%b3%95%e8%bd%a8%e2%80%94%e2%80%94%e6%80%9d%e6%83%9f%e8%a7%a3%e8%84%b1%e5%88%a9%e7%9b%8a.mp3)
 
 第五、思惟解脱利益　分二：一、总体由思惟解脱果的利益，发生欢喜之心；二、特别由思惟大乘的利益，发起唯求佛果的无上道心
 

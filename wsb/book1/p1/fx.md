@@ -7,8 +7,8 @@
 
 ## 参考串讲
 
-- [慧灯禅修班第1册第1课-三个差别.pptx](http://view.officeapps.live.com/op/view.aspx?src=https://f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第1课-三个差别.pptx)
-- [慧灯禅修班第1册第2课三殊胜(视频1).pptx](http://view.officeapps.live.com/op/view.aspx?src=https://f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第2课三殊胜(视频1).pptx) | [下载](https://f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第2课三殊胜(视频1).pptx)
-- [慧灯禅修班第1册第2课三殊胜(视频2).pptx](http://view.officeapps.live.com/op/view.aspx?src=https://f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第2课三殊胜(视频2).pptx) | [下载](https://f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第2课三殊胜(视频2).pptx)
-- [慧灯禅修班第1册第2课三殊胜(视频3).pptx](http://view.officeapps.live.com/op/view.aspx?src=https://f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第2课三殊胜(视频3).pptx) | [下载](https://f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第2课三殊胜(视频3).pptx)
-- [慧灯禅修班第1册第3课生存的方式和生存的意义.pptx](http://view.officeapps.live.com/op/view.aspx?src=https://f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第3课生存的方式和生存的意义.pptx)
+- [慧灯禅修班第1册第1课-三个差别.pptx](http://view.officeapps.live.com/op/view.aspx?src=https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第1课-三个差别.pptx)
+- [慧灯禅修班第1册第2课三殊胜(视频1).pptx](http://view.officeapps.live.com/op/view.aspx?src=https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第2课三殊胜(视频1).pptx) | [下载](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第2课三殊胜(视频1).pptx)
+- [慧灯禅修班第1册第2课三殊胜(视频2).pptx](http://view.officeapps.live.com/op/view.aspx?src=https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第2课三殊胜(视频2).pptx) | [下载](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第2课三殊胜(视频2).pptx)
+- [慧灯禅修班第1册第2课三殊胜(视频3).pptx](http://view.officeapps.live.com/op/view.aspx?src=https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第2课三殊胜(视频3).pptx) | [下载](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第2课三殊胜(视频3).pptx)
+- [慧灯禅修班第1册第3课生存的方式和生存的意义.pptx](http://view.officeapps.live.com/op/view.aspx?src=https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第3课生存的方式和生存的意义.pptx)

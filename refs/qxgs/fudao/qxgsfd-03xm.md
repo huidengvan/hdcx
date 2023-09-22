@@ -18,7 +18,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第14课辅导资料
 
-- [辅导音频--前行第01册1-21](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -254,7 +254,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第15课辅导资料
 
-- [辅导音频--前行第01册1-21](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -494,7 +494,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第16课辅导资料
 
-- [辅导音频--前行第01册1-21](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -700,7 +700,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第17课辅导资料
 
-- [辅导音频--前行第01册1-21](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -934,7 +934,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第18课辅导资料
 
-- [辅导音频--前行第01册1-21](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -1156,7 +1156,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第19课辅导资料
 
-- [辅导音频--前行第01册1-21](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -1454,7 +1454,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第20课辅导资料
 
-- [辅导音频--前行第01册1-21](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -1748,7 +1748,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第21课辅导资料
 
-- [辅导音频--前行第01册1-21](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -2054,7 +2054,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第22课辅导资料
 
-- [辅导音频--前行第02册22-44](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
+- [辅导音频--前行第02册22-44](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -2350,7 +2350,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第23课辅导资料
 
-- [辅导音频--前行第02册22-44](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
+- [辅导音频--前行第02册22-44](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
   
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -2664,7 +2664,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第24课辅导资料
 
-- [辅导音频--前行第02册22-44](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
+- [辅导音频--前行第02册22-44](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -2880,7 +2880,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第25课辅导资料
 
-- [辅导音频--前行第02册22-44](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
+- [辅导音频--前行第02册22-44](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -3154,7 +3154,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第26课辅导资料
 
-- [辅导音频--前行第02册22-44](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
+- [辅导音频--前行第02册22-44](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -3458,7 +3458,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第27课辅导资料
 
-- [辅导音频--前行第02册22-44](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
+- [辅导音频--前行第02册22-44](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 

@@ -6,6 +6,6 @@
 
 ## 复习内容
 
-* [第一册 第八课 《佛教的定义》 参考串讲](http://view.officeapps.live.com/op/view.aspx?src=https://f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第8课-佛教的定义.pptx) | [下载](https://f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第8课-佛教的定义.pptx)
-* [第一册 第九课 《解脱的原理》 参考串讲](http://view.officeapps.live.com/op/view.aspx?src=https://f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第9课-解脱的原理.pptx) | [下载](https://f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第9课-解脱的原理.pptx)
-* [第一册 第十课 《对初学者的教诲》 参考串讲](http://view.officeapps.live.com/op/view.aspx?src=https://f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第10课-对初学者的教诲.pptx) | [下载](https://f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第10课-对初学者的教诲.pptx)
+* [第一册 第八课 《佛教的定义》 参考串讲](http://view.officeapps.live.com/op/view.aspx?src=https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第8课-佛教的定义.pptx) | [下载](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第8课-佛教的定义.pptx)
+* [第一册 第九课 《解脱的原理》 参考串讲](http://view.officeapps.live.com/op/view.aspx?src=https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第9课-解脱的原理.pptx) | [下载](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第9课-解脱的原理.pptx)
+* [第一册 第十课 《对初学者的教诲》 参考串讲](http://view.officeapps.live.com/op/view.aspx?src=https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第10课-对初学者的教诲.pptx) | [下载](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/hdv/f/up/慧灯禅修班第1册第10课-对初学者的教诲.pptx)

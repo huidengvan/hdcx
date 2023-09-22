@@ -21,8 +21,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 前行备忘录.解脱利益01课
 
-- [前行备忘录·解脱利益01.docx](https://f.huidengchanxiu.net/jmy/xmfw/s4/%e5%89%8d%e8%a1%8c%e5%a4%87%e5%bf%98%e5%bd%95%c2%b7%e8%a7%a3%e8%84%b1%e5%88%a9%e7%9b%8a01.docx)  48K
-- [前行备忘录·解脱利益01.mp3](https://f.huidengchanxiu.net/jmy/xmfw/s4/%e5%89%8d%e8%a1%8c%e5%a4%87%e5%bf%98%e5%bd%95%c2%b7%e8%a7%a3%e8%84%b1%e5%88%a9%e7%9b%8a01.mp3)   39M
+- [前行备忘录·解脱利益01.docx](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s4/%e5%89%8d%e8%a1%8c%e5%a4%87%e5%bf%98%e5%bd%95%c2%b7%e8%a7%a3%e8%84%b1%e5%88%a9%e7%9b%8a01.docx)  48K
+- [前行备忘录·解脱利益01.mp3](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s4/%e5%89%8d%e8%a1%8c%e5%a4%87%e5%bf%98%e5%bd%95%c2%b7%e8%a7%a3%e8%84%b1%e5%88%a9%e7%9b%8a01.mp3)   39M
 
 第五、解脱利益
 
@@ -172,8 +172,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 前行备忘录.解脱利益02课
 
-- [前行备忘录·解脱利益02.docx](https://f.huidengchanxiu.net/jmy/xmfw/s4/%e5%89%8d%e8%a1%8c%e5%a4%87%e5%bf%98%e5%bd%95%c2%b7%e8%a7%a3%e8%84%b1%e5%88%a9%e7%9b%8a02.docx)  48K
-- [前行备忘录·解脱利益02.mp3](https://f.huidengchanxiu.net/jmy/xmfw/s4/%e5%89%8d%e8%a1%8c%e5%a4%87%e5%bf%98%e5%bd%95%c2%b7%e8%a7%a3%e8%84%b1%e5%88%a9%e7%9b%8a02.mp3) 30M
+- [前行备忘录·解脱利益02.docx](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s4/%e5%89%8d%e8%a1%8c%e5%a4%87%e5%bf%98%e5%bd%95%c2%b7%e8%a7%a3%e8%84%b1%e5%88%a9%e7%9b%8a02.docx)  48K
+- [前行备忘录·解脱利益02.mp3](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/xmfw/s4/%e5%89%8d%e8%a1%8c%e5%a4%87%e5%bf%98%e5%bd%95%c2%b7%e8%a7%a3%e8%84%b1%e5%88%a9%e7%9b%8a02.mp3) 30M
 
 丁三、忆念上士道内涵　分二：一、由三士道比较门，拣选大乘上士道；二、由上士道远、近、速三道比较门，拣选大圆满法道
 

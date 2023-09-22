@@ -17,7 +17,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第73课辅导资料
 
-- [辅导音频--前行第04册68-90](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
+- [辅导音频--前行第04册68-90](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
 
 为度化一切众生请大家发无上的菩提心！发了菩提心之后今天我们继续一起学习《前行引导文》。
 
@@ -495,7 +495,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第74课辅导资料
 
-- [辅导音频--前行第04册68-90](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
+- [辅导音频--前行第04册68-90](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
 
 为度化一切众生请大家发无上的菩提心！发了菩提心之后今天我们继续一起学习《前行引导文》。
 
@@ -1009,7 +1009,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第75课辅导资料
 
-- [辅导音频--前行第04册68-90](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
+- [辅导音频--前行第04册68-90](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
 
 为度化一切众生请大家发无上的菩提心！发了菩提心之后今天我们继续来学习华智仁波切造的《前行引导文》。
 
@@ -1423,7 +1423,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第76课辅导资料
 
-- [辅导音频--前行第04册68-90](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
+- [辅导音频--前行第04册68-90](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
 
 为度化一切众生请大家发无上的菩提心！发了菩提心之后，今天我们继续一起学习《前行引导文》。
 
@@ -1841,7 +1841,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第77课辅导资料
 
-- [辅导音频--前行第04册68-90](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
+- [辅导音频--前行第04册68-90](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
 
 为度化一切众生请大家发无上的菩提心！发了菩提心之后今天我们继续学习《前行引导文》。
 
@@ -2219,7 +2219,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第78课辅导资料
 
-- [辅导音频--前行第04册68-90](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
+- [辅导音频--前行第04册68-90](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
 
 为度化一切众生请大家发无上的菩提心！发了菩提心之后今天我们继续一起学习《前行引导文》。
 
@@ -2573,7 +2573,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第79课辅导资料
 
-- [辅导音频--前行第04册68-90](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
+- [辅导音频--前行第04册68-90](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
 
 为度化一切众生,请大家发无上的菩提心！发了菩提心之后今天我们继续一起学习华智仁波切造的《前行引导文》。
 
@@ -2953,7 +2953,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第80课辅导资料
 
-- [辅导音频--前行第04册68-90](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
+- [辅导音频--前行第04册68-90](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
 
 为度化一切众生请大家发无上的菩提心！发了菩提心之后今天我们继续一起学习《前行引导文》。
 
@@ -3453,7 +3453,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第81课辅导资料
 
-- [辅导音频--前行第04册68-90](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
+- [辅导音频--前行第04册68-90](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -3893,7 +3893,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第82课辅导资料
 
-- [辅导音频--前行第04册68-90](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
+- [辅导音频--前行第04册68-90](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -4411,7 +4411,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第83课辅导资料
 
-- [辅导音频--前行第04册68-90](https://f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
+- [辅导音频--前行第04册68-90](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第04册68-90/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
