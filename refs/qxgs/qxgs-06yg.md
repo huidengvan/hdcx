@@ -19,11 +19,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第五十九节课
 
-- [《大圆满前行》讲解第59课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第59课.mp4)
+- [《大圆满前行》讲解第59课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第59课.mp4)
 
-- [《大圆满前行》讲解第59课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第59课.mp3)
+- [《大圆满前行》讲解第59课.mp3 - 音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第59课.mp3)
 
-- [前行第059节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第059节课(仅供参考).ppt)
+- [前行第059节课(仅供参考).ppt](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第059节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-06yg#前行广释第59课辅导资料)
 
@@ -190,11 +190,11 @@ import Mypara from '@site/src/components/myp';
 ## 第六十节课
 
 
-- [《大圆满前行》讲解第60课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第60课.mp4)
+- [《大圆满前行》讲解第60课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第60课.mp4)
 
-- [《大圆满前行》讲解第60课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第60课.mp3)
+- [《大圆满前行》讲解第60课.mp3 - 音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第60课.mp3)
 
-- [前行第060节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第060节课(仅供参考).ppt)
+- [前行第060节课(仅供参考).ppt](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第060节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-06yg#前行广释第60课辅导资料)
 
@@ -343,11 +343,11 @@ import Mypara from '@site/src/components/myp';
 ## 第六十一节课
 
 
-- [《大圆满前行》讲解第61课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第61课.mp4)
+- [《大圆满前行》讲解第61课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第61课.mp4)
 
-- [《大圆满前行》讲解第61课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第61课.mp3)
+- [《大圆满前行》讲解第61课.mp3 - 音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第61课.mp3)
 
-- [前行第061节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第061节课(仅供参考).ppt)
+- [前行第061节课(仅供参考).ppt](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第061节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-06yg#前行广释第61课辅导资料)
 
@@ -491,11 +491,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第六十二节课
 
-- [《大圆满前行》讲解第62课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第62课.mp4)
+- [《大圆满前行》讲解第62课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第62课.mp4)
 
-- [《大圆满前行》讲解第62课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第62课.mp3)
+- [《大圆满前行》讲解第62课.mp3 - 音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第62课.mp3)
 
-- [前行第062节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第062节课(仅供参考).ppt)
+- [前行第062节课(仅供参考).ppt](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第062节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-06yg#前行广释第62课辅导资料)
 
@@ -660,11 +660,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第六十三节课
 
-- [《大圆满前行》讲解第63课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第63课.mp4)
+- [《大圆满前行》讲解第63课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第63课.mp4)
 
-- [《大圆满前行》讲解第63课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第63课.mp3)
+- [《大圆满前行》讲解第63课.mp3 - 音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第63课.mp3)
 
-- [前行第063节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第063节课(仅供参考).ppt)
+- [前行第063节课(仅供参考).ppt](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第063节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-06yg#前行广释第63课辅导资料)
 
@@ -805,11 +805,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第六十四节课
 
-- [《大圆满前行》讲解第64课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第64课.mp4)
+- [《大圆满前行》讲解第64课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第64课.mp4)
 
-- [《大圆满前行》讲解第64课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第64课.mp3)
+- [《大圆满前行》讲解第64课.mp3 - 音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第64课.mp3)
 
-- [前行第064节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第064节课(仅供参考).ppt)
+- [前行第064节课(仅供参考).ppt](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第064节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-06yg#前行广释第64课辅导资料)
 
@@ -946,11 +946,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第六十五节课
 
-- [《大圆满前行》讲解第65课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第65课.mp4)
+- [《大圆满前行》讲解第65课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第65课.mp4)
 
-- [《大圆满前行》讲解第65课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第65课.mp3)
+- [《大圆满前行》讲解第65课.mp3 - 音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第65课.mp3)
 
-- [前行第065节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第065节课(仅供参考).ppt)
+- [前行第065节课(仅供参考).ppt](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第065节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-06yg#前行广释第65课辅导资料)
 
@@ -1116,11 +1116,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第六十六节课
 
-- [《大圆满前行》讲解第66课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第66课.mp4)
+- [《大圆满前行》讲解第66课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第66课.mp4)
 
-- [《大圆满前行》讲解第66课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第66课.mp3)
+- [《大圆满前行》讲解第66课.mp3 - 音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第66课.mp3)
 
-- [前行第066节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第066节课(仅供参考).ppt)
+- [前行第066节课(仅供参考).ppt](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第066节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-06yg#前行广释第66课辅导资料)
 
@@ -1258,11 +1258,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第六十七节课
 
-- [《大圆满前行》讲解第67课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第67课.mp4)
+- [《大圆满前行》讲解第67课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第67课.mp4)
 
-- [《大圆满前行》讲解第67课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第67课.mp3)
+- [《大圆满前行》讲解第67课.mp3 - 音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第67课.mp3)
 
-- [前行第067节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第067节课(仅供参考).ppt)
+- [前行第067节课(仅供参考).ppt](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第067节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-06yg#前行广释第67课辅导资料)
 
@@ -1470,11 +1470,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第六十八节课
 
-- [《大圆满前行》讲解第68课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第68课.mp4)
+- [《大圆满前行》讲解第68课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第68课.mp4)
 
-- [《大圆满前行》讲解第68课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第68课.mp3)
+- [《大圆满前行》讲解第68课.mp3 - 音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第68课.mp3)
 
-- [前行第068节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第068节课(仅供参考).ppt)
+- [前行第068节课(仅供参考).ppt](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第068节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-06yg#前行广释第68课辅导资料)
 
@@ -1608,11 +1608,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第六十九节课
 
-- [《大圆满前行》讲解第69课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第69课.mp4)
+- [《大圆满前行》讲解第69课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第69课.mp4)
 
-- [《大圆满前行》讲解第69课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第69课.mp3)
+- [《大圆满前行》讲解第69课.mp3 - 音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第69课.mp3)
 
-- [前行第069节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第069节课(仅供参考).ppt)
+- [前行第069节课(仅供参考).ppt](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第069节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-06yg#前行广释第69课辅导资料)
 
@@ -1770,11 +1770,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第七十节课
 
-- [《大圆满前行》讲解第70课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第70课.mp4)
+- [《大圆满前行》讲解第70课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第70课.mp4)
 
-- [《大圆满前行》讲解第70课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第70课.mp3)
+- [《大圆满前行》讲解第70课.mp3 - 音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第70课.mp3)
 
-- [前行第070节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第070节课(仅供参考).ppt)
+- [前行第070节课(仅供参考).ppt](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第070节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-06yg#前行广释第70课辅导资料)
 
@@ -1930,11 +1930,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第七十一节课
 
-- [《大圆满前行》讲解第71课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第71课.mp4)
+- [《大圆满前行》讲解第71课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第71课.mp4)
 
-- [《大圆满前行》讲解第71课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第71课.mp3)
+- [《大圆满前行》讲解第71课.mp3 - 音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第71课.mp3)
 
-- [前行第071节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第071节课(仅供参考).ppt)
+- [前行第071节课(仅供参考).ppt](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第071节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-06yg#前行广释第71课辅导资料)
 
@@ -2090,11 +2090,11 @@ import Mypara from '@site/src/components/myp';
 
 ## 第七十二节课
 
-- [《大圆满前行》讲解第72课.mp4 - 视频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第72课.mp4)
+- [《大圆满前行》讲解第72课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第72课.mp4)
 
-- [《大圆满前行》讲解第72课.mp3 - 音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第72课.mp3)
+- [《大圆满前行》讲解第72课.mp3 - 音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释音频/《大圆满前行》讲解第72课.mp3)
 
-- [前行第072节课(仅供参考).ppt](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第072节课(仅供参考).ppt)
+- [前行第072节课(仅供参考).ppt](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第072节课(仅供参考).ppt)
 
 - [法师辅导](/refs/qxgs/fudao/qxgsfd-06yg#前行广释第72课辅导资料)
 

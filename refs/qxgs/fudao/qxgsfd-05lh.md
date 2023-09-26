@@ -20,7 +20,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第40课辅导资料
 
-- [辅导音频--前行第02册22-44](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
+- [辅导音频--前行第02册22-44](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第02册22-44/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -264,7 +264,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第41课辅导资料
 
-- [辅导音频--前行第02册22-44](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
+- [辅导音频--前行第02册22-44](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第02册22-44/)
 
 
 诸法等性本基法界中，自现圆满三身游舞力，
@@ -554,7 +554,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第42课辅导资料
 
-- [辅导音频--前行第02册22-44](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
+- [辅导音频--前行第02册22-44](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第02册22-44/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -835,7 +835,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第43课辅导资料
 
-- [辅导音频--前行第02册22-44](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
+- [辅导音频--前行第02册22-44](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第02册22-44/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -1100,7 +1100,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第44课辅导资料
 
-- [辅导音频--前行第02册22-44](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第02册22-44/)
+- [辅导音频--前行第02册22-44](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第02册22-44/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -1357,7 +1357,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第45课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -1552,7 +1552,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第46课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -1816,7 +1816,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第47辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -2025,7 +2025,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第48辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -2280,7 +2280,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第49辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -2519,7 +2519,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第50课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -2796,7 +2796,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第51课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -3029,7 +3029,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第52课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -3334,7 +3334,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第53课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -3557,7 +3557,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第54课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -3805,7 +3805,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第55课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -4158,7 +4158,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第56课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -4461,7 +4461,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第57课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -4782,7 +4782,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第58课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 

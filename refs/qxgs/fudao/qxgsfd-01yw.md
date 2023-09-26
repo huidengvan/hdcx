@@ -18,8 +18,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 前行之重要性辅导资料
 
-- [音频--上师瑜伽速赐加持2014年12月07日.m4a](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/上师瑜伽速赐加持2014年12月07日.m4a)
-- [音频--上师瑜伽速赐加持问答2014年12月07日.m4a](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/上师瑜伽速赐加持问答2014年12月07日.m4a)
+- [音频--上师瑜伽速赐加持2014年12月07日.m4a](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/上师瑜伽速赐加持2014年12月07日.m4a)
+- [音频--上师瑜伽速赐加持问答2014年12月07日.m4a](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/上师瑜伽速赐加持问答2014年12月07日.m4a)
 
 
 从这一周开始，我们将共同学习《大圆满前行引导文》。
@@ -262,8 +262,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 上师瑜伽速赐加持辅导资料
 
-- [辅导音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/上师瑜伽速赐加持2014年12月07日.m4a)
-- [问答音频](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/上师瑜伽速赐加持问答2014年12月07日.m4a)
+- [辅导音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/上师瑜伽速赐加持2014年12月07日.m4a)
+- [问答音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/上师瑜伽速赐加持问答2014年12月07日.m4a)
 
 
 今天我们一起来学习一下法王如意宝的上师瑜伽。
@@ -574,9 +574,9 @@ import Mypara from '@site/src/components/myp';
 
 ## 《大圆满前行》第1课辅导资料
 
-- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
-- [大圆满前行第01课2014年12月14日.m4a](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/大圆满前行第01课2014年12月14日.m4a)
-- [大圆满前行第01课问答2014年12月14日.m4a](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/大圆满前行第01课问答2014年12月14日.m4a)
+- [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [大圆满前行第01课2014年12月14日.m4a](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/大圆满前行第01课2014年12月14日.m4a)
+- [大圆满前行第01课问答2014年12月14日.m4a](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/大圆满前行第01课问答2014年12月14日.m4a)
 
 
 今天我们正式开始学习《大圆满前行引导文•普贤上师言教》这部很殊胜的修法论典。
@@ -769,7 +769,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《大圆满前行》第2课辅导资料
 
-- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 为度化一切众生，请大家发无上的菩提心！今天我们再一次一起来学习华智仁波切所造的《大圆满前行引导文》。
 

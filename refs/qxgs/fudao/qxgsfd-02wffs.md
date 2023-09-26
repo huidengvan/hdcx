@@ -14,7 +14,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第3课辅导资料
 
-- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 为度化一切众生，请大家发无上的菩提心！发了菩提心之后，今天我们再一次一起学习大圆满龙钦宁提前行引导文。
 
@@ -328,7 +328,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第4课辅导资料
 
-- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 为度化一切众生，请大家发无上的菩提心！发了菩提心之后，今天我们再次一起学习华智仁波切所造的《大圆满前行引导文》。
 
@@ -612,7 +612,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第5课辅导资料
 
-- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 发了菩提之后，今天我们再一次一起学习华智仁波切所造的《大圆满前行引导文•普贤上师言教》。
 
@@ -968,7 +968,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第6课辅导资料
 
-- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 发了菩提心之后，我们再一次一起来学习华智仁波切所造的《大圆满前行引导文》。
 
@@ -1228,7 +1228,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第7课辅导资料
 
-- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 发了菩提心之后，今天我们再次一起来学习华智仁波切所造的《大圆满前行引导文》。
 
@@ -1556,7 +1556,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第8课辅导资料
 
-- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 为度化一切众生，请大家发无上的菩提心！发了菩提心之后，我们再次一起学习华智仁波切所造的《大圆满前行》。
 
@@ -1858,7 +1858,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第9课辅导资料
 
-- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 为度化一切众生，请大家发无上的菩提心！发了菩提心之后，我们一起来学习华智仁波切所造的《大圆满前行引导文》。前行引导文是让修学者调伏自心、趋入佛道的一种实修窍诀。
 
@@ -2136,7 +2136,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第10课辅导资料
 
-- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 
 为度化一切众生，请大家发无上的菩提心！下面我们开始学习的是《大圆满前行引导文》。这是宁玛派著名的善知识、证悟者华智仁波切，在听闻了大恩上师如来芽尊者传讲的大圆满前行引导文的仪轨之后所做的笔录，又称《普贤上师言教》。内容分为共同前行、不共前行和往生法。在共同前行和不共前行之前是闻法的方式，也叫闻法规律。闻法方式包括发心和行为。已经讲了分别相应于显宗或密乘的两种发心，之后是应舍的和应取的行为。应舍的行为前面讲了三种过患、六垢，今天讲第三种应该舍的行为—五不持。
@@ -2317,7 +2317,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第11课辅导资料
 
-- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 为度化一切众生，请大家发无上的菩提心！发了菩提心之后，今天我们再一次一起来学习华智仁波切所造的《大圆满前行引导文》。
 
@@ -2481,7 +2481,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第12课辅导资料
 
-- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 为度化一切众生，请大家发无上的菩提心！发了菩提心之后，今天我们再次一起学习华智仁波切所造的《大圆满前行引导文》。
 
@@ -2665,7 +2665,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第13课辅导资料
 
-- [辅导音频--前行第01册1-21](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 
 为度化一切众生，请大家发无上的菩提心！发了菩提心之后，今天我们再一次一起来学习华智仁波切所造的《大圆满前行引导文》。
 

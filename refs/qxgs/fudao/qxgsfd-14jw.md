@@ -16,7 +16,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第143课辅导资料
 
-- [辅导音频--前行第07册137-144](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第07册137-144/)
+- [辅导音频--前行第07册137-144](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第07册137-144/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -438,7 +438,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第144课辅导资料
 
-- [辅导音频--前行第07册137-144](https://s3.ca-central-1.wasabisys.com/hddata/f.huidengchanxiu.net/jmy/前行辅导-智诚堪布/前行第07册137-144/)
+- [辅导音频--前行第07册137-144](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第07册137-144/)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
