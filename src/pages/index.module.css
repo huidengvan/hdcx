@@ -21,3 +21,8 @@
   align-items: center;
   justify-content: center;
 }
+
+audio {
+  width: 80%;
+  height: 40px;
+}
