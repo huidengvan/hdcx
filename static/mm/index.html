@@ -12,8 +12,16 @@
             height: 100vh;
         }
 
+        body {
+            display: flex;
+        }
+
         .sidebar {
-            max-width: 20%;
+            flex: 1;
+        }
+
+        #markmap {
+            flex: 9;
         }
 
         .zoom-controls {
@@ -26,15 +34,21 @@
                 display: none;
             }
         }
+
+        button {
+            border: 0;
+            zoom: 1.5;
+        }
     </style>
 </head>
 
 <body>
     <div class="sidebar">
         <span class="zoom-controls">
-            <button onclick="zoomOut()">-</button>
+            <button onclick="zoomOut()">−</button>
             <button onclick="zoomIn()">+</button>
             <button onclick="zoomResize()">=</button>
+            <button onclick="toggleFullScreen()">☐</button>
         </span>
         <details open>
             <summary>禅修课</summary>
@@ -44,6 +58,7 @@
             </ul>
         </details>
     </div>
+
     <div class="markmap" id="markmap">
     </div>
     <script>
@@ -68,6 +83,7 @@
             originSize = 1
             svg.style.zoom = 1
         }
+
         async function main() {
             const uri = location.hash.replace('#', '')
             const mdSourceBase = '/mm/'
@@ -89,6 +105,31 @@
             function () {
                 console.log("The hash has changed!");
                 main().catch((e) => console.error(e))
+            },
+            false,
+        );
+
+        function toggleFullScreen() {
+            const sidebar = document.querySelector('.sidebar')
+            if (!document.fullscreenElement) {
+                sidebar.style.flex = 0
+                sidebar.style.display = 'none'
+                document.documentElement.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    sidebar.style.flex = 1
+                    sidebar.style.display = ''
+                }
+            }
+        }
+
+        document.addEventListener(
+            "keydown",
+            function (e) {
+                if (e.keyCode == 13) {
+                    toggleFullScreen();
+                }
             },
             false,
         );
