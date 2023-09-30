@@ -18,6 +18,13 @@
     <div class="markmap">
     </div>
     <script>
+        window.markmap = {
+            autoLoader: { manual: true },
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/markmap-autoloader"></script>
+
+    <script>
         async function main() {
             const uri = location.hash.replace('#', '')
             const mdSourceBase = '/mm/'
@@ -29,6 +36,7 @@
                 document.title = decodeURI(uri).replace('/', ' | ')
             }
             document.querySelector(".markmap").innerHTML = text
+            markmap.autoLoader.renderAll();
         }
 
         main().catch((e) => console.error(e));
@@ -38,12 +46,10 @@
             function () {
                 console.log("The hash has changed!");
                 main().catch((e) => console.error(e))
-                    .then(location.reload())
             },
             false,
         );
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/markmap-autoloader@0.15.2"></script>
 
 </body>
 
