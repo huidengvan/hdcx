@@ -28,7 +28,7 @@
         <span class="zoom-control">
             <button onclick="zoomOut()">-</button>
             <button onclick="zoomIn()">+</button>
-            <button onclick="zoomReset()">=</button>
+            <button onclick="zoomResize()">=</button>
         </span>
         <details open>
             <summary>禅修课</summary>
@@ -58,7 +58,10 @@
             originSize -= 0.2
             svg.style.zoom = originSize
         }
-        function zoomReset() { svg.style.zoom = 1 }
+        function zoomResize() {
+            originSize = 1
+            svg.style.zoom = 1
+        }
         async function main() {
             const uri = location.hash.replace('#', '')
             const mdSourceBase = '/mm/'
