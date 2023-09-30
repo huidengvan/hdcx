@@ -12,25 +12,39 @@
             height: 100vh;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/markmap-autoloader@0.15.2"></script>
 </head>
 
 <body>
     <div class="markmap">
     </div>
     <script>
-        (async function main() {
-            const uri = location.hash
+        async function main() {
+            const uri = location.hash.replace('#', '')
             const mdSourceBase = '/mm/'
             if (uri != '') {
-                const reqUrl = `${mdSourceBase}${uri.replace('#', '')}.md`
+                const reqUrl = `${mdSourceBase}${uri}.md`
                 const res = await fetch(reqUrl);
                 text = await res.text();
                 // console.log(reqUrl, res);
+                document.title = decodeURI(uri).replace('/', ' | ')
             }
             document.querySelector(".markmap").innerHTML = text
-        }().catch((e) => console.error(e)))
+        }
+
+        main().catch((e) => console.error(e));
+
+        window.addEventListener(
+            "hashchange",
+            function () {
+                console.log("The hash has changed!");
+                main().catch((e) => console.error(e))
+                    .then(location.reload())
+            },
+            false,
+        );
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/markmap-autoloader@0.15.2"></script>
+
 </body>
 
 </html>
