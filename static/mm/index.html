@@ -16,16 +16,22 @@
             max-width: 20%;
         }
 
-        .zoom-control {
+        .zoom-controls {
             display: inline-block;
             margin: 5px 10px;
+        }
+
+        @media (pointer: coarse) {
+            .zoom-controls {
+                display: none;
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="sidebar">
-        <span class="zoom-control">
+        <span class="zoom-controls">
             <button onclick="zoomOut()">-</button>
             <button onclick="zoomIn()">+</button>
             <button onclick="zoomResize()">=</button>
@@ -71,9 +77,9 @@
                 text = await res.text();
                 // console.log(reqUrl, res);
                 document.title = decodeURI(uri).replace('/', ' | ')
+                document.querySelector(".markmap").innerHTML = text
+                markmap.autoLoader.renderAll();
             }
-            document.querySelector(".markmap").innerHTML = text
-            markmap.autoLoader.renderAll();
         }
 
         main().catch((e) => console.error(e));
