@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Markmap</title>
+    <style>
+        svg.markmap {
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/markmap-autoloader@0.15.2"></script>
+</head>
+
+<body>
+    <div class="markmap">
+    </div>
+    <script>
+        (async function main() {
+            const uri = location.hash
+            const mdSourceBase = '/mm/'
+            if (uri != '') {
+                const reqUrl = `${mdSourceBase}${uri.replace('#', '')}.md`
+                const res = await fetch(reqUrl);
+                text = await res.text();
+                // console.log(reqUrl, res);
+            }
+            document.querySelector(".markmap").innerHTML = text
+        }().catch((e) => console.error(e)))
+    </script>
+</body>
+
+</html>
