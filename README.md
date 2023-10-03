@@ -1,3 +1,5 @@
+[![deploy-docusaurus](https://github.com/huidengvan/hdcx/actions/workflows/docbuild.yml/badge.svg)](https://github.com/huidengvan/hdcx/actions/workflows/docbuild.yml)
+
 # Website
 
 This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
