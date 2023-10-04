@@ -7,10 +7,6 @@ import TOCInline from '@theme/TOCInline';
 
 <TOCInline toc={toc} maxHeadingLevel='6' />
 
-import Mypara from '@site/src/components/myp';
-
-<Mypara />
-
 ---
 
 ## 《前行广释》第114课辅导资料

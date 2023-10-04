@@ -26,3 +26,13 @@ audio {
   width: 80%;
   height: 40px;
 }
+
+@media screen and (max-width: 900px) {
+  audio {
+    width: 100%;
+  }
+}
+
+p>a {
+  font-size: 80%;
+}

@@ -6,10 +6,6 @@ import TOCInline from '@theme/TOCInline';
 
 <TOCInline toc={toc} maxHeadingLevel='6' />
 
-import Mypara from '@site/src/components/myp';
-
-<Mypara />
-
 ---
 
 ## 推动宣讲《正法念处经》

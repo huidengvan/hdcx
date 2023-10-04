@@ -82,6 +82,8 @@ const config = {
         path: 'refs',
         routeBasePath: 'refs',
         sidebarPath: require.resolve('./sidebars.js'),
+        // generate paragraph anchor plugin
+        rehypePlugins: [require('./plugins/para-anchor')],
         // ... other options
       },
     ],
@@ -187,7 +189,7 @@ const config = {
               },
             ],
           },
-          
+
           // {
           //   title: 'More',
           //   items: [
@@ -195,7 +197,7 @@ const config = {
           //       label: 'Blog',
           //       to: '/blog',
           //     },
-              
+
           //   ],
           // },
         ],
@@ -212,22 +214,25 @@ const config = {
         },
       },
     }),
-    // plugins: ['@aldridged/docusaurus-plugin-lunr'],
-    themes: [
-      // ... Your other themes.
-      [
-        require.resolve("@easyops-cn/docusaurus-search-local"),
-        {
-          // ... Your options.
-          // `hashed` is recommended as long-term-cache of index file is possible.
-          hashed: true,
-          // For Docs using Chinese, The `language` is recommended to set to:
-          // ```
-          // language: ["en", "zh"],
-          // ```
-        },
-      ],
+  // plugins: ['@aldridged/docusaurus-plugin-lunr'],
+  themes: [
+    // ... Your other themes.
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      {
+        // ... Your options.
+        // `hashed` is recommended as long-term-cache of index file is possible.
+        hashed: true,
+        // For Docs using Chinese, The `language` is recommended to set to:
+        // ```
+        // language: ["en", "zh"],
+        // ```
+      },
     ],
+  ],
+  scripts: [
+    { src: '/js/global.js', async: false, },
+  ],
 };
 
 module.exports = config;

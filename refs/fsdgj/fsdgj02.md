@@ -8,10 +8,6 @@ import TOCInline from '@theme/TOCInline';
 
 <TOCInline toc={toc} maxHeadingLevel='6' />
 
-import Mypara from '@site/src/components/myp';
-
-<Mypara />
-
 ---
 
 佛說稻稈經视频2

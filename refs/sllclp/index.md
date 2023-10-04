@@ -8,10 +8,6 @@ import TOCInline from '@theme/TOCInline';
 
 <TOCInline toc={toc} maxHeadingLevel='6' />
 
-import Mypara from '@site/src/components/myp';
-
-<Mypara />
-
 法称论师 撰著索达吉堪布 译讲
 
 酿吉钦布奏旦涅咪扬 大悲摄受具诤浊世刹  

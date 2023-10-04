@@ -10,10 +10,6 @@ import TOCInline from '@theme/TOCInline';
 <TOCInline toc={toc} maxHeadingLevel='6' />
 </details>
 
-import Mypara from '@site/src/components/myp';
-
-<Mypara />
-
 ## 前行之重要性
 
 - [0-1前行的重要性.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/0-1前行的重要性.mp4)

@@ -11,10 +11,6 @@ import TOCInline from '@theme/TOCInline';
 <TOCInline toc={toc} maxHeadingLevel='6' />
 </details>
 
-import Mypara from '@site/src/components/myp';
-
-<Mypara />
-
 ---
 
 ## 入菩萨行论颂词
