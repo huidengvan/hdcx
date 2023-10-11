@@ -15,7 +15,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第114课辅导资料
 
-- [辅导音频--前行第06册114-136](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第06册114-136/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -325,7 +325,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第115课辅导资料
 
-- [辅导音频--前行第06册114-136](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第06册114-136/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -741,7 +741,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第116课辅导资料
 
-- [辅导音频--前行第06册114-136](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第06册114-136/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -1205,7 +1205,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第117课辅导资料
 
-- [辅导音频--前行第06册114-136](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第06册114-136/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -1741,7 +1741,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 《前行广释》第118课辅导资料
 
-- [辅导音频--前行第06册114-136](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第06册114-136/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
