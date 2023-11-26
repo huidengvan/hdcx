@@ -18,8 +18,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 前行之重要性辅导资料
 
-- [音频--上师瑜伽速赐加持2014年12月07日.m4a](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/上师瑜伽速赐加持2014年12月07日.m4a)
-- [音频--上师瑜伽速赐加持问答2014年12月07日.m4a](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/上师瑜伽速赐加持问答2014年12月07日.m4a)
+- [音频--前行之重要性的辅导2014年11月30日.m4a](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/前行之重要性的辅导2014年11月30日.m4a)
+- [音频--前行之重要性的辅导问答2014年11月30日.m4a](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/前行之重要性的辅导问答2014年11月30日.m4a)
 
 
 从这一周开始，我们将共同学习《大圆满前行引导文》。
