@@ -1,4 +1,5 @@
 import React from 'react'
+import MarkmapHooks from '../components/MarkmapHooks'
 
 export default function map() {
   return (
