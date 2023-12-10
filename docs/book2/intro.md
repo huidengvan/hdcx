@@ -37,31 +37,31 @@ HDZG_ZEN 慧灯之光禅修 2020-09-15 02:42
 
 《莲花生大师修法》视频链接：
 
-<http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-22-23/650-l12031>
+http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-22-23/650-l12031
 
 2. 为什么现代人越来越没有幸福感：
 
 《我们为什么不幸福》视频链接：
 
-<http://www.huidengzhiguang.com/index.php/huideng-jiangtang/jingwai-hongfa/2016-07-21-09-34-27/617-l15009>
+http://www.huidengzhiguang.com/index.php/huideng-jiangtang/jingwai-hongfa/2016-07-21-09-34-27/617-l15009
 
 3. 如何面对痛苦和幸福：
 
 《如何面对痛苦之一》视频链接：
 
-<http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-20-23/474-l10036>
+http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-20-23/474-l10036
 
 《如何面对痛苦之二》视频链接：
 
-<http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-20-23/475-l10037>
+http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-20-23/475-l10037
 
 《如何面对痛苦之三》视频链接：
 
-<http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-20-23/476-l10038>
+http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-20-23/476-l10038
 
 《如何面对幸福》视频链接：
 
-<http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-20-23/477-l10039>
+http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-20-23/477-l10039
 
 ### 2 第二阶段
 
@@ -83,13 +83,13 @@ HDZG_ZEN 慧灯之光禅修 2020-09-15 02:42
 
 《戒杀放生的功德》音频链接：
 
-<http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-07-49-59/1684-l02002>
+http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-07-49-59/1684-l02002
 
 2. 素食的意义：
 
 《素食的意义》音频链接：
 
-<http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-07-49-59/1685-l02003>
+http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-07-49-59/1685-l02003
 
 3. 关于放生：
 
@@ -123,23 +123,23 @@ HDZG_ZEN 慧灯之光禅修 2020-09-15 02:42
 
 《如何将病苦转为道用》音频链接：
 
-<http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-20-23/917-l09050>
+http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-20-23/917-l09050
 
 2. 四谛—脱离生死的出路：
 
 《四谛——脱离生死的出路》（一）音频链接：
 
-<http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-19-14/1686-l02004>
+http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-19-14/1686-l02004
 
 《四谛——脱离生死的出路》（二）音频链接：
 
-<http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-19-14/1687-l02005>
+http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-19-14/1687-l02005
 
 3. 二谛——开启中观门扉之钥匙：
 
 《二谛——开启中观门扉之钥匙》音频链接：
 
-<http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-16-50/1688-l02006>
+http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-16-50/1688-l02006
 
 4. 十二缘起支——生命轮回的次序：
 
@@ -168,7 +168,7 @@ HDZG_ZEN 慧灯之光禅修 2020-09-15 02:42
 
 《佛教的世界观》音频链接：
 
-<http://www.huidengzhiguang.com/index.php/huideng-jiangtang/rensheng-zhihui/2016-07-21-07-48-25/570-l10008>
+http://www.huidengzhiguang.com/index.php/huideng-jiangtang/rensheng-zhihui/2016-07-21-07-48-25/570-l10008
 
 2. 佛教的物种起源说：
 
@@ -178,18 +178,18 @@ HDZG_ZEN 慧灯之光禅修 2020-09-15 02:42
 
 《佛教的世界观》音频链接：
 
-<http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-07-49-59/1689-l02007>
+http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-07-49-59/1689-l02007
 
 4. 语加持的修法：
 
 《语加持的修法》视频连接：
 
-<http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-24-32/645-l12006>
+http://www.huidengzhiguang.com/index.php/huideng-jiangtang/fofa-jianxiu/2016-07-21-09-24-32/645-l12006
 
 ### 5 电子书下载
 
 《慧灯禅修教材 二》电子书下载链接：
 
-<http://d.huidengzhiguang.com/hdzg/chanxiubanjiaocai_02.pdf>
+http://d.huidengzhiguang.com/hdzg/chanxiubanjiaocai_02.pdf
 
  • END •

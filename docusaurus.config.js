@@ -1,8 +1,8 @@
-// @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
+import { themes } from 'prism-react-renderer';
+import paraAnchor from './src/plugins/para-anchor.js';
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const lightTheme = themes.github;
+const darkTheme = themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -83,7 +83,8 @@ const config = {
         routeBasePath: 'refs',
         sidebarPath: require.resolve('./sidebars.js'),
         // generate paragraph anchor plugin
-        rehypePlugins: [require('./plugins/para-anchor')],
+        rehypePlugins: [paraAnchor],
+
         // ... other options
       },
     ],
@@ -204,8 +205,8 @@ const config = {
         copyright: `慧灯小组温哥华（huidengvan.com / huidengvan@gmail.com）发心制作. Built with Docusaurus. ${new Date().getFullYear()} `,
       },
       prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+        theme: lightTheme,
+        darkTheme: darkTheme,
       },
       docs: {
         sidebar: {
@@ -217,18 +218,7 @@ const config = {
   // plugins: ['@aldridged/docusaurus-plugin-lunr'],
   themes: [
     // ... Your other themes.
-    [
-      require.resolve("@easyops-cn/docusaurus-search-local"),
-      {
-        // ... Your options.
-        // `hashed` is recommended as long-term-cache of index file is possible.
-        hashed: true,
-        // For Docs using Chinese, The `language` is recommended to set to:
-        // ```
-        // language: ["en", "zh"],
-        // ```
-      },
-    ],
+   
   ],
   scripts: [
     { src: '/js/global.js', async: false, },

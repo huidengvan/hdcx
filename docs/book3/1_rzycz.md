@@ -26,16 +26,16 @@ import ReactPlayer from 'react-player'
 
 ●  本课视频在“慧灯之光”网站地址链接为：
 
-<https://www.huidengzhiguang.com/index.php/huideng-jiangtang/2016-07-21-09-15-04/2017-01-20-04-20-16/621-l15013>
+https://www.huidengzhiguang.com/index.php/huideng-jiangtang/2016-07-21-09-15-04/2017-01-20-04-20-16/621-l15013
 
 ●  本课文字在线阅读地址链接为：
 
-<https://www.huidengzhiguang.com/index.php/huideng-zhiguang/huideng-zhiguang-2/158-a00021>
+https://www.huidengzhiguang.com/index.php/huideng-zhiguang/huideng-zhiguang-2/158-a00021
 
 ●  本课电子书下载地址链接为：
 
-<https://d.huidengzhiguang.com/?id=F00021>
+https://d.huidengzhiguang.com/?id=F00021
 
 ●  本课有声书下载地址链接为：
 
-<https://d.huidengzhiguang.com/?id=B00021>
+https://d.huidengzhiguang.com/?id=B00021

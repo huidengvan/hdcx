@@ -5,4 +5,3 @@ draft: false
 tags: ["菩提心", "五加行"]
 ---
 
-{{% children style="h2" depth="4" %}}
