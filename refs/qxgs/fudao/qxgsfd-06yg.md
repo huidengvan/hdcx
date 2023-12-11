@@ -14,7 +14,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》第59课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -361,7 +361,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》第60课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -660,7 +660,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》第61课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -1033,7 +1033,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》第62课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -1380,7 +1380,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》第63课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -1713,7 +1713,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》第64课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -2068,7 +2068,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》第65课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -2443,7 +2443,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》第66课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -2816,7 +2816,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》第67课辅导资料
 
-- [辅导音频--前行第03册45-67](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第03册45-67/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -3275,7 +3275,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》第68课辅导资料
 
-- [辅导音频--前行第04册68-90](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第04册68-90/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -3655,7 +3655,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》第69课辅导资料
 
-- [辅导音频--前行第04册68-90](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第04册68-90/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -4074,7 +4074,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》第70课辅导资料
 
-- [辅导音频--前行第04册68-90](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第04册68-90/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -4499,7 +4499,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》第71课辅导资料
 
-- [辅导音频--前行第04册68-90](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第04册68-90/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -4972,7 +4972,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》第72课辅导资料
 
-- [辅导音频--前行第04册68-90](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第04册68-90/)
+- [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 

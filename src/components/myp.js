@@ -4,7 +4,7 @@ export default class MyPara extends React.Component {
 
     componentDidMount() {
         // Changing the state after 3 sec
-        console.log('componentDidMount document ready  is called');
+        // console.log('componentDidMount document ready  is called');
         const myarticle = document.getElementsByTagName("article")[0]
         // console.log(myarticle);
         var line = 1;
@@ -29,7 +29,7 @@ export default class MyPara extends React.Component {
 
     }
     render() {
-        console.log('MyPara component render is called');
+        // console.log('MyPara component render is called');
 
         return (
             <div>

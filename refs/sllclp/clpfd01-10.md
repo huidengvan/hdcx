@@ -38,6 +38,14 @@ import TOCInline from '@theme/TOCInline';
 
 为度化一切众生，请大家发无上殊胜的菩提心！
 
+## 科判
+
+- [成量品-颂词科判-A3.pdf](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/《释量论·成量品广释》-智诚堪布辅导/成量品-颂词科判-A3.pdf)
+
+## [智诚堪布辅导-音频文件列表](/refs/sllclp/clpfd-audio-files)
+
+- [/refs/sllclp/clpfd-audio-files](/refs/sllclp/clpfd-audio-files)
+  
 ## 第一课辅导
 
 **《释量论·成量品广释》第1课笔录**
