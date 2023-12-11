@@ -28,8 +28,7 @@
     "prism-react-renderer": "^2.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-player": "^2.10.1",
-    "unist-util-visit": "^5.0.0"
+    "react-player": "^2.10.1"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.0.1"
@@ -48,6 +47,5 @@
   },
   "engines": {
     "node": ">=18.0"
-  },
-  "packageManager": "yarn@3.7.0"
+  }
 }
