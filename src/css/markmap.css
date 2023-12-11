@@ -4,3 +4,11 @@ h1,
 p {
   font-family: Lato;
 }
+
+li {
+  list-style-type: circle;
+
+}
+.under-1 {
+  list-style-type: disc;
+}

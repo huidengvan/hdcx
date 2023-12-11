@@ -1,37 +1,22 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Transformer } from 'markmap-lib';
 import { Markmap } from 'markmap-view';
 import { Toolbar } from 'markmap-toolbar';
 import '../css/markmap.css';
 
 const transformer = new Transformer();
-const initValue = `# markmap
-
-- beautiful
-- useful
-- easy
-- interactive
-`;
 
 function renderToolbar(mm, wrapper) {
     while (wrapper?.firstChild) wrapper.firstChild.remove();
     if (mm && wrapper) {
         const toolbar = new Toolbar();
         toolbar.attach(mm);
-        // Register custom buttons
-        toolbar.register({
-            id: 'alert',
-            title: 'Click to show an alert',
-            content: 'Alert',
-            onClick: () => alert('You made it!'),
-        });
-        toolbar.setItems([...Toolbar.defaultItems, 'alert']);
+        toolbar.setItems([...Toolbar.defaultItems]);
         wrapper.append(toolbar.render());
     }
 }
 
-export default function MarkmapHooks() {
-    const [value, setValue] = useState(initValue);
+export default function MarkmapHooks(props) {
     // Ref for SVG element
     const refSvg = useRef();
     // Ref for markmap object
@@ -44,32 +29,23 @@ export default function MarkmapHooks() {
         const mm = Markmap.create(refSvg.current);
         refMm.current = mm;
         renderToolbar(refMm.current, refToolbar.current);
-    }, [refSvg.current]);
+
+        return () => mm.destroy()
+    }, [refSvg.current],);
 
     useEffect(() => {
-        // Update data for markmap once value is changed
         const mm = refMm.current;
         if (!mm) return;
-        const { root } = transformer.transform(value);
+        const { root } = transformer.transform(props.text);
         mm.setData(root);
         mm.fit();
-    }, [refMm.current, value]);
+    }, [refMm.current, props]);
 
-    const handleChange = (e) => {
-        setValue(e.target.value);
-    };
 
     return (
         <React.Fragment>
-            <div className="flex-1">
-                <textarea
-                    className="w-full h-full border border-gray-400"
-                    value={value}
-                    onChange={handleChange}
-                />
-            </div>
             <svg className="flex-1" ref={refSvg} />
-            <div className="absolute bottom-1 right-1" ref={refToolbar}></div>
+            <div className="absolute bottom-1 left-1" ref={refToolbar}></div>
         </React.Fragment>
     );
 }
