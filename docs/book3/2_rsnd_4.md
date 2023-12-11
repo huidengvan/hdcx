@@ -15,9 +15,9 @@ tags:
 
 本课介绍人身难得的最后三个修法，即从三个方面思维：一、获得人身的因缘；二、盲龟入轭的比喻；三、众生数量的差别。深深体会到自己生命的价值，从而懂得珍惜当下的人身并充分发挥它的作用，自利利他。
 
-import ReactPlayer from 'react-player'
 
-<ReactPlayer id='hdvplayer' light='/img/lamp-hope.png' controls url='https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be%e7%ac%ac%e4%b8%89%e5%86%8c/02-4%20%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be5%20%e4%ba%ba%e8%ba%ab%e9%9a%be%e5%be%974.mp4' />
+
+<video id='hdvplayer' poster='/img/lamp-hope.png' controls src='https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be%e7%ac%ac%e4%b8%89%e5%86%8c/02-4%20%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be5%20%e4%ba%ba%e8%ba%ab%e9%9a%be%e5%be%974.mp4' />
 
  本课相关链接
 

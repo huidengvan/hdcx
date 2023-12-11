@@ -6,9 +6,9 @@ p {
 }
 
 li {
-  list-style-type: circle;
+  list-style-type: none;
 
 }
 .under-1 {
-  list-style-type: disc;
+  list-style-type: circle;
 }

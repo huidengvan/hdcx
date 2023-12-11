@@ -62,6 +62,7 @@ const config = {
         path: 'wsb',
         routeBasePath: 'wsb',
         sidebarPath: require.resolve('./sidebars.js'),
+        rehypePlugins: [paraAnchor],
         // ... other options
       },
     ],
@@ -72,6 +73,7 @@ const config = {
         path: 'books',
         routeBasePath: 'books',
         sidebarPath: require.resolve('./sidebars.js'),
+        rehypePlugins: [paraAnchor],
         // ... other options
       },
     ],
@@ -95,6 +97,7 @@ const config = {
         path: '4jx',
         routeBasePath: '4jx',
         sidebarPath: require.resolve('./sidebars.js'),
+        rehypePlugins: [paraAnchor],
         // ... other options
       },
     ],
@@ -105,6 +108,7 @@ const config = {
         path: '5jx',
         routeBasePath: '5jx',
         sidebarPath: require.resolve('./sidebars.js'),
+        rehypePlugins: [paraAnchor],
         // ... other options
       },
     ],

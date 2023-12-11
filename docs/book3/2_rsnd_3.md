@@ -13,9 +13,9 @@ tags:
 
 本课继续讲四外加行的第一个：人身难得。介绍了十圆满，即学佛的十种条件，包括五种自圆满和五种他圆满。通过打坐深入地思维，重新认识人生的价值和意义。
 
-import ReactPlayer from 'react-player'
 
-<ReactPlayer id='hdvplayer' light='/img/lamp-hope.png' controls url='https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be%e7%ac%ac%e4%b8%89%e5%86%8c/02-3%20%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be4%20%e4%ba%ba%e8%ba%ab%e9%9a%be%e5%be%973.mp4' />
+
+<video id='hdvplayer' poster='/img/lamp-hope.png' controls src='https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be%e7%ac%ac%e4%b8%89%e5%86%8c/02-3%20%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be4%20%e4%ba%ba%e8%ba%ab%e9%9a%be%e5%be%973.mp4' />
 
  本课相关链接
 
