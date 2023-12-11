@@ -6904,6 +6904,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     react-player: ^2.10.1
+    unist-util-visit: ^5.0.0
   languageName: unknown
   linkType: soft
 
