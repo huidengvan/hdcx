@@ -219,14 +219,35 @@ const config = {
         },
       },
     }),
-  // plugins: ['@aldridged/docusaurus-plugin-lunr'],
-  themes: [
+
+  scripts: [{ src: '/js/global.js', async: false, },],
+  themes:
     // ... Your other themes.
-   
-  ],
-  scripts: [
-    { src: '/js/global.js', async: false, },
-  ],
+    ['docusaurus-theme-search-typesense'],
+  themeConfig: {
+    typesense: {
+      // Replace this with the name of your index/collection.
+      // It should match the "index_name" entry in the scraper's "config.json" file.
+      typesenseCollectionName: 'dev',
+
+      typesenseServerConfig: {
+        nodes: [
+          {
+            host: 'search.huidengchanxiu.net',
+            port: 443,
+            protocol: 'https',
+          },
+        ],
+        apiKey: 'FnBBEeF2xFuSPtVhHc5U8GR6uOl7Q9W9FXdpm1qANCUhedzY',
+      },
+
+      // Optional: Typesense search parameters: https://typesense.org/docs/0.24.0/api/search.html#search-parameters
+      typesenseSearchParameters: {},
+
+      // Optional
+      contextualSearch: true,
+    }
+  }
 };
 
 module.exports = config;
