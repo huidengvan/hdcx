@@ -210,7 +210,7 @@ const config = {
                 darkTheme: prismThemes.dracula,
             },
             typesense: {
-                typesenseCollectionName: 'dev',
+                typesenseCollectionName: 'default_value',
 
                 typesenseServerConfig: {
                     nodes: [
