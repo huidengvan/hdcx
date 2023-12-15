@@ -19,7 +19,7 @@ export default function map() {
     handleClick(currentmark)
   });
   const initData = async () => {
-    const dirsUrl = 'https://box.hdcxb.net/api/fs/dirs?path=markmaps'
+    const dirsUrl = 'https://box.hdcxb.net/api/fs/dirs?path=markmap'
     const resp = await postRequest(dirsUrl)
 
     const userArr = []
@@ -42,7 +42,7 @@ export default function map() {
   }
 
   async function loadMarklist(user) {
-    const listUrl = 'https://box.hdcxb.net/api/fs/list?path=markmaps'
+    const listUrl = 'https://box.hdcxb.net/api/fs/list?path=markmap'
     const userFiles = (await postRequest(`${listUrl}/${user}`))?.data?.content
     const markArr = []
     userFiles.forEach(file => {
@@ -54,7 +54,7 @@ export default function map() {
   }
 
   const handleClick = async (filename) => {
-    const fileUrl = `https://box.hdcxb.net/d/markmaps/${currentuser}/${filename}`
+    const fileUrl = `https://box.hdcxb.net/d/markmap/${currentuser}/${filename}`
     const text = await textRequest(fileUrl)
     setCurrentmark(filename)
     setText(text)
@@ -74,6 +74,7 @@ export default function map() {
             })
           }
         </select>
+        <a href="/" target='_self'> 主页</a>
         {
           marks?.map(mark => {
             { currentuser }

@@ -10,8 +10,16 @@ function renderToolbar(mm, wrapper) {
     while (wrapper?.firstChild) wrapper.firstChild.remove();
     if (mm && wrapper) {
         const toolbar = new Toolbar();
+        toolbar.showBrand = false
         toolbar.attach(mm);
-        toolbar.setItems([...Toolbar.defaultItems]);
+        // Register custom buttons
+        toolbar.register({
+            id: 'home',
+            title: '返回主页',
+            content: '🏠',
+            onClick: () => location.replace(''),
+        });
+        toolbar.setItems([...Toolbar.defaultItems, 'home']);
         wrapper.append(toolbar.render());
     }
 }
