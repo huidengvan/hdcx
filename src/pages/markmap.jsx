@@ -9,6 +9,7 @@ export default function map() {
   const [currentmark, setCurrentmark] = useState()
   const [marks, setMarks] = useState()
   const [text, setText] = useState()
+  const src_host = 'https://box.hdcxb.net'
   useEffect(() => {
 
     initData()
@@ -16,10 +17,10 @@ export default function map() {
   const syncLoadMarklist = useSyncCallback(() => {
     loadMarklist(currentuser)
     if (currentmark)
-    handleClick(currentmark)
+      handleClick(currentmark)
   });
   const initData = async () => {
-    const dirsUrl = 'https://box.hdcxb.net/api/fs/dirs?path=markmap'
+    const dirsUrl = `${src_host}/api/fs/dirs?path=markmap`
     const resp = await postRequest(dirsUrl)
 
     const userArr = []
@@ -42,10 +43,16 @@ export default function map() {
   }
 
   async function loadMarklist(user) {
-    const listUrl = 'https://box.hdcxb.net/api/fs/list?path=markmap'
+    const listUrl = `${src_host}/api/fs/list?path=markmap`
     const userFiles = (await postRequest(`${listUrl}/${user}`))?.data?.content
     const markArr = []
-    userFiles.forEach(file => {
+    userFiles.forEach(async file => {
+      if (file.is_dir) {
+        postRequest(`${listUrl}/${user}`)
+        const userFiles2 = (await postRequest(`${listUrl}/${user}/${file.name}`))?.data?.content
+        console.log(userFiles2);
+      }
+
       if (file.name.indexOf('.md' != -1)) {
         markArr.push(file.name)
       }
@@ -54,7 +61,7 @@ export default function map() {
   }
 
   const handleClick = async (filename) => {
-    const fileUrl = `https://box.hdcxb.net/d/markmap/${currentuser}/${filename}`
+    const fileUrl = `${src_host}/d/markmap/${currentuser}/${filename}`
     const text = await textRequest(fileUrl)
     setCurrentmark(filename)
     setText(text)
@@ -83,9 +90,11 @@ export default function map() {
         }
       </div>
 
-      <div className="flex flex-col h-screen p-2">
-        {text && <MarkmapHooks text={text} />}
-      </div>
+      {text &&
+        <div className="flex flex-col h-screen p-2">
+          <MarkmapHooks text={text} editUrl={`${src_host}/markmap/${currentuser}/${currentmark}`} />
+        </div>
+      }
     </>
   )
 }

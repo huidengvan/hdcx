@@ -6,7 +6,7 @@ import '../css/markmap.css';
 
 const transformer = new Transformer();
 
-function renderToolbar(mm, wrapper) {
+function renderToolbar(mm, wrapper, editUrl) {
     while (wrapper?.firstChild) wrapper.firstChild.remove();
     if (mm && wrapper) {
         const toolbar = new Toolbar();
@@ -14,12 +14,12 @@ function renderToolbar(mm, wrapper) {
         toolbar.attach(mm);
         // Register custom buttons
         toolbar.register({
-            id: 'home',
-            title: '返回主页',
-            content: '🏠',
-            onClick: () => location.replace(''),
+            id: 'edit',
+            title: '编辑',
+            content: '✍',
+            onClick: () => window.open(editUrl),
         });
-        toolbar.setItems([...Toolbar.defaultItems, 'home']);
+        toolbar.setItems([...Toolbar.defaultItems, 'edit']);
         wrapper.append(toolbar.render());
     }
 }
@@ -31,15 +31,14 @@ export default function MarkmapHooks(props) {
     const refMm = useRef();
     // Ref for toolbar wrapper
     const refToolbar = useRef();
-
     useEffect(() => {
         // Create markmap and save to refMm
         const mm = Markmap.create(refSvg.current);
         refMm.current = mm;
-        renderToolbar(refMm.current, refToolbar.current);
+        renderToolbar(refMm.current, refToolbar.current, props.editUrl);
 
         return () => mm.destroy()
-    }, [refSvg.current],);
+    }, [refSvg.current, props],);
 
     useEffect(() => {
         const mm = refMm.current;

@@ -164,46 +164,34 @@ const config = {
                 style: 'dark',
                 links: [
                     {
-                        title: 'Docs',
-                        items: [
-                            {
-                                label: 'Tutorial',
-                                to: '/docs/intro',
-                            },
-                        ],
+                      title: 'Docs',
+                      items: [
+                        {
+                          label: '学修指南',
+                          to: '/docs/intro',
+                        },
+                      ],
                     },
                     {
                         title: 'Community',
                         items: [
                             {
-                                label: 'Stack Overflow',
-                                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-                            },
-                            {
-                                label: 'Discord',
-                                href: 'https://discordapp.com/invite/docusaurus',
-                            },
-                            {
-                                label: 'Twitter',
-                                href: 'https://twitter.com/docusaurus',
-                            },
+                                label: 'markmap',
+                                href: '/markmap',
+                            }
                         ],
                     },
                     {
-                        title: 'More',
+                        title: 'Links',
                         items: [
                             {
-                                label: 'Blog',
-                                to: '/blog',
-                            },
-                            {
-                                label: 'GitHub',
-                                href: 'https://github.com/facebook/docusaurus',
-                            },
+                                label: '慧灯小组温哥华',
+                                href: 'https://www.huidengvan.com',
+                            }
                         ],
                     },
                 ],
-                copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+                copyright: `慧灯小组温哥华（huidengvan.com / huidengvan@gmail.com）发心制作. Built with Docusaurus. ${new Date().getFullYear()} `,
             },
             prism: {
                 theme: prismThemes.github,
