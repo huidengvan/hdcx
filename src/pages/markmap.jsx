@@ -62,12 +62,30 @@ export default function map() {
 
   const handleClick = async (filename) => {
     const fileUrl = `${src_host}/d/markmap/${currentuser}/${filename}`
-    const text = await textRequest(fileUrl)
+    let text = await textRequest(fileUrl)
+    const regx = /#{1,6} \S+/g
+
     setCurrentmark(filename)
+    // 优化logseq语法
+    if (text) {
+      text = text.replaceAll('^^', '==')
+      text = text.replaceAll('collapsed:: true', '')
+      text = text.replaceAll(/id:: [\da-z-]+/g, '')
+
+      // 自动折叠节点
+      if (regx.test(text)) {
+        text = text.replaceAll(regx, "$& <!-- fold recursively -->")
+      } else {
+        text = `# ${decodeURI(currentmark.replace('.md', ''))} <!-- fold recursively -->\n` + text
+      }
+    }
+
     setText(text)
   }
 
   const handleChange = (e) => {
+    location.hash = `#${e.target.value}`
+    setText()
     setCurrentuser(e.target.value)
     loadMarklist(e.target.value);
   }
