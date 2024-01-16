@@ -26,3 +26,7 @@ audio {
   width: 80%;
   height: 40px;
 }
+
+.markdown>p>a {
+  user-select: none;
+}
