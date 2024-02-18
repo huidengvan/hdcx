@@ -1,0 +1,89 @@
+.overflow-y-scroll {
+    overflow-y: scroll;
+    /* 垂直方向溢出时显示滚动条 */
+}
+
+.h-80 {
+    height: 20rem;
+    /* 高度为80个单位 */
+}
+
+.cursor-pointer {
+    cursor: pointer;
+    /* 鼠标悬停时显示为指针形状 */
+}
+
+.p-1 {
+    padding: 0.25rem;
+    /* 内边距为1个单位 */
+}
+
+.font-thin {
+    font-weight: 100;
+    /* 字体细 */
+}
+
+.text-xs {
+    font-size: 0.75rem;
+    /* 文本尺寸为极小 */
+}
+
+.hover\:text-blue-400:hover {
+    color: #4299e1;
+    /* 悬停时文本颜色为蓝色 */
+}
+
+.text-blue-400 {
+    color: #4299e1;
+    /* 文本颜色为蓝色 */
+}
+
+.text-lg {
+    font-size: 1.25rem;
+    /* 文本尺寸为大 */
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    padding: 16px;
+    /* 默认水平排列 */
+
+    /* 在小屏幕上调整为垂直排列 */
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
+}
+
+.item {
+    flex: 1;
+}
+
+.item>video {
+    max-width: 100%;
+}
+
+.item:last-child {
+    max-width: 50%;
+    margin-left: 1.25rem;
+    flex: 1;
+
+    @media (max-width: 768px) {
+        margin-left: 0;
+        max-width: 50%;
+    }
+}
+
+ul {
+    border: 1px solid #ccc;
+    padding-left: .75rem;
+    padding-right: .75rem;
+    width: fit-content;
+    max-width: 100%;
+
+}
+
+li {
+    list-style: none;
+    width: max-content;
+}
