@@ -74,7 +74,7 @@
     }
 }
 
-ul {
+.item>ul {
     border: 1px solid #ccc;
     padding-left: .75rem;
     padding-right: .75rem;
@@ -83,7 +83,7 @@ ul {
 
 }
 
-li {
+.item>ul>li {
     list-style: none;
     width: max-content;
 }
