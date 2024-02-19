@@ -64,15 +64,8 @@ const SubtitlePlayer = () => {
     };
 
     return (
-        <div style={{
-
-        }}
-            className='container'
-        >
-            <div style={{
-
-            }}
-                className='item'>
+        <div className='subtitle-container'>
+            <div className='item'>
                 <video ref={videoRef} controls>
                     <source src={`${baseUrl}${location.hash.split('#')[1]}`}
                         type="video/mp4" />

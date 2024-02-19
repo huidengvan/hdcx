@@ -43,14 +43,14 @@
     /* 文本尺寸为大 */
 }
 
-.container {
+.subtitle-container {
     display: flex;
     flex-direction: row;
     padding: 16px;
     /* 默认水平排列 */
 
     /* 在小屏幕上调整为垂直排列 */
-    @media (max-width: 768px) {
+    @media screen and (orientation:portrait) {
         flex-direction: column;
     }
 }
@@ -67,23 +67,32 @@
     max-width: 50%;
     margin-left: 1.25rem;
     flex: 1;
+    border: 1px solid #ccc;
 
     @media (max-width: 768px) {
         margin-left: 0;
-        max-width: 50%;
+        margin-top: 2rem;
+        max-width: 100%;
     }
 }
 
 .item>ul {
-    border: 1px solid #ccc;
-    padding-left: .75rem;
-    padding-right: .75rem;
+    margin: .75rem;
+    padding: 0;
     width: fit-content;
     max-width: 100%;
+
+    @media (max-width: 768px) {
+        height: 25rem;
+    }
 
 }
 
 .item>ul>li {
     list-style: none;
-    width: max-content;
+    width: fit-content;
+}
+
+span.p-1 {
+    user-select: none;
 }
