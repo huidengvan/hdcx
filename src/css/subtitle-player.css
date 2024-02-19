@@ -47,12 +47,6 @@
     display: flex;
     flex-direction: row;
     padding: 16px;
-    /* 默认水平排列 */
-
-    /* 在小屏幕上调整为垂直排列 */
-    @media screen and (orientation:portrait) {
-        flex-direction: column;
-    }
 }
 
 .item {
@@ -68,12 +62,6 @@
     margin-left: 1.25rem;
     flex: 1;
     border: 1px solid #ccc;
-
-    @media (max-width: 768px) {
-        margin-left: 0;
-        margin-top: 2rem;
-        max-width: 100%;
-    }
 }
 
 .item>ul {
@@ -81,18 +69,56 @@
     padding: 0;
     width: fit-content;
     max-width: 100%;
-
-    @media (max-width: 768px) {
-        height: 25rem;
-    }
-
 }
 
 .item>ul>li {
     list-style: none;
-    width: fit-content;
+    display: flex;
+    justify-content: space-between;
+}
+
+.item button:hover {
+    background-color: #39a7f1;
+    color: #fff;
+}
+
+.subtitle-text {
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.item button {
+    display: none;
+    padding: 4px 10px;
+    font-size: 13px;
+    text-align: center;
+    background-color: #fff;
+    border: 2px solid #3498db;
+    color: #3498db;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.item li:hover>button {
+    display: inline-block;
 }
 
 span.p-1 {
     user-select: none;
+}
+
+@media screen and (orientation:portrait) {
+    .item>ul {
+        height: 25rem;
+    }
+
+    .item:last-child {
+        margin-left: 0;
+        margin-top: 2rem;
+        max-width: 100%;
+    }
+
+    .subtitle-container {
+        flex-direction: column;
+    }
 }
