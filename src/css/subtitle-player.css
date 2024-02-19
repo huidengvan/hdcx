@@ -60,7 +60,6 @@
 .item:last-child {
     max-width: 50%;
     margin-left: 1.25rem;
-    flex: 1;
     border: 1px solid #ccc;
 }
 
@@ -73,8 +72,12 @@
 
 .item>ul>li {
     list-style: none;
-    display: flex;
-    justify-content: space-between;
+}
+
+.item>ul>li>div {
+    display: inline-block;
+    min-width: 273px;
+    max-width: 100%;
 }
 
 .item button:hover {
@@ -82,14 +85,11 @@
     color: #fff;
 }
 
-.subtitle-text {
-    display: inline-flex;
-    justify-content: space-between;
-}
-
 .item button {
+    margin: 0 3px;
     display: none;
-    padding: 4px 10px;
+    float: right;
+    padding: 4px 9px;
     font-size: 13px;
     text-align: center;
     background-color: #fff;
@@ -99,7 +99,7 @@
     cursor: pointer;
 }
 
-.item li:hover>button {
+.item li:hover button {
     display: inline-block;
 }
 

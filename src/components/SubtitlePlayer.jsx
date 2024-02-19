@@ -79,21 +79,23 @@ const SubtitlePlayer = () => {
                             <li
                                 key={index}
                                 id={`subtitle-${index}`}
-                                className={`subtitle-line cursor-pointer`}
+                                className={`subtitle-line`}
                             >
+                                <span className='p-1 font-thin text-xs'>{subtitle.startTime.split(',')[0]}
+                                </span>
                                 <div>
-                                    <span className='p-1 font-thin text-xs'>{subtitle.startTime.split(',')[0]}</span>
-                                    <span className={`subtitle-text hover:text-blue-400 ${index === currentSubtitleIndex && 'text-blue-400 text-lg'}`}
+                                    <span className={`subtitle-text hover:text-blue-400 cursor-pointer ${index === currentSubtitleIndex && 'text-blue-400 text-lg'}`}
                                         onClick={() => videoRef.current.currentTime = parseTime(subtitle.startTime)}
                                     >{subtitle.text}
                                     </span>
+                                    <button
+                                        onClick={e => {
+                                            e.target.innerHTML = '已复制';
+                                            navigator.clipboard.writeText(`${location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`);
+                                        }}
+                                    >分享
+                                    </button>
                                 </div>
-                                <button
-                                    onClick={() => {
-                                        navigator.clipboard.writeText(`${location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`);
-                                    }}
-                                >分享
-                                </button>
                             </li>
                         ))}
                     </ul>
