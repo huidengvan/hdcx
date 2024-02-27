@@ -1,7 +1,8 @@
 ---
-title: "释迦牟尼佛广传·白莲花论"
+title: "释迦牟尼佛广传"
 date: 2020-12-14T17:26:13-08:00
 draft: false
+sidebar_position: 1
 ---
 
 import TOCInline from '@theme/TOCInline';
@@ -16,6 +17,8 @@ import Mypara from '@site/src/components/myp';
 <Mypara />
 
 ---
+
+释迦牟尼佛广传·白莲花论
 
 南无哥热满吉些儿哥嘛不达雅！
 
