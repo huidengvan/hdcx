@@ -1482,3 +1482,6 @@ import Mypara from '@site/src/components/myp';
 
 雖然是這樣子，這一切法還是空的。所謂「繪事後素」，畫完了畫，那紙還是白的，就是一切都是空的。所以你們誰若學畫畫，就學這種畫──掃一切法，離一切相，什麼都沒有的！
 
+## 参考链接
+ 
+- [法界佛教总会线上阅读](http://www.drbachinese.org/online_reading_simplified/index.htm) <http://www.drbachinese.org/online_reading/sf_others/10_Disciples/contents.htm>
