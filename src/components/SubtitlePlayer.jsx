@@ -1,16 +1,22 @@
 import React from 'react'
 import { useEffect, useState, useRef } from 'react';
 import '../css/subtitle-player.css'
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
-const SubtitlePlayer = () => {
+const VideoFull = ({ src }) => {
+    const baseUrl = 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/'
+
+    const videoSrc = src && `${src}#t${location.hash.split('#t').pop()}` || `${baseUrl}${location.hash.slice(1)}`;
     const [subtitles, setSubtitles] = useState([]);
     const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(-1);
+    const [TimeLine, setTimeLine] = useState(true)
     const videoRef = useRef(null);
-    const baseUrl = 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/'
 
     // 解析SRT字幕文件
     useEffect(() => {
-        fetch(`${baseUrl}${location.hash.split('#')[1].replace(/mp\d/, 'srt')}`)
+        // 清除栅格布局, 使宽度为100%
+        document.querySelector('article').parentElement.className = ''
+        fetch(`${videoSrc.replace(/mp[34]/, 'srt')}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -64,37 +70,55 @@ const SubtitlePlayer = () => {
     };
 
     return (
-        <div className='subtitle-container'>
+        <div className='subtitle-container' style={{
+            display: src || location.hash?.includes('mp') ? 'flex' : 'none'
+        }}>
             <div className='item'>
-                <video ref={videoRef} controls>
-                    <source src={`${baseUrl}${location.hash.split('#')[1]}#${location.href.split('#')[2]}`}
+                <video ref={videoRef} width={'100%'} controls>
+                    <source src={`${videoSrc}`}
                         type="video/mp4" />
                 </video>
             </div>
             {subtitles.length > 0 &&
-                <div className='item'>
+                <div
+                    id='subtitle-box'
+                    className='item'>
                     <ul
-                        className="subtitles-box overflow-y-scroll h-80">
+                        onDoubleClick={() => {
+                            videoRef.current.paused ?
+                                videoRef.current.play() :
+                                videoRef.current.pause()
+                        }}>
+                        <label className="subtitle-switch">
+                            <input type="checkbox"
+                                checked={TimeLine}
+                                onChange={() => setTimeLine(value => !value)} />
+                            <span> 显示时间</span>
+                        </label>
                         {subtitles.map((subtitle, index) => (
                             <li
                                 key={index}
                                 id={`subtitle-${index}`}
                                 className={`subtitle-line`}
                             >
-                                <span className='p-1 font-thin text-xs'>{subtitle.startTime.split(',')[0]}
-                                </span>
+                                {TimeLine && <span title='双击复制' className='p-1 font-thin text-xs'
+                                    onDoubleClick={(e) => {
+                                        e.stopPropagation()
+                                        const msgEl = document.querySelector('.subtitle-switch');
+                                        msgEl.classList.add('show-copied');
+                                        navigator.clipboard.writeText(`${location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`);
+
+                                        setTimeout(() => msgEl.classList.remove('show-copied'), 1500)
+                                    }}
+                                >{subtitle.startTime.split(',')[0]}
+                                </span>}
                                 <div>
                                     <span className={`subtitle-text hover:text-blue-400 cursor-pointer ${index === currentSubtitleIndex && 'text-blue-400 text-lg'}`}
+                                        title='双击暂停/播放'
                                         onClick={() => videoRef.current.currentTime = parseTime(subtitle.startTime)}
+
                                     >{subtitle.text}
                                     </span>
-                                    <button
-                                        onClick={e => {
-                                            e.target.innerHTML = '已复制';
-                                            navigator.clipboard.writeText(`${location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`);
-                                        }}
-                                    >分享
-                                    </button>
                                 </div>
                             </li>
                         ))}
@@ -111,9 +135,15 @@ const scrollSubtitleToView = (index) => {
         subtitleElement.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
-            inline: 'center',
         });
     }
 };
 
-export default SubtitlePlayer
+
+export default function SubtitlePlayer({ src }) {
+    return (
+        <BrowserOnly>
+            {() => <VideoFull src={src} />}
+        </BrowserOnly>
+    )
+}
