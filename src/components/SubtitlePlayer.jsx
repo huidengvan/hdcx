@@ -70,9 +70,11 @@ const VideoFull = ({ src }) => {
     };
 
     return (
-        <div className='subtitle-container'>
+        <div className='subtitle-container' style={{
+            display: src || location.hash?.includes('mp') ? 'flex' : 'none'
+        }}>
             <div className='item'>
-                <video ref={videoRef} controls>
+                <video ref={videoRef} width={'100%'} controls>
                     <source src={`${videoSrc}`}
                         type="video/mp4" />
                 </video>
@@ -81,7 +83,6 @@ const VideoFull = ({ src }) => {
                 <div
                     id='subtitle-box'
                     className='item'>
-
                     <ul
                         onDoubleClick={() => {
                             videoRef.current.paused ?
@@ -134,7 +135,6 @@ const scrollSubtitleToView = (index) => {
         subtitleElement.scrollIntoView({
             behavior: 'smooth',
             block: 'center',
-            inline: 'center',
         });
     }
 };
