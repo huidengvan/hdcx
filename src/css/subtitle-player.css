@@ -1,13 +1,3 @@
-.overflow-y-scroll {
-    overflow-y: scroll;
-    /* 垂直方向溢出时显示滚动条 */
-}
-
-.h-80 {
-    height: 20rem;
-    /* 高度为80个单位 */
-}
-
 .cursor-pointer {
     cursor: pointer;
     /* 鼠标悬停时显示为指针形状 */
@@ -48,8 +38,13 @@
     flex-direction: row;
 }
 
-.item {
-    flex: 1;
+.item:first-child {
+    flex: 3;
+}
+
+.item:last-child {
+    flex: 2;
+
 }
 
 .item>video {
@@ -57,16 +52,17 @@
 }
 
 .item:last-child {
-    max-width: 50%;
-    margin-left: 1.25rem;
-    border: 1px solid #ccc;
+    max-width: 40%;
+    margin-left: 1rem;
 }
 
 .item>ul {
-    margin: .75rem;
-    padding: 0;
+    padding: .75rem;
     width: fit-content;
     max-width: 100%;
+    max-height: 55vh;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
 }
 
 .item>ul>li {
@@ -75,7 +71,6 @@
 
 .item>ul>li>div {
     display: inline-block;
-    min-width: 273px;
     max-width: 100%;
 }
 
@@ -88,10 +83,10 @@ span.p-1 {
     position: relative;
 }
 
-.subtitle-switch{
+.subtitle-switch {
     display: flex;
     position: absolute;
-    bottom: -27px;
+    bottom: -7px;
     left: .7rem;
     font-size: 12px;
 }
@@ -100,7 +95,7 @@ span.p-1 {
     position: absolute;
     width: max-content;
     left: 6rem;
-    margin: .3rem;
+    margin-left: .3rem;
     content: '播放位置已复制';
     font-size: 11px;
     border-width: 1px;
@@ -113,10 +108,6 @@ span.p-1 {
 }
 
 @media screen and (orientation:portrait) {
-    .item>ul {
-        height: 25rem;
-    }
-
     .item:last-child {
         margin-left: 0;
         margin-top: 2rem;
