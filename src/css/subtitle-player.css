@@ -46,7 +46,6 @@
 .subtitle-container {
     display: flex;
     flex-direction: row;
-    padding: 16px;
 }
 
 .item {
@@ -80,31 +79,37 @@
     max-width: 100%;
 }
 
-.item button:hover {
-    background-color: #39a7f1;
-    color: #fff;
-}
-
-.item button {
-    margin: 0 3px;
-    display: none;
-    float: right;
-    padding: 4px 9px;
-    font-size: 13px;
-    text-align: center;
-    background-color: #fff;
-    border: 2px solid #3498db;
-    color: #3498db;
-    border-radius: 5px;
+span.p-1 {
+    user-select: none;
     cursor: pointer;
 }
 
-.item li:hover button {
-    display: inline-block;
+#subtitle-box {
+    position: relative;
 }
 
-span.p-1 {
-    user-select: none;
+.subtitle-switch{
+    display: flex;
+    position: absolute;
+    bottom: -27px;
+    left: .7rem;
+    font-size: 12px;
+}
+
+.show-copied::after {
+    position: absolute;
+    width: max-content;
+    left: 6rem;
+    margin: .3rem;
+    content: '播放位置已复制';
+    font-size: 11px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ccc;
+    padding: 3px 6px;
+    background-color: #3b75f4;
+    border-radius: 5px;
+    color: #fff;
 }
 
 @media screen and (orientation:portrait) {

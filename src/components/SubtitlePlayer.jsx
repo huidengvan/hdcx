@@ -5,6 +5,7 @@ import '../css/subtitle-player.css'
 const SubtitlePlayer = () => {
     const [subtitles, setSubtitles] = useState([]);
     const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(-1);
+    const [TimeLine, setTimeLine] = useState(true)
     const videoRef = useRef(null);
     const baseUrl = 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/'
 
@@ -72,29 +73,46 @@ const SubtitlePlayer = () => {
                 </video>
             </div>
             {subtitles.length > 0 &&
-                <div className='item'>
+                <div
+                    id='subtitle-box'
+                    className='item'>
+                    <label className="subtitle-switch">
+                        <input type="checkbox"
+                            checked={TimeLine}
+                            onChange={() => setTimeLine(value => !value)} />
+                        <span> 显示时间</span>
+                    </label>
                     <ul
-                        className="subtitles-box overflow-y-scroll h-80">
+                        onDoubleClick={() => {
+                            videoRef.current.paused ?
+                                videoRef.current.play() :
+                                videoRef.current.pause()
+                        }}
+                        className="overflow-y-scroll h-80">
                         {subtitles.map((subtitle, index) => (
                             <li
                                 key={index}
                                 id={`subtitle-${index}`}
                                 className={`subtitle-line`}
                             >
-                                <span className='p-1 font-thin text-xs'>{subtitle.startTime.split(',')[0]}
-                                </span>
+                                {TimeLine && <span title='双击复制' className='p-1 font-thin text-xs'
+                                    onDoubleClick={(e) => {
+                                        e.stopPropagation()
+                                        const msgEl = document.getElementById('subtitle-box');
+                                        msgEl.classList.add('show-copied');
+                                        navigator.clipboard.writeText(`${location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`);
+
+                                        setTimeout(() => msgEl.classList.remove('show-copied'), 1500)
+                                    }}
+                                >{subtitle.startTime.split(',')[0]}
+                                </span>}
                                 <div>
                                     <span className={`subtitle-text hover:text-blue-400 cursor-pointer ${index === currentSubtitleIndex && 'text-blue-400 text-lg'}`}
+                                        title='双击暂停/播放'
                                         onClick={() => videoRef.current.currentTime = parseTime(subtitle.startTime)}
+
                                     >{subtitle.text}
                                     </span>
-                                    <button
-                                        onClick={e => {
-                                            e.target.innerHTML = '已复制';
-                                            navigator.clipboard.writeText(`${location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`);
-                                        }}
-                                    >分享
-                                    </button>
                                 </div>
                             </li>
                         ))}
