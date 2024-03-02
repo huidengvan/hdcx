@@ -16,7 +16,7 @@ import Mypara from '@site/src/components/myp';
 
 ---
 
-## 第126课
+## 前行广释第126课
 
 - [《大圆满前行》讲解第126课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第126课.mp4)
 
@@ -274,7 +274,7 @@ import Mypara from '@site/src/components/myp';
 
 因此，对于这个可以一生成佛的法门，大家一定要重视！
 
-## 第127课
+## 前行广释第127课
 
 - [《大圆满前行》讲解第127课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第127课.mp4)
 
@@ -490,7 +490,7 @@ import Mypara from '@site/src/components/myp';
 
 但尽管如此，我们还是要知道，在所有的修法当中，上师瑜伽的确是最最关键的。它是加行，同时也是一切正行的究竟要诀，所以，诚心诚意、尽心尽力地修上师瑜伽，非常非常重要！
 
-## 第128课
+## 前行广释第128课
 
 - [《大圆满前行》讲解第128课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第128课.mp4)
 
@@ -864,7 +864,7 @@ import Mypara from '@site/src/components/myp';
 
 这个上师瑜伽的修法，显宗根基一般很难修成，因为他有很多分别念的障碍，相续还未成熟。但有信心、有因缘的道友，应该努力修持，因为这的确是最重要的修法！
 
-## 第129课
+## 前行广释第129课
 
 - [《大圆满前行》讲解第129课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第129课.mp4)
 
@@ -1112,7 +1112,7 @@ import Mypara from '@site/src/components/myp';
 
 总之，在修学佛法和利益众生的过程中，每个人都应从自身上做起，如果是善的、对的，就尽力甚至强迫自己去做；如果是恶的、不对的，对自他、对修行都毫无利益，就尽量地避开，甚至远离！
 
-## 第130课
+## 前行广释第130课
 
 - [《大圆满前行》讲解第130课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第130课.mp4)
 
@@ -1402,7 +1402,7 @@ import Mypara from '@site/src/components/myp';
 
 以上已经讲了七支供里的三支――顶礼、供养、忏悔，这些都是滋养慧命的好“食品”。胃口好的人一看到好食品，这个好吃、那个也好吃，统统想吃。所以，在有限的生命里，能“吃”多少就“吃”多少吧，如果你胃口好的话。
 
-## 第131课
+## 前行广释第131课
 
 - [《大圆满前行》讲解第131课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第131课.mp4)
 
@@ -1744,7 +1744,7 @@ import Mypara from '@site/src/components/myp';
 
 能呈现这样一种修行状态，就是闻思的真正意义。
 
-## 第132课
+## 前行广释第132课
 
 - [《大圆满前行》讲解第132课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第132课.mp4)
 
@@ -2040,7 +2040,7 @@ import Mypara from '@site/src/components/myp';
 
 能这样修的话，修行也不会很困难的。
 
-## 第133课
+## 前行广释第133课
 
 - [《大圆满前行》讲解第133课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第133课.mp4)
 
@@ -2492,7 +2492,7 @@ import Mypara from '@site/src/components/myp';
 
 或者念诵铜色吉祥山发愿文。这个愿文，以前我翻译过，是回向往生莲师刹土的发愿文。
 
-## 第134课
+## 前行广释第134课
 
 - [《大圆满前行》讲解第134课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第134课.mp4)
 
@@ -2826,7 +2826,7 @@ import Mypara from '@site/src/components/myp';
 
 以上我们以很简单的方式，对如来密意传作了了解。
 
-## 第135课
+## 前行广释第135课
 
 - [《大圆满前行》讲解第135课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第135课.mp4)
 
@@ -2998,7 +2998,7 @@ import Mypara from '@site/src/components/myp';
 
 极喜金刚依靠无勤大圆满，而在刹那间成佛。后来，他的窍诀――三大教言，全部留在文字上，令无数后人有机会修行大圆满的无上法要。
 
-## 第136课
+## 前行广释第136课
 
 - [《大圆满前行》讲解第136课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第136课.mp4)
 
@@ -3296,7 +3296,7 @@ import Mypara from '@site/src/components/myp';
 
 后来，国王松赞干布从自己的白毫间幻化出一位化身比丘，名为阿嘎玛德，调伏了印度圣地的外道国王，并从印度与铜洲交界处的一株蛇心旃檀中，取出了五尊旃檀（印度那一尊，以前我们去时见过），同时塑造了拉萨的十一面观音像。可以说，国王松赞干布时期，才真实地树立起佛教的法幢。
 
-## 第137课
+## 前行广释第137课
 
 - [《大圆满前行》讲解第137课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第137课.mp4)
 
