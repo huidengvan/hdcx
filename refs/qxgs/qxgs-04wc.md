@@ -18,7 +18,7 @@ import Mypara from '@site/src/components/myp';
 
 前行广释之 寿命无常
 
-## 第二十八节课
+## 第028课
 
 - [《大圆满前行》讲解第28课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第28课.mp4)
 
@@ -149,7 +149,7 @@ import Mypara from '@site/src/components/myp';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第二十九节课
+## 第029课
 
 - [《大圆满前行》讲解第29课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第29课.mp4)
 
@@ -409,7 +409,7 @@ import Mypara from '@site/src/components/myp';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第三十一节课
+## 第031课
 
 - [《大圆满前行》讲解第31课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第31课.mp4)
 
@@ -558,7 +558,7 @@ import Mypara from '@site/src/components/myp';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第三十二节课
+## 第032课
 
 - [《大圆满前行》讲解第32课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第32课.mp4)
 
@@ -689,7 +689,7 @@ import Mypara from '@site/src/components/myp';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第三十三节课
+## 第033课
 
 - [《大圆满前行》讲解第33课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第33课.mp4)
 
@@ -818,7 +818,7 @@ import Mypara from '@site/src/components/myp';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第三十四节课
+## 第034课
 
 - [《大圆满前行》讲解第34课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第34课.mp4)
 
@@ -955,7 +955,7 @@ import Mypara from '@site/src/components/myp';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第三十五节课
+## 第035课
 
 - [《大圆满前行》讲解第35课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第35课.mp4)
 
@@ -1117,7 +1117,7 @@ import Mypara from '@site/src/components/myp';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第三十六节课
+## 第036课
 
 - [《大圆满前行》讲解第36课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第36课.mp4)
 
@@ -1310,7 +1310,7 @@ import Mypara from '@site/src/components/myp';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第三十七节课
+## 第037课
 
 - [《大圆满前行》讲解第37课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第37课.mp4)
 
@@ -1449,7 +1449,7 @@ import Mypara from '@site/src/components/myp';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第三十八节课
+## 第038课
 
 - [《大圆满前行》讲解第38课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第38课.mp4)
 
@@ -1648,7 +1648,7 @@ import Mypara from '@site/src/components/myp';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第三十九节课
+## 第039课
 
 - [《大圆满前行》讲解第39课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第39课.mp4)
 

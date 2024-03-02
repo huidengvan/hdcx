@@ -16,7 +16,7 @@ import Mypara from '@site/src/components/myp';
 
 ---
 
-## 第一百三十八节课
+## 第138课
 
 - [《大圆满前行》讲解第138课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第138课.mp4)
 
@@ -260,7 +260,7 @@ import Mypara from '@site/src/components/myp';
 
 因此，在座的各位学到这些道理以后，一方面，在为亡者念经时，要怀着利他的心，要尽力用清净的念诵饶益他；另一方面也应该祈愿，一旦我们自己成了中阴身时，也能够以那种极为聪利的心，来忆念生前学过的这些窍诀，从而立即往生极乐世界。
 
-## 第一百三十九节课
+## 第139课
 
 - [《大圆满前行》讲解第139课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第139课.mp4)
 
@@ -506,7 +506,7 @@ import Mypara from '@site/src/components/myp';
 
 因此，希望大家珍惜这个修法，也珍惜自己的修法因缘。
 
-## 第一百四十节课
+## 第140课
 
 - [《大圆满前行》讲解第140课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第140课.mp4)
 
@@ -748,7 +748,7 @@ import Mypara from '@site/src/components/myp';
 
 总之，在往生的问题上，修法的本身也好，里里外外的因缘也好，佛教徒一定要先懂得道理；懂了道理以后，单单是理解或者能说还不行，一定要实地去修，要多多少少地做到。这样的话，才会对自他起到真实的大利益。
 
-## 第一百四十一节课
+## 第141课
 
 - [《大圆满前行》讲解第141课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第141课.mp4)
 
@@ -1118,7 +1118,7 @@ import Mypara from '@site/src/components/myp';
 
 顶礼供养皈依世尊善逝出有坏圆满正等觉怙主无量光佛
 
-## 第一百四十二节课
+## 第142课
 
 - [《大圆满前行》讲解第142课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第142课.mp4)
 

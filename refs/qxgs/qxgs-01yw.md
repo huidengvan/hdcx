@@ -420,7 +420,7 @@ import Mypara from '@site/src/components/myp';
 
 ---
 
-## 第一节课
+## 第001课
 
 
 - [《大圆满前行》讲解第1课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第01课.mp4)
@@ -623,7 +623,7 @@ import Mypara from '@site/src/components/myp';
 
 作为后学者，应当经常祈祷这些传承上师。如果你没有其他祈祷文，可以念诵这几个顶礼偈，不断地祈祷三大传承上师、无垢光尊者、智悲光尊者。若能如此，相续中的烦恼通过上师加持即可遣除，智慧和大悲无形中会自然出现。所以，我始终认为，恭敬祈祷本传上师是极为重要的事情！
 
-## 第二节课
+## 第02课
 
 
 - [《大圆满前行》讲解第02课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第02课.mp4)
