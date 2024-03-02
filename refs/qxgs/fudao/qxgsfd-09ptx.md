@@ -15,7 +15,7 @@ import Mypara from '@site/src/components/myp';
 
 ---
 
-## 《前行广释》第91课辅导资料
+## 前行广释第091课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -509,7 +509,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第92课辅导资料
+## 前行广释第092课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1031,7 +1031,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第93课辅导资料
+## 前行广释第093课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1535,7 +1535,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第94课辅导资料
+## 前行广释第094课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1961,7 +1961,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第95课辅导资料
+## 前行广释第095课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -2385,7 +2385,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第96课辅导资料
+## 前行广释第096课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -2775,7 +2775,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第97课辅导资料
+## 前行广释第097课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -3359,7 +3359,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第98课辅导资料
+## 前行广释第098课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -3829,7 +3829,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第99课辅导资料
+## 前行广释第099课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -4263,7 +4263,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考，请勿助印！
 
-## 《前行广释》第100课辅导资料
+## 前行广释第100课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -4819,7 +4819,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考，请勿助印！
 
-## 《前行广释》第101课辅导资料
+## 前行广释第101课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -5257,7 +5257,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考，请勿助印！
 
-## 《前行广释》第102课辅导资料
+## 前行广释第102课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -5823,7 +5823,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考，请勿助印！
 
-## 《前行广释》第103课辅导资料
+## 前行广释第103课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -6245,7 +6245,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考，请勿助印！
 
-## 《前行广释》第104课辅导资料
+## 前行广释第104课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -6723,7 +6723,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考，请勿助印！
 
-## 《前行广释》第105课辅导资料
+## 前行广释第105课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -7135,7 +7135,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考，请勿助印！
 
-## 《前行广释》第106课辅导资料
+## 前行广释第106课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -7589,7 +7589,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考，请勿助印！
 
-## 《前行广释》第107课辅导资料
+## 前行广释第107课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -8057,7 +8057,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考，请勿助印！
 
-## 《前行广释》第108课辅导资料
+## 前行广释第108课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -8543,7 +8543,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考，请勿助印！
 
-## 《前行广释》第109课辅导资料
+## 前行广释第109课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -9069,7 +9069,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考，请勿助印！
 
-## 《前行广释》第110课辅导资料
+## 前行广释第110课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -9559,7 +9559,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考，请勿助印！
 
-## 《前行广释》第111课辅导资料
+## 前行广释第111课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -10065,7 +10065,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考，请勿助印！
 
-## 《前行广释》第112课辅导资料
+## 前行广释第112课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -10757,7 +10757,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考，请勿助印！
 
-## 《前行广释》第113课辅导资料
+## 前行广释第113课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 

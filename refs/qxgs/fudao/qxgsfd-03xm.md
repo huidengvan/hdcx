@@ -16,7 +16,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第14课辅导资料
+## 前行广释第014课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -252,7 +252,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第15课辅导资料
+## 前行广释第015课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -492,7 +492,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第16课辅导资料
+## 前行广释第016课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -698,7 +698,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第17课辅导资料
+## 前行广释第017课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -932,7 +932,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第18课辅导资料
+## 前行广释第018课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1154,7 +1154,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第19课辅导资料
+## 前行广释第019课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1452,7 +1452,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第20课辅导资料
+## 前行广释第020课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1746,7 +1746,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第21课辅导资料
+## 前行广释第021课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -2052,7 +2052,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第22课辅导资料
+## 前行广释第022课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -2348,7 +2348,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第23课辅导资料
+## 前行广释第023课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
   
@@ -2662,7 +2662,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第24课辅导资料
+## 前行广释第024课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -2878,7 +2878,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第25课辅导资料
+## 前行广释第025课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -3152,7 +3152,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第26课辅导资料
+## 前行广释第026课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -3456,7 +3456,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第27课辅导资料
+## 前行广释第027课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 

@@ -15,7 +15,7 @@ import Mypara from '@site/src/components/myp';
 
 ---
 
-## 《前行广释》第73课辅导资料
+## 前行广释第073课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -493,7 +493,7 @@ import Mypara from '@site/src/components/myp';
 
 这也是前面十二个条件的归纳，对照就可以，比较容易。今天我们的课就讲到这个地方。
 
-## 《前行广释》第74课辅导资料
+## 前行广释第074课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1007,7 +1007,7 @@ import Mypara from '@site/src/components/myp';
 
 如是上师等同诸佛，伤害他也可以间接趋入安乐道。“何人正信依止师”，无论什么样的人以正信依止他，他都会降下一切功德雨。有可能在今生中就会得到功德雨滋润，成佛获得最大的利益。以上是对上师功德的赞叹，今天的课就学到这里。
 
-## 《前行广释》第75课辅导资料
+## 前行广释第075课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1421,7 +1421,7 @@ import Mypara from '@site/src/components/myp';
 
 这是《功德藏》的归纳，前面的内容讲完了，这里只是归纳而已。今天的课我们就讲到这里。
 
-## 《前行广释》第76课辅导资料
+## 前行广释第076课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1839,7 +1839,7 @@ import Mypara from '@site/src/components/myp';
 
 所以这些教义要反复地学，这里面告诉我们在依止上师的过程中一些如理作意、如理的行为、怎么样制止我们产生邪见的很多方法，都是实用的，都是没有水分的干货，比如怎么样调伏自己的邪见等等，都讲得很清楚。不要学过就算了，要牢牢地把这些记在心中，然后自己用，也告诉别人去用。因为把这个原理学得很透彻了，给别人讲的时候也不会干巴巴地只是读一次，而且会有体会。给别人介绍时也能打动他们的心，避免别人依止上师前冲动、盲目，依止完之后又开始诽谤等很多这样的行为。所以这些是自利利他的殊胜窍诀，要反复地思维、使用，重要的部分一定要背下来。今天我们的课就讲到这里。
 
-## 《前行广释》第77课辅导资料
+## 前行广释第077课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -2217,7 +2217,7 @@ import Mypara from '@site/src/components/myp';
 
 今天的课就讲到这里。
 
-## 《前行广释》第78课辅导资料
+## 前行广释第078课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -2571,7 +2571,7 @@ import Mypara from '@site/src/components/myp';
 
 今天我们的课就讲到这个地方。
 
-## 《前行广释》第79课辅导资料
+## 前行广释第079课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -2951,7 +2951,7 @@ import Mypara from '@site/src/components/myp';
 
 今天我们的课就讲到这。
 
-## 《前行广释》第80课辅导资料
+## 前行广释第080课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -3451,7 +3451,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第81课辅导资料
+## 前行广释第081课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -3891,7 +3891,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第82课辅导资料
+## 前行广释第082课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -4409,7 +4409,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿为内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第83课辅导资料
+## 前行广释第083课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 

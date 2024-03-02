@@ -14,7 +14,7 @@ import Mypara from '@site/src/components/myp';
 ---
 
 
-## 《前行广释》第126课辅导资料
+## 前行广释第126课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -256,7 +256,7 @@ import Mypara from '@site/src/components/myp';
 
 今天我们的课就讲到这个地方！
 
-## 《前行广释》第127课辅导资料
+## 前行广释第127课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -574,7 +574,7 @@ import Mypara from '@site/src/components/myp';
 
 以上就学完了上师瑜伽的重要性。我们今天的课讲到这里。
 
-## 《前行广释》第128课辅导资料
+## 前行广释第128课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1016,7 +1016,7 @@ import Mypara from '@site/src/components/myp';
 
 今天我们的课就讲到这里。
 
-## 《前行广释》第129课辅导资料  
+## 前行广释第129课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1398,7 +1398,7 @@ import Mypara from '@site/src/components/myp';
 
 今天我们的课就讲到这里。
 
-## 《前行广释》第130课辅导资料  
+## 前行广释第130课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1770,7 +1770,7 @@ import Mypara from '@site/src/components/myp';
 
 哲波措利卓瓦卓瓦效 愿度有海诸有情
 
-## 《前行广释》第131课辅导资料  
+## 前行广释第131课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -2122,7 +2122,7 @@ import Mypara from '@site/src/components/myp';
 
 我们今天的课讲到这里。
 
-## 《前行广释》第132课辅导资料  
+## 前行广释第132课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -2456,7 +2456,7 @@ import Mypara from '@site/src/components/myp';
 
 哲波措利卓瓦卓瓦效 愿度有海诸有情
 
-## 《前行广释》第133课辅导资料  
+## 前行广释第133课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -2946,7 +2946,7 @@ import Mypara from '@site/src/components/myp';
 
 今天我们的课就讲到这个地方！
 
-## 《前行广释》第134课辅导资料
+## 前行广释第134课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -3356,7 +3356,7 @@ import Mypara from '@site/src/components/myp';
 
 哲波措利卓瓦卓瓦效 愿度有海诸有情
 
-## 《前行广释》第135课辅导资料
+## 前行广释第135课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -3828,7 +3828,7 @@ import Mypara from '@site/src/components/myp';
 
 哲波措利卓瓦卓瓦效 愿度有海诸有情
 
-## 《前行广释》第136课辅导资料  
+## 前行广释第136课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -4168,7 +4168,7 @@ import Mypara from '@site/src/components/myp';
 
 哲波措利卓瓦卓瓦效 愿度有海诸有情
 
-## 《前行广释》第137课辅导资料  
+## 前行广释第137课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 

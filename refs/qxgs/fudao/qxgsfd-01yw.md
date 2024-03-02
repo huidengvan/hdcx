@@ -572,7 +572,7 @@ import Mypara from '@site/src/components/myp';
 
 今天我们的上师瑜伽就讲到这个地方。
 
-## 《大圆满前行》第1课辅导资料
+## 前行广释第001课辅导
 
 - [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 - [大圆满前行第01课2014年12月14日.m4a](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/大圆满前行第01课2014年12月14日.m4a)
@@ -767,7 +767,7 @@ import Mypara from '@site/src/components/myp';
 
 今天的课我们就讲到这里。
 
-## 《大圆满前行》第2课辅导资料
+## 前行广释第002课辅导
 
 - [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
 

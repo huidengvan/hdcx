@@ -14,7 +14,7 @@ import Mypara from '@site/src/components/myp';
 ---
 
 
-## 《前行广释》第119课辅导资料
+## 前行广释第119课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -326,7 +326,7 @@ import Mypara from '@site/src/components/myp';
 
 哲波措利卓瓦卓瓦效 愿度有海诸有情
 
-## 《前行广释》第120课辅导资料
+## 前行广释第120课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -834,7 +834,7 @@ import Mypara from '@site/src/components/myp';
 
 今天我们就讲到这个地方。
 
-## 《前行广释》第121课辅导资料
+## 前行广释第121课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1212,7 +1212,7 @@ import Mypara from '@site/src/components/myp';
 
 哲波措利卓瓦卓瓦效 愿度有海诸有情
 
-## 《前行广释》第122课辅导资料
+## 前行广释第122课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1590,7 +1590,7 @@ import Mypara from '@site/src/components/myp';
 
 哲波措利卓瓦卓瓦效 愿度有海诸有情
 
-## 《前行广释》第123课辅导资料  
+## 前行广释第123课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1924,7 +1924,7 @@ import Mypara from '@site/src/components/myp';
 
 哲波措利卓瓦卓瓦效 愿度有海诸有情
 
-## 《前行广释》第124课辅导资料
+## 前行广释第124课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -2282,7 +2282,7 @@ import Mypara from '@site/src/components/myp';
 
 哲波措利卓瓦卓瓦效 愿度有海诸有情
 
-## 《前行广释》第125课辅导资料
+## 前行广释第125课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 

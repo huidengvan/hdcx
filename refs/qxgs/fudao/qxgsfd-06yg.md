@@ -16,7 +16,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第59课辅导资料
+## 前行广释第059课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -363,7 +363,7 @@ import Mypara from '@site/src/components/myp';
 哲波措利卓瓦卓瓦效    愿度有海诸有情
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第60课辅导资料
+## 前行广释第060课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -662,7 +662,7 @@ import Mypara from '@site/src/components/myp';
 哲波措利卓瓦卓瓦效    愿度有海诸有情
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第61课辅导资料
+## 前行广释第061课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1035,7 +1035,7 @@ import Mypara from '@site/src/components/myp';
 哲波措利卓瓦卓瓦效    愿度有海诸有情
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第62课辅导资料
+## 前行广释第062课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1382,7 +1382,7 @@ import Mypara from '@site/src/components/myp';
 哲波措利卓瓦卓瓦效    愿度有海诸有情
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第63课辅导资料
+## 前行广释第063课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -1715,7 +1715,7 @@ import Mypara from '@site/src/components/myp';
 哲波措利卓瓦卓瓦效    愿度有海诸有情
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第64课辅导资料
+## 前行广释第064课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -2070,7 +2070,7 @@ import Mypara from '@site/src/components/myp';
 哲波措利卓瓦卓瓦效    愿度有海诸有情
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第65课辅导资料
+## 前行广释第065课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -2445,7 +2445,7 @@ import Mypara from '@site/src/components/myp';
 哲波措利卓瓦卓瓦效    愿度有海诸有情
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第66课辅导资料
+## 前行广释第066课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -2818,7 +2818,7 @@ import Mypara from '@site/src/components/myp';
 哲波措利卓瓦卓瓦效    愿度有海诸有情
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第67课辅导资料
+## 前行广释第067课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -3277,7 +3277,7 @@ import Mypara from '@site/src/components/myp';
 哲波措利卓瓦卓瓦效    愿度有海诸有情
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第68课辅导资料
+## 前行广释第068课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -3657,7 +3657,7 @@ import Mypara from '@site/src/components/myp';
 
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第69课辅导资料
+## 前行广释第069课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -4076,7 +4076,7 @@ import Mypara from '@site/src/components/myp';
 哲波措利卓瓦卓瓦效    愿度有海诸有情
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第70课辅导资料
+## 前行广释第070课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -4501,7 +4501,7 @@ import Mypara from '@site/src/components/myp';
 哲波措利卓瓦卓瓦效    愿度有海诸有情
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第71课辅导资料
+## 前行广释第071课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -4974,7 +4974,7 @@ import Mypara from '@site/src/components/myp';
 哲波措利卓瓦卓瓦效    愿度有海诸有情
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
-## 《前行广释》第72课辅导资料
+## 前行广释第072课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
