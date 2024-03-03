@@ -1,7 +1,7 @@
 import urllib.parse
 from datetime import datetime, timedelta
 
-classStartDate = "2024-03-06"
+classStartDate = "2024-03-08"
 # current_date = datetime.now()
 current_date = datetime.strptime(classStartDate, "%Y-%m-%d")
 
