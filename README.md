@@ -9,6 +9,12 @@ This website is built using [Docusaurus 2](https://docusaurus.io/), a modern sta
 $ yarn
 ```
 
+### Upgrade to latest docusaurus
+
+```
+yarn upgrade @docusaurus/core@latest @docusaurus/preset-classic@latest @docusaurus/module-type-aliases@latest
+```
+
 ### Local Development
 
 ```
