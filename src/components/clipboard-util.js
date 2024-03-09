@@ -1,15 +1,11 @@
 export async function copyTextToClipboard(text) {
     let copyStatus;
-    if (navigator.clipboard) {
-        try {
-            await navigator.clipboard.writeText(text);
-            console.log('文本已成功复制到剪贴板');
-            copyStatus = true
-        } catch (error) {
-            console.error('复制到剪贴板时出现错误:', error);
-            copyStatus = false
-        }
-    } else {
+    try {
+        await navigator.clipboard.writeText(text);
+        console.log('文本已成功复制到剪贴板');
+        copyStatus = true
+    } catch (error) {
+        console.error('复制到剪贴板时出现错误:', error);
         copyStatus = copy2(text)
     }
     console.log('Text copied to clipboard successfully.', text, copyStatus);
