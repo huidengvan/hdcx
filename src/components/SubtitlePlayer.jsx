@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect, useState, useRef } from 'react';
 import '../css/subtitle-player.css'
 import BrowserOnly from '@docusaurus/BrowserOnly';
+import { copyTextToClipboard } from './clipboard-util';
 
 const VideoFull = ({ src }) => {
     const baseUrl = 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/'
@@ -105,9 +106,9 @@ const VideoFull = ({ src }) => {
                                     onDoubleClick={(e) => {
                                         e.stopPropagation()
                                         const msgEl = document.querySelector('.subtitle-switch');
-                                        msgEl.classList.add('show-copied');
-                                        navigator.clipboard.writeText(`${location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`);
+                                        let ok = copyTextToClipboard(`${location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`);
 
+                                        ok && msgEl.classList.add('show-copied');
                                         setTimeout(() => msgEl.classList.remove('show-copied'), 1500)
                                     }}
                                 >{subtitle.startTime.split(',')[0]}
