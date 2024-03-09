@@ -26,6 +26,7 @@ function copy2(text) {
         selection.addRange(range);
         copyStatus = document.execCommand('copy');
         selection.removeAllRanges();
+        document.body.removeChild(input);
         console.log('ios copyed:', text);
     } else {
         const input = document.createElement("INPUT");
