@@ -15,14 +15,18 @@ export async function copyTextToClipboard(text) {
 
 function copy2(text) {
     let copyStatus;
-    if ((navigator.userAgent.match(/(iPhone|iPod|iPad);?/i))) {
+    if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
         const range = document.createRange();
-        range.selectNode(document.querySelector("#copyTxt"));
+        const input = document.createElement("input");
+        input.value = text;
+        document.body.appendChild(input);
+        range.selectNode(input);
         const selection = window.getSelection();
         if (selection.rangeCount > 0) selection.removeAllRanges();
         selection.addRange(range);
         copyStatus = document.execCommand('copy');
         selection.removeAllRanges();
+        console.log('ios copyed:', text);
     } else {
         const input = document.createElement("INPUT");
         input.value = text;
