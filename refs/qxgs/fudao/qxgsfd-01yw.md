@@ -742,7 +742,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 前行广释第001课辅导
 
-- [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](/refs/qxgs/fudao/qxgsfd-audio-files#01引文1-2)
 - [大圆满前行第01课2014年12月14日.m4a](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/大圆满前行第01课2014年12月14日.m4a)
 - [大圆满前行第01课问答2014年12月14日.m4a](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/大圆满前行第01课问答2014年12月14日.m4a)
 
@@ -999,7 +999,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 前行广释第002课辅导
 
-- [辅导音频--前行第01册1-21](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/)
+- [辅导音频--前行第01册1-21](/refs/qxgs/fudao/qxgsfd-audio-files#01引文1-2)
 
 为度化一切众生，请大家发无上的菩提心！今天我们再一次一起来学习华智仁波切所造的《大圆满前行引导文》。
 
