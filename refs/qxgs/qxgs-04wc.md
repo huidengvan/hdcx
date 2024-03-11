@@ -266,7 +266,7 @@ import Mypara from '@site/src/components/myp';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 前行广释第三十节课
+## 前行广释第030课
 
 - [《大圆满前行》讲解第30课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第30课.mp4)
 
