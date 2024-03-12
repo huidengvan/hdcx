@@ -20,6 +20,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解义慧剑讲解01
 
+- [视频-解义慧剑讲解01](https://hdcx.s3.ap-northeast-1.wasabisys.com/jmy/038-解义慧剑/《解义慧剑》讲解第01课.mp4)
+
 顶礼本师释迦牟尼佛！
 
 顶礼文殊智慧勇识！
@@ -152,6 +154,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解义慧剑讲解02
 
+- [视频-解义慧剑讲解02](https://hdcx.s3.ap-northeast-1.wasabisys.com/jmy/038-解义慧剑/《解义慧剑》讲解第02课.mp4)
+
 前面因果体三理中，作用理和观待理的定义已经讲完了，大家都清楚，作用理是依靠因的作用产生果，观待理是任何一个果都依靠或观待它的因而产生。这两个道理非常重要，今天继续讲“彼之必要”，也就是说，要明白这样的理在世间中有什么样的作用和意义。
 
 壬二、彼之必要：
@@ -242,6 +246,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 解义慧剑辅导01-02
 
+- [音频-解义慧剑辅导01-02](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/038-解义慧剑/fudao/《解义慧剑》第01-02课辅导2016年03月12日.m4a)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -631,6 +636,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解义慧剑讲解03
 
+- [视频-解义慧剑讲解03](https://hdcx.s3.ap-northeast-1.wasabisys.com/jmy/038-解义慧剑/《解义慧剑》讲解第03课.mp4)
+
 下面从空性胜义的角度宣讲胜义法尔。
 
 壬二、从空性胜义角度而宣说：
@@ -769,6 +776,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解义慧剑讲解04
 
+- [视频-解义慧剑讲解04](https://hdcx.s3.ap-northeast-1.wasabisys.com/jmy/038-解义慧剑/《解义慧剑》讲解第04课.mp4)
+
 前面已经讲了根现量和意现量，现在讲瑜伽现量。
 
 癸三、瑜伽现量：
@@ -885,7 +894,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解义慧剑辅导03-04
 
-
+- [音频-解义慧剑辅导03-04](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/038-解义慧剑/fudao/《解义慧剑》第03-04课辅导2016年03月19日.m4a)
+  
 诸法等性本基法界中，自现圆满三身游舞力，
 
 离障本来怙主龙钦巴，祈请无垢光尊常护我。
@@ -1302,6 +1312,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解义慧剑讲解05
 
+- [视频-解义慧剑讲解05](https://hdcx.s3.ap-northeast-1.wasabisys.com/jmy/038-解义慧剑/《解义慧剑》讲解第05课.mp4)
+
 前面讲了“以何心比量”，现在讲“以何因比量”。
 
 癸二、以何因比量：
@@ -1427,6 +1439,8 @@ import Mypara from '@site/src/components/myp';
 依靠这样的论典就会了知，除了我们现在的所见之外，还有更深、更微妙的所见真实存在，虽然现在还见不到，但我们有充分的理由，也就是说我们坚信不清净所见的背后，一定有清净的显现存在。就像有眼翳者，无论他怎样看海螺都是黄色的，但他从道理上明白：“我的眼翳什么时候好了，我就能见到白色的海螺。”同理，虽然我们现在还没有到达一切都是清净的境界，但只要不断努力，总有一天会像相续清净者那样：不但能现证万法本体的空性，还能现见一切诸法的清净实相。可见，学习这部论典非常重要！
 
 ## 解义慧剑讲解06
+
+- [视频-解义慧剑讲解06](https://hdcx.s3.ap-northeast-1.wasabisys.com/jmy/038-解义慧剑/《解义慧剑》讲解第06课.mp4)
 
 现在正在讲比量证成理，其中讲第二个科判——分类，该量分为两类，即名言量和胜义量，首先讲名言量。前面讲了名言量有两种，即见现相实相不一致的观现世量与见现相实相一致的净见量，它们分别像人眼与天眼一样。大家务必清楚，净见量讲得特别清楚的经论并不多，而麦彭仁波切的相关教言书却讲得非常详细，依此我们能非常方便地认识世间万事万物，故大家一定要再再深入麦彭仁波切的论典。
 
@@ -1570,6 +1584,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 解义慧剑辅导05-06
 
+- [音频-解义慧剑辅导05-06](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/038-解义慧剑/fudao/《解义慧剑》第05-06课辅导与答疑2016年03月26日.m4a)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -2013,6 +2028,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解义慧剑讲解07
 
+- [视频-解义慧剑讲解07](https://hdcx.s3.ap-northeast-1.wasabisys.com/jmy/038-解义慧剑/《解义慧剑》讲解第07课.mp4)
+
 在遣除三种诤论中，除不容有之诤与除不成立之诤已经讲完了，现在讲除无必要之诤。
 
 子三、除无必要之诤：
@@ -2179,6 +2196,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解义慧剑讲解08
 
+- [视频-解义慧剑讲解08](https://hdcx.s3.ap-northeast-1.wasabisys.com/jmy/038-解义慧剑/《解义慧剑》讲解第08课.mp4)
+
 下面继续宣讲彼之作用四法依，总说前面已经讲完了，现在讲别说。
 
 己二（别说）分四：一、不依人而依法；二、不依句而依义；三、不依不了义而依了义；四、不依心识而依智慧。
@@ -2297,6 +2316,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 解义慧剑辅导07-08
 
+- [音频-解义慧剑辅导07-08](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/038-解义慧剑/fudao/《解义慧剑》第07-08课辅导与答疑2016年04月03日.m4a)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -2688,6 +2708,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解义慧剑讲解09
 
+- [视频-解义慧剑讲解09](https://hdcx.s3.ap-northeast-1.wasabisys.com/jmy/038-解义慧剑/《解义慧剑》讲解第09课.mp4)
+
 现在继续讲四法依，前面讲了不依人而依法和不依句而依义，下面讲不依不了义而依了义。这是第三个问题，也就是说意义分了义和不了义两种，我们应该依了义而不能依不了义。
 
 庚三、不依不了义而依了义：
@@ -2801,6 +2823,8 @@ import Mypara from '@site/src/components/myp';
 所以不管是善知识也好，或者是一般的普通道友，大家首先应该从内心当中对密宗生起坚定不移的信心，然后再通过前面所讲的方式来了解密宗的教理，之后还要有上师窍诀的陪伴，这样的因缘聚合之后，就应认识心的本性，认识本性之后还要不断修持，如果不修，那临死的时候恐怕也起不到任何作用。因为，我们的心在漫长的轮回中一直被各种分别念和恶习不断地熏染，要想从中出离，认识心的本性的境界就要得以稳固，这样之后，我们才能成为如来教法的真正弘扬者。
 
 ## 解义慧剑讲解10
+
+- [视频-解义慧剑讲解10](https://hdcx.s3.ap-northeast-1.wasabisys.com/jmy/038-解义慧剑/《解义慧剑》讲解第10课.mp4)
 
 《解义慧剑》当中，现在继续宣讲四法依。其实，在《涅槃经•四依品》里面，四法依也讲得比较广，如果有时间大家应看一下。今天讲第四个问题——不依心识而依智慧。
 
@@ -2922,7 +2946,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解义慧剑辅导09-10
 
-
+- [音频-解义慧剑辅导09-10](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/038-解义慧剑/fudao/《解义慧剑》第09-10课辅导与答疑2016年04月09日.m4a)
+  
 诸法等性本基法界中，自现圆满三身游舞力，
 
 离障本来怙主龙钦巴，祈请无垢光尊常护我。
@@ -3303,6 +3328,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 解义慧剑讲解11
 
+- [视频-解义慧剑讲解11](https://hdcx.s3.ap-northeast-1.wasabisys.com/jmy/038-解义慧剑/《解义慧剑》讲解第11课.mp4)
+
 下面继续讲依智不依识。
 
 精通二谛理，见二谛融义，
@@ -3410,6 +3437,8 @@ import Mypara from '@site/src/components/myp';
 当然，真正的八种辩才或八种功德藏，只有在获得一地菩萨以上的圣者果位时才能生起，但现在有些修行人，相似的境界也可以得到。而有关论典也经常讲到八种辩才，所以大家从理论上一定要了解。
 
 ## 解义慧剑讲解12
+
+- [视频-解义慧剑讲解12](https://hdcx.s3.ap-northeast-1.wasabisys.com/jmy/038-解义慧剑/《解义慧剑》讲解第12课.mp4)
 
 下面讲八辩才果之结尾：
 
@@ -3520,6 +3549,7 @@ import Mypara from '@site/src/components/myp';
 
 ## 解义慧剑辅导11-12
 
+- [音频-解义慧剑辅导11-12](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/038-解义慧剑/fudao/《解义慧剑》第11-12课辅导与答疑2016年04月17日.m4a)
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
