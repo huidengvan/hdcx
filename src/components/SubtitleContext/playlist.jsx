@@ -8,12 +8,13 @@ export default function Playlist() {
     const params = new URLSearchParams(location.search);
     const urls = params.get('urls')?.split('|');
     const baseUrl = params.get('baseurl') || 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/';
-    const buildSrc = (url) => baseUrl + url.replace('@', '#t=')
+    const buildSrc = (url) => (url.includes('http') ? '' : baseUrl) + url.replace('@', '#t=')
 
-    const [src, setSrc] = useState(buildSrc(urls[0]))
+    const [src, setSrc] = useState()
     const [current, setCurrent] = useState(0)
     useEffect(() => {
-        if (urls.length - current >= 1) {
+        console.log(buildSrc(urls[current]),1);
+        if (urls.length - current > 0) {
             setSrc(buildSrc(urls[current]))
         }
 
@@ -33,7 +34,7 @@ export default function Playlist() {
                     {urls && urls[0] != '' &&
                         urls.map((url, index) => {
                             return (
-                                <li key={index} className={`${styles.item} ${current == index ? styles.active : ''}`} value={++index} onClick={changeSrc}>{decodeURI(url.split('.')[0])}</li>
+                                <li key={index} className={`${styles.item} ${current == index ? styles.active : ''}`} value={++index} onClick={changeSrc}>{decodeURI(url.split('.mp')[0])}</li>
                             )
                         })
                     }

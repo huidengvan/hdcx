@@ -7,13 +7,12 @@ const VideoPlayer = ({ src, setCurrent }) => {
     let videoSrc = src || `${baseUrl}${location.hash.slice(1)}`;
     const [subtitles, setSubtitles] = useState([]);
     const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(-1);
-    const [TimeLine, setTimeLine] = useState(true);
+    const [showtime, setShowtime] = useState(localStorage.getItem('showtime') !== 'false');
     const videoRef = useRef(null);
     let endTime = parseInt(src?.split(',').pop())
-
     useEffect(() => {
         // 清除栅格布局, 使宽度为100%
-        document.querySelector('article').parentElement.className = ''
+        document.querySelector('article').parentElement.removeAttribute('class')
         document.querySelector('footer').style.display = 'none'
         fetch(`${videoSrc.replace(/mp[34]/, 'srt')}`)
             .then(response => {
@@ -23,7 +22,9 @@ const VideoPlayer = ({ src, setCurrent }) => {
                 return response.text();
             })
             .then(data => {
-                parseSRT(data);
+                if (!data.includes('failed')) {
+                    parseSRT(data);
+                }
             });
 
         const parseSRT = (data) => {
@@ -38,6 +39,7 @@ const VideoPlayer = ({ src, setCurrent }) => {
             });
             setSubtitles(subtitlesArray);
         };
+        console.log(subtitles.length);
     }, [videoSrc]);
 
     useEffect(() => {
@@ -114,13 +116,16 @@ const VideoPlayer = ({ src, setCurrent }) => {
                     }}>
                         <label className={styles['subtitle-switch']}>
                             <input type="checkbox"
-                                checked={TimeLine}
-                                onChange={() => setTimeLine(value => !value)} />
+                                checked={showtime}
+                                onChange={() => {
+                                    localStorage.setItem('showtime', !showtime)
+                                    setShowtime(value => !value)
+                                }} />
                             <span> 显示时间</span>
                         </label>
                         {subtitles.map((subtitle, index) => (
                             <li key={index} id={`subtitle-${index}`} className={styles['subtitle-line']}>
-                                {TimeLine && <span title='双击复制' className={styles.timeline}
+                                {showtime && <span title='双击复制' className={styles.timeline}
                                     onDoubleClick={(e) => {
                                         e.stopPropagation();
                                         const msgEl = document.querySelector(`.${styles['subtitle-switch']}`);
