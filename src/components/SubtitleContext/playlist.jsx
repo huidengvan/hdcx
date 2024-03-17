@@ -13,7 +13,6 @@ export default function Playlist() {
     const [src, setSrc] = useState()
     const [current, setCurrent] = useState(0)
     useEffect(() => {
-        console.log(buildSrc(urls[current]),1);
         if (urls.length - current > 0) {
             setSrc(buildSrc(urls[current]))
         }

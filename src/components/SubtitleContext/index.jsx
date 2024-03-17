@@ -39,7 +39,6 @@ const VideoPlayer = ({ src, setCurrent }) => {
             });
             setSubtitles(subtitlesArray);
         };
-        console.log(subtitles.length);
     }, [videoSrc]);
 
     useEffect(() => {
