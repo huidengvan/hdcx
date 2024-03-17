@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from '@docusaurus/router';
-import SubtitleContext from '.';
+import SubtitleContext from '@site/src/components/SubtitleContext'
 import styles from './playlist.module.css'
 
 export default function Playlist() {

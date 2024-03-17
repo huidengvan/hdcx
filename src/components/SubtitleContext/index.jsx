@@ -12,6 +12,7 @@ const VideoPlayer = ({ src, setCurrent }) => {
     let endTime = parseInt(src?.split(',').pop())
     useEffect(() => {
         // 清除栅格布局, 使宽度为100%
+        document.querySelector('main').firstChild.removeAttribute('class')
         document.querySelector('article').parentElement.removeAttribute('class')
         document.querySelector('footer').style.display = 'none'
         fetch(`${videoSrc.replace(/mp[34]/, 'srt')}`)
