@@ -1,0 +1,12 @@
+.playlist {
+    margin: 0 .5rem;
+}
+
+.active {
+    color: burlywood;
+}
+
+.item:hover {
+    cursor: pointer;
+    color: bisque;
+}
