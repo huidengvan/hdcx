@@ -2,6 +2,23 @@ import React, { useEffect, useState, useRef } from 'react';
 import styles from './index.module.css';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 
+export const parseTime = (timeString) => {
+    if (!timeString) return timeString
+
+    if (timeString?.split(':').length == 1) {
+        return parseInt(timeString)
+    }
+
+    if (timeString?.split(':').length == 2) {
+        timeString = '00:' + timeString
+    }
+    const parts = timeString?.split(':');
+    const hours = parseInt(parts[0], 10);
+    const minutes = parseInt(parts[1], 10);
+    const seconds = parseFloat(parts[2]?.replace(',', '.'));
+    return hours * 3600 + minutes * 60 + (seconds || 0);
+};
+
 const VideoPlayer = ({ src, setCurrent }) => {
     const baseUrl = 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/';
     let videoSrc = src || `${baseUrl}${location.hash.slice(1)}`;
@@ -9,13 +26,14 @@ const VideoPlayer = ({ src, setCurrent }) => {
     const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(-1);
     const [showtime, setShowtime] = useState(localStorage.getItem('showtime') !== 'false');
     const videoRef = useRef(null);
-    let endTime = parseInt(src?.split(',').pop())
+    let endTime = parseTime(src?.split(',')[1])
+
     useEffect(() => {
         // 清除栅格布局, 使宽度为100%
         document.querySelector('main').firstChild.removeAttribute('class')
         document.querySelector('article').parentElement.removeAttribute('class')
         document.querySelector('footer').style.display = 'none'
-        fetch(`${videoSrc.replace(/mp[34]/, 'srt')}`)
+        fetch(`${videoSrc.replace(/m(?:p3|p4|4a)/, 'srt')}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -30,9 +48,9 @@ const VideoPlayer = ({ src, setCurrent }) => {
 
         const parseSRT = (data) => {
             const subtitlesArray = [];
-            const subtitleLines = data.trim().split('\n\n');
+            const subtitleLines = data.trim().split(new RegExp('\r?\n\r?\n'));
             subtitleLines.forEach((line) => {
-                const parts = line.trim().split('\n');
+                const parts = line.trim().split(new RegExp('\r?\n'));
                 const index = parts[0];
                 const time = parts[1].split(' --> ');
                 const text = parts.slice(2).join('\n');
@@ -74,14 +92,6 @@ const VideoPlayer = ({ src, setCurrent }) => {
         };
     }, [src, subtitles]);
 
-    const parseTime = (timeString) => {
-        const parts = timeString.split(':');
-        const hours = parseInt(parts[0], 10);
-        const minutes = parseInt(parts[1], 10);
-        const seconds = parseFloat(parts[2].replace(',', '.'));
-        return hours * 3600 + minutes * 60 + seconds;
-    };
-
     const copyTextToClipboard = (text) => {
         const textArea = document.createElement('textarea');
         textArea.value = text;
@@ -94,13 +104,16 @@ const VideoPlayer = ({ src, setCurrent }) => {
 
     const scrollSubtitleToView = (index) => {
         const subtitleElement = document.getElementById(`subtitle-${index}`);
-        if (subtitleElement) {
-            subtitleElement.scrollIntoView({
+        const parentElement = subtitleElement.parentElement;
+
+        if (subtitleElement && parentElement) {
+            parentElement.scroll({
                 behavior: 'smooth',
-                block: 'center',
+                top: subtitleElement.offsetTop - (parentElement.clientHeight - subtitleElement.clientHeight) / 2
             });
         }
     };
+
 
     return (
         <div className={styles['subtitle-container']}>
