@@ -16,14 +16,14 @@ export default function Playlist() {
     const [edit, setEdit] = useState(false)
     const [urltext, setUrltext] = useState(urls)
     useEffect(() => {
-        if (urls.length - current > 0) {
+        if (urls?.length - current > 0) {
             setSrc(buildSrc(urls[current]))
         }
 
     }, [current])
 
     useEffect(() => {
-        if (urls.join() != urltext.join()) {
+        if (urls?.join() != urltext?.join()) {
             window.location.replace(`/playlist?urls=${urltext.join('|')}`)
         }
     }, [edit])
@@ -76,14 +76,14 @@ export default function Playlist() {
                 </summary>
                 {edit ?
                     <textarea rows={5}
-                        defaultValue={urltext.join('\n')} className='col'
+                        defaultValue={urltext?.join('\n')} className='col'
                         onChange={(e) => setUrltext(e.target.value?.split('\n').filter(item => item !== ''))}
                     /> :
                     <ol className={styles.playlist} >
                         {urls && urls[0] != '' &&
                             urls.map((url, index) => {
                                 return (
-                                    <li key={index} className={`${styles.item} ${current == index ? styles.active : ''}`} value={++index} onClick={changeSrc}>{decodeURI(url.split('@')[1] || url.split('.mp')[0])}</li>
+                                    <li key={index} className={`${styles.item} ${current == index ? styles.active : ''}`} value={++index} onClick={changeSrc}>{decodeURI(url.split('@')[1] || url.split('.m')[0])}</li>
                                 )
                             })
                         }
