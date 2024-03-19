@@ -50,9 +50,9 @@ export default function Playlist() {
         <div className={styles.root}>
             {src && <SubtitleContext src={src} setCurrent={setCurrent} />}
             <details open>
-                <summary style={{ userSelect: 'none' }}>播放列表
+                <summary style={{ userSelect: 'none',marginBottom:'5px' }}>播放列表
                     <span style={{
-                        marginLeft: '4px',
+                        marginLeft: '4px'
                     }}
                         onClick={e => {
                             e.stopPropagation()
@@ -76,6 +76,8 @@ export default function Playlist() {
                 </summary>
                 {edit ?
                     <textarea rows={5}
+                    style={{padding: '.5rem'}}
+                    placeholder='格式：视频地址$起始时间@列表显示名字 每个视频一行，编辑好再点一下铅笔图标。'
                         defaultValue={urltext?.join('\n')} className='col'
                         onChange={(e) => setUrltext(e.target.value?.split('\n').filter(item => item !== ''))}
                     /> :
