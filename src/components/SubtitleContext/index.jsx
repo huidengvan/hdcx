@@ -108,7 +108,7 @@ const VideoPlayer = ({ src, setCurrent }) => {
 
         if (subtitleElement && parentElement) {
             parentElement.scroll({
-                behavior: 'smooth',
+                behavior: 'auto',
                 top: subtitleElement.offsetTop - (parentElement.clientHeight - subtitleElement.clientHeight) / 2
             });
         }
