@@ -159,11 +159,11 @@ const config = {
             label: '五加行',
           },
           // {to: '/blog', label: 'Blog', position: 'left'},
-          // {
-          //   href: 'https://github.com/facebook/docusaurus',
-          //   label: 'GitHub',
-          //   position: 'right',
-          // },
+          {
+            href: 'https://sou.hdcxb.net',
+            label: '法语搜索',
+            position: 'right',
+          },
         ],
       },
       footer: {
@@ -187,7 +187,7 @@ const config = {
               },
             ],
           },
-          
+
           // {
           //   title: 'More',
           //   items: [
@@ -195,7 +195,7 @@ const config = {
           //       label: 'Blog',
           //       to: '/blog',
           //     },
-              
+
           //   ],
           // },
         ],
@@ -212,22 +212,22 @@ const config = {
         },
       },
     }),
-    // plugins: ['@aldridged/docusaurus-plugin-lunr'],
-    themes: [
-      // ... Your other themes.
-      [
-        require.resolve("@easyops-cn/docusaurus-search-local"),
-        {
-          // ... Your options.
-          // `hashed` is recommended as long-term-cache of index file is possible.
-          hashed: true,
-          // For Docs using Chinese, The `language` is recommended to set to:
-          // ```
-          // language: ["en", "zh"],
-          // ```
-        },
-      ],
+  // plugins: ['@aldridged/docusaurus-plugin-lunr'],
+  themes: [
+    // ... Your other themes.
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      {
+        // ... Your options.
+        // `hashed` is recommended as long-term-cache of index file is possible.
+        hashed: true,
+        // For Docs using Chinese, The `language` is recommended to set to:
+        // ```
+        // language: ["en", "zh"],
+        // ```
+      },
     ],
+  ],
 };
 
 module.exports = config;
