@@ -35,13 +35,12 @@ export default function Playlist() {
     const calcTime = () => {
         let t = 0
         urls?.forEach(item => {
-            if (!item.includes('$')) {
+            if (!item.includes('^')) {
                 return t = 0
             }
-            const times = item.split('$')[1].split('@')[0].split(',')
+            const times = item.split('^')[1].split('@')[0].split(',')
             t += (parseTime(times[1]) - parseTime(times[0]))
         })
-
         return (t / 60).toFixed(1);
     }
 
