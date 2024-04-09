@@ -105,6 +105,15 @@ const config = {
         // ... other options
       },
     ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'wenda',
+        path: 'wenda',
+        routeBasePath: 'q&a',
+        sidebarPath: require.resolve('./sidebars.js'),
+      },
+    ],
   ],
 
   themeConfig:
@@ -157,6 +166,11 @@ const config = {
             docsPluginId: '5jx',
             position: 'left',
             label: '五加行',
+          },
+          {
+            to: '/q&a/十个怎么办',
+            label: '答疑',
+            position: 'left'
           },
           // {to: '/blog', label: 'Blog', position: 'left'},
           {
