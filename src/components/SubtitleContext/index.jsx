@@ -58,6 +58,23 @@ const VideoPlayer = ({ src, setCurrent }) => {
             });
             setSubtitles(subtitlesArray);
         };
+
+        const requestScreenWakeLock = async () => {
+            if ('wakeLock' in navigator) {
+                try {
+                    const wakeLock = await navigator.wakeLock.request('screen');
+                    console.log('Screen Wake Lock is active');
+
+                    // 如果需要，在适当的时候释放屏幕常亮
+                    // wakeLock.release();
+                } catch (error) {
+                    console.error('Error requesting Screen Wake Lock:', error);
+                }
+            }
+        };
+
+        requestScreenWakeLock();
+
     }, [videoSrc]);
 
     useEffect(() => {
