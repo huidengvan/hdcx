@@ -1,6 +1,6 @@
 ---
 title: "量理宝藏论释"
-position: 150
+position: 05
 draft: false
 ---
 
