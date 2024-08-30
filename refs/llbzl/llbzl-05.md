@@ -19,6 +19,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 第二十六课
 
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论26.mp4)
+
 顶礼本师释迦牟尼佛！
 
 顶礼文殊智慧勇士！
@@ -194,6 +196,8 @@ import Mypara from '@site/src/components/myp';
 (1)外道只承认一个识，即意识。
 
 ## 第二十七课
+
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论27.mp4)
 
 顶礼本师释迦牟尼佛！
 
@@ -399,6 +403,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 第二十八课
 
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论28.mp4)
+
 顶礼本师释迦牟尼佛！
 
 顶礼文殊智慧勇士！
@@ -566,6 +572,8 @@ import Mypara from '@site/src/components/myp';
 (1)此处的反体是支分、部分的意思。
 
 ## 第二十九课
+
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论29.mp4)
 
 祈祷本师释迦牟尼佛：
 

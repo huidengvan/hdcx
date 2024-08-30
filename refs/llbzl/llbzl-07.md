@@ -19,6 +19,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 第三十九课
 
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论39.mp4)
+
 顶礼本师释迦牟尼佛！
 
 顶礼文殊智慧勇士！
@@ -185,6 +187,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 第四十课
 
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论40.mp4)
+
 顶礼本师释迦牟尼佛！
 
 顶礼文殊智慧勇士！
@@ -336,6 +340,8 @@ import Mypara from '@site/src/components/myp';
 **哲波措利卓瓦卓瓦效****愿度有海诸有情**
 
 ## 第四十一课
+
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论41.mp4)
 
 顶礼本师释迦牟尼佛！
 
@@ -506,6 +512,8 @@ import Mypara from '@site/src/components/myp';
 **哲波措利卓瓦卓瓦效****愿度有海诸有情**
 
 ## 第四十二课
+
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论42.mp4)
 
 顶礼本师释迦牟尼佛！
 

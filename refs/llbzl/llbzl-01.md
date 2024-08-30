@@ -44,6 +44,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 第一节课
 
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论01.mp4)
+
 今天开始宣讲《量理宝藏论》。
 
 宣讲这部因明之前，我顺便也给大家讲一下这次我们宣讲因明的主要缘起。在座的各位都知道，早在几年前，我们的恩师——上师如意宝还没有圆寂之时，我也在僧众面前发过愿，如果没有出现死亡，那么这几年当中要宣讲五部大论；当时我们这里有许多道友也同时发愿，要听受五部大论。几年以来，我们排除困难，精进地学习了五部大论当中《戒律》、《俱舍》、《中观》三部论典。
@@ -193,6 +195,8 @@ import Mypara from '@site/src/components/myp';
 (5)下一段落位置有所调整。
 
 ## 第二节课
+
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论02.mp4)
 
 顶礼本师释迦牟尼佛！
 
@@ -466,6 +470,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 第三节课
 
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论03.mp4)
+
 顶礼本师释迦牟尼佛！
 
 顶礼文殊智慧勇士！
@@ -646,6 +652,8 @@ import Mypara from '@site/src/components/myp';
 
 
 ## 第四节课
+
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论04.mp4)
 
 顶礼本师释迦牟尼佛！
 
@@ -830,6 +838,8 @@ import Mypara from '@site/src/components/myp';
 (2)义共相：即义总相。
 
 ## 第五节课
+
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论05.mp4)
 
 顶礼本师释迦牟尼佛！
 
@@ -1031,6 +1041,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 第六节课
 
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论06.mp4)
+
 顶礼本师释迦牟尼佛！
 
 顶礼文殊智慧勇士！
@@ -1229,6 +1241,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 第七节课
 
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论07.mp4)
+
 顶礼本师释迦牟尼佛：
 
 **酿吉钦布奏旦涅咪扬****大悲摄受具诤浊世刹**
@@ -1391,6 +1405,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 第八节课
 
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论08.mp4)
+  
 顶礼本师释迦牟尼佛！
 
 **酿吉钦布奏旦涅咪扬**大悲摄受具诤浊世刹
@@ -1546,6 +1562,8 @@ import Mypara from '@site/src/components/myp';
 (2)众生流浪生死，以六根贪六境，实际根境本无，但由迷乱习气所显，故如梦境。
 
 ## 第九节课
+
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论09.mp4)
 
 顶礼本师释迦牟尼佛！
 

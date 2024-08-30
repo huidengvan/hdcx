@@ -19,6 +19,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 第十八节课
 
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论18.mp4)
+
 顶礼本师释迦牟尼佛！
 
 顶礼文殊智慧勇士！
@@ -186,6 +188,8 @@ import Mypara from '@site/src/components/myp';
 [](http://read.goodweb.net.cn/news/news_view.asp?newsid=25514#_ftnref1)窥基大师在《因明大疏》中说：“能缘行相，不动不摇，因循照境，不筹不度，离分别心，照符前境，明局自体，故名现量。然有二类：一定位，二散心。定心澄湛，境皆明证，随缘何法，皆名现量。一切散心，若亲于境，冥得自体，亦皆现量。”
 
 ## 第十九节课
+
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论19.mp4)
 
 **顶礼本师释迦牟尼佛！**
 
@@ -358,6 +362,8 @@ import Mypara from '@site/src/components/myp';
 **哲波措利卓瓦卓瓦效****愿度有海诸有情**
 
 ## 第二十节课
+
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论20.mp4)
 
 顶礼本师释迦牟尼佛！
 
@@ -563,6 +569,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 第二十一课
 
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论21.mp4)
+
 顶礼本师释迦牟尼佛！
 
 顶礼文殊智慧勇士！
@@ -760,6 +768,8 @@ import Mypara from '@site/src/components/myp';
 (1)外面的分别念：指心识执着外境的状态。
 
 ## 第二十二课
+
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论22.mp4)
 
 顶礼本师释迦牟尼佛！
 
@@ -972,6 +982,8 @@ import Mypara from '@site/src/components/myp';
 (2)据《俱舍论》云，我们居住的瞻部洲处于须弥山的南侧，而须弥山南侧的质地是蓝色的琉璃，由此琉璃反射蓝光，致使瞻部洲的天空成为蓝色。
 
 ## 第二十三课
+
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论23.mp4)
 
 顶礼本师释迦牟尼佛!
 
@@ -1221,6 +1233,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 第二十四课
 
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论24.mp4)
+
 顶礼本师释迦牟尼佛！
 
 顶礼文殊智慧勇士！
@@ -1410,6 +1424,8 @@ import Mypara from '@site/src/components/myp';
 **哲波措利卓瓦卓瓦效****愿度有海诸有情**
 
 ## 第二十五课
+
+- [视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/量理宝藏论25.mp4)
 
 顶礼本师释迦牟尼佛！
 
