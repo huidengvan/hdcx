@@ -14,11 +14,11 @@ import Mypara from '@site/src/components/myp';
 
 ## [入行论辅导001-023课音频](https://box.hdcxb.net/%E6%85%A7%E7%81%AF%E7%A6%85%E4%BF%AE/001-%E5%85%A5%E8%A1%8C%E8%AE%BA%E9%87%8A/fudao/%E7%AC%AC01%E5%86%8C01-23)
 
-## [入行论辅导024-046课音频](https://box.hdcxb.net/%E6%85%A7%E7%81%AF%E7%A6%85%E4%BF%AE/001-%E5%85%A5%E8%A1%8C%E8%AE%BA%E9%87%8A/fudao/%E7%AC%AC02%E5%86%8C24-46）
+## [入行论辅导024-046课音频](https://box.hdcxb.net/%E6%85%A7%E7%81%AF%E7%A6%85%E4%BF%AE/001-%E5%85%A5%E8%A1%8C%E8%AE%BA%E9%87%8A/fudao/%E7%AC%AC02%E5%86%8C24-46)
 
 ## [入行论辅导047-069课音频](https://box.hdcxb.net/%E6%85%A7%E7%81%AF%E7%A6%85%E4%BF%AE/001-%E5%85%A5%E8%A1%8C%E8%AE%BA%E9%87%8A/fudao/%E7%AC%AC03%E5%86%8C47-69)
 
-## [入行论辅导701-092课音频](https://box.hdcxb.net/%E6%85%A7%E7%81%AF%E7%A6%85%E4%BF%AE/001-%E5%85%A5%E8%A1%8C%E8%AE%BA%E9%87%8A/fudao/%E7%AC%AC04%E5%86%8C70-92)
+## [入行论辅导070-092课音频](https://box.hdcxb.net/%E6%85%A7%E7%81%AF%E7%A6%85%E4%BF%AE/001-%E5%85%A5%E8%A1%8C%E8%AE%BA%E9%87%8A/fudao/%E7%AC%AC04%E5%86%8C70-92)
 
 ## [入行论辅导093-115课音频](https://box.hdcxb.net/%E6%85%A7%E7%81%AF%E7%A6%85%E4%BF%AE/001-%E5%85%A5%E8%A1%8C%E8%AE%BA%E9%87%8A/fudao/%E7%AC%AC05%E5%86%8C93-115)
 
