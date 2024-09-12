@@ -4,6 +4,15 @@ export default class MyPara extends React.Component {
     constructor() {
         super();
         this.navRef = null;
+        this.articleRef = null;
+        this.colors = [
+            { name: '褐色', color: '#FFF2E2' },
+            { name: '绿色', color: '#CCE8CF' },
+            { name: '黄色', color: '#F8FD89' },
+            { name: '灰色', color: '#DBE1F1' },
+            { name: '白色', color: 'white' }
+        ];
+        this.colorIndex = 0;
     }
 
     componentDidMount() {
@@ -33,6 +42,7 @@ export default class MyPara extends React.Component {
 
         window.addEventListener('keydown', this.handleKeyDown);
         this.navRef = document.querySelector('nav')
+        this.articleRef = document.querySelector('.container')
     }
 
     componentWillUnmount() {
@@ -50,12 +60,15 @@ export default class MyPara extends React.Component {
             if (this.navRef.style.display == 'none') {
                 this.navRef.style.display = 'block'; // 显示导航
             } else {
-                this.navRef.style.display = 'none'; // 显示导航
+                this.navRef.style.display = 'none'; // 隐藏导航
             }
         } else if (event.key === 'ArrowLeft') {
             window.scrollBy(0, 50 - window.innerHeight);
         } else if (event.key === 'ArrowRight') {
             window.scrollBy(0, window.innerHeight - 50);
+        } else if (event.key === 'b') {
+            this.articleRef.style.backgroundColor = this.colors[this.colorIndex].color;
+            this.colorIndex = (this.colorIndex + 1) % this.colors.length;
         }
     }
 
