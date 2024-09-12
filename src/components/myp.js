@@ -1,6 +1,10 @@
 import React from 'react';
 
 export default class MyPara extends React.Component {
+    constructor() {
+        super();
+        this.navRef = null;
+    }
 
     componentDidMount() {
         // Changing the state after 3 sec
@@ -27,15 +31,36 @@ export default class MyPara extends React.Component {
             window.location = window.location.href;
         }
 
+        window.addEventListener('keydown', this.handleKeyDown);
+        this.navRef = document.querySelector('nav')
     }
+
+    componentWillUnmount() {
+        window.removeEventListener('keydown', this.handleKeyDown);
+    }
+
+    handleKeyDown = (event) => {
+        if (event.key === 'f') {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+
+            if (this.navRef.style.display == 'none') {
+                this.navRef.style.display = 'block'; // 显示导航
+            } else {
+                this.navRef.style.display = 'none'; // 显示导航
+            }
+        } else if (event.key === 'ArrowLeft') {
+            window.scrollBy(0, 50 - window.innerHeight);
+        } else if (event.key === 'ArrowRight') {
+            window.scrollBy(0, window.innerHeight - 50);
+        }
+    }
+
     render() {
-        // console.log('MyPara component render is called');
-
-        return (
-            <div>
-
-            </div>
-        );
+        return <></>
     }
 }
 
