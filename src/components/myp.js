@@ -9,7 +9,6 @@ export default class MyPara extends React.Component {
             { name: '褐色', color: '#FFF2E2' },
             { name: '绿色', color: '#CCE8CF' },
             { name: '黄色', color: '#F8FD89' },
-            { name: '灰色', color: '#DBE1F1' },
             { name: '白色', color: 'white' }
         ];
         this.colorIndex = 0;
@@ -59,8 +58,10 @@ export default class MyPara extends React.Component {
 
             if (this.navRef.style.display == 'none') {
                 this.navRef.style.display = 'block'; // 显示导航
+                this.articleRef.style.fontSize = 'medium'
             } else {
                 this.navRef.style.display = 'none'; // 隐藏导航
+                this.articleRef.style.fontSize = 'x-large'
             }
         } else if (event.key === 'ArrowLeft') {
             window.scrollBy(0, 50 - window.innerHeight);
