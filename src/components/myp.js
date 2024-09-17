@@ -46,8 +46,10 @@ export default class MyPara extends React.Component {
             // 上一页
             window.scrollBy(0, 50 - window.innerHeight);
         });
-        document.addEventListener('mousedown', function (event) {
-            if (event.button === 4) {
+
+        document.addEventListener('contextmenu', function (event) {
+            if (document.fullscreenElement || /iPad|iPhone|Android|Mobile/.test(navigator.userAgent)) {
+                event.preventDefault();
                 // 下一页
                 window.scrollBy(0, window.innerHeight - 50);
             }
