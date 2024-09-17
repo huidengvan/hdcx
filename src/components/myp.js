@@ -41,7 +41,17 @@ export default class MyPara extends React.Component {
 
         window.addEventListener('keydown', this.handleKeyDown);
         this.navRef = document.querySelector('nav')
-        this.articleRef = document.querySelector('.container')
+        this.articleRef = document.querySelector('#__docusaurus')
+        document.addEventListener('dblclick', function (event) {
+            // 上一页
+            window.scrollBy(0, 50 - window.innerHeight);
+        });
+        document.addEventListener('mousedown', function (event) {
+            if (event.button === 4) {
+                // 下一页
+                window.scrollBy(0, window.innerHeight - 50);
+            }
+        });
     }
 
     componentWillUnmount() {
