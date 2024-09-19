@@ -17,6 +17,22 @@ export default class MyPara extends React.Component {
         this.colorIndex = 0;
     }
 
+    handleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+
+        if (this.navRef.style.display == 'none') {
+            this.navRef.style.display = 'block'; // 显示导航
+            this.articleRef.style.fontSize = 'medium'
+        } else {
+            this.navRef.style.display = 'none'; // 隐藏导航
+            this.articleRef.style.fontSize = 'x-large'
+        }
+    }
+
     componentDidMount() {
         // Changing the state after 3 sec
         // console.log('componentDidMount document ready  is called');
@@ -42,22 +58,18 @@ export default class MyPara extends React.Component {
             window.location = window.location.href;
         }
 
-        window.addEventListener('keydown', this.handleKeyDown);
         this.navRef = document.querySelector('nav')
         this.articleRef = document.querySelector('#__docusaurus')
-        document.addEventListener('dblclick', function (event) {
-            // 上一页
-            window.scrollBy(0, 50 - window.innerHeight);
-        });
 
+        window.addEventListener('keydown', this.handleKeyDown);
+        document.addEventListener('dblclick', this.handleFullscreen);
         document.addEventListener('contextmenu', function (event) {
             if (document.fullscreenElement || /iPad|iPhone|Android|Mobile/.test(navigator.userAgent)) {
                 event.preventDefault();
-                // 下一页
-                window.scrollBy(0, window.innerHeight - 50);
+                window.scrollBy(0, window.innerHeight - 50); // 下一页
             }
         });
-        
+
         const article = document.querySelector('article');
         article.addEventListener('touchstart', this.handleTouchStart);
         article.addEventListener('touchend', this.handleTouchEnd);
@@ -69,19 +81,7 @@ export default class MyPara extends React.Component {
 
     handleKeyDown = (event) => {
         if (event.key === 'f') {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen();
-            } else {
-                document.exitFullscreen();
-            }
-
-            if (this.navRef.style.display == 'none') {
-                this.navRef.style.display = 'block'; // 显示导航
-                this.articleRef.style.fontSize = 'medium'
-            } else {
-                this.navRef.style.display = 'none'; // 隐藏导航
-                this.articleRef.style.fontSize = 'x-large'
-            }
+            this.handleFullscreen()
         } else if (event.key === 'ArrowLeft') {
             window.scrollBy(0, 50 - window.innerHeight);
         } else if (event.key === 'ArrowRight') {
