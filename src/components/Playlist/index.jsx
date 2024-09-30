@@ -8,8 +8,7 @@ export default function Playlist() {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const urls = params.get('urls')?.split('|');
-    const baseUrl = params.get('baseurl') || 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/';
-    const buildSrc = (url) => (url.includes('http') ? '' : baseUrl) + url.split('@')[0].replace('^', '#t=')
+    const buildSrc = (url) => url.split('@')[0].replace('^', '#t=')
     const [src, setSrc] = useState()
     const [current, setCurrent] = useState(0)
     const [edit, setEdit] = useState(false)
