@@ -6,6 +6,19 @@ tags: ["菩提心", "五加行"]
 sidebar_label: 思考题
 ---
 
+import TOCInline from '@theme/TOCInline';
+
+<details>
+<summary>目录</summary>
+<TOCInline toc={toc} maxHeadingLevel='6' />
+</details>
+
+import Mypara from '@site/src/components/myp';
+
+<Mypara />
+
+---
+
 ## 入菩萨行论广解思考题及参考答案
 
 
