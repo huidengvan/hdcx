@@ -31,18 +31,6 @@ export default function Playlist() {
         setCurrent(value - 1)
     }
 
-    const calcTime = () => {
-        let t = 0
-        urls?.forEach(item => {
-            if (!item.includes('^')) {
-                return t = 0
-            }
-            const times = item.split('^')[1].split('@')[0].split(',')
-            t += (parseTime(times[1]) - parseTime(times[0]))
-        })
-        return (t / 60).toFixed(1);
-    }
-
     return (
         <div className={styles.root}>
             {src && <SubtitleContext src={src} setCurrent={setCurrent} />}
@@ -64,18 +52,13 @@ export default function Playlist() {
                             </svg>
                             {!urltext && ' 点击编辑'}
                         </span>
-                        <span style={{
-                            marginLeft: '1rem',
-                            fontSize: '12px'
-                        }}>
-                            {calcTime() > 0 && `时长：${calcTime()}分钟`}
-                        </span>
+                        <Duration videoUrls={urls} />
                     </span>
                 </summary>
                 {edit ?
                     <textarea rows={5}
                         style={{ padding: '.5rem' }}
-                        placeholder='格式：视频地址^起始时间@列表显示名字 每个视频一行，编辑好再点一下铅笔图标。'
+                        placeholder='格式：视频地址^起始时间@显示标题 每个视频一行，编辑好再点一下铅笔图标。'
                         defaultValue={urltext?.join('\n')} className='col'
                         onChange={(e) => setUrltext(e.target.value?.split('\n').filter(item => item !== ''))}
                     /> :
@@ -92,3 +75,55 @@ export default function Playlist() {
         </div>
     )
 }
+
+async function getVideoDuration(videoUrl) {
+    return new Promise((resolve, reject) => {
+        const video = document.createElement('video');
+
+        video.preload = 'metadata'; // 只加载元数据
+        video.src = videoUrl;
+
+        video.onloadedmetadata = () => {
+            resolve(video.duration); // 获取视频时长
+            video.pause(); // 可选：暂停视频
+            video.src = ''; // 释放资源
+        };
+
+        video.onerror = () => {
+            reject(new Error('无法加载视频'));
+        };
+    });
+}
+
+const Duration = ({ videoUrls }) => {
+    const [totalDuration, setTotalDuration] = useState('');
+
+    useEffect(() => {
+        const calculateTotalDuration = async () => {
+            let t = 0
+            for (const item of videoUrls) {
+                if (!item?.includes('^')) {
+                    let url = item?.split('@')[0];
+                    let duration = await getVideoDuration(url);
+                    t += Math.ceil(duration);
+                } else {
+                    const times = item.split('^')[1].split('@')[0].split(',');
+                    t += (parseTime(times[1]) - parseTime(times[0]));
+                }
+            }
+
+            t = (t / 60).toFixed(1);
+            t >= 60 ?
+                setTotalDuration(`${(t / 60).toFixed(1)}小时`) :
+                setTotalDuration(`${t}分钟`)
+        };
+
+        calculateTotalDuration();
+    }, [videoUrls]);
+
+    return (
+        <span style={{ marginLeft: '1rem', fontSize: '12px' }}>
+            时长：{totalDuration}
+        </span>
+    );
+};

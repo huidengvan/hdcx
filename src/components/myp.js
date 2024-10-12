@@ -14,7 +14,7 @@ export default class MyPara extends React.Component {
             { name: '黄色', color: '#F8FD89' },
             { name: '白色', color: 'white' }
         ];
-        this.colorIndex = 0;
+        this.colorIndex = -1;
     }
 
     handleFullscreen = () => {
@@ -60,7 +60,11 @@ export default class MyPara extends React.Component {
 
         this.navRef = document.querySelector('nav')
         this.articleRef = document.querySelector('#__docusaurus')
-
+        let bgColorIndex = localStorage.getItem('bgColorIndex')
+        if (bgColorIndex) {
+            this.colorIndex = bgColorIndex
+            this.articleRef.style.backgroundColor = this.colors[bgColorIndex].color;
+        }
         window.addEventListener('keydown', this.handleKeyDown);
         document.addEventListener('dblclick', this.handleFullscreen);
         document.addEventListener('contextmenu', function (event) {
@@ -80,15 +84,16 @@ export default class MyPara extends React.Component {
     }
 
     handleKeyDown = (event) => {
-        if (event.key === 'f') {
+        if (event.key === 'f' || event.key === 'F') {
             this.handleFullscreen()
         } else if (event.key === 'ArrowLeft') {
             window.scrollBy(0, 50 - window.innerHeight);
         } else if (event.key === 'ArrowRight') {
             window.scrollBy(0, window.innerHeight - 50);
-        } else if (event.key === 'b') {
-            this.articleRef.style.backgroundColor = this.colors[this.colorIndex].color;
+        } else if (event.key === 'b' || event.key === 'B') {
             this.colorIndex = (this.colorIndex + 1) % this.colors.length;
+            localStorage.setItem('bgColorIndex', this.colorIndex)
+            this.articleRef.style.backgroundColor = this.colors[this.colorIndex].color;
         }
     }
 
