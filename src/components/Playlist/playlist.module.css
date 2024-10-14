@@ -3,10 +3,10 @@
 }
 
 .active {
-    color: burlywood;
+    color: #2e8555;
 }
 
 .item:hover {
     cursor: pointer;
-    color: brown;
+    color: #3cad6e
 }

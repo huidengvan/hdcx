@@ -7,21 +7,36 @@ import { parseTime } from '../SubtitleContext';
 export default function Playlist() {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
-    const urls = params.get('urls')?.split('|');
-    const buildSrc = (url) => url.split('@')[0].replace('^', '#t=')
+    const urlsParam = params.get('urls');
+    const uriParam = params.get('uri');
+    const currentParam = params.get('index');
+    let urls = urlsParam?.split('|');
+
     const [src, setSrc] = useState()
-    const [current, setCurrent] = useState(0)
+    const [current, setCurrent] = useState(currentParam || 0)
     const [edit, setEdit] = useState(false)
     const [urltext, setUrltext] = useState(urls)
+
+    const parseUri = async () => {
+        let res = await fetchTextFile(uriParam);
+        urls = res?.split(/\r?\n/)
+        setUrltext(urls)
+    }
+    const buildSrc = (url) => url.split('@')[0].replace('^', '#t=')
+
     useEffect(() => {
-        if (urls?.length - current > 0) {
-            setSrc(buildSrc(urls[current]))
+        if (!urlsParam && uriParam) {
+            parseUri()
+        }
+
+        if (urltext?.length - current > 0) {
+            setSrc(buildSrc(urltext[current]))
         }
 
     }, [current])
 
     useEffect(() => {
-        if (urls?.join() != urltext?.join()) {
+        if (urltext?.join() != urltext?.join()) {
             window.location.replace(`/playlist?urls=${urltext.join('|')}`)
         }
     }, [edit])
@@ -30,6 +45,47 @@ export default function Playlist() {
         const { value } = e.target
         setCurrent(value - 1)
     }
+
+    const Duration = () => {
+        const [totalDuration, setTotalDuration] = useState('');
+
+        let videoUrls = urltext
+        const calculateTotalDuration = async () => {
+            let t = 0
+            for (let i = 0; i < videoUrls.length; i++) {
+                const item = videoUrls[i];
+                if (!item?.includes('^')) {
+                    let url = item?.split('@')[0];
+                    console.log('get video meta');
+
+                    let duration = await getVideoDuration(url);
+                    t += Math.ceil(duration);
+                    videoUrls[i] = `${item?.split('@')[0]}^0,${Math.ceil(duration)}${item?.split('@').length > 1 ? '@' + item?.split('@')[1] : ''}`
+                } else {
+                    const times = item.split('^')[1].split('@')[0].split(',');
+                    t += (parseTime(times[1]) - parseTime(times[0]));
+                }
+            }
+
+            t = (t / 60).toFixed(1);
+            t >= 60 ?
+                setTotalDuration(`${(t / 60).toFixed(1)}小时`) :
+                setTotalDuration(`${t}分钟`)
+
+            setUrltext(videoUrls)
+        };
+
+        useEffect(() => {
+
+            videoUrls && calculateTotalDuration();
+        }, []);
+
+        return (
+            <span style={{ marginLeft: '1rem', fontSize: '12px' }}>
+                时长：{totalDuration}
+            </span>
+        );
+    };
 
     return (
         <div className={styles.root}>
@@ -52,7 +108,7 @@ export default function Playlist() {
                             </svg>
                             {!urltext && ' 点击编辑'}
                         </span>
-                        <Duration videoUrls={urls} />
+                        <Duration />
                     </span>
                 </summary>
                 {edit ?
@@ -63,10 +119,10 @@ export default function Playlist() {
                         onChange={(e) => setUrltext(e.target.value?.split('\n').filter(item => item !== ''))}
                     /> :
                     <ol className={styles.playlist} >
-                        {urls && urls[0] != '' &&
-                            urls.map((url, index) => {
+                        {urltext && urltext[0] != '' &&
+                            urltext.map((url, index) => {
                                 return (
-                                    <li key={index} className={`${styles.item} ${current == index ? styles.active : ''}`} value={++index} onClick={changeSrc}>{decodeURI(url.split('@')[1] || url.split('.m')[0])}</li>
+                                    <li key={index} className={`${styles.item} ${current == index ? styles.active : ''}`} value={++index} onClick={changeSrc}>{decodeURI(url.split('@')[1] || url.split('/')[url.split('/').length - 1])?.split('.m')[0]}</li>
                                 )
                             })
                         }
@@ -95,35 +151,16 @@ async function getVideoDuration(videoUrl) {
     });
 }
 
-const Duration = ({ videoUrls }) => {
-    const [totalDuration, setTotalDuration] = useState('');
+async function fetchTextFile(uri) {
+    try {
+        const response = await fetch(uri);
 
-    useEffect(() => {
-        const calculateTotalDuration = async () => {
-            let t = 0
-            for (const item of videoUrls) {
-                if (!item?.includes('^')) {
-                    let url = item?.split('@')[0];
-                    let duration = await getVideoDuration(url);
-                    t += Math.ceil(duration);
-                } else {
-                    const times = item.split('^')[1].split('@')[0].split(',');
-                    t += (parseTime(times[1]) - parseTime(times[0]));
-                }
-            }
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
 
-            t = (t / 60).toFixed(1);
-            t >= 60 ?
-                setTotalDuration(`${(t / 60).toFixed(1)}小时`) :
-                setTotalDuration(`${t}分钟`)
-        };
-
-        calculateTotalDuration();
-    }, [videoUrls]);
-
-    return (
-        <span style={{ marginLeft: '1rem', fontSize: '12px' }}>
-            时长：{totalDuration}
-        </span>
-    );
-};
+        return await response.text();
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+    }
+}
