@@ -56,22 +56,20 @@ export default function Playlist() {
                 const item = videoUrls[i];
                 if (!item?.includes('^')) {
                     let url = item?.split('@')[0];
-                    console.log('get video meta');
+                    console.log('fetch video meta');
 
                     let duration = await getVideoDuration(url);
-                    t += Math.ceil(duration);
-                    videoUrls[i] = `${item?.split('@')[0]}^0,${Math.ceil(duration)}${item?.split('@').length > 1 ? '@' + item?.split('@')[1] : ''}`
+                    if (duration > 0) {
+                        t += Math.ceil(duration);
+                        videoUrls[i] = `${item?.split('@')[0]}^0,${Math.ceil(duration)}${item?.split('@').length > 1 ? '@' + item?.split('@')[1] : ''}`
+                    }
                 } else {
                     const times = item.split('^')[1].split('@')[0].split(',');
                     t += (parseTime(times[1]) - parseTime(times[0]));
                 }
             }
 
-            t = (t / 60).toFixed(1);
-            t >= 60 ?
-                setTotalDuration(`${(t / 60).toFixed(1)}小时`) :
-                setTotalDuration(`${t}分钟`)
-
+            setTotalDuration((t / 3600).toFixed(2))
             setUrltext(videoUrls)
         };
 
@@ -81,9 +79,12 @@ export default function Playlist() {
         }, []);
 
         return (
-            <span style={{ marginLeft: '1rem', fontSize: '12px' }}>
-                时长：{totalDuration}
-            </span>
+            <>
+                {totalDuration > 0 &&
+                    <span style={{ marginLeft: '1rem', fontSize: '12px' }}>
+                        时长：{totalDuration}小时
+                    </span>}
+            </>
         );
     };
 
