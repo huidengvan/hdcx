@@ -10,6 +10,8 @@ export default function Playlist() {
     const urlsParam = params.get('urls');
     const uriParam = params.get('uri');
     const currentParam = params.get('index');
+    const subTypeParam = params.get('subType');
+    const subPathParam = params.get('subPath');
     let urls = urlsParam?.split('|');
 
     const [src, setSrc] = useState()
@@ -90,7 +92,7 @@ export default function Playlist() {
 
     return (
         <div className={styles.root}>
-            {src && <SubtitleContext src={src} setCurrent={setCurrent} />}
+            {src && <SubtitleContext src={src} setCurrent={setCurrent} subType={subTypeParam} subPath={subPathParam} />}
             <details open>
                 <summary style={{ userSelect: 'none', marginBottom: '5px' }}>播放列表
                     <span style={{
