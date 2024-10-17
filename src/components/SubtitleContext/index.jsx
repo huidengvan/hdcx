@@ -19,6 +19,18 @@ export const parseTime = (timeString) => {
     return hours * 3600 + minutes * 60 + (seconds || 0);
 };
 
+function formatTimeToLRC(currentTime) {
+    // 将当前时间转换为分钟和秒
+    const minutes = Math.floor(currentTime / 60);
+    const seconds = Math.floor(currentTime % 60);
+    const milliseconds = Math.floor((currentTime % 1) * 100); // 提取毫秒部分并转换为整数
+
+    // 格式化为 [mm:ss.ms] 形式
+    const formattedTime = `[${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(milliseconds).padStart(2, '0')}]`;
+
+    return formattedTime;
+}
+
 const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
     const baseUrl = location.hash.includes('http') ? '' : 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/';
     let videoSrc = src || `${baseUrl}${location.hash.slice(1)}`;
@@ -27,33 +39,28 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
     const [showtime, setShowtime] = useState(localStorage.getItem('showtime') !== 'false');
     const videoRef = useRef(null);
     const subRef = useRef(null);
+    const ulRef = useRef(null);
     let endTime = parseTime(src?.split(',')[1])
 
-    const editLrc = () => {
-        if (!localStorage.getItem('boxToken')) {
-            const password = prompt("请输入密码:");
-            if (password) {
-                fetch('https://box.hdcxb.net/api/auth/login', {
-                    method: 'post',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        "username": "hdcx",
-                        "password": password
-                    })
-                }).then(resp => resp.json())
-                    .then(json => {
-                        console.log(json);
-                        localStorage.setItem('boxToken', resp.data?.token)
-                    })
-            }
+    const copyText = async (text) => {
+        const msgEl = document.querySelector(`.${styles['subtitle-switch']}`);
+        try {
+            await navigator.clipboard.writeText(text);
+            console.log('文本已复制到剪贴板');
+            msgEl?.classList.add(`${styles['show-copied']}`);
+            setTimeout(() => msgEl?.classList.remove(`${styles['show-copied']}`), 1000)
+            return true;
+        } catch (err) {
+            console.error('复制失败:', err);
+            return false;
         }
-
-
     }
     const subFullscreen = () => {
-        if (subRef.current && !document.fullscreenElement) {
+        if (!document.fullscreenElement) {
+            ulRef.current.style.overflowY = 'hidden'
             subRef.current.requestFullscreen()
         } else {
+            ulRef.current.style.overflowY = 'auto'
             document.exitFullscreen()
         }
     }
@@ -63,12 +70,15 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
         document.querySelector('main').firstChild.removeAttribute('class')
         document.querySelector('article').parentElement.removeAttribute('class')
         document.querySelector('footer').style.display = 'none'
+        videoRef.current.src = videoSrc
+        if (videoRef.current)
+            setTimeout(() => videoRef.current.play(), 1000)
+
         if (subPath || subType) {
             let videoPath = videoSrc.substring(0, videoSrc.lastIndexOf('/') + 1)
             let videoName = videoSrc.substring(videoSrc.lastIndexOf('/') + 1)
-            let suburl = `${subPath || videoPath}${videoName.replace(/\.[^/.]+$/, '.' + (subType || 'lrc'))}`
-            console.log(`fetch suxbtitle from ${suburl}`);
-
+            let suburl = `${subPath || videoPath}${videoName.replace(/\.[^/.]+$/, '.' + (subType || 'srt'))}`
+            // console.log(`fetch suxbtitle from ${suburl}`);
             fetch(suburl)
                 .then(response => {
                     if (!response.ok) {
@@ -85,27 +95,30 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
 
         const parseSubtitles = (data) => {
             const subtitlesArray = [];
-            const subtitleLines = data.trim().split(new RegExp('\r?\n\r?\n'));
-            if (subType == 'srt') {
+            if (subType == 'lrc') {
+                const subtitleLines = data.trim()?.split(new RegExp('\r?\n'));
                 subtitleLines.forEach((line) => {
-                    const parts = line.trim().split(new RegExp('\r?\n'));
+                    const match = line.match(/\[(\d{1,2}):(\d{2})(?::(\d+\.\d+))?\](.*)/);
+                    if (match) {
+                        const hours = match[1] || '00'; // 小时
+                        const minutes = match[2]; // 分钟
+                        const seconds = match[3] || '00.00'; // 秒（如果没有则默认）
+                        const startTime = `${hours}:${minutes}:${seconds}`;
+                        const text = match[4].trim(); // 获取字幕文本
+                        subtitlesArray.push({ startTime, endTime: '', text });
+                    }
+                });
+            } else {
+                const subtitleLines = data.trim()?.split(new RegExp('\r?\n\r?\n'));
+                subtitleLines.forEach((line) => {
+                    const parts = line.trim()?.split(new RegExp('\r?\n'));
                     const index = parts[0];
-                    const time = parts[1].split(' --> ');
+                    const time = parts[1]?.split(' --> ');
                     const text = parts.slice(2).join('\n');
                     subtitlesArray.push({ index, startTime: time[0], endTime: time[1], text });
                 });
-            } else {
-                subtitleLines.forEach((line) => {
-                    const match = line.match(/\[(\d+):(\d+\.\d+)\](.*)/);
-                    if (match) {
-                        const minutes = match[1];
-                        const seconds = match[2];
-                        const text = match[3].trim();
-                        const startTime = `${minutes}:${seconds}`;
-                        subtitlesArray.push({ startTime, endTime: '', text: line?.slice(10) });
-                    }
-                });
             }
+            console.log(subtitlesArray);
 
             setSubtitles(subtitlesArray);
         };
@@ -114,18 +127,13 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
 
     useEffect(() => {
         const video = videoRef.current;
-        video.src = videoSrc
-
-        const timer = setTimeout(() => video.play(), 1000)
         const handleTimeUpdate = () => {
             const currentTime = video?.currentTime;
-            if (currentTime) {
-                const currentSubtitleIndex = subtitles.findIndex(subtitle =>
-                    currentTime >= parseTime(subtitle.startTime)
-                    //  && currentTime <= parseTime(subtitle.endTime)
-                );
-                if (currentSubtitleIndex !== -1) {
-                    setCurrentSubtitleIndex(currentSubtitleIndex);
+            // console.log(currentTime, parseTime(subtitles[currentSubtitleIndex + 1]?.startTime));
+
+            if (currentTime != null && currentSubtitleIndex < subtitles.length - 2) {
+                if (currentTime >= parseTime(subtitles[currentSubtitleIndex + 1]?.startTime)) {
+                    setCurrentSubtitleIndex(currentSubtitleIndex + 1);
                     scrollSubtitleToView(currentSubtitleIndex);
                 }
 
@@ -138,31 +146,57 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
                 }
             }
         };
-        video?.addEventListener('timeupdate', handleTimeUpdate);
-        return () => {
-            clearTimeout(timer)
-            video?.removeEventListener('timeupdate', handleTimeUpdate);
-        };
-    }, [src, subtitles]);
 
-    const copyTextToClipboard = (text) => {
-        const textArea = document.createElement('textarea');
-        textArea.value = text;
-        document.body.appendChild(textArea);
-        textArea.select();
-        const success = document.execCommand('copy');
-        document.body.removeChild(textArea);
-        return success;
-    };
+        const handleKeyDown = (event) => {
+            if (event.key === ' ') { // 空格键
+                if (videoRef.current.paused)
+                    videoRef.current.play()
+                else
+                    videoRef.current.pause();
+            } else if (event.key === 't' || event.key === 'T') {
+                subFullscreen()
+            } else if (event.key === 'm' || event.key === 'M') {
+                copyText('\n' + formatTimeToLRC(video?.currentTime)) // 复制时间点
+            } else if (event.key === 'ArrowLeft') { // 左箭头
+                ulRef.current.scrollBy(0, 30 - window.innerHeight);
+            } else if (event.key === 'ArrowRight') { // 右箭头
+                ulRef.current.scrollBy(0, window.innerHeight - 30);
+            } else if (event.key === 'ArrowUp') {
+                video.currentTime = Math.max(0, videoRef.current.currentTime - 10);  // 上箭头后退10s
+            } else if (event.key === 'ArrowDown') {
+                videoRef.current.currentTime += 30; // 下箭头前进30s
+            } else if (event.key === '1') {
+                videoRef.current.playbackRate = 1
+            } else if (event.key === '2') {
+                videoRef.current.playbackRate = 2
+            } else if (event.key === 'j' && currentSubtitleIndex < subtitles.length - 1) {
+                setCurrentSubtitleIndex(currentSubtitleIndex + 1)
+                videoRef.current.currentTime = parseTime(subtitles[currentSubtitleIndex + 1].startTime)
+            } else if (event.key === 'k' && currentSubtitleIndex > 0) {
+                setCurrentSubtitleIndex(currentSubtitleIndex - 1)
+                videoRef.current.currentTime = parseTime(subtitles[currentSubtitleIndex - 1].startTime)
+            }
+        };
+
+        // 添加事件监听器
+        window.addEventListener('keydown', handleKeyDown);
+        video?.addEventListener('timeupdate', handleTimeUpdate);
+
+        return () => {
+            video?.removeEventListener('timeupdate', handleTimeUpdate);
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [subtitles, currentSubtitleIndex]);
+
 
     const scrollSubtitleToView = (index) => {
         const subtitleElement = document.getElementById(`subtitle-${index}`);
-        const parentElement = subtitleElement.parentElement;
+        const parentElement = ulRef.current;
 
-        if (subtitleElement && parentElement) {
+        if (parentElement) {
             parentElement.scroll({
                 behavior: 'auto',
-                top: showtime ? (subtitleElement.offsetTop - (parentElement.clientHeight - subtitleElement.clientHeight) / 2) : 0
+                top: subtitleElement?.offsetTop - (parentElement?.clientHeight - subtitleElement?.clientHeight) / 2
             });
         }
     };
@@ -177,7 +211,7 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
             </div>
             {subtitles.length > 0 &&
                 <div className={`${styles['subtitle-box']} ${styles.item}`} ref={subRef}>
-                    <ul onDoubleClick={subFullscreen}>
+                    <ul ref={ulRef} onDoubleClick={subFullscreen}>
                         <span className={styles['subtitle-switch']}>
                             <input type="checkbox"
                                 checked={showtime}
@@ -185,14 +219,7 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
                                     localStorage.setItem('showtime', !showtime)
                                     setShowtime(value => !value)
                                 }} />
-                            <span> 显示时间</span>
-                            {subType == 'srt' &&
-                                <button onClick={editLrc}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
-                                        <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12 12 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A20 20 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a20 20 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21 21 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21 21 0 0 0 14 7.655V1.222z" />
-                                    </svg>
-                                </button>
-                            }
+                            <span>显示时间</span>
                             <button onClick={subFullscreen}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
                                     <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5" />
@@ -204,21 +231,22 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
                                 {showtime && <span title='点击复制' className={styles.timeline}
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        const msgEl = document.querySelector(`.${styles['subtitle-switch']}`);
-                                        let ok = copyTextToClipboard(`${window.location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`);
-                                        ok && msgEl?.classList.add(`${styles['show-copied']}`);
-                                        setTimeout(() => msgEl?.classList.remove(`${styles['show-copied']}`), 1500)
+                                        copyText(`${window.location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`)
                                     }}
-                                >{subtitle.startTime.split(',')[0]}</span>}
-                                <span className={`${styles['subtitle-text']} ${index === currentSubtitleIndex && styles['current-line']}`}
-                                    onClick={() => videoRef.current.currentTime = parseTime(subtitle.startTime)}>
+                                >{subtitle.startTime?.split(',')[0]}</span>}
+                                <span className={`${index === currentSubtitleIndex ? styles['current-line'] : ''}`}
+                                    onClick={() => {
+                                        videoRef.current.currentTime = parseTime(subtitle.startTime)
+                                        const subtitleIndex = subtitles.findLastIndex(subtitle => videoRef.current?.currentTime > parseTime(subtitle.startTime))
+                                        setCurrentSubtitleIndex(subtitleIndex)
+                                    }}>
                                     {subtitle.text}
                                 </span>
                             </li>
                         ))}
                     </ul>
                 </div>}
-        </div>
+        </div >
     );
 };
 
@@ -231,4 +259,3 @@ export default function SubtitleContext(props) {
         </BrowserOnly>
     );
 };
-

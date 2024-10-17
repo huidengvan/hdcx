@@ -38,7 +38,7 @@ export default function Playlist() {
     }, [current])
 
     useEffect(() => {
-        if (urltext?.join() != urltext?.join()) {
+        if (urltext?.join() != urls?.join()) {
             window.location.replace(`/playlist?urls=${urltext.join('|')}`)
         }
     }, [edit])

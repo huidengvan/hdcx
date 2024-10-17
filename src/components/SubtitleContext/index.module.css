@@ -1,7 +1,6 @@
 .subtitle-container {
     display: flex;
     flex-direction: row;
-    margin-bottom: 1rem;
     justify-content: space-around;
 }
 
@@ -9,6 +8,8 @@
     flex: 3;
     display: inline-flex;
     justify-content: center;
+    max-width: 55;
+
 }
 
 .item>video {
@@ -18,21 +19,24 @@
 .item:last-child {
     flex: 2;
     margin-left: 1rem;
-    max-width: 40%;
+    max-width: 45%;
 }
 
 .item>ul {
     padding: .75rem;
     width: fit-content;
     max-width: 100%;
-    max-height: 100vh;
+    max-height: 85vh;
     overflow-y: scroll;
-    border: 1px solid #ccc;
+    background-color: #FFF2E2;
+    margin: 0 !important;
+    font-size: 22px;
 }
 
 .item>ul>li {
     cursor: pointer;
     list-style: none;
+    max-width: fit-content;
 }
 
 .item>ul>li>span {
@@ -41,8 +45,13 @@
 }
 
 .current-line {
-    font-size: 28px;
-    color: #4299e1;
+    font-size: 26px;
+    color: #2e8555
+}
+
+::selection {
+    background-color: yellow;
+    /* 高亮色 */
 }
 
 .timeline {
@@ -54,7 +63,9 @@
 
 .subtitle-box {
     position: relative;
-    background-color: #FFF2E2;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
 }
 
 .subtitle-switch {
@@ -70,12 +81,13 @@
     position: absolute;
     width: max-content;
     left: 6rem;
+    top: 1.5rem;
     margin-left: .2rem;
     content: '播放位置已复制';
     font-size: 11px;
     border-width: 1px;
     border-style: solid;
-    border-color: #ccc;
+    border-color: #359962;
     padding: 3px 6px;
     background-color: #3b75f4;
     border-radius: 5px;
@@ -90,7 +102,6 @@
 
     .item:last-child {
         margin-left: 0;
-        margin-bottom: 1rem;
         min-width: 100%;
     }
 

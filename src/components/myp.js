@@ -26,10 +26,10 @@ export default class MyPara extends React.Component {
 
         if (this.navRef.style.display == 'none') {
             this.navRef.style.display = 'block'; // 显示导航
-            this.articleRef.style.fontSize = 'medium'
+            // this.articleRef.style.fontSize = 'medium'
         } else {
             this.navRef.style.display = 'none'; // 隐藏导航
-            this.articleRef.style.fontSize = 'x-large'
+            // this.articleRef.style.fontSize = 'x-large'
         }
     }
 
