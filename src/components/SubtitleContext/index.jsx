@@ -65,6 +65,35 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
         }
     }
 
+    const parseSubtitles = (data) => {
+        const subtitlesArray = [];
+        if (subType == 'lrc') {
+            const subtitleLines = data.trim()?.split(new RegExp('\r?\n'));
+            subtitleLines.forEach((line) => {
+                const match = line.match(/\[(\d{1,2}):(\d{2})(?::(\d+\.\d+))?\](.*)/);
+                if (match) {
+                    const hours = match[1] || '00'; // 小时
+                    const minutes = match[2]; // 分钟
+                    const seconds = match[3] || '00.00'; // 秒（如果没有则默认）
+                    const startTime = `${hours}:${minutes}:${seconds}`;
+                    const text = match[4].trim(); // 获取字幕文本
+                    subtitlesArray.push({ startTime, endTime: '', text });
+                }
+            });
+        } else {
+            const subtitleLines = data.trim()?.split(new RegExp('\r?\n\r?\n'));
+            subtitleLines.forEach((line) => {
+                const parts = line.trim()?.split(new RegExp('\r?\n'));
+                const index = parts[0];
+                const time = parts[1]?.split(' --> ');
+                const text = parts.slice(2).join('\n');
+                subtitlesArray.push({ index, startTime: time[0], endTime: time[1], text });
+            });
+        }
+
+        setSubtitles(subtitlesArray);
+    };
+
     useEffect(() => {
         // 清除栅格布局, 使宽度为100%
         document.querySelector('main').firstChild.removeAttribute('class')
@@ -92,38 +121,9 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
                     }
                 });
         }
+        setSubtitles([])
 
-        const parseSubtitles = (data) => {
-            const subtitlesArray = [];
-            if (subType == 'lrc') {
-                const subtitleLines = data.trim()?.split(new RegExp('\r?\n'));
-                subtitleLines.forEach((line) => {
-                    const match = line.match(/\[(\d{1,2}):(\d{2})(?::(\d+\.\d+))?\](.*)/);
-                    if (match) {
-                        const hours = match[1] || '00'; // 小时
-                        const minutes = match[2]; // 分钟
-                        const seconds = match[3] || '00.00'; // 秒（如果没有则默认）
-                        const startTime = `${hours}:${minutes}:${seconds}`;
-                        const text = match[4].trim(); // 获取字幕文本
-                        subtitlesArray.push({ startTime, endTime: '', text });
-                    }
-                });
-            } else {
-                const subtitleLines = data.trim()?.split(new RegExp('\r?\n\r?\n'));
-                subtitleLines.forEach((line) => {
-                    const parts = line.trim()?.split(new RegExp('\r?\n'));
-                    const index = parts[0];
-                    const time = parts[1]?.split(' --> ');
-                    const text = parts.slice(2).join('\n');
-                    subtitlesArray.push({ index, startTime: time[0], endTime: time[1], text });
-                });
-            }
-            console.log(subtitlesArray);
-
-            setSubtitles(subtitlesArray);
-        };
-
-    }, [videoSrc]);
+    }, [src]);
 
     useEffect(() => {
         const video = videoRef.current;
@@ -131,14 +131,16 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
             const currentTime = video?.currentTime;
             // console.log(currentTime, parseTime(subtitles[currentSubtitleIndex + 1]?.startTime));
 
-            if (currentTime != null && currentSubtitleIndex < subtitles.length - 2) {
-                if (currentTime >= parseTime(subtitles[currentSubtitleIndex + 1]?.startTime)) {
+            if (currentTime != null) {
+                if (currentTime >= parseTime(subtitles[currentSubtitleIndex + 1]?.startTime)
+                    && currentSubtitleIndex < subtitles.length - 1) {
                     setCurrentSubtitleIndex(currentSubtitleIndex + 1);
                     scrollSubtitleToView(currentSubtitleIndex);
                 }
 
                 // 当播放时间超过 endTime 时，切换到下一个视频
-                if (currentTime > (endTime || video.duration - 1)) {
+                // console.log(currentTime, endTime, video.duration)
+                if (currentTime >= (endTime || video.duration) - 1) {
                     // 执行切换到下一个视频的操作
                     setCurrent(prev => prev + 1)
                     // console.log("Switching to next video");
