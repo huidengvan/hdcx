@@ -100,8 +100,19 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
         document.querySelector('article').parentElement.removeAttribute('class')
         document.querySelector('footer').style.display = 'none'
         videoRef.current.src = videoSrc
-        if (videoRef.current)
+
+        if (videoRef.current) {
             setTimeout(() => videoRef.current.play(), 1000)
+        }
+        let match = videoSrc.match(/入行论广解(\d+)课/);
+        if (match) {
+            // 打开新标签页
+            const newTab = window.open(`/refs/rxl/fudao/rxl-fd01?autoPage=true#入菩萨行论第${parseInt(match[1])}节课`);
+            // 关闭新标签页
+            setTimeout(() => {
+                newTab.close();
+            }, endTime * 1000 / localStorage.getItem('playbackRate') || 1)
+        }
 
         if (subPath || subType) {
             let videoPath = videoSrc.substring(0, videoSrc.lastIndexOf('/') + 1)
@@ -127,6 +138,7 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
 
     useEffect(() => {
         const video = videoRef.current;
+        video.playbackRate = localStorage.getItem('playbackRate') || 1
         const handleTimeUpdate = () => {
             const currentTime = video?.currentTime;
             // console.log(currentTime, parseTime(subtitles[currentSubtitleIndex + 1]?.startTime));
@@ -150,7 +162,7 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
         };
 
         const handleKeyDown = (event) => {
-            if (event.key === ' ') { // 空格键
+            if (event.key === 'p' || event.key === 'P') {
                 if (videoRef.current.paused)
                     videoRef.current.play()
                 else
@@ -169,8 +181,10 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
                 videoRef.current.currentTime += 30; // 下箭头前进30s
             } else if (event.key === '1') {
                 videoRef.current.playbackRate = 1
+                localStorage.setItem('playbackRate', 1)
             } else if (event.key === '2') {
                 videoRef.current.playbackRate = 2
+                localStorage.setItem('playbackRate', 2)
             } else if (event.key === 'j' && currentSubtitleIndex < subtitles.length - 1) {
                 setCurrentSubtitleIndex(currentSubtitleIndex + 1)
                 videoRef.current.currentTime = parseTime(subtitles[currentSubtitleIndex + 1].startTime)

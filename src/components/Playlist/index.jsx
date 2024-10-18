@@ -135,7 +135,7 @@ export default function Playlist() {
     )
 }
 
-async function getVideoDuration(videoUrl) {
+export async function getVideoDuration(videoUrl) {
     return new Promise((resolve, reject) => {
         const video = document.createElement('video');
 
