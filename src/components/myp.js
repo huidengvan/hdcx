@@ -1,6 +1,5 @@
 import React from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { getVideoDuration } from './Playlist';
 
 export default class MyPara extends React.Component {
     constructor() {
@@ -18,13 +17,21 @@ export default class MyPara extends React.Component {
         this.colorIndex = -1;
         this.autoPage = false;
         this.endNodeName = null;
+        this.duration = null;
     }
 
-    handleFullscreen = () => {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen();
+    handleWidescreen = () => {
+        if (this.navRef.style.display !== 'none') {
+            // console.log('宽屏阅读模式');
+            this.navRef.style.display = 'none'; // 隐藏导航
+            document.body.style.scale = '1.71'
         } else {
-            document.exitFullscreen();
+            this.navRef.style.display = 'block'; // 显示导航
+            document.body.style.scale = '1'
+        }
+
+        if (window.location.hash) {
+            window.location = window.location.href;
         }
     }
 
@@ -68,9 +75,18 @@ export default class MyPara extends React.Component {
     }
     async autoPaginate() {
         let speed = await this.calcAudioSpeed()
-        console.log({ 语速: speed });
-        if (speed > 1) this.autoNextParagraph(speed)
+        if (this.autoPage == true) {
+            this.autoPage = false;
+        } else {
+            this.autoPage = true;
+        }
         toast(`${this.autoPage ? '开始' : '暂停'}自动阅读`);
+        console.log(`${this.autoPage ? '开始' : '暂停'}自动阅读`);
+        console.log('text speed', speed);
+        if (speed > 1) {
+            this.handleWidescreen()
+            this.autoNextParagraph(speed)
+        }
     }
 
     /**
@@ -78,59 +94,37 @@ export default class MyPara extends React.Component {
      * @returns 语速：秒/字
      */
     async calcAudioSpeed() {
-        const p1 = getTargetNode(); // 开始段落的a节点
-        let targetName = decodeURI(location.hash.substring(1))
-        const match = targetName?.match(/入菩萨行论第(\d+)节课/);
-        console.log(match);
-        if (!match) return;
-        let endNode;
-        if (targetName == '入菩萨行论第14节课') {
-            endNode = `p833`
-        } else if (targetName == '入菩萨行论第28节课') {
-            endNode = `p841`
-        } else if (targetName == '入菩萨行论第35节课') {
-            endNode = `p1311`
-        } else if (targetName == '入菩萨行论第46节课') {
-            endNode = `p1311`
-        } else if (targetName == '入菩萨行论第69节课') {
-            endNode = `p1311`
-        } else if (targetName == '入菩萨行论第94节课') {
-            endNode = `p1311`
-        } else if (targetName == '入菩萨行论第110节课') {
-            endNode = `p1311`
-        } else if (targetName == '入菩萨行论第152节课') {
-            endNode = `p1311`
-        } else if (targetName == '入菩萨行论第190节课') {
-            endNode = `p1311`
-        } else if (targetName == '入菩萨行论第201节课') {
-            endNode = `p1311`
-        } else {
-            endNode = `入菩萨行论第${parseInt(match[1]) + 1}节课`
-        }
-        const p2 = getTargetNode(endNode); // 结束段落的a节点
-        this.endNodeName = p2.name
-        let totalWordCount = p1.parentElement.lastChild.length;
-        console.log({ endNode, p2 });
+        const startNode = getTargetNode(); // 开始段落的a节点
+        let endNode = getRxlEndNode() // 结束段落的a节点
+        // console.log({ endNode });
+        if (!endNode) return;
 
-        if (p1 && p2) {
-            // 创建一个临时元素来获取 p1 和 p2 之间的所有文本
-            let currentNode = p1.parentElement.firstChild; // 当前段落的a节点
-            // 遍历 p1 和 p2 之间的所有节点
-            // parseInt(currentNode?.name?.slice(1)), parseInt(p2?.name?.slice(1))
-            while (currentNode && parseInt(currentNode?.name?.slice(1)) < parseInt(p2?.name?.slice(1))) {
+        endNode?.name && (this.endNodeName = endNode.name)
+        let totalWordCount = startNode.parentElement.lastChild.length;
+
+        if (startNode && endNode) {
+            // 创建一个临时元素来获取 startNode 和 endNode 之间的所有文本
+            let currentNode = startNode.parentElement.firstChild; // 当前段落的a节点
+            // 遍历 startNode 和 endNode 之间的所有节点
+            // parseInt(currentNode?.name?.slice(1)), parseInt(endNode?.name?.slice(1))
+            while (currentNode && parseInt(currentNode?.name?.slice(1)) < parseInt(endNode?.name?.slice(1))) {
                 totalWordCount += currentNode.parentElement.lastChild.length;
                 currentNode = currentNode.parentElement.nextSibling.firstChild;
             }
-            let duration = await getVideoDuration(`https://box.hdcxb.net/d/慧灯禅修/001-入行论释/fudao/全部音频/入行论广解${match[1]?.padStart(3, '0')}课.mp3`)
-            console.log({ totalWordCount, duration }, p1.name, p2.name);
+            console.log({ totalWordCount, duration: this.duration }, startNode.name, endNode.name);
 
-            return Math.round((totalWordCount / (duration - 220)) * 1000) / 1000
+            return Math.round(totalWordCount / this.duration * 1000) / 1000
         }
+
+        return -1;
     }
     componentDidMount() {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        this.autoPage = urlParams.get('autoPage');
+        this.duration = urlParams.get('duration');
+        if (this.duration) {
+            setTimeout(() => this.autoPaginate())
+        }
 
         const myarticle = document.getElementsByTagName("article")[0]
         var line = 1;
@@ -151,31 +145,14 @@ export default class MyPara extends React.Component {
         }
 
         this.navRef = document.querySelector('nav')
-        this.articleRef = document.querySelector('article')
+        this.articleRef = document.querySelector('article').parentElement.parentElement
         let bgColorIndex = localStorage.getItem('bgColorIndex')
         if (bgColorIndex) {
             this.colorIndex = bgColorIndex
             this.articleRef.style.backgroundColor = this.colors[bgColorIndex].color;
         }
-        if (this.autoPage) {
-            setTimeout(() => {
-                this.autoPaginate()
-            }, 88 * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
-        }
         window.addEventListener('keydown', this.handleKeyDown);
-        document.addEventListener('dblclick', this.handleFullscreen);
-        document.addEventListener('fullscreenchange', () => {
-            if (window.location.hash) {
-                window.location = window.location.href;
-            }
-            if (!document.fullscreenElement) {
-                this.navRef.style.display = 'block'; // 显示导航
-                document.body.style.scale = '1'
-            } else {
-                this.navRef.style.display = 'none'; // 隐藏导航
-                document.body.style.scale = '1.71'
-            }
-        });
+        document.addEventListener('dblclick', this.handleWidescreen);
         window.addEventListener('hashchange', this.handleHashChange);
     }
 
@@ -184,19 +161,23 @@ export default class MyPara extends React.Component {
     }
 
     handleKeyDown = async (event) => {
-        if (event.key === 'f' || event.key === 'F') {
-            this.handleFullscreen()
+        if (event.altKey && (event.key === 't' || event.key === 'T')) {
+            this.handleWidescreen()
+        } else if (event.altKey && (event.key === 'f' || event.key === 'F')) {
+            event.preventDefault()
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+            this.handleWidescreen()
         } else if (event.key === 'j') {
             this.nextParagraph()
         } else if (event.key === 'k') {
             this.prevParagraph()
-        } else if (event.key === 'a' || event.key === 'A') {
-            if (this.autoPage == true) {
-                this.autoPage = false;
-            } else {
-                this.autoPage = true;
-                this.autoPaginate()
-            }
+        } else if (event.altKey && (event.key === 'a' || event.key === 'A')) {
+            event.preventDefault()
+            this.autoPaginate()
         } else if (event.key === 'ArrowUp') {
             window.scrollBy(0, -window.innerHeight / 4);
         } else if (event.key === 'ArrowDown') {
@@ -207,7 +188,7 @@ export default class MyPara extends React.Component {
         } else if (event.key === 'ArrowRight') {
             event.preventDefault()
             window.scrollBy(0, window.innerHeight - 50);
-        } else if (event.key === 'b' || event.key === 'B') {
+        } else if (event.altKey && (event.key === 'b' || event.key === 'B')) {
             this.colorIndex = (this.colorIndex + 1) % this.colors.length;
             localStorage.setItem('bgColorIndex', this.colorIndex)
             this.articleRef.style.backgroundColor = this.colors[this.colorIndex].color;
@@ -225,10 +206,47 @@ function createElementFromHTML(htmlString) {
     return div.firstChild;
 }
 
-function getTargetNode(targetName = location.hash.substring(1)) {
-    let targetNode = /p\d+/.test(targetName) ?
-        document.querySelector(`a[name="${targetName}"]`) :
-        document.getElementById(decodeURI(targetName))?.nextElementSibling.firstChild;
+function getTargetNode() {
+    let targetName = location.hash.substring(1)
+    if (/p\d+/.test(targetName)) {
+        return document.querySelector(`a[name="${targetName}"]`)
+    }
+    return document.getElementById(decodeURI(targetName))?.nextElementSibling?.firstChild
+}
 
-    return targetNode
+function getRxlEndNode() {
+    let targetName = decodeURI(location.hash.substring(1))
+    const match = targetName?.match(/入菩萨行论第(\d+)节课/);
+    // console.log({ match });
+    if (!match) return;
+    let endNode = `入菩萨行论第${parseInt(match[1]) + 1}节课`
+
+    if (targetName == '入菩萨行论第14节课') {
+        endNode = `p833`
+    } else if (targetName == '入菩萨行论第28节课') {
+        endNode = `p841`
+    } else if (targetName == '入菩萨行论第35节课') {
+        endNode = `p374`
+    } else if (targetName == '入菩萨行论第46节课') {
+        endNode = `p567`
+    } else if (targetName == '入菩萨行论第69节课') {
+        endNode = `p1500`
+    } else if (targetName == '入菩萨行论第94节课') {
+        endNode = `p1945`
+    } else if (targetName == '入菩萨行论第110节课') {
+        endNode = `p1444`
+    } else if (targetName == '入菩萨行论第152节课') {
+        endNode = `p3881`
+    } else if (targetName == '入菩萨行论第190节课') {
+        endNode = `p4320`
+    } else if (targetName == '入菩萨行论第201节课') {
+        endNode = `p1311`
+    }
+    // console.log(document.getElementById(endNode)?.previousElementSibling.firstElementChild);
+
+    if (/p\d+/.test(endNode)) {
+        return document.querySelector(`a[name="${endNode}"]`)
+    }
+    return document.getElementById(endNode)?.previousElementSibling?.firstElementChild
+
 }

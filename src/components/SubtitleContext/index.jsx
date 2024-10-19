@@ -104,15 +104,6 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
         if (videoRef.current) {
             setTimeout(() => videoRef.current.play(), 1000)
         }
-        let match = videoSrc.match(/入行论广解(\d+)课/);
-        if (match) {
-            // 打开新标签页
-            const newTab = window.open(`/refs/rxl/fudao/rxl-fd01?autoPage=true#入菩萨行论第${parseInt(match[1])}节课`);
-            // 关闭新标签页
-            setTimeout(() => {
-                newTab.close();
-            }, endTime * 1000 / localStorage.getItem('playbackRate') || 1)
-        }
 
         if (subPath || subType) {
             let videoPath = videoSrc.substring(0, videoSrc.lastIndexOf('/') + 1)
@@ -139,10 +130,17 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
     useEffect(() => {
         const video = videoRef.current;
         video.playbackRate = localStorage.getItem('playbackRate') || 1
+        let kesongDuration = 220;
+        let audoReadTab;
+        let match = videoSrc.match(/入行论广解(\d+)课/);
+        if (match) {
+            // 课诵念完，打开新标签页
+            setTimeout(() => {
+                audoReadTab = window.open(`/refs/rxl/fudao/rxl-fd${getRxlSection(match[1])}?duration=${Math.ceil(video.duration) - kesongDuration}#入菩萨行论第${parseInt(match[1])}节课`);
+            }, kesongDuration * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
+        }
         const handleTimeUpdate = () => {
             const currentTime = video?.currentTime;
-            // console.log(currentTime, parseTime(subtitles[currentSubtitleIndex + 1]?.startTime));
-
             if (currentTime != null) {
                 if (currentTime >= parseTime(subtitles[currentSubtitleIndex + 1]?.startTime)
                     && currentSubtitleIndex < subtitles.length - 1) {
@@ -157,6 +155,8 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
                     setCurrent(prev => prev + 1)
                     // console.log("Switching to next video");
                     endTime = undefined
+                    // 关闭新标签页
+                    audoReadTab?.close();
                 }
             }
         };
@@ -275,3 +275,36 @@ export default function SubtitleContext(props) {
         </BrowserOnly>
     );
 };
+
+function getRxlSection(lesson) {
+    if (lesson >= 1 && lesson <= 14) {
+        return '01'
+    }
+    else if (lesson >= 15 && lesson <= 28) {
+        return '02'
+    }
+    else if (lesson >= 29 && lesson <= 35) {
+        return '03'
+    }
+    else if (lesson >= 36 && lesson <= 46) {
+        return '04'
+    }
+    else if (lesson >= 47 && lesson <= 69) {
+        return '05'
+    }
+    else if (lesson >= 70 && lesson <= 94) {
+        return '06'
+    }
+    else if (lesson >= 95 && lesson <= 110) {
+        return '07'
+    }
+    else if (lesson >= 111 && lesson <= 152) {
+        return '08'
+    }
+    else if (lesson >= 153 && lesson <= 190) {
+        return '09'
+    }
+    else if (lesson >= 191 && lesson <= 201) {
+        return '10'
+    }
+}
