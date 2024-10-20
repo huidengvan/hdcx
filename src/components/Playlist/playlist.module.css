@@ -1,3 +1,15 @@
+.root {
+    display: flex;
+    justify-content: space-between;
+}
+
+.details {
+    justify-content: center;
+    align-self: center;
+    width: 50%;
+    padding-left: 1rem;
+}
+
 .playlist {
     margin: 0 .5rem;
 }

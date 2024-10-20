@@ -10,10 +10,9 @@ export default function Playlist() {
     const urlsParam = params.get('urls');
     const uriParam = params.get('uri');
     const currentParam = params.get('index');
-    const subTypeParam = params.get('subType');
+    let rest = params.get('rest');
     const subPathParam = params.get('subPath');
     let urls = urlsParam?.split('|');
-
     const [src, setSrc] = useState()
     const [current, setCurrent] = useState(currentParam || 0)
     const [edit, setEdit] = useState(false)
@@ -31,7 +30,7 @@ export default function Playlist() {
             parseUri()
         }
 
-        if (urltext?.length - current > 0) {
+        if (urltext?.length > current && rest != current) {
             setSrc(buildSrc(urltext[current]))
         }
 
@@ -41,6 +40,7 @@ export default function Playlist() {
         if (urltext?.join() != urls?.join()) {
             window.location.replace(`/playlist?urls=${urltext.join('|')}`)
         }
+
     }, [edit])
 
     const changeSrc = (e) => {
@@ -54,8 +54,18 @@ export default function Playlist() {
         let videoUrls = urltext
         const calculateTotalDuration = async () => {
             let t = 0
+            let matchRxl
             for (let i = 0; i < videoUrls.length; i++) {
                 const item = videoUrls[i];
+
+                if (!matchRxl) {
+                    matchRxl = item.includes('入行论辅导');
+                }
+
+                if (item.includes('五分钟')) {
+                    t -= 312
+                }
+
                 if (!item?.includes('^')) {
                     let url = item?.split('@')[0];
                     console.log('fetch video meta');
@@ -71,7 +81,18 @@ export default function Playlist() {
                 }
             }
 
-            setTotalDuration((t / 3600).toFixed(2))
+            let duration = parseFloat((t / 3600).toFixed(2));
+            if (matchRxl && duration < 2.5) {
+                let rest3minutes = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/恒常念诵愿文.mp4^0,3:26@恒常念诵愿文（休息三分钟）`
+                let meditation = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/4jx/smwc.mp4@寿命无常观修 1 小时`
+                videoUrls.splice(urltext.length - 1, 0, rest3minutes)
+                videoUrls.splice(urltext.length - 1, 0, meditation)
+            } else {
+                rest = videoUrls.length - 1
+                console.log('暂停列表');
+                videoUrls.splice(urltext.length - 1, 0, `^0,0@讨论时间`)
+            }
+            setTotalDuration(duration)
             setUrltext(videoUrls)
         };
 
@@ -92,8 +113,8 @@ export default function Playlist() {
 
     return (
         <div className={styles.root}>
-            {src && <SubtitleContext src={src} setCurrent={setCurrent} subType={subTypeParam} subPath={subPathParam} />}
-            <details open>
+            {src && <SubtitleContext src={src} setCurrent={setCurrent} subPath={subPathParam} />}
+            <details open className={styles.details}>
                 <summary style={{ userSelect: 'none', marginBottom: '5px' }}>播放列表
                     <span style={{
                         marginLeft: '4px'
@@ -115,8 +136,8 @@ export default function Playlist() {
                     </span>
                 </summary>
                 {edit ?
-                    <textarea rows={5}
-                        style={{ padding: '.5rem' }}
+                    <textarea rows={10}
+                        style={{ padding: '.5rem', width: '100%' }}
                         placeholder='格式：视频地址^起始时间@显示标题 每个视频一行，编辑好再点一下铅笔图标。'
                         defaultValue={urltext?.join('\n')} className='col'
                         onChange={(e) => setUrltext(e.target.value?.split('\n').filter(item => item !== ''))}

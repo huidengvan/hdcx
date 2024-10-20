@@ -19,19 +19,7 @@ export const parseTime = (timeString) => {
     return hours * 3600 + minutes * 60 + (seconds || 0);
 };
 
-function formatTimeToLRC(currentTime) {
-    // 将当前时间转换为分钟和秒
-    const minutes = Math.floor(currentTime / 60);
-    const seconds = Math.floor(currentTime % 60);
-    const milliseconds = Math.floor((currentTime % 1) * 100); // 提取毫秒部分并转换为整数
-
-    // 格式化为 [mm:ss.ms] 形式
-    const formattedTime = `[${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(milliseconds).padStart(2, '0')}]`;
-
-    return formattedTime;
-}
-
-const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
+const VideoPlayer = ({ src, setCurrent, subPath }) => {
     const baseUrl = location.hash.includes('http') ? '' : 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/';
     let videoSrc = src || `${baseUrl}${location.hash.slice(1)}`;
     const [subtitles, setSubtitles] = useState([]);
@@ -40,7 +28,12 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
     const videoRef = useRef(null);
     const subRef = useRef(null);
     const ulRef = useRef(null);
+    const wraperRef = useRef(null);
     let endTime = parseTime(src?.split(',')[1])
+    let matchRxl = videoSrc.match(/入行论广解(\d+)课/);
+    let keqianTime = 83;
+    let kehouTime = 125;
+    let audoReadTab, rxlTimeDifference;
 
     const copyText = async (text) => {
         const msgEl = document.querySelector(`.${styles['subtitle-switch']}`);
@@ -67,29 +60,14 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
 
     const parseSubtitles = (data) => {
         const subtitlesArray = [];
-        if (subType == 'lrc') {
-            const subtitleLines = data.trim()?.split(new RegExp('\r?\n'));
-            subtitleLines.forEach((line) => {
-                const match = line.match(/\[(\d{1,2}):(\d{2})(?::(\d+\.\d+))?\](.*)/);
-                if (match) {
-                    const hours = match[1] || '00'; // 小时
-                    const minutes = match[2]; // 分钟
-                    const seconds = match[3] || '00.00'; // 秒（如果没有则默认）
-                    const startTime = `${hours}:${minutes}:${seconds}`;
-                    const text = match[4].trim(); // 获取字幕文本
-                    subtitlesArray.push({ startTime, endTime: '', text });
-                }
-            });
-        } else {
-            const subtitleLines = data.trim()?.split(new RegExp('\r?\n\r?\n'));
-            subtitleLines.forEach((line) => {
-                const parts = line.trim()?.split(new RegExp('\r?\n'));
-                const index = parts[0];
-                const time = parts[1]?.split(' --> ');
-                const text = parts.slice(2).join('\n');
-                subtitlesArray.push({ index, startTime: time[0], endTime: time[1], text });
-            });
-        }
+        const subtitleLines = data.trim()?.split(new RegExp('\r?\n\r?\n'));
+        subtitleLines.forEach((line) => {
+            const parts = line.trim()?.split(new RegExp('\r?\n'));
+            const index = parts[0];
+            const time = parts[1]?.split(' --> ');
+            const text = parts.slice(2).join('\n');
+            subtitlesArray.push({ index, startTime: time[0], endTime: time[1], text });
+        });
 
         setSubtitles(subtitlesArray);
     };
@@ -105,10 +83,11 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
             setTimeout(() => videoRef.current.play(), 1000)
         }
 
-        if (subPath || subType) {
-            let videoPath = videoSrc.substring(0, videoSrc.lastIndexOf('/') + 1)
+        if (subPath || matchRxl) {
             let videoName = videoSrc.substring(videoSrc.lastIndexOf('/') + 1)
-            let suburl = `${subPath || videoPath}${videoName.replace(/\.[^/.]+$/, '.' + (subType || 'srt'))}`
+            let suburl = matchRxl ?
+                `https://box.hdcxb.net/d/慧灯禅修/001-入行论释/fudao/入行论辅导字幕（课诵部分）.srt`
+                : `${subPath}${videoName.replace(/\.[^/.]+$/, '.srt')}`
             // console.log(`fetch suxbtitle from ${suburl}`);
             fetch(suburl)
                 .then(response => {
@@ -120,9 +99,21 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
                 .then(data => {
                     if (!data.includes('failed')) {
                         parseSubtitles(data)
+                        wraperRef.current.parentElement.style.flexDirection = 'column'
                     }
                 });
+        } else {
+            wraperRef.current.parentElement.style.flexDirection = 'row'
         }
+
+        if (matchRxl && !audoReadTab) {
+            rxlTimeDifference = videoRef.current?.duration - 2870
+            // 课诵念完，打开新标签页
+            setTimeout(() => {
+                audoReadTab = window.open(`/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${Math.ceil(videoRef.current.duration) - keqianTime}#入菩萨行论第${parseInt(matchRxl[1])}节课`);
+            }, keqianTime * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
+        }
+
         setSubtitles([])
 
     }, [src]);
@@ -130,23 +121,21 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
     useEffect(() => {
         const video = videoRef.current;
         video.playbackRate = localStorage.getItem('playbackRate') || 1
-        let kesongDuration = 220;
-        let audoReadTab;
-        let match = videoSrc.match(/入行论广解(\d+)课/);
-        if (match) {
-            // 课诵念完，打开新标签页
-            setTimeout(() => {
-                audoReadTab = window.open(`/refs/rxl/fudao/rxl-fd${getRxlSection(match[1])}?duration=${Math.ceil(video.duration) - kesongDuration}#入菩萨行论第${parseInt(match[1])}节课`);
-            }, kesongDuration * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
-        }
+
         const handleTimeUpdate = () => {
-            const currentTime = video?.currentTime;
+            let currentTime = video?.currentTime;
             if (currentTime != null) {
+                if (matchRxl && currentTime > 2000 && currentTime - kehouTime <= 0) {
+                    currentTime -= rxlTimeDifference
+                    // 关闭新标签页
+                    if (!audoReadTab?.closed) audoReadTab?.close();
+                }
                 if (currentTime >= parseTime(subtitles[currentSubtitleIndex + 1]?.startTime)
                     && currentSubtitleIndex < subtitles.length - 1) {
                     setCurrentSubtitleIndex(currentSubtitleIndex + 1);
                     scrollSubtitleToView(currentSubtitleIndex);
                 }
+
 
                 // 当播放时间超过 endTime 时，切换到下一个视频
                 // console.log(currentTime, endTime, video.duration)
@@ -155,8 +144,6 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
                     setCurrent(prev => prev + 1)
                     // console.log("Switching to next video");
                     endTime = undefined
-                    // 关闭新标签页
-                    audoReadTab?.close();
                 }
             }
         };
@@ -169,8 +156,6 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
                     videoRef.current.pause();
             } else if (event.key === 't' || event.key === 'T') {
                 subFullscreen()
-            } else if (event.key === 'm' || event.key === 'M') {
-                copyText('\n' + formatTimeToLRC(video?.currentTime)) // 复制时间点
             } else if (event.key === 'ArrowLeft') { // 左箭头
                 ulRef.current.scrollBy(0, 30 - window.innerHeight);
             } else if (event.key === 'ArrowRight') { // 右箭头
@@ -219,12 +204,10 @@ const VideoPlayer = ({ src, setCurrent, subPath, subType }) => {
 
 
     return (
-        <div className={styles['subtitle-container']}>
-            <div className={styles.item}>
-                <video ref={videoRef} width={'100%'} controls>
-                    <source src={`${videoSrc}`} type="video/mp4" />
-                </video>
-            </div>
+        <div ref={wraperRef} className={styles['subtitle-container']}>
+            <video ref={videoRef} style={{ minWidth: '50%', maxHeight: '640px' }} controls>
+                <source src={`${videoSrc}`} type="video/mp4" />
+            </video>
             {subtitles.length > 0 &&
                 <div className={`${styles['subtitle-box']} ${styles.item}`} ref={subRef}>
                     <ul ref={ulRef} onDoubleClick={subFullscreen}>
