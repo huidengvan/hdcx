@@ -123,7 +123,7 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
                         window.open(tabUrl);
                     }
                 }
-            }, 1000)
+            }, keqianTime * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000) + 1000)
         }
 
         setSubtitles([])
