@@ -55,8 +55,9 @@ export default class MyPara extends React.Component {
         if (!targetNode || !/\d+/.test(location.hash?.slice(1))) return;
         let nextPara = parseInt(targetNode.name.slice(1)) + 1
 
-        if (`p${nextPara}` == getRxlEndNode()?.name) {
+        if (`p${nextPara}` == this.endNodeName) {
             this.autoPage = false
+            console.log(`自动阅读停止`);
         }
         location.hash = `p${nextPara}`
     }
@@ -89,17 +90,19 @@ export default class MyPara extends React.Component {
     }
     async autoPaginate() {
         let speed = await this.calcAudioSpeed()
+
         if (this.autoPage == true) {
             this.autoPage = false;
         } else {
             this.autoPage = true;
         }
-        toast(`${this.autoPage ? '开始' : '暂停'}自动阅读`);
-        console.log(`${this.autoPage ? '开始' : '暂停'}自动阅读`);
-        console.log('text speed', speed);
+
         if (speed > 1) {
             this.handleWidescreen()
             this.autoNextParagraph(speed)
+            toast(`${this.autoPage ? '开始' : '暂停'}自动阅读`);
+            console.log(`${this.autoPage ? '开始' : '暂停'}自动阅读`);
+            console.log('text speed', speed);
         }
     }
 

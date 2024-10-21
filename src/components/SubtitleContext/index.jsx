@@ -108,22 +108,19 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
 
         if (matchRxl && !audoReadTab) {
             rxlTimeDifference = videoRef.current?.duration - 2870
-            let tabUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${Math.ceil(videoRef.current.duration) - keqianTime - kehouTime}#入菩萨行论第${parseInt(matchRxl[1])}节课`
-
             // 课诵念完，打开新标签页
             setTimeout(() => {
-                audoReadTab = window.open(tabUrl);
-                // console.log(audoReadTab);
-            }, keqianTime * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
+                let duration = Math.ceil(videoRef.current.duration) - keqianTime - kehouTime
+                let tabUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${duration}#入菩萨行论第${parseInt(matchRxl[1])}节课`
 
-            setTimeout(() => {
-                if (!audoReadTab) {
-                    const userConfirmed = confirm('如需开启自动阅读，请允许打开新标签');
-                    if (userConfirmed) {
-                        window.open(tabUrl);
-                    }
+                if (duration) {
+                    audoReadTab = window.open(tabUrl);
                 }
-            }, keqianTime * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000) + 1000)
+
+                if (!audoReadTab) {
+                    alert('如需开启自动阅读，请允许打开新标签');
+                }
+            }, keqianTime * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
         }
 
         setSubtitles([])
@@ -137,7 +134,7 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
         const handleTimeUpdate = () => {
             let currentTime = video?.currentTime;
             if (currentTime != null) {
-                if (matchRxl && currentTime > 2000 && currentTime - kehouTime <= 0) {
+                if (matchRxl && currentTime > 2000 && duration - currentTime - kehouTime <= 0) {
                     currentTime -= rxlTimeDifference
                     // 关闭新标签页
                     if (!audoReadTab?.closed) audoReadTab?.close();
