@@ -82,17 +82,25 @@ export default function Playlist() {
             }
 
             let duration = parseFloat((t / 3600).toFixed(2));
-            if (matchRxl && duration < 2.5) {
-                let rest3minutes = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/恒常念诵愿文.mp4^0,3:26@恒常念诵愿文（休息三分钟）`
-                let meditation = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/4jx/smwc.mp4@寿命无常观修 1 小时`
-                videoUrls.splice(urltext.length - 1, 0, rest3minutes)
-                videoUrls.splice(urltext.length - 1, 0, meditation)
-            } else {
-                rest = videoUrls.length - 1
-                console.log('暂停列表');
-                videoUrls.splice(urltext.length - 1, 0, `^0,0@讨论时间`)
+            if (matchRxl) {
+                if (duration < 2.5) {
+                    let rest3minutes = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/恒常念诵愿文.mp4^0,3:26@恒常念诵愿文（休息三分钟）`
+                    let meditation = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/4jx/smwc.mp4^0,1:01:16@寿命无常观修 1 小时`
+                    videoUrls.splice(urltext.length - 1, 0, rest3minutes)
+                    videoUrls.splice(urltext.length - 1, 0, meditation)
+                    duration += 1.1
+                    console.log(`添加打坐视频`);
+                } else if (duration >= 2.5 && duration <= 3 && !videoUrls[videoUrls.length - 2].includes('讨论')) {
+                    rest = videoUrls.length - 1
+                    console.log('添加暂停讨论');
+                    videoUrls.splice(urltext.length - 1, 0, `^0,0@讨论${parseInt((3 - duration) * 60 - 4)}分钟`)
+                    duration = 3
+
+                }
             }
-            setTotalDuration(duration)
+            let hour = parseInt(duration)
+            setTotalDuration(`时长：${hour ? hour + '小时' : ''}${Math.round((duration - hour) * 60)}分钟`)
+
             setUrltext(videoUrls)
         };
 
@@ -103,9 +111,9 @@ export default function Playlist() {
 
         return (
             <>
-                {totalDuration > 0 &&
+                {totalDuration &&
                     <span style={{ marginLeft: '1rem', fontSize: '12px' }}>
-                        时长：{totalDuration}小时
+                        {totalDuration}
                     </span>}
             </>
         );
