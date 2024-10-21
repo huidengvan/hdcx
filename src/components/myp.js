@@ -20,11 +20,19 @@ export default class MyPara extends React.Component {
         this.duration = null;
     }
 
+    handleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+        this.handleWidescreen()
+    }
     handleWidescreen = () => {
         if (this.navRef.style.display !== 'none') {
             // console.log('宽屏阅读模式');
             this.navRef.style.display = 'none'; // 隐藏导航
-            document.body.style.scale = '1.71'
+            document.body.style.scale = '1.72'
         } else {
             this.navRef.style.display = 'block'; // 显示导航
             document.body.style.scale = '1'
@@ -55,7 +63,7 @@ export default class MyPara extends React.Component {
         }
         let targetNode = getTargetNode()
         const textLength = targetNode.nextSibling.length;
-        const pagiTime = Math.ceil(textLength / speed) + 3;
+        const pagiTime = Math.round(textLength / speed);
         // console.log(`${targetNode.name}文本长度为: ${textLength} 停留时间为: ${pagiTime}秒`);
         setTimeout(() => {
             this.nextParagraph()
@@ -152,7 +160,7 @@ export default class MyPara extends React.Component {
             this.articleRef.style.backgroundColor = this.colors[bgColorIndex].color;
         }
         window.addEventListener('keydown', this.handleKeyDown);
-        document.addEventListener('dblclick', this.handleWidescreen);
+        document.addEventListener('dblclick', this.handleFullscreen);
         window.addEventListener('hashchange', this.handleHashChange);
     }
 
@@ -165,15 +173,10 @@ export default class MyPara extends React.Component {
             this.handleWidescreen()
         } else if (event.altKey && (event.key === 'f' || event.key === 'F')) {
             event.preventDefault()
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen();
-            } else {
-                document.exitFullscreen();
-            }
-            this.handleWidescreen()
-        } else if (event.key === 'j') {
+            handleFullscreen()
+        } else if (event.altKey && event.key === 'j') {
             this.nextParagraph()
-        } else if (event.key === 'k') {
+        } else if (event.altKey && event.key === 'k') {
             this.prevParagraph()
         } else if (event.altKey && (event.key === 'a' || event.key === 'A')) {
             event.preventDefault()
@@ -221,7 +224,9 @@ function getRxlEndNode() {
     if (!match) return;
     let endNode = `入菩萨行论第${parseInt(match[1]) + 1}节课`
 
-    if (targetName == '入菩萨行论第14节课') {
+    if (targetName == '入菩萨行论第1节课') {
+        endNode = `p45`
+    } else if (targetName == '入菩萨行论第14节课') {
         endNode = `p833`
     } else if (targetName == '入菩萨行论第28节课') {
         endNode = `p841`

@@ -24,6 +24,11 @@ export default function Playlist() {
         setUrltext(urls)
     }
     const buildSrc = (url) => url.split('@')[0].replace('^', '#t=')
+    const updatePlaylist = () => {
+        if (urltext?.join() != urls?.join()) {
+            window.location.replace(`/playlist?urls=${urltext.join('|')}`)
+        }
+    }
 
     useEffect(() => {
         if (!urlsParam && uriParam) {
@@ -37,10 +42,7 @@ export default function Playlist() {
     }, [current])
 
     useEffect(() => {
-        if (urltext?.join() != urls?.join()) {
-            window.location.replace(`/playlist?urls=${urltext.join('|')}`)
-        }
-
+        updatePlaylist()
     }, [edit])
 
     const changeSrc = (e) => {
@@ -100,8 +102,8 @@ export default function Playlist() {
             }
             let hour = parseInt(duration)
             setTotalDuration(`时长：${hour ? hour + '小时' : ''}${Math.round((duration - hour) * 60)}分钟`)
-
             setUrltext(videoUrls)
+            updatePlaylist()
         };
 
         useEffect(() => {

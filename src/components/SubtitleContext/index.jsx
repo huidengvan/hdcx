@@ -31,7 +31,7 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
     const wraperRef = useRef(null);
     let endTime = parseTime(src?.split(',')[1])
     let matchRxl = videoSrc.match(/入行论广解(\d+)课/);
-    let keqianTime = 83;
+    let keqianTime = 88;
     let kehouTime = 125;
     let audoReadTab, rxlTimeDifference;
 
@@ -110,7 +110,7 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
             rxlTimeDifference = videoRef.current?.duration - 2870
             // 课诵念完，打开新标签页
             setTimeout(() => {
-                audoReadTab = window.open(`/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${Math.ceil(videoRef.current.duration) - keqianTime}#入菩萨行论第${parseInt(matchRxl[1])}节课`);
+                audoReadTab = window.open(`/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${Math.ceil(videoRef.current.duration) - keqianTime - kehouTime}#入菩萨行论第${parseInt(matchRxl[1])}节课`);
             }, keqianTime * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
         }
 
@@ -149,14 +149,7 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
         };
 
         const handleKeyDown = (event) => {
-            if (event.key === 'p' || event.key === 'P') {
-                if (videoRef.current.paused)
-                    videoRef.current.play()
-                else
-                    videoRef.current.pause();
-            } else if (event.key === 't' || event.key === 'T') {
-                subFullscreen()
-            } else if (event.key === 'ArrowLeft') { // 左箭头
+            if (event.key === 'ArrowLeft') { // 左箭头
                 ulRef.current.scrollBy(0, 30 - window.innerHeight);
             } else if (event.key === 'ArrowRight') { // 右箭头
                 ulRef.current.scrollBy(0, window.innerHeight - 30);
@@ -164,18 +157,12 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
                 video.currentTime = Math.max(0, videoRef.current.currentTime - 10);  // 上箭头后退10s
             } else if (event.key === 'ArrowDown') {
                 videoRef.current.currentTime += 30; // 下箭头前进30s
-            } else if (event.key === '1') {
+            } else if (event.altKey && event.key === '1') {
                 videoRef.current.playbackRate = 1
                 localStorage.setItem('playbackRate', 1)
-            } else if (event.key === '2') {
+            } else if (event.altKey && event.key === '2') {
                 videoRef.current.playbackRate = 2
                 localStorage.setItem('playbackRate', 2)
-            } else if (event.key === 'j' && currentSubtitleIndex < subtitles.length - 1) {
-                setCurrentSubtitleIndex(currentSubtitleIndex + 1)
-                videoRef.current.currentTime = parseTime(subtitles[currentSubtitleIndex + 1].startTime)
-            } else if (event.key === 'k' && currentSubtitleIndex > 0) {
-                setCurrentSubtitleIndex(currentSubtitleIndex - 1)
-                videoRef.current.currentTime = parseTime(subtitles[currentSubtitleIndex - 1].startTime)
             }
         };
 
