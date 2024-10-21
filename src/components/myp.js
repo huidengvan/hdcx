@@ -54,6 +54,10 @@ export default class MyPara extends React.Component {
         let targetNode = getTargetNode()
         if (!targetNode || !/\d+/.test(location.hash?.slice(1))) return;
         let nextPara = parseInt(targetNode.name.slice(1)) + 1
+
+        if (`p${nextPara}` == getRxlEndNode()?.name) {
+            this.autoPage = false
+        }
         location.hash = `p${nextPara}`
     }
 
@@ -75,9 +79,11 @@ export default class MyPara extends React.Component {
     handleHashChange() {
         let targetNode = getTargetNode()
         if (targetNode) {
-            const offset = window.innerHeight / 2 - targetNode.clientHeight / 2 - 200;
+            const targetRect = targetNode.getBoundingClientRect();
+            const offset = window.innerHeight / 2;
+            const targetScrollPosition = window.scrollY + targetRect.top - offset;
             window.scrollTo({
-                top: targetNode.getBoundingClientRect().top + window.scrollY - offset
+                top: targetScrollPosition,
             });
         }
     }

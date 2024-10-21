@@ -32,7 +32,7 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
     let endTime = parseTime(src?.split(',')[1])
     let matchRxl = videoSrc.match(/入行论广解(\d+)课/);
     let keqianTime = 88;
-    let kehouTime = 125;
+    let kehouTime = 140;
     let audoReadTab, rxlTimeDifference;
 
     const copyText = async (text) => {
@@ -108,10 +108,22 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
 
         if (matchRxl && !audoReadTab) {
             rxlTimeDifference = videoRef.current?.duration - 2870
+            let tabUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${Math.ceil(videoRef.current.duration) - keqianTime - kehouTime}#入菩萨行论第${parseInt(matchRxl[1])}节课`
+
             // 课诵念完，打开新标签页
             setTimeout(() => {
-                audoReadTab = window.open(`/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${Math.ceil(videoRef.current.duration) - keqianTime - kehouTime}#入菩萨行论第${parseInt(matchRxl[1])}节课`);
+                audoReadTab = window.open(tabUrl);
+                // console.log(audoReadTab);
             }, keqianTime * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
+
+            setTimeout(() => {
+                if (!audoReadTab) {
+                    const userConfirmed = confirm('如需开启自动阅读，请允许打开新标签');
+                    if (userConfirmed) {
+                        window.open(tabUrl);
+                    }
+                }
+            }, 1000)
         }
 
         setSubtitles([])
