@@ -133,18 +133,17 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
         const handleTimeUpdate = () => {
             let currentTime = video?.currentTime;
             if (currentTime != null) {
-                if (matchRxl && duration - currentTime <= kehouTime) {
-                    currentTime -= rxlTimeDifference
-                    // 关闭新标签页
-                    if (!audoReadTab?.closed) audoReadTab?.close();
-                }
                 if (currentTime >= parseTime(subtitles[currentSubtitleIndex + 1]?.startTime)
                     && currentSubtitleIndex < subtitles.length - 1) {
                     setCurrentSubtitleIndex(currentSubtitleIndex + 1);
                     scrollSubtitleToView(currentSubtitleIndex);
                 }
 
-
+                if (matchRxl && video.duration - currentTime <= kehouTime) {
+                    currentTime -= rxlTimeDifference
+                    // 关闭新标签页
+                    if (!audoReadTab?.closed) audoReadTab?.close();
+                }
                 // 当播放时间超过 endTime 时，切换到下一个视频
                 // console.log(currentTime, endTime, video.duration)
                 if (currentTime >= (endTime || video.duration)) {
@@ -192,7 +191,7 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
         if (parentElement) {
             parentElement.scroll({
                 behavior: 'auto',
-                top: subtitleElement?.offsetTop - (parentElement?.clientHeight - subtitleElement?.clientHeight) / 2
+                top: subtitleElement?.offsetTop - 60 - (parentElement?.clientHeight - subtitleElement?.clientHeight) / 2
             });
         }
     };
