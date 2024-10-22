@@ -38,11 +38,17 @@
     cursor: pointer;
     list-style: none;
     max-width: fit-content;
+    display: flex;
 }
 
 .item>ul>li>span {
     display: inline-block;
     max-width: 100%;
+}
+
+.item>ul>li>p {
+    /* 保留换行符并自动换行 */
+    white-space: pre-wrap;
 }
 
 .current-line {

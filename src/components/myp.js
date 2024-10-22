@@ -116,6 +116,7 @@ export default class MyPara extends React.Component {
         // console.log({ endNode });
         if (!endNode) return;
 
+        endNode = filterFootnote(endNode)
         endNode?.name && (this.endNodeName = endNode.name)
         let totalWordCount = startNode.parentElement.lastChild.length;
 
@@ -233,9 +234,7 @@ function getRxlEndNode() {
     if (!match) return;
     let endNode = `入菩萨行论第${parseInt(match[1]) + 1}节课`
 
-    if (targetName == '入菩萨行论第1节课') {
-        endNode = `p45`
-    } else if (targetName == '入菩萨行论第14节课') {
+    if (targetName == '入菩萨行论第14节课') {
         endNode = `p833`
     } else if (targetName == '入菩萨行论第28节课') {
         endNode = `p841`
@@ -262,5 +261,21 @@ function getRxlEndNode() {
         return document.querySelector(`a[name="${endNode}"]`)
     }
     return document.getElementById(endNode)?.previousElementSibling?.firstElementChild
+
+}
+
+function filterFootnote(node) {
+    if (!node) return;
+
+    if (node.parentElement.previousElementSibling.tagName === 'HR') {
+
+        return node.parentElement.previousElementSibling?.previousElementSibling.firstChild
+    }
+
+    if (!/\[\d+\]/.test(node.nextSibling?.textContent)) {
+        return node
+    }
+
+    return filterFootnote(node.parentElement.previousElementSibling.firstChild)
 
 }
