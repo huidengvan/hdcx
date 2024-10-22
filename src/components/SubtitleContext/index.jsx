@@ -102,11 +102,9 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
                         wraperRef.current.parentElement.style.flexDirection = 'column'
                     }
                 });
-        } else {
-            wraperRef.current.parentElement.style.flexDirection = 'row'
         }
 
-        if (matchRxl && !audoReadTab) {
+        if (typeof window.orientation === 'undefined' && matchRxl && !audoReadTab) {
             rxlTimeDifference = videoRef.current?.duration - 2870
             // 课诵念完，打开新标签页
             setTimeout(() => {
@@ -118,10 +116,11 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
                 }
 
                 if (!audoReadTab) {
-                    alert('如需开启自动阅读，请允许打开新标签');
+                    confirm('如需开启自动阅读，请允许打开新标签');
                 }
             }, keqianTime * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
         }
+
 
         setSubtitles([])
 
@@ -134,7 +133,7 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
         const handleTimeUpdate = () => {
             let currentTime = video?.currentTime;
             if (currentTime != null) {
-                if (matchRxl && currentTime > 2000 && duration - currentTime - kehouTime <= 0) {
+                if (matchRxl && duration - currentTime <= kehouTime) {
                     currentTime -= rxlTimeDifference
                     // 关闭新标签页
                     if (!audoReadTab?.closed) audoReadTab?.close();
@@ -148,7 +147,7 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
 
                 // 当播放时间超过 endTime 时，切换到下一个视频
                 // console.log(currentTime, endTime, video.duration)
-                if (currentTime >= (endTime || video.duration) - 1) {
+                if (currentTime >= (endTime || video.duration)) {
                     // 执行切换到下一个视频的操作
                     setCurrent(prev => prev + 1)
                     // console.log("Switching to next video");

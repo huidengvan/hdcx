@@ -50,76 +50,6 @@ export default function Playlist() {
         setCurrent(value - 1)
     }
 
-    const Duration = () => {
-        const [totalDuration, setTotalDuration] = useState('');
-
-        let videoUrls = urltext
-        const calculateTotalDuration = async () => {
-            let t = 0
-            let matchRxl
-            for (let i = 0; i < videoUrls.length; i++) {
-                const item = videoUrls[i];
-
-                if (!matchRxl) {
-                    matchRxl = item.includes('入行论辅导');
-                }
-
-                if (item.includes('五分钟')) {
-                    t -= 312
-                }
-
-                if (!item?.includes('^')) {
-                    let url = item?.split('@')[0];
-                    console.log('fetch video meta');
-
-                    let duration = await getVideoDuration(url);
-                    if (duration > 0) {
-                        t += Math.ceil(duration);
-                        videoUrls[i] = `${item?.split('@')[0]}^0,${Math.ceil(duration)}${item?.split('@').length > 1 ? '@' + item?.split('@')[1] : ''}`
-                    }
-                } else {
-                    const times = item.split('^')[1].split('@')[0].split(',');
-                    t += (parseTime(times[1]) - parseTime(times[0]));
-                }
-            }
-
-            let duration = parseFloat((t / 3600).toFixed(2));
-            if (matchRxl) {
-                if (duration < 2.5) {
-                    let rest3minutes = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/恒常念诵愿文.mp4^0,3:26@恒常念诵愿文（休息三分钟）`
-                    let meditation = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/4jx/smwc.mp4^0,1:01:16@寿命无常观修 1 小时`
-                    videoUrls.splice(urltext.length - 1, 0, rest3minutes)
-                    videoUrls.splice(urltext.length - 1, 0, meditation)
-                    duration += 1.1
-                    console.log(`添加打坐视频`);
-                } else if (duration >= 2.5 && duration <= 3 && !videoUrls[videoUrls.length - 2].includes('讨论')) {
-                    rest = videoUrls.length - 1
-                    console.log('添加暂停讨论');
-                    videoUrls.splice(urltext.length - 1, 0, `^0,0@讨论${parseInt((3 - duration) * 60 - 4)}分钟`)
-                    duration = 3
-
-                }
-            }
-            let hour = parseInt(duration)
-            setTotalDuration(`时长：${hour ? hour + '小时' : ''}${Math.round((duration - hour) * 60)}分钟`)
-            setUrltext(videoUrls)
-            updatePlaylist()
-        };
-
-        useEffect(() => {
-
-            videoUrls && calculateTotalDuration();
-        }, []);
-
-        return (
-            <>
-                {totalDuration &&
-                    <span style={{ marginLeft: '1rem', fontSize: '12px' }}>
-                        {totalDuration}
-                    </span>}
-            </>
-        );
-    };
 
     return (
         <div className={styles.root}>
@@ -142,7 +72,7 @@ export default function Playlist() {
                             </svg>
                             {!urltext && ' 点击编辑'}
                         </span>
-                        <Duration />
+                        <Duration urltext={urltext} setUrltext={setUrltext} />
                     </span>
                 </summary>
                 {edit ?
@@ -166,6 +96,78 @@ export default function Playlist() {
     )
 }
 
+const Duration = ({urltext, setUrltext}) => {
+    const [totalDuration, setTotalDuration] = useState('');
+
+    let videoUrls = urltext
+    const calculateTotalDuration = async () => {
+        let t = 0
+        let matchRxl
+        for (let i = 0; i < videoUrls.length; i++) {
+            const item = videoUrls[i];
+
+            if (!matchRxl) {
+                matchRxl = item.includes('入行论辅导');
+            }
+
+            if (item.includes('五分钟')) {
+                t -= 312
+            }
+
+            if (!item?.includes('^')) {
+                let url = item?.split('@')[0];
+                console.log('fetch video meta');
+
+                let duration = await getVideoDuration(url);
+                if (duration > 0) {
+                    t += duration;
+                    videoUrls[i] = `${item?.split('@')[0]}^0,${duration}${item?.split('@').length > 1 ? '@' + item?.split('@')[1] : ''}`
+                }
+            } else {
+                const times = item.split('^')[1].split('@')[0].split(',');
+                t += (parseTime(times[1]) - parseTime(times[0]));
+            }
+        }
+
+        let duration = parseFloat((t / 3600).toFixed(2));
+        if (matchRxl) {
+            if (duration < 2.5) {
+                let rest3minutes = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/恒常念诵愿文.mp4^0,3:26@恒常念诵愿文（休息三分钟）`
+                let meditation = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/4jx/smwc.mp4^0,1:01:16@寿命无常观修 1 小时`
+                videoUrls.splice(urltext.length - 1, 0, rest3minutes)
+                videoUrls.splice(urltext.length - 1, 0, meditation)
+                duration += 1.1
+                console.log(`添加打坐视频`);
+            } else if (duration >= 2.5 && duration <= 3 && !videoUrls[videoUrls.length - 2].includes('讨论')) {
+                rest = videoUrls.length - 1
+                console.log('添加暂停讨论');
+                videoUrls.splice(urltext.length - 1, 0, `^0,0@讨论${parseInt((3 - duration) * 60 - 4)}分钟`)
+                duration = 3
+
+            }
+        }
+        let hour = parseInt(duration)
+        setTotalDuration(`时长：${hour ? hour + '小时' : ''}${Math.round((duration - hour) * 60)}分钟`)
+        setUrltext(videoUrls)
+        // updatePlaylist()
+        console.log('--计算列表时长--', { duration });
+    };
+
+    useEffect(() => {
+        calculateTotalDuration();
+    }, []);
+
+    return (
+        <>
+            {totalDuration &&
+                <span style={{ marginLeft: '1rem', fontSize: '12px' }}>
+                    {totalDuration}
+                </span>}
+        </>
+    );
+};
+
+
 export async function getVideoDuration(videoUrl) {
     return new Promise((resolve, reject) => {
         const video = document.createElement('video');
@@ -174,7 +176,7 @@ export async function getVideoDuration(videoUrl) {
         video.src = videoUrl;
 
         video.onloadedmetadata = () => {
-            resolve(video.duration); // 获取视频时长
+            resolve(Math.ceil(video.duration)); // 获取视频时长
             video.pause(); // 可选：暂停视频
             video.src = ''; // 释放资源
         };
