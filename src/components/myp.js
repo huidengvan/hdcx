@@ -16,11 +16,12 @@ export default class MyPara extends React.Component {
         ];
         this.colorIndex = -1;
         this.autoPage = false;
-        this.endNodeName = null;
+        this.currentPara = null;
+        this.endPara = null;
         this.duration = null;
     }
 
-    handleFullscreen = () => {
+    handleFullscreen() {
         if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen();
         } else {
@@ -28,7 +29,8 @@ export default class MyPara extends React.Component {
         }
         this.handleWidescreen()
     }
-    handleWidescreen = () => {
+
+    handleWidescreen() {
         if (this.navRef.style.display !== 'none') {
             // console.log('宽屏阅读模式');
             this.navRef.style.display = 'none'; // 隐藏导航
@@ -43,42 +45,30 @@ export default class MyPara extends React.Component {
         }
     }
 
+    getTrgetNode = () => document.querySelector(`a[name="p${this.currentPara}"]`)
+
     prevParagraph = () => {
-        let targetNode = getTargetNode()
-        if (!targetNode || location.hash?.slice(2) == 1) return;
-        let nextPara = parseInt(targetNode.name.slice(1)) - 1
-        location.hash = `p${nextPara}`
+        let targetNode = this.getTrgetNode()
+        if (!targetNode || this.currentPara === 1) return;
+        this.currentPara -= 1
+        this.locateParagraph()
+        targetNode.parentElement.style.borderLeft = 'none'
     }
 
     nextParagraph = () => {
-        let targetNode = getTargetNode()
-        if (!targetNode || !/\d+/.test(location.hash?.slice(1))) return;
-        let nextPara = parseInt(targetNode.name.slice(1)) + 1
-
-        if (`p${nextPara}` == this.endNodeName) {
+        let targetNode = this.getTrgetNode()
+        if (!targetNode || this.currentPara == this.endPara) {
             this.autoPage = false
             console.log(`自动阅读停止`);
+        } else {
+            targetNode.parentElement.style.borderLeft = '0.5px solid #2e8555'
+            this.currentPara += 1
+            this.locateParagraph()
         }
-        location.hash = `p${nextPara}`
     }
 
-    autoNextParagraph = (speed) => {
-        if (this.autoPage === false) {
-            return;
-        }
-        let targetNode = getTargetNode()
-        const textLength = targetNode.nextSibling.length;
-        const pagiTime = Math.round(textLength / speed);
-        // console.log(`${targetNode.name}文本长度为: ${textLength} 停留时间为: ${pagiTime}秒`);
-        setTimeout(() => {
-            this.nextParagraph()
-            this.autoNextParagraph(speed)
-        }, pagiTime * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
-
-    }
-
-    handleHashChange() {
-        let targetNode = getTargetNode()
+    locateParagraph() {
+        let targetNode = this.getTrgetNode()
         if (targetNode) {
             const targetRect = targetNode.getBoundingClientRect();
             const offset = window.innerHeight / 2;
@@ -88,6 +78,22 @@ export default class MyPara extends React.Component {
             });
         }
     }
+
+    autoNextParagraph = (speed) => {
+        if (this.autoPage === false) {
+            return;
+        }
+        let targetNode = this.getTrgetNode()
+
+        const textLength = targetNode.nextSibling.length;
+        const pagiTime = Math.round(textLength / speed);
+        // console.log(`${targetNode.name}文本长度为: ${textLength} 停留时间为: ${pagiTime}秒`);
+        setTimeout(() => {
+            this.nextParagraph()
+            this.autoNextParagraph(speed)
+        }, pagiTime * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
+    }
+
     async autoPaginate() {
         let speed = await this.calcAudioSpeed()
 
@@ -111,13 +117,14 @@ export default class MyPara extends React.Component {
      * @returns 语速：秒/字
      */
     async calcAudioSpeed() {
-        const startNode = getTargetNode(); // 开始段落的a节点
+        const startNode = getStartNode(); // 开始段落的a节点
         let endNode = getRxlEndNode() // 结束段落的a节点
         // console.log({ endNode });
         if (!endNode) return;
 
         endNode = filterFootnote(endNode)
-        endNode?.name && (this.endNodeName = endNode.name)
+        startNode?.name && (this.currentPara = parseInt(startNode.name?.slice(1)))
+        endNode?.name && (this.endPara = parseInt(endNode.name?.slice(1)))
         let totalWordCount = startNode.parentElement.lastChild.length;
 
         if (startNode && endNode) {
@@ -171,7 +178,6 @@ export default class MyPara extends React.Component {
         }
         window.addEventListener('keydown', this.handleKeyDown);
         document.addEventListener('dblclick', this.handleFullscreen);
-        window.addEventListener('hashchange', this.handleHashChange);
     }
 
     componentWillUnmount() {
@@ -183,10 +189,10 @@ export default class MyPara extends React.Component {
             this.handleWidescreen()
         } else if (event.altKey && (event.key === 'f' || event.key === 'F')) {
             event.preventDefault()
-            handleFullscreen()
-        } else if (event.altKey && event.key === 'j') {
+            this.handleFullscreen()
+        } else if (event.altKey && event.key === 'ArrowDown') {
             this.nextParagraph()
-        } else if (event.altKey && event.key === 'k') {
+        } else if (event.altKey && event.key === 'ArrowUp') {
             this.prevParagraph()
         } else if (event.altKey && (event.key === 'a' || event.key === 'A')) {
             event.preventDefault()
@@ -219,7 +225,7 @@ function createElementFromHTML(htmlString) {
     return div.firstChild;
 }
 
-function getTargetNode() {
+function getStartNode() {
     let targetName = location.hash.substring(1)
     if (/p\d+/.test(targetName)) {
         return document.querySelector(`a[name="${targetName}"]`)

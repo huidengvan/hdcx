@@ -31,6 +31,7 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
     const wraperRef = useRef(null);
     let endTime = parseTime(src?.split(',')[1])
     let matchRxl = videoSrc.match(/入行论广解(\d+)课/);
+    let matchRxlQa = /入行论广解\d+-\d+课问答/.test(src)
     let keqianTime = 88;
     let kehouTime = 140;
     let audoReadTab;
@@ -80,14 +81,18 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
         videoRef.current.src = videoSrc
 
         if (videoRef.current) {
-            setTimeout(() => videoRef.current.play(), 1000)
+            try {
+                videoRef.current.play()
+            } catch (error) {
+                // console.error('Playback failed:', error);
+            }
         }
 
-        if (subPath || matchRxl) {
+        if (subPath || (matchRxl || matchRxlQa)) {
             let videoName = videoSrc.substring(videoSrc.lastIndexOf('/') + 1)
-            let suburl = matchRxl ?
+            let suburl = subPath ?
+                `${subPath}${videoName.replace(/\.[^/.]+$/, '.srt')}` :
                 `https://box.hdcxb.net/d/慧灯禅修/001-入行论释/fudao/入行论辅导字幕（课诵部分）.srt`
-                : `${subPath}${videoName.replace(/\.[^/.]+$/, '.srt')}`
             // console.log(`fetch suxbtitle from ${suburl}`);
             fetch(suburl)
                 .then(response => {
@@ -126,37 +131,46 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
     }, [src]);
 
     useEffect(() => {
+        let timer;
         const video = videoRef.current;
         video.playbackRate = localStorage.getItem('playbackRate') || 1
-        let rxlTimeDifference = videoRef.current?.duration - 2870
-
+        setTimeout(() => {
+            if (!endTime || video?.duration - endTime < 1) {
+                endTime = video.duration;
+            }
+        }, 3000);
         const handleTimeUpdate = () => {
             let currentTime = video?.currentTime;
             if (currentTime != null) {
-                if (matchRxl && currentTime > 84 && video?.duration - currentTime > kehouTime) {
+                // 当播放时间超过处于正文时
+                if ((matchRxl || matchRxlQa) && currentTime > 84 && video?.duration - currentTime > kehouTime) {
                     return;
                 }
 
-                if (matchRxl && video?.duration - currentTime <= kehouTime) {
-                    currentTime -= rxlTimeDifference
+                // 当播放时间超过 endTime 时，切换到下一个视频
+                if (currentTime > endTime - 1) {
+                    // console.log(currentTime, endTime, video.duration)
+                    // 执行切换到下一个视频的操作
+                    clearTimeout(timer)
+                    timer = setTimeout(() => {
+                        // console.log("Switching to next video");
+                        setCurrent(prev => prev + 1)
+                        endTime = undefined
+                    }, 1000);
+                } else if ((matchRxl || matchRxlQa) && video?.duration - currentTime <= kehouTime) {
+                    currentTime = matchRxlQa ?
+                        currentTime - (video?.duration - 2743) + 116 :
+                        currentTime - (video?.duration - 2870)
 
                     // 关闭新标签页
                     if (!audoReadTab?.closed) audoReadTab?.close();
+                    console.log(currentTime);
                 }
 
                 if (currentTime >= parseTime(subtitles[currentSubtitleIndex + 1]?.startTime)
                     && currentSubtitleIndex < subtitles.length - 1) {
                     setCurrentSubtitleIndex(currentSubtitleIndex + 1);
                     scrollSubtitleToView(currentSubtitleIndex);
-                }
-
-                // 当播放时间超过 endTime 时，切换到下一个视频
-                // console.log(currentTime, endTime, video.duration)
-                if (currentTime >= (endTime || video.duration)) {
-                    // 执行切换到下一个视频的操作
-                    setCurrent(prev => prev + 1)
-                    // console.log("Switching to next video");
-                    endTime = undefined
                 }
             }
         };
@@ -205,7 +219,8 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
 
     return (
         <div ref={wraperRef} className={styles['subtitle-container']}>
-            <video ref={videoRef} style={{ minWidth: '50%', maxHeight: '640px' }} controls>
+            <video ref={videoRef}
+                style={{ minWidth: '50%', maxHeight: '640px' }} controls>
                 <source src={`${videoSrc}`} type="video/mp4" />
             </video>
             {subtitles.length > 0 &&

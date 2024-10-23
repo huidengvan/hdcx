@@ -96,7 +96,7 @@ export default function Playlist() {
     )
 }
 
-const Duration = ({urltext, setUrltext}) => {
+const Duration = ({ urltext, setUrltext }) => {
     const [totalDuration, setTotalDuration] = useState('');
 
     let videoUrls = urltext
@@ -149,8 +149,7 @@ const Duration = ({urltext, setUrltext}) => {
         let hour = parseInt(duration)
         setTotalDuration(`时长：${hour ? hour + '小时' : ''}${Math.round((duration - hour) * 60)}分钟`)
         setUrltext(videoUrls)
-        // updatePlaylist()
-        console.log('--计算列表时长--', { duration });
+        // console.log('--计算列表时长--', duration);
     };
 
     useEffect(() => {
@@ -176,7 +175,7 @@ export async function getVideoDuration(videoUrl) {
         video.src = videoUrl;
 
         video.onloadedmetadata = () => {
-            resolve(Math.ceil(video.duration)); // 获取视频时长
+            resolve(Math.floor(video.duration)); // 获取视频时长
             video.pause(); // 可选：暂停视频
             video.src = ''; // 释放资源
         };
