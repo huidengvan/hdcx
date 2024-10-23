@@ -1,6 +1,7 @@
 import React from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
+const ignoredCharacters = /[【】〖〗\[\]《》：:"'“”]/g;
 export default class MyPara extends React.Component {
     constructor() {
         super();
@@ -40,8 +41,8 @@ export default class MyPara extends React.Component {
             document.body.style.scale = '1'
         }
 
-        if (window.location.hash) {
-            window.location = window.location.href;
+        if (this.currentPara) {
+            this.locateParagraph()
         }
     }
 
@@ -61,7 +62,7 @@ export default class MyPara extends React.Component {
             this.autoPage = false
             console.log(`自动阅读停止`);
         } else {
-            targetNode.parentElement.style.borderLeft = '0.5px solid #2e8555'
+            targetNode.parentElement.nextElementSibling.style.borderLeft = '0.5px solid #2e8555'
             this.currentPara += 1
             this.locateParagraph()
         }
@@ -85,7 +86,7 @@ export default class MyPara extends React.Component {
         }
         let targetNode = this.getTrgetNode()
 
-        const textLength = targetNode.nextSibling.length;
+        const textLength = targetNode.nextSibling?.textContent.replace(ignoredCharacters, '').length;
         const pagiTime = Math.round(textLength / speed);
         // console.log(`${targetNode.name}文本长度为: ${textLength} 停留时间为: ${pagiTime}秒`);
         setTimeout(() => {
@@ -104,8 +105,8 @@ export default class MyPara extends React.Component {
         }
 
         if (speed > 1) {
-            this.handleWidescreen()
             this.autoNextParagraph(speed)
+            this.handleWidescreen()
             toast(`${this.autoPage ? '开始' : '暂停'}自动阅读`);
             console.log(`${this.autoPage ? '开始' : '暂停'}自动阅读`);
             console.log('text speed', speed);
@@ -121,11 +122,12 @@ export default class MyPara extends React.Component {
         let endNode = getRxlEndNode() // 结束段落的a节点
         // console.log({ endNode });
         if (!endNode) return;
-
+        startNode.parentElement.nextElementSibling.style.borderLeft = '0.5px solid #2e8555'
+        // 定义要忽略的字符
         endNode = filterFootnote(endNode)
         startNode?.name && (this.currentPara = parseInt(startNode.name?.slice(1)))
         endNode?.name && (this.endPara = parseInt(endNode.name?.slice(1)))
-        let totalWordCount = startNode.parentElement.lastChild.length;
+        let totalWordCount = startNode.parentElement.lastChild?.textContent.replace(ignoredCharacters, '').length;
 
         if (startNode && endNode) {
             // 创建一个临时元素来获取 startNode 和 endNode 之间的所有文本
@@ -133,7 +135,7 @@ export default class MyPara extends React.Component {
             // 遍历 startNode 和 endNode 之间的所有节点
             // parseInt(currentNode?.name?.slice(1)), parseInt(endNode?.name?.slice(1))
             while (currentNode && parseInt(currentNode?.name?.slice(1)) < parseInt(endNode?.name?.slice(1))) {
-                totalWordCount += currentNode.parentElement.lastChild.length;
+                totalWordCount += currentNode.parentElement.lastChild?.textContent.replace(ignoredCharacters, '').length;
                 currentNode = currentNode.parentElement.nextSibling.firstChild;
             }
             console.log({ totalWordCount, duration: this.duration }, startNode.name, endNode.name);

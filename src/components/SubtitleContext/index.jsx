@@ -32,7 +32,7 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
     let endTime = parseTime(src?.split(',')[1])
     let matchRxl = videoSrc.match(/入行论广解(\d+)课/);
     let matchRxlQa = /入行论广解\d+-\d+课问答/.test(src)
-    let keqianTime = 88;
+    let keqianTime = 90;
     let kehouTime = 140;
     let audoReadTab;
 
@@ -61,7 +61,11 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
 
     const parseSubtitles = (data) => {
         const subtitlesArray = [];
-        const subtitleLines = data.trim()?.split(new RegExp('\r?\n\r?\n'));
+        let subtitleLines = data.trim()?.split(new RegExp('\r?\n\r?\n'));
+        if(matchRxlQa){
+            subtitleLines =subtitleLines.slice(20)
+        }
+        
         subtitleLines.forEach((line) => {
             const parts = line.trim()?.split(new RegExp('\r?\n'));
             const index = parts[0];
@@ -164,7 +168,6 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
 
                     // 关闭新标签页
                     if (!audoReadTab?.closed) audoReadTab?.close();
-                    console.log(currentTime);
                 }
 
                 if (currentTime >= parseTime(subtitles[currentSubtitleIndex + 1]?.startTime)
