@@ -28,7 +28,7 @@ export default class MyPara extends React.Component {
         } else {
             document.exitFullscreen();
         }
-        this.handleWidescreen()
+        handleWidescreen()
     }
 
     handleWidescreen() {
@@ -57,19 +57,14 @@ export default class MyPara extends React.Component {
     }
 
     nextParagraph = () => {
-        let targetNode = this.getTrgetNode()
-        if (!targetNode || this.currentPara == this.endPara) {
-            this.autoPage = false
-            console.log(`自动阅读停止`);
-        } else {
-            targetNode.parentElement.nextElementSibling.style.borderLeft = '0.5px solid #2e8555'
-            this.currentPara += 1
-            this.locateParagraph()
-        }
+        this.getTrgetNode().parentElement.style.borderLeft = '0.5px solid #2e8555'
+        this.currentPara += 1
+        this.locateParagraph()
     }
 
     locateParagraph() {
         let targetNode = this.getTrgetNode()
+        // console.log(targetNode?.name, '锚点定位');
         if (targetNode) {
             const targetRect = targetNode.getBoundingClientRect();
             const offset = window.innerHeight / 2;
@@ -81,11 +76,12 @@ export default class MyPara extends React.Component {
     }
 
     autoNextParagraph = (speed) => {
-        if (this.autoPage === false) {
+        let targetNode = this.getTrgetNode()
+        if (!targetNode || !this.autoPage || this.currentPara == this.endPara) {
+            this.autoPage = false
+            console.log(this.autoPage, `自动阅读停止`);
             return;
         }
-        let targetNode = this.getTrgetNode()
-
         const textLength = targetNode.nextSibling?.textContent.replace(ignoredCharacters, '').length;
         const pagiTime = Math.round(textLength / speed);
         // console.log(`${targetNode.name}文本长度为: ${textLength} 停留时间为: ${pagiTime}秒`);
@@ -122,7 +118,6 @@ export default class MyPara extends React.Component {
         let endNode = getRxlEndNode() // 结束段落的a节点
         // console.log({ endNode });
         if (!endNode) return;
-        startNode.parentElement.nextElementSibling.style.borderLeft = '0.5px solid #2e8555'
         // 定义要忽略的字符
         endNode = filterFootnote(endNode)
         startNode?.name && (this.currentPara = parseInt(startNode.name?.slice(1)))
@@ -180,6 +175,7 @@ export default class MyPara extends React.Component {
         }
         window.addEventListener('keydown', this.handleKeyDown);
         document.addEventListener('dblclick', this.handleFullscreen);
+        document.addEventListener('fullscreenchange', this.locateParagraph);
     }
 
     componentWillUnmount() {
@@ -192,17 +188,19 @@ export default class MyPara extends React.Component {
         } else if (event.altKey && (event.key === 'f' || event.key === 'F')) {
             event.preventDefault()
             this.handleFullscreen()
-        } else if (event.altKey && event.key === 'ArrowDown') {
-            this.nextParagraph()
-        } else if (event.altKey && event.key === 'ArrowUp') {
-            this.prevParagraph()
         } else if (event.altKey && (event.key === 'a' || event.key === 'A')) {
             event.preventDefault()
             this.autoPaginate()
         } else if (event.key === 'ArrowUp') {
-            window.scrollBy(0, -window.innerHeight / 4);
+            event.preventDefault()
+            this.autoPage ?
+                this.prevParagraph() :
+                window.scrollBy(0, -window.innerHeight / 4);
         } else if (event.key === 'ArrowDown') {
-            window.scrollBy(0, window.innerHeight / 4);
+            event.preventDefault()
+            this.autoPage ?
+                this.nextParagraph() :
+                window.scrollBy(0, window.innerHeight / 4);
         } else if (event.key === 'ArrowLeft') {
             event.preventDefault()
             window.scrollBy(0, 50 - window.innerHeight);

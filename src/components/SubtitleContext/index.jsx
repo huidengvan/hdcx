@@ -19,9 +19,10 @@ export const parseTime = (timeString) => {
     return hours * 3600 + minutes * 60 + (seconds || 0);
 };
 
-const VideoPlayer = ({ src, setCurrent, subPath }) => {
+const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
     const baseUrl = location.hash.includes('http') ? '' : 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/';
-    let videoSrc = src || `${baseUrl}${location.hash.slice(1)}`;
+    let videoSrc = (src === undefined ? `${baseUrl}${location.hash.slice(1)}` : src);
+
     const [subtitles, setSubtitles] = useState([]);
     const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(-1);
     const [showtime, setShowtime] = useState(localStorage.getItem('showtime') !== 'false');
@@ -30,11 +31,10 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
     const ulRef = useRef(null);
     const wraperRef = useRef(null);
     let endTime = parseTime(src?.split(',')[1])
-    let matchRxl = videoSrc.match(/入行论广解(\d+)课/);
+    let matchRxl = videoSrc?.match(/入行论广解(\d+)课/);
     let matchRxlQa = /入行论广解\d+-\d+课问答/.test(src)
     let keqianTime = 90;
     let kehouTime = 140;
-    let audoReadTab;
 
     const copyText = async (text) => {
         const msgEl = document.querySelector(`.${styles['subtitle-switch']}`);
@@ -62,10 +62,10 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
     const parseSubtitles = (data) => {
         const subtitlesArray = [];
         let subtitleLines = data.trim()?.split(new RegExp('\r?\n\r?\n'));
-        if(matchRxlQa){
-            subtitleLines =subtitleLines.slice(20)
+        if (matchRxlQa) {
+            subtitleLines = subtitleLines.slice(20)
         }
-        
+
         subtitleLines.forEach((line) => {
             const parts = line.trim()?.split(new RegExp('\r?\n'));
             const index = parts[0];
@@ -82,17 +82,23 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
         document.querySelector('main').firstChild.removeAttribute('class')
         document.querySelector('article').parentElement.removeAttribute('class')
         document.querySelector('footer').style.display = 'none'
-        videoRef.current.src = videoSrc
+        // videoRef.current.src = videoSrc
 
         if (videoRef.current) {
+            let isMp4 = /\.(mp4|webm)/.test(videoSrc)
             try {
                 videoRef.current.play()
+                if (current != 0 && isMp4) {
+                    !document.fullscreenElement && videoRef.current.requestFullscreen()
+                } else {
+                    document.fullscreenElement && document.exitFullscreen()
+                }
             } catch (error) {
                 // console.error('Playback failed:', error);
             }
         }
 
-        if (subPath || (matchRxl || matchRxlQa)) {
+        if (subPath || matchRxl || matchRxlQa) {
             let videoName = videoSrc.substring(videoSrc.lastIndexOf('/') + 1)
             let suburl = subPath ?
                 `${subPath}${videoName.replace(/\.[^/.]+$/, '.srt')}` :
@@ -111,16 +117,22 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
                         wraperRef.current.parentElement.style.flexDirection = 'column'
                     }
                 });
+        } else {
+            wraperRef.current.parentElement.style.flexDirection = 'row'
         }
 
-        if (typeof window.orientation === 'undefined' && matchRxl && !audoReadTab) {
+        if (typeof window.orientation === 'undefined' && matchRxl) {
             // 课诵念完，打开新标签页
             setTimeout(() => {
                 let duration = Math.ceil(videoRef.current.duration) - keqianTime - kehouTime
                 let tabUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${duration}#入菩萨行论第${parseInt(matchRxl[1])}节课`
+                let audoReadTab;
 
                 if (duration) {
                     audoReadTab = window.open(tabUrl);
+                    setTimeout(() => {
+                        audoReadTab?.close()
+                    }, (duration + 2) * 1000);
                 }
 
                 if (!audoReadTab) {
@@ -132,11 +144,13 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
 
         setSubtitles([])
 
-    }, [src]);
+    }, [videoSrc]);
 
     useEffect(() => {
         let timer;
         const video = videoRef.current;
+        if (!video) return;
+
         video.playbackRate = localStorage.getItem('playbackRate') || 1
         setTimeout(() => {
             if (!endTime || video?.duration - endTime < 1) {
@@ -147,12 +161,12 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
             let currentTime = video?.currentTime;
             if (currentTime != null) {
                 // 当播放时间超过处于正文时
-                if ((matchRxl || matchRxlQa) && currentTime > 84 && video?.duration - currentTime > kehouTime) {
+                if ((matchRxl || matchRxlQa) && currentTime > keqianTime && video?.duration - currentTime > kehouTime) {
                     return;
                 }
 
                 // 当播放时间超过 endTime 时，切换到下一个视频
-                if (currentTime > endTime - 1) {
+                if (videoSrc !== 'blank' && currentTime > endTime - 1) {
                     // console.log(currentTime, endTime, video.duration)
                     // 执行切换到下一个视频的操作
                     clearTimeout(timer)
@@ -165,9 +179,6 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
                     currentTime = matchRxlQa ?
                         currentTime - (video?.duration - 2743) + 116 :
                         currentTime - (video?.duration - 2870)
-
-                    // 关闭新标签页
-                    if (!audoReadTab?.closed) audoReadTab?.close();
                 }
 
                 if (currentTime >= parseTime(subtitles[currentSubtitleIndex + 1]?.startTime)
@@ -222,10 +233,12 @@ const VideoPlayer = ({ src, setCurrent, subPath }) => {
 
     return (
         <div ref={wraperRef} className={styles['subtitle-container']}>
-            <video ref={videoRef}
-                style={{ minWidth: '50%', maxHeight: '640px' }} controls>
-                <source src={`${videoSrc}`} type="video/mp4" />
-            </video>
+            {videoSrc && <video ref={videoRef}
+                src={videoSrc}
+                style={{ minWidth: '50%', maxHeight: '640px' }}
+                controls
+            >
+            </video>}
             {subtitles.length > 0 &&
                 <div className={`${styles['subtitle-box']} ${styles.item}`} ref={subRef}>
                     <ul ref={ulRef} onDoubleClick={subFullscreen}>

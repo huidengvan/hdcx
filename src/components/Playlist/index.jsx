@@ -10,13 +10,14 @@ export default function Playlist() {
     const urlsParam = params.get('urls');
     const uriParam = params.get('uri');
     const currentParam = params.get('index');
-    let rest = params.get('rest');
+    let restParam = params.get('rest');
     const subPathParam = params.get('subPath');
     let urls = urlsParam?.split('|');
     const [src, setSrc] = useState()
     const [current, setCurrent] = useState(currentParam || 0)
     const [edit, setEdit] = useState(false)
     const [urltext, setUrltext] = useState(urls)
+    const [rest, setRest] = useState(restParam)
 
     const parseUri = async () => {
         let res = await fetchTextFile(uriParam);
@@ -35,11 +36,11 @@ export default function Playlist() {
             parseUri()
         }
 
-        if (urltext?.length > current && rest != current) {
+        if (urltext?.length > current) {
             setSrc(buildSrc(urltext[current]))
         }
 
-    }, [current])
+    }, [current, rest])
 
     useEffect(() => {
         updatePlaylist()
@@ -53,7 +54,7 @@ export default function Playlist() {
 
     return (
         <div className={styles.root}>
-            {src && <SubtitleContext src={src} setCurrent={setCurrent} subPath={subPathParam} />}
+            {src && <SubtitleContext src={src} current={current} setCurrent={setCurrent} subPath={subPathParam} />}
             <details open className={styles.details}>
                 <summary style={{ userSelect: 'none', marginBottom: '5px' }}>播放列表
                     <span style={{
@@ -72,7 +73,7 @@ export default function Playlist() {
                             </svg>
                             {!urltext && ' 点击编辑'}
                         </span>
-                        <Duration urltext={urltext} setUrltext={setUrltext} />
+                        <Duration urltext={urltext} setUrltext={setUrltext} setRest={setRest} />
                     </span>
                 </summary>
                 {edit ?
@@ -96,7 +97,7 @@ export default function Playlist() {
     )
 }
 
-const Duration = ({ urltext, setUrltext }) => {
+const Duration = ({ urltext, setUrltext, setRest }) => {
     const [totalDuration, setTotalDuration] = useState('');
 
     let videoUrls = urltext
@@ -110,6 +111,7 @@ const Duration = ({ urltext, setUrltext }) => {
                 matchRxl = item.includes('入行论辅导');
             }
 
+            // 减去等候时播放恒常念诵原文的时间
             if (item.includes('五分钟')) {
                 t -= 312
             }
@@ -139,15 +141,17 @@ const Duration = ({ urltext, setUrltext }) => {
                 duration += 1.1
                 console.log(`添加打坐视频`);
             } else if (duration >= 2.5 && duration <= 3 && !videoUrls[videoUrls.length - 2].includes('讨论')) {
-                rest = videoUrls.length - 1
+                setRest(videoUrls.length - 1)
+                let discussTime = Math.ceil((3 - duration) * 6) * 10
+                videoUrls.splice(urltext.length - 1, 0, `blank@研讨${discussTime}分钟`)
+                duration += discussTime / 60
                 console.log('添加暂停讨论');
-                videoUrls.splice(urltext.length - 1, 0, `^0,0@讨论${parseInt((3 - duration) * 60 - 4)}分钟`)
-                duration = 3
-
             }
         }
         let hour = parseInt(duration)
-        setTotalDuration(`时长：${hour ? hour + '小时' : ''}${Math.round((duration - hour) * 60)}分钟`)
+        duration === hour ?
+            setTotalDuration(`时长：${hour}小时`) :
+            setTotalDuration(`时长：${hour ? hour + '小时' : ''}${Math.round((duration - hour) * 60)}分钟`)
         setUrltext(videoUrls)
         // console.log('--计算列表时长--', duration);
     };
