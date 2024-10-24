@@ -18,6 +18,21 @@ export const parseTime = (timeString) => {
     const seconds = parseFloat(parts[2]?.replace(',', '.'));
     return hours * 3600 + minutes * 60 + (seconds || 0);
 };
+export const formatTime = (totalSeconds) => {
+    if (totalSeconds === undefined || totalSeconds === null) return '';
+
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = String(totalSeconds % 60);
+
+    // 格式化为两位数
+    const formattedHours = String(hours).padStart(2, '0') + ':';
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedSeconds = String(seconds?.split('.')[0]).padStart(2, '0');
+    const formattedMillSeconds = seconds?.split('.')[1]?.slice(0, 3);
+
+    return `${formattedHours}${formattedMinutes}:${formattedSeconds},${formattedMillSeconds}`;
+};
 
 const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
     const baseUrl = location.hash.includes('http') ? '' : 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/';
@@ -33,7 +48,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
     let endTime = parseTime(src?.split(',')[1])
     let matchRxl = videoSrc?.match(/入行论广解(\d+)课/);
     let matchRxlQa = /入行论广解\d+-\d+课问答/.test(src)
-    let keqianTime = 90;
+    let keqianTime = 88;
     let kehouTime = 140;
 
     const copyText = async (text) => {
@@ -71,7 +86,16 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
             const index = parts[0];
             const time = parts[1]?.split(' --> ');
             const text = parts.slice(2).join('\n');
-            subtitlesArray.push({ index, startTime: time[0], endTime: time[1], text });
+            let timeStart = time[0]
+            if ((matchRxl || matchRxlQa) && parseTime(timeStart) > keqianTime + 5) {
+                timeStart = matchRxlQa ?
+                    parseTime(timeStart) + (videoRef.current?.duration - 2860) :
+                    parseTime(timeStart) + (videoRef.current?.duration - 2870)
+
+                timeStart = formatTime(timeStart)
+            }
+
+            subtitlesArray.push({ index, startTime: timeStart, endTime: time[1], text });
         });
 
         setSubtitles(subtitlesArray);
@@ -113,7 +137,9 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                 })
                 .then(data => {
                     if (!data.includes('failed')) {
-                        parseSubtitles(data)
+                        setTimeout(() => {
+                            parseSubtitles(data)
+                        }, 1000);
                         wraperRef.current.parentElement.style.flexDirection = 'column'
                     }
                 });
@@ -132,7 +158,8 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                     audoReadTab = window.open(tabUrl);
                     setTimeout(() => {
                         audoReadTab?.close()
-                    }, (duration + 2) * 1000);
+                        console.log(audoReadTab, audoReadTab.closed);
+                    }, (duration + 3) * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000));
                 }
 
                 if (!audoReadTab) {
@@ -157,28 +184,18 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                 endTime = video.duration;
             }
         }, 3000);
+
         const handleTimeUpdate = () => {
             let currentTime = video?.currentTime;
             if (currentTime != null) {
-                // 当播放时间超过处于正文时
-                if ((matchRxl || matchRxlQa) && currentTime > keqianTime && video?.duration - currentTime > kehouTime) {
-                    return;
-                }
-
                 // 当播放时间超过 endTime 时，切换到下一个视频
                 if (videoSrc !== 'blank' && currentTime > endTime - 1) {
                     // console.log(currentTime, endTime, video.duration)
-                    // 执行切换到下一个视频的操作
                     clearTimeout(timer)
                     timer = setTimeout(() => {
-                        // console.log("Switching to next video");
                         setCurrent(prev => prev + 1)
                         endTime = undefined
                     }, 1000);
-                } else if ((matchRxl || matchRxlQa) && video?.duration - currentTime <= kehouTime) {
-                    currentTime = matchRxlQa ?
-                        currentTime - (video?.duration - 2743) + 116 :
-                        currentTime - (video?.duration - 2870)
                 }
 
                 if (currentTime >= parseTime(subtitles[currentSubtitleIndex + 1]?.startTime)

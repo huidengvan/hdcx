@@ -28,7 +28,6 @@ export default class MyPara extends React.Component {
         } else {
             document.exitFullscreen();
         }
-        handleWidescreen()
     }
 
     handleWidescreen() {
@@ -46,10 +45,10 @@ export default class MyPara extends React.Component {
         }
     }
 
-    getTrgetNode = () => document.querySelector(`a[name="p${this.currentPara}"]`)
+    getTargetNode = () => document.querySelector(`a[name="p${this.currentPara}"]`)
 
     prevParagraph = () => {
-        let targetNode = this.getTrgetNode()
+        let targetNode = this.getTargetNode()
         if (!targetNode || this.currentPara === 1) return;
         this.currentPara -= 1
         this.locateParagraph()
@@ -57,13 +56,13 @@ export default class MyPara extends React.Component {
     }
 
     nextParagraph = () => {
-        this.getTrgetNode().parentElement.style.borderLeft = '0.5px solid #2e8555'
+        this.getTargetNode().parentElement.style.borderLeft = '0.5px solid #2e8555'
         this.currentPara += 1
         this.locateParagraph()
     }
 
     locateParagraph() {
-        let targetNode = this.getTrgetNode()
+        let targetNode = this.getTargetNode()
         // console.log(targetNode?.name, '锚点定位');
         if (targetNode) {
             const targetRect = targetNode.getBoundingClientRect();
@@ -76,7 +75,7 @@ export default class MyPara extends React.Component {
     }
 
     autoNextParagraph = (speed) => {
-        let targetNode = this.getTrgetNode()
+        let targetNode = this.getTargetNode()
         if (!targetNode || !this.autoPage || this.currentPara == this.endPara) {
             this.autoPage = false
             console.log(this.autoPage, `自动阅读停止`);
@@ -92,6 +91,8 @@ export default class MyPara extends React.Component {
     }
 
     async autoPaginate() {
+        this.handleWidescreen()
+
         let speed = await this.calcAudioSpeed()
 
         if (this.autoPage == true) {
@@ -102,7 +103,6 @@ export default class MyPara extends React.Component {
 
         if (speed > 1) {
             this.autoNextParagraph(speed)
-            this.handleWidescreen()
             toast(`${this.autoPage ? '开始' : '暂停'}自动阅读`);
             console.log(`${this.autoPage ? '开始' : '暂停'}自动阅读`);
             console.log('text speed', speed);
@@ -116,8 +116,8 @@ export default class MyPara extends React.Component {
     async calcAudioSpeed() {
         const startNode = getStartNode(); // 开始段落的a节点
         let endNode = getRxlEndNode() // 结束段落的a节点
-        // console.log({ endNode });
-        if (!endNode) return;
+        // console.log({ endNode },this.duration);
+        if (!endNode || !this.duration) return -1;
         // 定义要忽略的字符
         endNode = filterFootnote(endNode)
         startNode?.name && (this.currentPara = parseInt(startNode.name?.slice(1)))
@@ -175,7 +175,6 @@ export default class MyPara extends React.Component {
         }
         window.addEventListener('keydown', this.handleKeyDown);
         document.addEventListener('dblclick', this.handleFullscreen);
-        document.addEventListener('fullscreenchange', this.locateParagraph);
     }
 
     componentWillUnmount() {
@@ -183,12 +182,7 @@ export default class MyPara extends React.Component {
     }
 
     handleKeyDown = async (event) => {
-        if (event.altKey && (event.key === 't' || event.key === 'T')) {
-            this.handleWidescreen()
-        } else if (event.altKey && (event.key === 'f' || event.key === 'F')) {
-            event.preventDefault()
-            this.handleFullscreen()
-        } else if (event.altKey && (event.key === 'a' || event.key === 'A')) {
+        if (event.altKey && (event.key === 'q' || event.key === 'Q')) {
             event.preventDefault()
             this.autoPaginate()
         } else if (event.key === 'ArrowUp') {
