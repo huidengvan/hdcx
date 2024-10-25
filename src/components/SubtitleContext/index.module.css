@@ -27,7 +27,7 @@
     padding: .75rem;
     width: fit-content;
     max-width: 100%;
-    max-height: 85vh;
+    max-height: 70vh;
     overflow-y: scroll;
     /* background-color: #FFF2E2; */
     margin: 0 !important;
@@ -74,6 +74,7 @@
     display: flex;
     justify-content: center;
     width: 100vw;
+    margin-top: -2rem;
 }
 
 .subtitle-switch {

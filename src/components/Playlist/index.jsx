@@ -10,14 +10,12 @@ export default function Playlist() {
     const urlsParam = params.get('urls');
     const uriParam = params.get('uri');
     const currentParam = params.get('index');
-    let restParam = params.get('rest');
     const subPathParam = params.get('subPath');
     let urls = urlsParam?.split('|');
     const [src, setSrc] = useState()
     const [current, setCurrent] = useState(currentParam || 0)
     const [edit, setEdit] = useState(false)
     const [urltext, setUrltext] = useState(urls)
-    const [rest, setRest] = useState(restParam)
 
     const parseUri = async () => {
         let res = await fetchTextFile(uriParam);
@@ -25,11 +23,6 @@ export default function Playlist() {
         setUrltext(urls)
     }
     const buildSrc = (url) => url.split('@')[0].replace('^', '#t=')
-    const updatePlaylist = () => {
-        if (urltext?.join() != urls?.join()) {
-            window.location.replace(`/playlist?urls=${urltext.join('|')}`)
-        }
-    }
 
     useEffect(() => {
         if (!urlsParam && uriParam) {
@@ -40,17 +33,18 @@ export default function Playlist() {
             setSrc(buildSrc(urltext[current]))
         }
 
-    }, [current, rest])
+    }, [current])
 
     useEffect(() => {
-        updatePlaylist()
+        if (urltext?.join() != urls?.join()) {
+            window.location.replace(`/playlist?urls=${urltext.join('|')}`)
+        }
     }, [edit])
 
     const changeSrc = (e) => {
         const { value } = e.target
         setCurrent(value - 1)
     }
-
 
     return (
         <>
@@ -74,7 +68,7 @@ export default function Playlist() {
                                 </svg>
                                 {!urltext && ' 点击编辑'}
                             </span>
-                            <Duration urltext={urltext} setUrltext={setUrltext} setRest={setRest} />
+                            <Duration urltext={urltext} />
                         </span>
                     </summary>
                     {edit ?
@@ -96,15 +90,15 @@ export default function Playlist() {
                 </details>
             </div>
             <div className={styles.footer}>
-                <img src="https://box.hdcxb.net/d/%E5%85%B6%E4%BB%96%E8%B5%84%E6%96%99/p/bajixiang.png" alt="" height={80}/>
+                <img src="https://box.hdcxb.net/d/%E5%85%B6%E4%BB%96%E8%B5%84%E6%96%99/p/bajixiang.png" alt="" height={80} />
             </div>
         </>
     )
 }
 
-const Duration = ({ urltext, setUrltext, setRest }) => {
+const Duration = ({ urltext }) => {
     const [totalDuration, setTotalDuration] = useState('');
-
+    let urlsLength = urltext.length
     let videoUrls = urltext
     const calculateTotalDuration = async () => {
         let t = 0
@@ -138,16 +132,15 @@ const Duration = ({ urltext, setUrltext, setRest }) => {
         let duration = parseFloat((t / 3600).toFixed(2));
         if (matchRxl) {
             if (duration < 2.5) {
-                let rest3minutes = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/恒常念诵愿文.mp4^0,3:26@恒常念诵愿文（休息三分钟）`
+                let rest3minutes = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/恒常念诵愿文.mp4^0,3:27@恒常念诵愿文（休息三分钟）`
                 let meditation = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/4jx/smwc.mp4^0,1:01:17@寿命无常观修 1 小时`
                 videoUrls.splice(urltext.length - 1, 0, rest3minutes)
                 videoUrls.splice(urltext.length - 1, 0, meditation)
                 duration += 1.1
                 console.log(`添加打坐视频`);
             } else if (duration >= 2.5 && duration <= 3 && !videoUrls[videoUrls.length - 2].includes('讨论')) {
-                setRest(videoUrls.length - 1)
                 let discussTime = Math.ceil((3 - duration) * 6) * 10
-                videoUrls.splice(urltext.length - 1, 0, `blank@研讨${discussTime}分钟`)
+                videoUrls.splice(urltext.length - 1, 0, `blank@研究讨论${discussTime}分钟`)
                 duration += discussTime / 60
                 console.log('添加暂停讨论');
             }
@@ -156,7 +149,10 @@ const Duration = ({ urltext, setUrltext, setRest }) => {
         duration === hour ?
             setTotalDuration(`时长：${hour}小时`) :
             setTotalDuration(`时长：${hour ? hour + '小时' : ''}${Math.round((duration - hour) * 60)}分钟`)
-        setUrltext(videoUrls)
+
+        if (urlsLength != videoUrls?.length) {
+            window.location.replace(`/playlist?urls=${urltext.join('|')}`)
+        }
         // console.log('--计算列表时长--', duration);
     };
 

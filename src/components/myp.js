@@ -29,6 +29,7 @@ export default class MyPara extends React.Component {
         } else {
             document.exitFullscreen();
         }
+        this.locateParagraph()
     }
 
     handleWidescreen() {

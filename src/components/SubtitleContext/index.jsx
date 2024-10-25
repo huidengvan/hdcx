@@ -41,6 +41,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
     const [subtitles, setSubtitles] = useState([]);
     const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(-1);
     const [showtime, setShowtime] = useState(localStorage.getItem('showtime') !== 'false');
+    const [subAlignCenter, setSubAlignCenter] = useState(true);
     const videoRef = useRef(null);
     const subRef = useRef(null);
     const ulRef = useRef(null);
@@ -87,7 +88,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
             let timeStart = time[0]
             if ((matchRxl || matchRxlQa) && parseTime(timeStart) > keqianTime + 5) {
                 timeStart = matchRxlQa ?
-                    parseTime(timeStart) + (videoRef.current?.duration - 2860) :
+                    parseTime(timeStart) + (videoRef.current?.duration - 2868) :
                     parseTime(timeStart) + (videoRef.current?.duration - 2870)
 
                 timeStart = formatTime(timeStart)
@@ -147,7 +148,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
         if (typeof window.orientation === 'undefined' && matchRxl) {
             // 课诵念完，打开新标签页
             setTimeout(() => {
-                let duration = Math.ceil(videoRef.current.duration) - keqianTime - kehouTime
+                let duration = Math.ceil(videoRef.current?.duration) - keqianTime - kehouTime
                 let tabUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${duration}#入菩萨行论第${parseInt(matchRxl[1])}节课`
                 let audoReadTab;
 
@@ -188,17 +189,15 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                 // 当播放时间超过 endTime 时，切换到下一个视频
                 if (endTime && currentTime >= endTime) {
                     clearTimeout(timer)
-                    timer = setTimeout(() => {
-                        console.log('play next video', { currentTime, endTime })
-                        setCurrent(prev => prev + 1)
-                        endTime = undefined
-                    }, 300);
+                    console.log('play next video', { currentTime, endTime })
+                    setCurrent(prev => prev + 1)
+                    video?.removeEventListener('timeupdate', handleTimeUpdate);
                 }
 
                 if (currentTime >= parseTime(subtitles[currentSubtitleIndex + 1]?.startTime)
                     && currentSubtitleIndex < subtitles.length - 1) {
                     setCurrentSubtitleIndex(currentSubtitleIndex + 1);
-                    scrollSubtitleToView(currentSubtitleIndex);
+                    subAlignCenter && scrollSubtitleToView(currentSubtitleIndex);
                 }
             }
         };
@@ -228,7 +227,6 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
 
         return () => {
             video?.removeEventListener('timeupdate', handleTimeUpdate);
-            // video?.addEventListener('ended', handleVideoEnd);
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [subtitles, currentSubtitleIndex]);
@@ -247,7 +245,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
         if (parentElement) {
             parentElement.scroll({
                 behavior: 'auto',
-                top: subtitleElement?.offsetTop - 60 - (parentElement?.clientHeight - subtitleElement?.clientHeight) / 2
+                top: subtitleElement?.offsetTop + 60 - (parentElement?.clientHeight - subtitleElement?.clientHeight) / 2
             });
         }
     };
@@ -255,7 +253,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
 
     return (
         <div ref={wraperRef} className={styles['subtitle-container']}>
-            {videoSrc && <video ref={videoRef}
+            {videoSrc !== 'blank' && <video ref={videoRef}
                 src={videoSrc}
                 style={{ minWidth: '50%', maxHeight: '640px' }}
                 controls
@@ -263,7 +261,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
             >
             </video>}
             {subtitles.length > 0 &&
-                <details open style={{width:'100vw'}}>
+                <details open style={{ width: '100vw' }}>
                     <summary></summary>
                     <div className={`${styles['subtitle-box']} ${styles.item}`} ref={subRef}>
                         <ul ref={ulRef} onDoubleClick={subFullscreen}>
@@ -274,7 +272,13 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                                         localStorage.setItem('showtime', !showtime)
                                         setShowtime(value => !value)
                                     }} />
-                                <span>时间</span>
+                                <span>时间轴</span>
+                                <input type="checkbox"
+                                    checked={subAlignCenter}
+                                    onChange={() => {
+                                        setSubAlignCenter(value => !value)
+                                    }} />
+                                <span>垂直居中</span>
                                 <button onClick={subFullscreen}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
                                         <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5" />
