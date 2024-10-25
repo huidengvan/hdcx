@@ -28,3 +28,9 @@
     cursor: pointer;
     color: #3cad6e
 }
+
+.footer {
+    margin: 3rem;
+    display: flex;
+    justify-content: center;
+}

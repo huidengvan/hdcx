@@ -55,12 +55,10 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
         const msgEl = document.querySelector(`.${styles['subtitle-switch']}`);
         try {
             await navigator.clipboard.writeText(text);
-            console.log('文本已复制到剪贴板');
             msgEl?.classList.add(`${styles['show-copied']}`);
             setTimeout(() => msgEl?.classList.remove(`${styles['show-copied']}`), 1000)
             return true;
         } catch (err) {
-            console.error('复制失败:', err);
             return false;
         }
     }
@@ -78,7 +76,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
         const subtitlesArray = [];
         let subtitleLines = data.trim()?.split(new RegExp('\r?\n\r?\n'));
         if (matchRxlQa) {
-            subtitleLines = subtitleLines.slice(20)
+            subtitleLines = subtitleLines.slice(21)
         }
 
         subtitleLines.forEach((line) => {
@@ -112,14 +110,13 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
             let isMp4 = /\.(mp4|webm)/.test(videoSrc)
             try {
                 videoRef.current.play()
+                // console.log({ current, isMp4 });
                 if (current != 0 && isMp4) {
                     !document.fullscreenElement && videoRef.current.requestFullscreen()
                 } else {
                     document.fullscreenElement && document.exitFullscreen()
                 }
-            } catch (error) {
-                // console.error('Playback failed:', error);
-            }
+            } catch (error) { }
         }
 
         if (subPath || matchRxl || matchRxlQa) {
@@ -158,7 +155,6 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                     audoReadTab = window.open(tabUrl);
                     setTimeout(() => {
                         audoReadTab?.close()
-                        console.log(audoReadTab, audoReadTab.closed);
                     }, (duration + 3) * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000));
                 }
 
@@ -180,22 +176,23 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
 
         video.playbackRate = localStorage.getItem('playbackRate') || 1
         setTimeout(() => {
-            if (!endTime || video?.duration - endTime < 1) {
-                endTime = video.duration;
+            if (video?.duration - endTime < 1) {
+                endTime = undefined
             }
         }, 3000);
 
         const handleTimeUpdate = () => {
             let currentTime = video?.currentTime;
+            // console.log(currentTime, endTime, video.duration)
             if (currentTime != null) {
                 // 当播放时间超过 endTime 时，切换到下一个视频
-                if (videoSrc !== 'blank' && currentTime > endTime - 1) {
-                    // console.log(currentTime, endTime, video.duration)
+                if (endTime && currentTime >= endTime) {
                     clearTimeout(timer)
                     timer = setTimeout(() => {
+                        console.log('play next video', { currentTime, endTime })
                         setCurrent(prev => prev + 1)
                         endTime = undefined
-                    }, 1000);
+                    }, 300);
                 }
 
                 if (currentTime >= parseTime(subtitles[currentSubtitleIndex + 1]?.startTime)
@@ -205,6 +202,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                 }
             }
         };
+
 
         const handleKeyDown = (event) => {
             if (event.key === 'ArrowLeft') { // 左箭头
@@ -230,10 +228,17 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
 
         return () => {
             video?.removeEventListener('timeupdate', handleTimeUpdate);
+            // video?.addEventListener('ended', handleVideoEnd);
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [subtitles, currentSubtitleIndex]);
 
+    const handleVideoEnd = () => {
+        console.log('ended');
+        if (videoSrc !== 'blank') {
+            setCurrent(prev => prev + 1)
+        }
+    }
 
     const scrollSubtitleToView = (index) => {
         const subtitleElement = document.getElementById(`subtitle-${index}`);
@@ -254,45 +259,50 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                 src={videoSrc}
                 style={{ minWidth: '50%', maxHeight: '640px' }}
                 controls
+                onEnded={handleVideoEnd}
             >
             </video>}
             {subtitles.length > 0 &&
-                <div className={`${styles['subtitle-box']} ${styles.item}`} ref={subRef}>
-                    <ul ref={ulRef} onDoubleClick={subFullscreen}>
-                        <span className={styles['subtitle-switch']}>
-                            <input type="checkbox"
-                                checked={showtime}
-                                onChange={() => {
-                                    localStorage.setItem('showtime', !showtime)
-                                    setShowtime(value => !value)
-                                }} />
-                            <span>显示时间</span>
-                            <button onClick={subFullscreen}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5" />
-                                </svg>
-                            </button>
-                        </span>
-                        {subtitles.map((subtitle, index) => (
-                            <li key={index} id={`subtitle-${index}`} className={styles['subtitle-line']}>
-                                {showtime && <span title='点击复制' className={styles.timeline}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        copyText(`${window.location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`)
-                                    }}
-                                >{subtitle.startTime?.split(',')[0]}</span>}
-                                <p className={`${index === currentSubtitleIndex ? styles['current-line'] : ''}`}
-                                    onClick={() => {
-                                        videoRef.current.currentTime = parseTime(subtitle.startTime)
-                                        const subtitleIndex = subtitles.findLastIndex(subtitle => videoRef.current?.currentTime > parseTime(subtitle.startTime))
-                                        setCurrentSubtitleIndex(subtitleIndex)
-                                    }}>
-                                    {subtitle.text}
-                                </p>
-                            </li>
-                        ))}
-                    </ul>
-                </div>}
+                <details open style={{width:'100vw'}}>
+                    <summary></summary>
+                    <div className={`${styles['subtitle-box']} ${styles.item}`} ref={subRef}>
+                        <ul ref={ulRef} onDoubleClick={subFullscreen}>
+                            <span className={styles['subtitle-switch']}>
+                                <input type="checkbox"
+                                    checked={showtime}
+                                    onChange={() => {
+                                        localStorage.setItem('showtime', !showtime)
+                                        setShowtime(value => !value)
+                                    }} />
+                                <span>时间</span>
+                                <button onClick={subFullscreen}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5" />
+                                    </svg>
+                                </button>
+                            </span>
+                            {subtitles.map((subtitle, index) => (
+                                <li key={index} id={`subtitle-${index}`} className={styles['subtitle-line']}>
+                                    {showtime && <span title='点击复制' className={styles.timeline}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            copyText(`${window.location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`)
+                                        }}
+                                    >{subtitle.startTime?.split(',')[0]}</span>}
+                                    <p className={`${index === currentSubtitleIndex ? styles['current-line'] : ''}`}
+                                        onClick={() => {
+                                            videoRef.current.currentTime = parseTime(subtitle.startTime)
+                                            const subtitleIndex = subtitles.findLastIndex(subtitle => videoRef.current?.currentTime > parseTime(subtitle.startTime))
+                                            setCurrentSubtitleIndex(subtitleIndex)
+                                        }}>
+                                        {subtitle.text}
+                                    </p>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </details>
+            }
         </div >
     );
 };

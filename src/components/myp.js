@@ -20,6 +20,7 @@ export default class MyPara extends React.Component {
         this.currentPara = null;
         this.endPara = null;
         this.duration = null;
+        this.scrollY = 0;
     }
 
     handleFullscreen() {
@@ -66,7 +67,7 @@ export default class MyPara extends React.Component {
         // console.log(targetNode?.name, '锚点定位');
         if (targetNode) {
             const targetRect = targetNode.getBoundingClientRect();
-            const offset = window.innerHeight / 2;
+            const offset = window.innerHeight / 2 + this.scrollY;
             const targetScrollPosition = window.scrollY + targetRect.top - offset;
             window.scrollTo({
                 top: targetScrollPosition,
@@ -185,16 +186,31 @@ export default class MyPara extends React.Component {
         if (event.altKey && (event.key === 'q' || event.key === 'Q')) {
             event.preventDefault()
             this.autoPaginate()
+        } else if (event.altKey && (event.key === 't' || event.key === 'T')) {
+            event.preventDefault()
+            this.handleWidescreen()
+        } else if (event.altKey && event.key === 'ArrowUp') {
+            event.preventDefault()
+            this.prevParagraph()
+        } else if (event.altKey && event.key === 'ArrowDown') {
+            event.preventDefault()
+            this.nextParagraph()
         } else if (event.key === 'ArrowUp') {
             event.preventDefault()
-            this.autoPage ?
-                this.prevParagraph() :
+            if (this.autoPage) {
+                this.scrollY += 100
+                this.locateParagraph()
+            } else {
                 window.scrollBy(0, -window.innerHeight / 4);
+            }
         } else if (event.key === 'ArrowDown') {
             event.preventDefault()
-            this.autoPage ?
-                this.nextParagraph() :
+            if (this.autoPage) {
+                this.scrollY -= 100
+                this.locateParagraph()
+            } else {
                 window.scrollBy(0, window.innerHeight / 4);
+            }
         } else if (event.key === 'ArrowLeft') {
             event.preventDefault()
             window.scrollBy(0, 50 - window.innerHeight);

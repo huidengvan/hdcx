@@ -53,47 +53,52 @@ export default function Playlist() {
 
 
     return (
-        <div className={styles.root}>
-            {src && <SubtitleContext src={src} current={current} setCurrent={setCurrent} subPath={subPathParam} />}
-            <details open className={styles.details}>
-                <summary style={{ userSelect: 'none', marginBottom: '5px' }}>播放列表
-                    <span style={{
-                        marginLeft: '4px'
-                    }}
-                        onClick={e => {
-                            e.stopPropagation()
-                            e.preventDefault()
+        <>
+            <div className={styles.root}>
+                {src && <SubtitleContext src={src} current={current} setCurrent={setCurrent} subPath={subPathParam} />}
+                <details open className={styles.details}>
+                    <summary style={{ userSelect: 'none', marginBottom: '5px' }}>播放列表
+                        <span style={{
+                            marginLeft: '4px'
                         }}
+                            onClick={e => {
+                                e.stopPropagation()
+                                e.preventDefault()
+                            }}
 
-                    >
-                        <span onClick={(e) => setEdit(prev => !prev)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                            </svg>
-                            {!urltext && ' 点击编辑'}
+                        >
+                            <span onClick={(e) => setEdit(prev => !prev)}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                    <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                </svg>
+                                {!urltext && ' 点击编辑'}
+                            </span>
+                            <Duration urltext={urltext} setUrltext={setUrltext} setRest={setRest} />
                         </span>
-                        <Duration urltext={urltext} setUrltext={setUrltext} setRest={setRest} />
-                    </span>
-                </summary>
-                {edit ?
-                    <textarea rows={10}
-                        style={{ padding: '.5rem', width: '100%' }}
-                        placeholder='格式：视频地址^起始时间@显示标题 每个视频一行，编辑好再点一下铅笔图标。'
-                        defaultValue={urltext?.join('\n')} className='col'
-                        onChange={(e) => setUrltext(e.target.value?.split('\n').filter(item => item !== ''))}
-                    /> :
-                    <ol className={styles.playlist} >
-                        {urltext && urltext[0] != '' &&
-                            urltext.map((url, index) => {
-                                return (
-                                    <li key={index} className={`${styles.item} ${current == index ? styles.active : ''}`} value={++index} onClick={changeSrc}>{decodeURI(url.split('@')[1] || url.split('/')[url.split('/').length - 1])?.split('.m')[0]}</li>
-                                )
-                            })
-                        }
-                    </ol>}
-            </details>
-        </div>
+                    </summary>
+                    {edit ?
+                        <textarea rows={10}
+                            style={{ padding: '.5rem', width: '100%' }}
+                            placeholder='格式：视频地址^起始时间@显示标题 每个视频一行，编辑好再点一下铅笔图标。'
+                            defaultValue={urltext?.join('\n')} className='col'
+                            onChange={(e) => setUrltext(e.target.value?.split('\n').filter(item => item !== ''))}
+                        /> :
+                        <ol className={styles.playlist} >
+                            {urltext && urltext[0] != '' &&
+                                urltext.map((url, index) => {
+                                    return (
+                                        <li key={index} className={`${styles.item} ${current == index ? styles.active : ''}`} value={++index} onClick={changeSrc}>{decodeURI(url.split('@')[1] || url.split('/')[url.split('/').length - 1])?.split('.m')[0]}</li>
+                                    )
+                                })
+                            }
+                        </ol>}
+                </details>
+            </div>
+            <div className={styles.footer}>
+                <img src="https://box.hdcxb.net/d/%E5%85%B6%E4%BB%96%E8%B5%84%E6%96%99/p/bajixiang.png" alt="" height={80}/>
+            </div>
+        </>
     )
 }
 
@@ -117,13 +122,12 @@ const Duration = ({ urltext, setUrltext, setRest }) => {
             }
 
             if (!item?.includes('^')) {
+                // console.log('fetch video meta');
                 let url = item?.split('@')[0];
-                console.log('fetch video meta');
-
                 let duration = await getVideoDuration(url);
                 if (duration > 0) {
                     t += duration;
-                    videoUrls[i] = `${item?.split('@')[0]}^0,${duration}${item?.split('@').length > 1 ? '@' + item?.split('@')[1] : ''}`
+                    // videoUrls[i] = `${item?.split('@')[0]}^0,${duration}${item?.split('@').length > 1 ? '@' + item?.split('@')[1] : ''}`
                 }
             } else {
                 const times = item.split('^')[1].split('@')[0].split(',');
@@ -135,7 +139,7 @@ const Duration = ({ urltext, setUrltext, setRest }) => {
         if (matchRxl) {
             if (duration < 2.5) {
                 let rest3minutes = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/恒常念诵愿文.mp4^0,3:26@恒常念诵愿文（休息三分钟）`
-                let meditation = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/4jx/smwc.mp4^0,1:01:16@寿命无常观修 1 小时`
+                let meditation = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/4jx/smwc.mp4^0,1:01:17@寿命无常观修 1 小时`
                 videoUrls.splice(urltext.length - 1, 0, rest3minutes)
                 videoUrls.splice(urltext.length - 1, 0, meditation)
                 duration += 1.1
