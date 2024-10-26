@@ -105,12 +105,16 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
         document.querySelector('main').firstChild.removeAttribute('class')
         document.querySelector('article').parentElement.removeAttribute('class')
         document.querySelector('footer').style.display = 'none'
-        // videoRef.current.src = videoSrc
 
         if (videoRef.current) {
             let isMp4 = /\.(mp4|webm)/.test(videoSrc)
+            let matchJx = /\/v\/[45]jx/.test(videoSrc)
             try {
-                videoRef.current.play()
+                if (matchJx) {
+                    videoRef.current.pause()
+                } else {
+                    videoRef.current.play()
+                }
                 // console.log({ current, isMp4 });
                 if (current != 0 && isMp4) {
                     !document.fullscreenElement && videoRef.current.requestFullscreen()
@@ -258,6 +262,8 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                 style={{ minWidth: '50%', maxHeight: '640px' }}
                 controls
                 onEnded={handleVideoEnd}
+                poster={/\/v\/[45]jx/.test(videoSrc) ?
+                    'https://box.hdcxb.net/d/其他资料/f/up/untitled.png' : ''}
             >
             </video>}
             {subtitles.length > 0 &&

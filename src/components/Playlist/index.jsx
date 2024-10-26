@@ -82,7 +82,7 @@ export default function Playlist() {
                             {urltext && urltext[0] != '' &&
                                 urltext.map((url, index) => {
                                     return (
-                                        <li key={index} className={`${styles.item} ${current == index ? styles.active : ''}`} value={++index} onClick={changeSrc}>{decodeURI(url.split('@')[1] || url.split('/')[url.split('/').length - 1])?.split('.m')[0]}</li>
+                                        <li key={index} className={`${styles.item} ${current == index ? styles.active : ''}`} value={++index} onClick={changeSrc}>{decodeURI(url.split('@')[1] || url.split('/')[url.split('/')?.length - 1])?.split('.m')[0]}</li>
                                     )
                                 })
                             }
@@ -98,12 +98,12 @@ export default function Playlist() {
 
 const Duration = ({ urltext }) => {
     const [totalDuration, setTotalDuration] = useState('');
-    let urlsLength = urltext.length
+    let urlsLength = urltext?.length
     let videoUrls = urltext
     const calculateTotalDuration = async () => {
         let t = 0
         let matchRxl
-        for (let i = 0; i < videoUrls.length; i++) {
+        for (let i = 0; i < videoUrls?.length; i++) {
             const item = videoUrls[i];
 
             if (!matchRxl) {
@@ -121,7 +121,7 @@ const Duration = ({ urltext }) => {
                 let duration = await getVideoDuration(url);
                 if (duration > 0) {
                     t += duration;
-                    // videoUrls[i] = `${item?.split('@')[0]}^0,${duration}${item?.split('@').length > 1 ? '@' + item?.split('@')[1] : ''}`
+                    // videoUrls[i] = `${item?.split('@')[0]}^0,${duration}${item?.split('@')?.length > 1 ? '@' + item?.split('@')[1] : ''}`
                 }
             } else {
                 const times = item.split('^')[1].split('@')[0].split(',');
@@ -133,14 +133,14 @@ const Duration = ({ urltext }) => {
         if (matchRxl) {
             if (duration < 2.5) {
                 let rest3minutes = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/恒常念诵愿文.mp4^0,3:27@恒常念诵愿文（休息三分钟）`
-                let meditation = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/4jx/smwc.mp4^0,1:01:17@寿命无常观修 1 小时`
-                videoUrls.splice(urltext.length - 1, 0, rest3minutes)
-                videoUrls.splice(urltext.length - 1, 0, meditation)
+                let meditation = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/4jx/寿命无常-上师念诵.mp4^0,1:00:07@寿命无常观修 1 小时`
+                videoUrls.splice(urltext?.length - 1, 0, rest3minutes)
+                videoUrls.splice(urltext?.length - 1, 0, meditation)
                 duration += 1.1
                 console.log(`添加打坐视频`);
-            } else if (duration >= 2.5 && duration <= 3 && !videoUrls[videoUrls.length - 2].includes('讨论')) {
+            } else if (duration >= 2.5 && duration <= 3 && !videoUrls[videoUrls?.length - 2].includes('讨论')) {
                 let discussTime = Math.ceil((3 - duration) * 6) * 10
-                videoUrls.splice(urltext.length - 1, 0, `blank@研究讨论${discussTime}分钟`)
+                videoUrls.splice(urltext?.length - 1, 0, `blank@研究讨论${discussTime}分钟`)
                 duration += discussTime / 60
                 console.log('添加暂停讨论');
             }
