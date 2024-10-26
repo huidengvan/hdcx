@@ -2070,6 +2070,8 @@ import Mypara from '@site/src/components/myp';
 
 ## 《入菩萨行论》第12节课
 
+ - [音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-%E5%85%A5%E8%A1%8C%E8%AE%BA%E9%87%8A/fudao/%E7%AC%AC01%E5%86%8C01-23/%E5%85%A5%E8%A1%8C%E8%AE%BA%E5%B9%BF%E8%A7%A3012%E8%AF%BE%202011%E5%B9%B411%E6%9C%8811%E6%97%A5.mp3)
+
 下面我们接着讲第二个科判:理证之合理性。
 
 己二（理证之合理性）分二：一、意乐殊胜；二、加行殊胜。
@@ -2221,6 +2223,8 @@ import Mypara from '@site/src/components/myp';
 就讲到这里。
 
 ## 《入菩萨行论》第13节课
+
+ - [音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第01册01-23/入行论广解013课%202011年11月12日.mp3)
 
 我们继续学习下面的课程,现在讲第二个科判：
 
@@ -2399,6 +2403,8 @@ import Mypara from '@site/src/components/myp';
 〖任何人有感恩图报之心，尚且值得被人们称赞是“这是知恩报恩的人”，更何况说是没有受人嘱托，也是心甘情愿的利乐众生的菩萨了。〗任何一个世间人如果有感恩图报之心，人格比较贤善，就会为人所称赞：“这个人人品很好，能够知恩报恩。”如果受人恩惠，反而恩将仇报，那么肯定被世间人唾弃与呵责。对于感恩图报的人尚且应该赞叹，更何况没有受过任何嘱托、心甘情愿发心利益众生的菩萨，就更应该值得赞叹了。赞叹的理由与前面分析颂词时相同，本课就讲到这里。
 
 ## 《入菩萨行论》第14节课
+
+ - [音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-%E5%85%A5%E8%A1%8C%E8%AE%BA%E9%87%8A/fudao/%E7%AC%AC01%E5%86%8C01-23/%E5%85%A5%E8%A1%8C%E8%AE%BA%E5%B9%BF%E8%A7%A3014%E8%AF%BE%202011%E5%B9%B411%E6%9C%8813%E6%97%A5.mp3)
 
 下面接着讲科判“是殊胜施主”：
 
