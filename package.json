@@ -14,13 +14,12 @@
     "write-heading-ids": "docusaurus write-heading-ids"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.0.1",
-    "@docusaurus/preset-classic": "^3.0.1",
+    "@docusaurus/core": "^3.5.2",
+    "@docusaurus/preset-classic": "^3.5.2",
     "@gera2ld/jsx-dom": "^2.2.2",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^1.2.1",
     "d3": "^7.8.5",
-    "docusaurus-theme-search-typesense": "^0.14.1-0",
     "markmap-common": "^0.15.0",
     "markmap-lib": "^0.15.2",
     "markmap-toolbar": "^0.15.0",

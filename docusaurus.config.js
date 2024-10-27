@@ -104,8 +104,8 @@ const config = {
         ],
     ],
     themes:
-    // ... Your other themes.
-    ['docusaurus-theme-search-typesense'],
+        // ... Your other themes.
+        [],
     themeConfig:
 
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -164,13 +164,13 @@ const config = {
                 style: 'dark',
                 links: [
                     {
-                      title: 'Docs',
-                      items: [
-                        {
-                          label: '学修指南',
-                          to: '/docs/intro',
-                        },
-                      ],
+                        title: 'Docs',
+                        items: [
+                            {
+                                label: '学修指南',
+                                to: '/docs/intro',
+                            },
+                        ],
                     },
                     {
                         title: 'Community',
@@ -197,26 +197,6 @@ const config = {
                 theme: prismThemes.github,
                 darkTheme: prismThemes.dracula,
             },
-            typesense: {
-                typesenseCollectionName: 'default_value',
-
-                typesenseServerConfig: {
-                    nodes: [
-                        {
-                            host: 'search.huidengchanxiu.net',
-                            port: 443,
-                            protocol: 'https',
-                        },
-                    ],
-                    apiKey: 'FnBBEeF2xFuSPtVhHc5U8GR6uOl7Q9W9FXdpm1qANCUhedzY',
-                },
-
-                // Optional: Typesense search parameters: https://typesense.org/docs/0.24.0/api/search.html#search-parameters
-                typesenseSearchParameters: {},
-
-                // Optional
-                contextualSearch: true,
-            }
         }),
     scripts: [{ src: '/js/global.js', async: false, },],
 };
