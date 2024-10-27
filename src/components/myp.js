@@ -148,24 +148,6 @@ export default class MyPara extends React.Component {
             setTimeout(() => this.autoPaginate())
         }
 
-        const myarticle = document.getElementsByTagName("article")[0]
-        var line = 1;
-        const nodes = myarticle.getElementsByTagName("p");
-        for (const element of nodes) {
-            var hrefNode = createElementFromHTML("<a name='p" +
-                line +
-                "' href='#p" +
-                line +
-                "' style='font-size: 80%;'>[p" +
-                line +
-                "]</a>");
-            element.prepend(hrefNode);
-            line++;
-        };
-        if (window.location.hash) {
-            window.location = window.location.href;
-        }
-
         this.navRef = document.querySelector('nav')
         this.articleRef = document.querySelector('article').parentElement.parentElement
         let bgColorIndex = localStorage.getItem('bgColorIndex')
@@ -226,12 +208,6 @@ export default class MyPara extends React.Component {
     render() {
         return <></>
     }
-}
-
-function createElementFromHTML(htmlString) {
-    var div = document.createElement('div');
-    div.innerHTML = htmlString.trim();
-    return div.firstChild;
 }
 
 function getStartNode() {

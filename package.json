@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "start": "docusaurus start  --host 0.0.0.0",
+    "start": "docusaurus start",
+    "dev": "docusaurus start --config dev.config.js --host 0.0.0.0 --no-open",
+    "prebuild": "docusaurus build --config dev.config.js",
+    "preview": "docusaurus serve --config dev.config.js",
     "build": "docusaurus build",
     "check": "npx docusaurus-mdx-checker",
     "swizzle": "docusaurus swizzle",
@@ -30,7 +33,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.0.1"
+    "@docusaurus/module-type-aliases": "^3.5.2"
   },
   "browserslist": {
     "production": [
