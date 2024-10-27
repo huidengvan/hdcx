@@ -1484,4 +1484,4 @@ import Mypara from '@site/src/components/myp';
 
 ## 参考链接
  
-- [法界佛教总会线上阅读](http://www.drbachinese.org/online_reading_simplified/index.htm) <http://www.drbachinese.org/online_reading/sf_others/10_Disciples/contents.htm>
+- [法界佛教总会线上阅读](http://www.drbachinese.org/online_reading_simplified/index.htm) http://www.drbachinese.org/online_reading/sf_others/10_Disciples/contents.htm

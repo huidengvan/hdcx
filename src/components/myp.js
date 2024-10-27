@@ -1,5 +1,4 @@
 import React from 'react';
-import toast, { Toaster } from 'react-hot-toast';
 
 const ignoredCharacters = /[【】〖〗\[\]《》：:"'“”]/g;
 export default class MyPara extends React.Component {
@@ -105,7 +104,6 @@ export default class MyPara extends React.Component {
 
         if (speed > 1) {
             this.autoNextParagraph(speed)
-            toast(`${this.autoPage ? '开始' : '暂停'}自动阅读`);
             console.log(`${this.autoPage ? '开始' : '暂停'}自动阅读`);
             console.log('text speed', speed);
         }
@@ -226,7 +224,7 @@ export default class MyPara extends React.Component {
     }
 
     render() {
-        return <Toaster />
+        return <></>
     }
 }
 
