@@ -18,8 +18,7 @@ tags:
 
 
 
-
-<video id='hdvplayer' poster='/img/lamp-hope.png' controls src='https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be%e7%ac%ac%e4%b8%89%e5%86%8c/%e4%bb%8e%e3%80%8a%e4%bd%9b%e8%af%b4%e7%a8%bb%e7%a7%86%e7%bb%8f%e3%80%8b%e8%b0%88%e4%bd%9b%e6%95%99%e4%ba%ba%e7%94%9f%e8%a7%82%e5%92%8c%e4%b8%96%e7%95%8c%e8%a7%825.mp4' />
+<ReactPlayer id='hdvplayer' light='/img/lamp-hope.png' controls url='https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%E6%85%A7%E7%81%AF%E7%A6%85%E4%BF%AE%E8%AF%BE/%E6%85%A7%E7%81%AF%E7%A6%85%E4%BF%AE%E8%AF%BE%E7%AC%AC%E4%B8%89%E5%86%8C/%E4%BD%9B%E8%AF%B4%E7%A8%BB%E7%A7%86%E7%BB%8F/%E4%BB%8E%E3%80%8A%E4%BD%9B%E8%AF%B4%E7%A8%BB%E7%A7%86%E7%BB%8F%E3%80%8B%e8%b0%88%e4%bd%9b%e6%95%99%e4%ba%ba%e7%94%9f%e8%a7%82%e5%92%8c%e4%b8%96%e7%95%8c%e8%a7%825.mp4' />
 
 
  本课相关链接 

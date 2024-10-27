@@ -1,0 +1,36 @@
+.root {
+    display: flex;
+}
+
+@media screen and (orientation:portrait) {
+    .root {
+        flex-direction: column;
+    }
+}
+
+.details {
+    justify-content: center;
+    align-self: center;
+    min-width: 35%;
+    padding: 1rem;
+    margin: .5rem;
+}
+
+.playlist {
+    margin: 0 .5rem;
+}
+
+.active {
+    color: #2e8555;
+}
+
+.item:hover {
+    cursor: pointer;
+    color: #3cad6e
+}
+
+.footer {
+    margin: 3rem;
+    display: flex;
+    justify-content: center;
+}

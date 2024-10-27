@@ -14,7 +14,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 前行广释之 暇满难得
 
-## 第十四节课
+## 前行广释第014课
 
 
 - [《大圆满前行》讲解第14课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第14课.mp4)
@@ -175,7 +175,7 @@ import TOCInline from '@theme/TOCInline';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第十五节课
+## 前行广释第015课
 
 - [《大圆满前行》讲解第15课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第15课.mp4)
 
@@ -318,7 +318,7 @@ import TOCInline from '@theme/TOCInline';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第十六节课
+## 前行广释第016课
 
 - [《大圆满前行》讲解第16课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第16课.mp4)
 
@@ -475,7 +475,7 @@ import TOCInline from '@theme/TOCInline';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第十七节课
+## 前行广释第017课
 
 - [《大圆满前行》讲解第17课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第17课.mp4)
 
@@ -634,7 +634,7 @@ import TOCInline from '@theme/TOCInline';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第十八节课
+## 前行广释第018课
 
 - [《大圆满前行》讲解第18课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第18课.mp4)
 
@@ -773,7 +773,7 @@ import TOCInline from '@theme/TOCInline';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第十九节课
+## 前行广释第019课
 
 - [《大圆满前行》讲解第19课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第19课.mp4)
 
@@ -953,7 +953,7 @@ import TOCInline from '@theme/TOCInline';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第二十节课
+## 前行广释第020课
 
 - [《大圆满前行》讲解第20课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第20课.mp4)
 
@@ -1099,7 +1099,7 @@ import TOCInline from '@theme/TOCInline';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第二十一节课
+## 前行广释第021课
 
 - [《大圆满前行》讲解第21课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第21课.mp4)
 
@@ -1265,7 +1265,7 @@ import TOCInline from '@theme/TOCInline';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第二十二节课
+## 前行广释第022课
 
 - [《大圆满前行》讲解第22课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第22课.mp4)
 
@@ -1435,7 +1435,7 @@ import TOCInline from '@theme/TOCInline';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第二十三节课
+## 前行广释第023课
 
 - [《大圆满前行》讲解第23课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第23课.mp4)
 
@@ -1595,7 +1595,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 暇满难得的自性
 
-## 第二十四节课
+## 前行广释第024课
 
 - [《大圆满前行》讲解第24课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第24课.mp4)
 
@@ -1719,7 +1719,7 @@ import TOCInline from '@theme/TOCInline';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第二十五节课
+## 前行广释第025课
 
 - [《大圆满前行》讲解第25课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第25课.mp4)
 
@@ -1863,7 +1863,7 @@ import TOCInline from '@theme/TOCInline';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第二十六节课
+## 前行广释第026课
 
 - [《大圆满前行》讲解第26课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第26课.mp4)
 
@@ -1999,7 +1999,7 @@ import TOCInline from '@theme/TOCInline';
 
 我今回向诸善根  为得普贤殊胜行
 
-## 第二十七节课
+## 前行广释第027课
 
 - [《大圆满前行》讲解第27课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第27课.mp4)
 

@@ -10,7 +10,7 @@ import TOCInline from '@theme/TOCInline';
 ---
 
 
-## 《前行广释》第143课辅导资料
+## 前行广释第143课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -432,7 +432,7 @@ import TOCInline from '@theme/TOCInline';
 
 哲波措利卓瓦卓瓦效  愿度有海诸有情
 
-## 《前行广释》第144课辅导资料
+## 前行广释第144课辅导
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 

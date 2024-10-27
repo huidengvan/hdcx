@@ -11,7 +11,7 @@ import TOCInline from '@theme/TOCInline';
 
 ---
 
-## 第一百四十三节课
+## 前行广释第143课
 
 - [《大圆满前行》讲解第143课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第143课.mp4)
 
@@ -311,7 +311,7 @@ import TOCInline from '@theme/TOCInline';
 
 总共我们讲了一百四十多堂课吧。这一百四十多堂课，如果能包括的话，就包括在今天的这几十分钟里了。像华智仁波切所说的：“这以上的文字，归纳总结了所有教言的要点。”
 
-## 第一百四十四节课
+## 前行广释第144课
 
 - [《大圆满前行》讲解第144课.mp4 - 视频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/007-前行广释视频/《大圆满前行》讲解第144课.mp4)
 

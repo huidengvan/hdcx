@@ -44,6 +44,10 @@ import TOCInline from '@theme/TOCInline';
 
 此大圆满龙钦宁提内外前行，是依照无等殊胜上师的口传而记录下来的。
 
+- [前行原文分层归摄-V3.0-二号-20230522.pdf](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-%E5%A4%A7%E5%9C%86%E6%BB%A1%E5%89%8D%E8%A1%8C%E5%B9%BF%E9%87%8A/02%E7%A7%91%E5%88%A4-%20%E5%A4%A7%E5%9C%86%E6%BB%A1%E5%89%8D%E8%A1%8C/%E5%89%8D%E8%A1%8C%E5%8E%9F%E6%96%87%E5%88%86%E5%B1%82%E5%BD%92%E6%91%84-V3.0-%E4%BA%8C%E5%8F%B7-20230522.pdf)
+- [前行原文分层归摄-V3.0-四号-20230522.pdf](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-%E5%A4%A7%E5%9C%86%E6%BB%A1%E5%89%8D%E8%A1%8C%E5%B9%BF%E9%87%8A/02%E7%A7%91%E5%88%A4-%20%E5%A4%A7%E5%9C%86%E6%BB%A1%E5%89%8D%E8%A1%8C/%E5%89%8D%E8%A1%8C%E5%8E%9F%E6%96%87%E5%88%86%E5%B1%82%E5%BD%92%E6%91%84-V3.0-%E5%9B%9B%E5%8F%B7-20230522.pdf)
+
+
 全文分二：甲一、闻法方式；甲二、所讲之法。
 
 ## 1 甲一（闻法方式）

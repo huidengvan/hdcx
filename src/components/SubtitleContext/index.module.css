@@ -1,0 +1,129 @@
+.subtitle-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    min-width: 50%;
+}
+
+.item:first-child {
+    flex: 3;
+    display: inline-flex;
+    justify-content: center;
+    max-width: 55;
+
+}
+
+.item>video {
+    max-width: 100%;
+}
+
+.item:last-child {
+    flex: 2;
+    margin-left: 1rem;
+    max-width: 45%;
+}
+
+.item>ul {
+    padding: .75rem;
+    width: fit-content;
+    max-width: 100%;
+    max-height: 70vh;
+    overflow-y: scroll;
+    /* background-color: #FFF2E2; */
+    margin: 0 !important;
+    font-size: 22px;
+}
+
+.item>ul>li {
+    cursor: pointer;
+    list-style: none;
+    max-width: fit-content;
+    display: flex;
+}
+
+.item>ul>li>span {
+    display: inline-block;
+    max-width: 100%;
+}
+
+.item>ul>li>p {
+    /* 保留换行符并自动换行 */
+    white-space: pre-wrap;
+}
+
+.current-line {
+    font-size: 26px;
+    color: #2e8555
+}
+
+::selection {
+    background-color: yellow;
+    /* 高亮色 */
+}
+
+.timeline {
+    font-size: 0.75rem;
+    user-select: none;
+    padding: 0.25rem;
+    font-weight: 100;
+}
+
+.subtitle-box {
+    position: relative;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    margin-top: -2rem;
+}
+
+.subtitle-switch {
+    display: flex;
+    position: absolute;
+    bottom: -24px;
+    left: 40px;
+    font-size: 12px;
+    align-items: flex-end;
+}
+
+.show-copied::after {
+    position: absolute;
+    width: max-content;
+    left: 6rem;
+    top: 1.5rem;
+    margin-left: .2rem;
+    content: '播放位置已复制';
+    font-size: 11px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #359962;
+    padding: 3px 6px;
+    background-color: #3b75f4;
+    border-radius: 5px;
+    color: #fff;
+}
+
+@media screen and (orientation:portrait) {
+    .item>ul {
+        margin-top: .5rem;
+        max-height: 45vh;
+    }
+
+    .item:last-child {
+        margin-left: 0;
+        min-width: 100%;
+    }
+
+    .item>ul {
+        width: 100%;
+    }
+
+    .subtitle-container {
+        flex-direction: column;
+    }
+}
+
+button {
+    background-color: transparent;
+    border: none;
+}
