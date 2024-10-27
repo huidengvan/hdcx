@@ -6087,9 +6087,9 @@ import TOCInline from '@theme/TOCInline';
 
 **尽此一报身　同生极乐国**
 
-**网址：http://www.xianmifw.com>**
+**网址：http://www.xianmifw.com**
 
-**博客：http://blog.sina.com.cn/yixiponcuo>**
+**博客：http://blog.sina.com.cn/yixiponcuo**
 
 **联系电话：18982121118**
 
