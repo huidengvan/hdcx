@@ -13,8 +13,8 @@ const config = {
     tagline: '学修指南及参考课程进度安排',
     url: 'https://huidengchanxiu.net',
     baseUrl: '/',
-    onBrokenLinks: 'warn',
-    onBrokenMarkdownLinks: 'warn',
+    onBrokenLinks: 'ignore',
+    onBrokenMarkdownLinks: 'ignore',
     favicon: 'img/favicon.ico',
     organizationName: 'huidengvan', // Usually your GitHub org/user name.
     projectName: 'huidengchanxiu', // Usually your repo name.

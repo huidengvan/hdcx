@@ -166,7 +166,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                     }, (duration + 3) * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000));
                 }
 
-            }, endTime * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
+            }, keqianTime * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
         }
 
 

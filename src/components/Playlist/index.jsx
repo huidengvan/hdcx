@@ -38,7 +38,7 @@ export default function Playlist() {
     useEffect(() => {
         if (urls?.length > 0 && urltext?.join() != urls?.join()) {
             setUrltext(urls)
-        }else if (!urlsParam && uriParam) {
+        } else if (!urlsParam && uriParam) {
             parseUri()
         }
     }, [])
@@ -185,7 +185,8 @@ export async function getVideoDuration(videoUrl) {
         };
 
         video.onerror = () => {
-            reject(new Error('无法加载视频'));
+            console.warn(`无法加载视频: ${videoUrl}`);
+            resolve(0)
         };
     });
 }

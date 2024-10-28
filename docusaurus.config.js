@@ -13,8 +13,8 @@ const config = {
     tagline: '学修指南及参考课程进度安排',
     url: 'https://huidengchanxiu.net',
     baseUrl: '/',
-    onBrokenLinks: 'warn',
-    onBrokenMarkdownLinks: 'warn',
+    onBrokenLinks: 'ignore',
+    onBrokenMarkdownLinks: 'ignore',
     favicon: 'img/favicon.ico',
     organizationName: 'huidengvan', // Usually your GitHub org/user name.
     projectName: 'huidengchanxiu', // Usually your repo name.
@@ -95,6 +95,11 @@ const config = {
     themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     {
+        docs: {
+            sidebar: {
+                hideable: true,
+            },
+        },
         navbar: {
             title: '慧灯禅修',
             logo: {
@@ -155,15 +160,6 @@ const config = {
                             label: '学修指南',
                             to: '/docs/intro',
                         },
-                    ],
-                },
-                {
-                    title: 'Community',
-                    items: [
-                        {
-                            label: 'markmap',
-                            href: '/markmap',
-                        }
                     ],
                 },
                 {

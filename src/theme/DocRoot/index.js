@@ -42,7 +42,6 @@ export default function DocRootWrapper(props) {
   };
 
   const handleWidescreen = () => {
-    let sidebarButton = document.querySelector('[class*="collapseSidebarButton"]')
     let tocNode = document.querySelector('.theme-doc-toc-desktop')
     if (articleRef.className == '') {
       tocNode.style.display = ''
@@ -54,10 +53,12 @@ export default function DocRootWrapper(props) {
       articleRef.style.fontSize = 'x-large'
     }
 
+    let sidebarButton = document.querySelector('[class*="collapseSidebarButton"]')
+    sidebarButton?.click()
+
     setTimeout(() => {
-      sidebarButton.click()
       locateParagraph(currentPara, scrollY);
-    }, 50)
+    }, 10)
   };
 
   const prevParagraph = () => {
@@ -70,7 +71,10 @@ export default function DocRootWrapper(props) {
   const nextParagraph = () => {
     currentPara += 1;
     locateParagraph(currentPara + 1, scrollY);
-    getTargetNode(currentPara).style.borderLeft = '1px solid #2e8555'
+    let node = getTargetNode(currentPara)
+    if (node) {
+      node.style.borderLeft = '1px solid #2e8555'
+    }
   };
 
   const handleKeyDown = (event) => {
@@ -119,12 +123,13 @@ export default function DocRootWrapper(props) {
 
   const autoPaginate = async () => {
     autoPage = !autoPage;
-    handleWidescreen();
     const speed = await calcAudioSpeed();
 
     console.log('read speed', speed);
     if (speed > 1) {
       autoNextParagraph(speed);
+      handleWidescreen();
+
       console.log(`${autoPage ? '开始' : '暂停'}自动阅读`);
     }
   };
