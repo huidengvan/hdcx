@@ -50,28 +50,26 @@ const config = {
         //         rehypePlugins: [paraAnchor],
         //     },
         // ],
+        // [
+        //     '@docusaurus/plugin-content-docs',
+        //     {
+        //         id: 'books',
+        //         path: 'books',
+        //         routeBasePath: 'books',
+        //         sidebarPath: require.resolve('./sidebars.js'),
+        //         rehypePlugins: [paraAnchor],
+        //     },
+        // ],
         [
             '@docusaurus/plugin-content-docs',
             {
-                id: 'books',
-                path: 'books',
-                routeBasePath: 'books',
+                id: 'refs',
+                path: 'refs',
+                routeBasePath: 'refs',
                 sidebarPath: require.resolve('./sidebars.js'),
                 rehypePlugins: [paraAnchor],
             },
         ],
-        // [
-        //     '@docusaurus/plugin-content-docs',
-        //     {
-        //         id: 'refs',
-        //         path: 'refs',
-        //         routeBasePath: 'refs',
-        //         sidebarPath: require.resolve('./sidebars.js'),
-        //         // generate paragraph anchor plugin
-        //         rehypePlugins: [paraAnchor],
-
-        //     },
-        // ],
         [
             '@docusaurus/plugin-content-docs',
             {
@@ -82,101 +80,106 @@ const config = {
                 rehypePlugins: [paraAnchor],
             },
         ],
-        [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: '5jx',
-                path: '5jx',
-                routeBasePath: '5jx',
-                sidebarPath: require.resolve('./sidebars.js'),
-                rehypePlugins: [paraAnchor],
-            },
-        ],
+        // [
+        //     '@docusaurus/plugin-content-docs',
+        //     {
+        //         id: '5jx',
+        //         path: '5jx',
+        //         routeBasePath: '5jx',
+        //         sidebarPath: require.resolve('./sidebars.js'),
+        //         rehypePlugins: [paraAnchor],
+        //     },
+        // ],
     ],
     themes: [],
     themeConfig:
 
-        /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-        ({
-            navbar: {
-                title: '慧灯禅修',
-                logo: {
-                    alt: 'HuidengVan',
-                    src: 'img/hdlogo.png',
+    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+    {
+        docs: {
+            sidebar: {
+                hideable: true,
+            },
+        },
+        navbar: {
+            title: '慧灯禅修',
+            logo: {
+                alt: 'HuidengVan',
+                src: 'img/hdlogo.png',
+            },
+            items: [
+                // {
+                //     type: 'doc',
+                //     docId: 'intro',
+                //     position: 'left',
+                //     label: '学修指南',
+                // },
+                // {
+                //     type: 'doc',
+                //     docId: 'b1/1-01',
+                //     docsPluginId: 'books',
+                //     position: 'left',
+                //     label: '课程法本',
+                // },
+                {
+                    type: 'doc',
+                    docId: 'index',
+                    docsPluginId: 'refs',
+                    position: 'left',
+                    label: '参考法本',
                 },
-                items: [
-                    // {
-                    //     type: 'doc',
-                    //     docId: 'intro',
-                    //     position: 'left',
-                    //     label: '学修指南',
-                    // },
-                    {
-                        type: 'doc',
-                        docId: 'b1/1-01',
-                        docsPluginId: 'books',
-                        position: 'left',
-                        label: '课程法本',
-                    },
-                    // {
-                    //     type: 'doc',
-                    //     docId: 'index',
-                    //     docsPluginId: 'refs',
-                    //     position: 'left',
-                    //     label: '参考法本',
-                    // },
-                    // {
-                    //     type: 'doc',
-                    //     docId: 'book1',
-                    //     docsPluginId: 'wsb',
-                    //     position: 'left',
-                    //     label: '闻思班',
-                    // },
-                    {
-                        type: 'doc',
-                        docId: '1xm',
-                        docsPluginId: '4jx',
-                        position: 'left',
-                        label: '四加行',
-                    },
-                    {
-                        type: 'doc',
-                        docId: '1gy',
-                        docsPluginId: '5jx',
-                        position: 'left',
-                        label: '五加行',
-                    },
-                ],
-            },
-            footer: {
-                style: 'dark',
-                links: [
-                    {
-                        title: 'Docs',
-                        items: [
-                            {
-                                label: '学修指南',
-                                to: '/docs/intro',
-                            },
-                        ],
-                    },
-                    {
-                        title: '法本',
-                        items: [
-                            {
-                                label: '第一册',
-                                href: '/books/b1',
-                            }
-                        ],
-                    },
-                ],
-                copyright: `慧灯小组温哥华（ <a href='https://www.huidengvan.com' target='_blank'>huidengvan.com</a> / huidengvan@gmail.com）发心制作. Built with Docusaurus. ${new Date().getFullYear()} `,
-            },
-            prism: {
-                theme: prismThemes.github,
-                darkTheme: prismThemes.dracula,
-            },
-        }),
+                // {
+                //     type: 'doc',
+                //     docId: 'book1',
+                //     docsPluginId: 'wsb',
+                //     position: 'left',
+                //     label: '闻思班',
+                // },
+                {
+                    type: 'doc',
+                    docId: '1xm',
+                    docsPluginId: '4jx',
+                    position: 'left',
+                    label: '四加行',
+                },
+                // {
+                //     type: 'doc',
+                //     docId: '1gy',
+                //     docsPluginId: '5jx',
+                //     position: 'left',
+                //     label: '五加行',
+                // },
+            ],
+        },
+        footer: {
+            style: 'light',
+            links: [
+                {
+                    title: 'Docs',
+                    items: [
+                        {
+                            label: '学修指南',
+                            to: '/docs/intro',
+                        },
+                    ],
+                },
+                {
+                    title: '法本',
+                    items: [
+                        {
+                            label: '第一册',
+                            href: '/books/b1',
+                        }
+                    ],
+                },
+            ],
+            copyright: `慧灯小组温哥华（ <a href='https://www.huidengvan.com' target='_blank'>huidengvan.com</a> / huidengvan@gmail.com）发心制作. Built with Docusaurus. ${new Date().getFullYear()} `,
+        },
+        prism: {
+            theme: prismThemes.github,
+            darkTheme: prismThemes.dracula,
+        },
+    },
     // scripts: [{ src: '/js/global.js', async: false, },],
 };
 

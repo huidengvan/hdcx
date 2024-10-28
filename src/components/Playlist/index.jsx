@@ -3,19 +3,22 @@ import { useLocation } from '@docusaurus/router';
 import SubtitleContext from '@site/src/components/SubtitleContext'
 import styles from './playlist.module.css'
 import { parseTime } from '../SubtitleContext';
+import useLocalStorageState from 'use-local-storage-state'
 
 export default function Playlist() {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
     const urlsParam = params.get('urls');
-    const uriParam = params.get('uri');
+    const uriParam = params.get('uri'); // 可以传入一个列表文件
     const currentParam = params.get('index');
     const subPathParam = params.get('subPath');
     let urls = urlsParam?.split('|');
     const [src, setSrc] = useState()
     const [current, setCurrent] = useState(currentParam || 0)
     const [edit, setEdit] = useState(false)
-    const [urltext, setUrltext] = useState(urls)
+    const [urltext, setUrltext] = useLocalStorageState('playlist', {
+        defaultValue: urls
+    })
 
     const parseUri = async () => {
         let res = await fetchTextFile(uriParam);
@@ -25,21 +28,20 @@ export default function Playlist() {
     const buildSrc = (url) => url.split('@')[0].replace('^', '#t=')
 
     useEffect(() => {
-        if (!urlsParam && uriParam) {
-            parseUri()
-        }
-
         if (urltext?.length > current) {
             setSrc(buildSrc(urltext[current]))
         }
 
     }, [current])
 
+
     useEffect(() => {
-        if (urltext?.join() != urls?.join()) {
-            window.location.replace(`/playlist?urls=${urltext.join('|')}`)
+        if (urls?.length > 0 && urltext?.join() != urls?.join()) {
+            setUrltext(urls)
+        }else if (!urlsParam && uriParam) {
+            parseUri()
         }
-    }, [edit])
+    }, [])
 
     const changeSrc = (e) => {
         const { value } = e.target
@@ -52,9 +54,7 @@ export default function Playlist() {
                 {src && <SubtitleContext src={src} current={current} setCurrent={setCurrent} subPath={subPathParam} />}
                 <details open className={styles.details}>
                     <summary style={{ userSelect: 'none', marginBottom: '5px' }}>播放列表
-                        <span style={{
-                            marginLeft: '4px'
-                        }}
+                        <span style={{ marginLeft: '4px' }}
                             onClick={e => {
                                 e.stopPropagation()
                                 e.preventDefault()
@@ -121,7 +121,7 @@ const Duration = ({ urltext }) => {
                 let duration = await getVideoDuration(url);
                 if (duration > 0) {
                     t += duration;
-                    // videoUrls[i] = `${item?.split('@')[0]}^0,${duration}${item?.split('@')?.length > 1 ? '@' + item?.split('@')[1] : ''}`
+                    videoUrls[i] = `${item?.split('@')[0]}^0,${duration}${item?.split('@')?.length > 1 ? '@' + item?.split('@')[1] : ''}`
                 }
             } else {
                 const times = item.split('^')[1].split('@')[0].split(',');

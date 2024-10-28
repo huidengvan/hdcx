@@ -7,7 +7,7 @@ export default function paraAnchor() {
         visit(tree, 'element', (node) => {
 
             if (node.tagName == 'p') {
-                // node.properties = { id: `p${line}` }; //同样可以定位到
+                node.properties = { id: `p${line}` }; //给p加id同样可以定位到
                 const alink = {
                     type: 'element',
                     tagName: 'a',

@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from './index.module.css';
 import BrowserOnly from '@docusaurus/BrowserOnly';
+import { useHistory } from '@docusaurus/router';
+
 
 export const parseTime = (timeString) => {
     if (!timeString) return timeString
@@ -52,6 +54,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
     let keqianTime = 88;
     let kehouTime = 140;
 
+    const history = useHistory();
     const copyText = async (text) => {
         const msgEl = document.querySelector(`.${styles['subtitle-switch']}`);
         try {
@@ -102,19 +105,18 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
 
     useEffect(() => {
         // 清除栅格布局, 使宽度为100%
-        document.querySelector('main').firstChild.removeAttribute('class')
         document.querySelector('article').parentElement.removeAttribute('class')
-        document.querySelector('footer').style.display = 'none'
 
         if (videoRef.current) {
             let isMp4 = /\.(mp4|webm)/.test(videoSrc)
             let matchJx = /\/v\/[45]jx/.test(videoSrc)
             try {
-                if (matchJx) {
-                    videoRef.current.pause()
-                } else {
+                if (current != 0) {
                     videoRef.current.play()
+                } else if (matchJx) {
+                    videoRef.current.pause()
                 }
+
                 // console.log({ current, isMp4 });
                 if (current != 0 && isMp4) {
                     !document.fullscreenElement && videoRef.current.requestFullscreen()
@@ -123,13 +125,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                 }
             } catch (error) { }
         }
-
-        if (subPath || matchRxl || matchRxlQa) {
-            let videoName = videoSrc.substring(videoSrc.lastIndexOf('/') + 1)
-            let suburl = subPath ?
-                `${subPath}${videoName.replace(/\.[^/.]+$/, '.srt')}` :
-                `https://box.hdcxb.net/d/慧灯禅修/001-入行论释/fudao/入行论辅导字幕（课诵部分）.srt`
-            // console.log(`fetch suxbtitle from ${suburl}`);
+        const fetchSub = (suburl) => {
             fetch(suburl)
                 .then(response => {
                     if (!response.ok) {
@@ -145,28 +141,33 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                         wraperRef.current.parentElement.style.flexDirection = 'column'
                     }
                 });
+        }
+        let suburl
+        if (matchRxl || matchRxlQa) {
+            suburl = `https://box.hdcxb.net/d/慧灯禅修/001-入行论释/fudao/入行论辅导字幕（课诵部分）.srt`
+            fetchSub(suburl)
+        } else if (decodeURI(location.hash).includes("慧灯禅修课")) {
+            let videoName = videoSrc.slice(95, -4)
+            suburl = `https://box.hdcxb.net/d/禅修课视频/${videoName}.srt`
+            fetchSub(suburl)
+
         } else {
             wraperRef.current.parentElement.style.flexDirection = 'row'
         }
+        if (typeof window.orientation === 'undefined' && matchRxl && endTime) {
+            // 课诵念完，前往阅读页
+            let duration = Math.ceil(endTime) - keqianTime - kehouTime
 
-        if (typeof window.orientation === 'undefined' && matchRxl) {
-            // 课诵念完，打开新标签页
             setTimeout(() => {
-                let duration = Math.ceil(videoRef.current?.duration) - keqianTime - kehouTime
-                let tabUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${duration}#入菩萨行论第${parseInt(matchRxl[1])}节课`
-                let audoReadTab;
-
+                let readingUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${duration}#入菩萨行论第${parseInt(matchRxl[1])}节课`
                 if (duration) {
-                    audoReadTab = window.open(tabUrl);
+                    history.push(readingUrl)
                     setTimeout(() => {
-                        audoReadTab?.close()
+                        history.push('/playlist')
                     }, (duration + 3) * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000));
                 }
 
-                if (!audoReadTab) {
-                    confirm('如需开启自动阅读，请允许打开新标签');
-                }
-            }, keqianTime * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
+            }, endTime * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
         }
 
 
