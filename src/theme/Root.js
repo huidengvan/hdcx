@@ -9,11 +9,10 @@ export default function Root({ children }) {
         setTimeout(() => {
             if (/^\/(playlist|video)/.test(location.pathname)) {
                 let footer = document.querySelector('footer')
-                let main = document.querySelector('main')
-                main.firstChild.removeAttribute('class')
+                document.querySelector('main')?.firstChild.removeAttribute('class')
                 footer.style.display = 'none'
             }
-        });
+        }, 50);
     }, [location]);
     return <>
         {children}

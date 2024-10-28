@@ -41,6 +41,7 @@ const config = {
                 theme: {
                     customCss: './src/css/custom.css',
                 },
+                blog: { onUntruncatedBlogPosts: 'ignore' }
             }),
         ],
     ],
@@ -53,7 +54,6 @@ const config = {
                 routeBasePath: 'wsb',
                 sidebarPath: require.resolve('./sidebars.js'),
                 rehypePlugins: [paraAnchor],
-                // ... other options
             },
         ],
         [
@@ -64,7 +64,6 @@ const config = {
                 routeBasePath: 'books',
                 sidebarPath: require.resolve('./sidebars.js'),
                 rehypePlugins: [paraAnchor],
-                // ... other options
             },
         ],
         [
@@ -77,7 +76,6 @@ const config = {
                 // generate paragraph anchor plugin
                 rehypePlugins: [paraAnchor],
 
-                // ... other options
             },
         ],
         [
@@ -88,7 +86,6 @@ const config = {
                 routeBasePath: '4jx',
                 sidebarPath: require.resolve('./sidebars.js'),
                 rehypePlugins: [paraAnchor],
-                // ... other options
             },
         ],
         [
@@ -99,106 +96,111 @@ const config = {
                 routeBasePath: '5jx',
                 sidebarPath: require.resolve('./sidebars.js'),
                 rehypePlugins: [paraAnchor],
-                // ... other options
             },
         ],
     ],
-    themes:
-        // ... Your other themes.
-        [],
+    themes: [],
     themeConfig:
-
-        /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-        ({
-            navbar: {
-                title: '慧灯禅修',
-                logo: {
-                    alt: 'HuidengVan',
-                    src: 'img/hdlogo.png',
+    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+    {
+        navbar: {
+            title: '慧灯禅修',
+            logo: {
+                alt: 'HuidengVan',
+                src: 'img/hdlogo.png',
+            },
+            items: [
+                {
+                    type: 'doc',
+                    docId: 'intro',
+                    position: 'left',
+                    label: '学修指南',
                 },
-                items: [
-                    {
-                        type: 'doc',
-                        docId: 'intro',
-                        position: 'left',
-                        label: '学修指南',
-                    },
-                    {
-                        type: 'doc',
-                        docId: 'b1/1-01',
-                        docsPluginId: 'books',
-                        position: 'left',
-                        label: '课程法本',
-                    },
-                    {
-                        type: 'doc',
-                        docId: 'index',
-                        docsPluginId: 'refs',
-                        position: 'left',
-                        label: '参考法本',
-                    },
-                    {
-                        type: 'doc',
-                        docId: 'book1',
-                        docsPluginId: 'wsb',
-                        position: 'left',
-                        label: '闻思班',
-                    },
-                    {
-                        type: 'doc',
-                        docId: '1xm',
-                        docsPluginId: '4jx',
-                        position: 'left',
-                        label: '四加行',
-                    },
-                    {
-                        type: 'doc',
-                        docId: '1gy',
-                        docsPluginId: '5jx',
-                        position: 'left',
-                        label: '五加行',
-                    },
-                ],
-            },
-            footer: {
-                style: 'light',
-                links: [
-                    {
-                        title: 'Docs',
-                        items: [
-                            {
-                                label: '学修指南',
-                                to: '/docs/intro',
-                            },
-                        ],
-                    },
-                    {
-                        title: 'Community',
-                        items: [
-                            {
-                                label: 'markmap',
-                                href: '/markmap',
-                            }
-                        ],
-                    },
-                    {
-                        title: 'Links',
-                        items: [
-                            {
-                                label: '慧灯小组温哥华',
-                                href: 'https://www.huidengvan.com',
-                            }
-                        ],
-                    },
-                ],
-                copyright: `慧灯小组温哥华（huidengvan.com / huidengvan@gmail.com）发心制作. Built with Docusaurus. ${new Date().getFullYear()} `,
-            },
-            prism: {
-                theme: prismThemes.github,
-                darkTheme: prismThemes.dracula,
+                {
+                    type: 'doc',
+                    docId: 'b1/1-01',
+                    docsPluginId: 'books',
+                    position: 'left',
+                    label: '课程法本',
+                },
+                {
+                    type: 'doc',
+                    docId: 'index',
+                    docsPluginId: 'refs',
+                    position: 'left',
+                    label: '参考法本',
+                },
+                {
+                    type: 'doc',
+                    docId: 'book1',
+                    docsPluginId: 'wsb',
+                    position: 'left',
+                    label: '闻思班',
+                },
+                {
+                    type: 'doc',
+                    docId: '1xm',
+                    docsPluginId: '4jx',
+                    position: 'left',
+                    label: '四加行',
+                },
+                {
+                    type: 'doc',
+                    docId: '1gy',
+                    docsPluginId: '5jx',
+                    position: 'left',
+                    label: '五加行',
+                },
+            ],
+        },
+        footer: {
+            style: 'light',
+            links: [
+                {
+                    title: 'Docs',
+                    items: [
+                        {
+                            label: '学修指南',
+                            to: '/docs/intro',
+                        },
+                    ],
+                },
+                {
+                    title: 'Community',
+                    items: [
+                        {
+                            label: 'markmap',
+                            href: '/markmap',
+                        }
+                    ],
+                },
+                {
+                    title: 'Links',
+                    items: [
+                        {
+                            label: '慧灯小组温哥华',
+                            href: 'https://www.huidengvan.com',
+                        }
+                    ],
+                },
+            ],
+            copyright: `慧灯小组温哥华（huidengvan.com / huidengvan@gmail.com）发心制作. Built with Docusaurus. ${new Date().getFullYear()} `,
+        },
+        prism: {
+            theme: prismThemes.github,
+            darkTheme: prismThemes.dracula,
+        },
+    },
+    webpack: {
+        jsLoader: (isServer) => ({
+            loader: require.resolve('esbuild-loader'),
+            options: {
+                loader: 'jsx',
+                format: isServer ? 'cjs' : undefined,
+                target: isServer ? 'node12' : 'es2017',
             },
         }),
-    scripts: [{ src: '/js/global.js', async: false, },],
+    },
 };
 
 export default config;

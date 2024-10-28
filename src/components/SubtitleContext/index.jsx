@@ -104,10 +104,9 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
     };
 
     useEffect(() => {
-        // 清除栅格布局, 使宽度为100%
-        document.querySelector('article').parentElement.removeAttribute('class')
-
         if (videoRef.current) {
+            // 清除栅格布局, 使宽度为100%
+            document.querySelector('article')?.parentElement.removeAttribute('class')
             let isMp4 = /\.(mp4|webm)/.test(videoSrc)
             let matchJx = /\/v\/[45]jx/.test(videoSrc)
             try {

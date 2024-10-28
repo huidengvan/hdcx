@@ -70,16 +70,16 @@ const config = {
                 rehypePlugins: [paraAnchor],
             },
         ],
-        [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: '4jx',
-                path: '4jx',
-                routeBasePath: '4jx',
-                sidebarPath: require.resolve('./sidebars.js'),
-                rehypePlugins: [paraAnchor],
-            },
-        ],
+        // [
+        //     '@docusaurus/plugin-content-docs',
+        //     {
+        //         id: '4jx',
+        //         path: '4jx',
+        //         routeBasePath: '4jx',
+        //         sidebarPath: require.resolve('./sidebars.js'),
+        //         rehypePlugins: [paraAnchor],
+        //     },
+        // ],
         // [
         //     '@docusaurus/plugin-content-docs',
         //     {
@@ -135,13 +135,13 @@ const config = {
                 //     position: 'left',
                 //     label: '闻思班',
                 // },
-                {
-                    type: 'doc',
-                    docId: '1xm',
-                    docsPluginId: '4jx',
-                    position: 'left',
-                    label: '四加行',
-                },
+                // {
+                //     type: 'doc',
+                //     docId: '1xm',
+                //     docsPluginId: '4jx',
+                //     position: 'left',
+                //     label: '四加行',
+                // },
                 // {
                 //     type: 'doc',
                 //     docId: '1gy',
@@ -181,6 +181,16 @@ const config = {
         },
     },
     // scripts: [{ src: '/js/global.js', async: false, },],
+    webpack: {
+        jsLoader: (isServer) => ({
+            loader: require.resolve('esbuild-loader'),
+            options: {
+                loader: 'jsx',
+                format: isServer ? 'cjs' : undefined,
+                target: isServer ? 'node12' : 'es2017',
+            },
+        }),
+    },
 };
 
 export default config;
