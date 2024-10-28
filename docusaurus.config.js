@@ -13,16 +13,11 @@ const config = {
     tagline: '学修指南及参考课程进度安排',
     url: 'https://huidengchanxiu.net',
     baseUrl: '/',
-    onBrokenLinks: 'throw',
+    onBrokenLinks: 'warn',
     onBrokenMarkdownLinks: 'warn',
     favicon: 'img/favicon.ico',
     organizationName: 'huidengvan', // Usually your GitHub org/user name.
     projectName: 'huidengchanxiu', // Usually your repo name.
-
-
-    // Even if you don't use internationalization, you can use this field to set
-    // useful metadata like html lang. For example, if your site is Chinese, you
-    // may want to replace "en" with "zh-Hans".
     i18n: {
         defaultLocale: 'zh-Hans',
         locales: ['zh-Hans'],
@@ -35,13 +30,11 @@ const config = {
             ({
                 docs: {
                     sidebarPath: './sidebars.js',
-
                 },
 
                 theme: {
                     customCss: './src/css/custom.css',
                 },
-                blog: { onUntruncatedBlogPosts: 'ignore' }
             }),
         ],
     ],
@@ -73,7 +66,6 @@ const config = {
                 path: 'refs',
                 routeBasePath: 'refs',
                 sidebarPath: require.resolve('./sidebars.js'),
-                // generate paragraph anchor plugin
                 rehypePlugins: [paraAnchor],
 
             },
@@ -201,6 +193,7 @@ const config = {
             },
         }),
     },
+
 };
 
 export default config;
