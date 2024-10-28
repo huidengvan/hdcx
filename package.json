@@ -5,10 +5,10 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
+    "build": "export NODE_OPTIONS=--max-old-space-size=16000 && docusaurus build",
     "dev": "docusaurus start --config dev.config.js --host 0.0.0.0 --no-open",
-    "prebuild": "docusaurus build --config dev.config.js",
+    "build:dev": "docusaurus build --config dev.config.js",
     "preview": "docusaurus serve --config dev.config.js",
-    "build": "docusaurus build",
     "check": "npx docusaurus-mdx-checker",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
