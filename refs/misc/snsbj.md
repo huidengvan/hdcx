@@ -12,9 +12,7 @@ import TOCInline from '@theme/TOCInline';
 <TOCInline toc={toc} maxHeadingLevel='6' />
 </details>
 
-import Mypara from '@site/src/components/myp';
 
-<Mypara />
 
 # 随念三宝经讲记
 
