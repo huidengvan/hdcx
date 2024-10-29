@@ -35,9 +35,8 @@
   padding-left: 4px;
 }
 
-.theme-doc-markdown>p::before {
-  content: '[' attr(id)'] ';
-  color: #2e8555;
+.theme-doc-markdown>p>a {
   font-size: 80%;
-  cursor: pointer;
+  padding-right: 2px;
+  user-select: none;
 }
