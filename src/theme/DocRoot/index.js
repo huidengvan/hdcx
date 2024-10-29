@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from '@docusaurus/router';
+import React, { useEffect } from 'react';
+import { useHistory, useLocation } from '@docusaurus/router';
 import DocRoot from '@theme-original/DocRoot';
 import { ignoredCharacters, bgColors as colors, getTargetNode, locateParagraph, getStartNode, getRxlEndNode, filterFootnote } from '@site/src/utils/readingUtils.js'
 
 
 export default function DocRootWrapper(props) {
+  const history = useHistory();
   const location = useLocation();
   let docRoot, articleRef, duration, currentPara, endPara, autoPage, scrollY = 100;
 
@@ -162,11 +163,17 @@ export default function DocRootWrapper(props) {
   };
 
   useEffect(() => {
-    if (location.hash) {
-      const element = document.getElementById(decodeURI(location.hash.slice(1)));
+    let para = decodeURI(location.hash?.slice(1))
 
-      element && element.scrollIntoView();
+    if (para) {
+      locateParagraph(para.slice(1), -200)
     }
+
+    document.querySelector('.theme-doc-markdown').addEventListener('click', function (event) {
+      if (event.target.tagName === 'P') {
+        history.push(`#${event.target.id}`)
+      }
+    });
   }, [location]);
 
   return (
