@@ -14,6 +14,7 @@
 }
 
 .videoBox>img {
+    min-height: 400px;
     align-self: center;
 }
 
@@ -31,12 +32,12 @@
 
 .audio {
     height: 4rem;
-    width: 50%;
+    max-width: 50vw;
 }
 
 .item:last-child {
     flex: 2;
-    margin-left: 1rem;
+    padding-left: 1rem;
     min-width: 45%;
 }
 
@@ -108,7 +109,7 @@
     width: max-content;
     left: 6rem;
     top: 1.5rem;
-    margin-left: .2rem;
+    padding-left: .2rem;
     content: '播放位置已复制';
     font-size: 11px;
     border-width: 1px;

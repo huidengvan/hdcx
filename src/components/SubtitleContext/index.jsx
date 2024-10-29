@@ -22,7 +22,6 @@ export const parseTime = (timeString) => {
 };
 export const formatTime = (totalSeconds) => {
     if (totalSeconds === undefined || totalSeconds === null) return '';
-
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = String(totalSeconds % 60);
@@ -39,6 +38,7 @@ export const formatTime = (totalSeconds) => {
 const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
     const baseUrl = location.hash.includes('http') ? '' : 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/';
     let videoSrc = (src === undefined ? `${baseUrl}${location.hash.slice(1)}` : src);
+    const [duration, setDuration] = useState(0);
 
     const [subtitles, setSubtitles] = useState([]);
     const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(-1);
@@ -91,8 +91,8 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
             let timeStart = time[0]
             if ((matchRxl || matchRxlQa) && parseTime(timeStart) > keqianTime + 5) {
                 timeStart = matchRxlQa ?
-                    parseTime(timeStart) + (videoRef.current?.duration - 2868) :
-                    parseTime(timeStart) + (videoRef.current?.duration - 2870)
+                    parseTime(timeStart) + (duration - 2868) :
+                    parseTime(timeStart) + (- 2870)
 
                 timeStart = formatTime(timeStart)
             }
@@ -124,8 +124,6 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
         }
 
         const fetchSub = (suburl) => {
-            console.log(suburl);
-
             fetch(suburl)
                 .then(response => {
                     if (!response.ok) {
@@ -155,26 +153,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
             wraperRef.current.parentElement.style.flexDirection = 'row'
         }
 
-        if (typeof window.orientation === 'undefined' && matchRxl && endTime) {
-            let duration = Math.ceil(endTime) - keqianTime - kehouTime
-
-            setTimeout(() => {
-                let readingUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${duration}#入菩萨行论第${parseInt(matchRxl[1])}节课`
-                console.log('课诵念完，前往阅读页');
-
-                if (duration) {
-                    history.push(readingUrl)
-                    setTimeout(() => {
-                        history.push('/playlist')
-                    }, (duration + 3) * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000));
-                }
-
-            }, keqianTime * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
-        }
-
-
         setSubtitles([])
-
     }, [videoSrc]);
 
     useEffect(() => {
@@ -183,11 +162,6 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
         if (!video) return;
 
         video.playbackRate = localStorage.getItem('playbackRate') || 1
-        setTimeout(() => {
-            if (video?.duration - endTime < 1) {
-                endTime = undefined
-            }
-        }, 3000);
 
         const handleTimeUpdate = () => {
             let currentTime = video?.currentTime;
@@ -208,7 +182,6 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                 }
             }
         };
-
 
         const handleKeyDown = (event) => {
             if (event.key === 'ArrowLeft') { // 左箭头
@@ -257,15 +230,37 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
         }
     };
 
+    const handleLoadedMetadata = (event) => {
+        const videoDuration = event.target.duration;
+        // console.log({videoDuration});
+
+        setDuration(videoDuration);
+        if (videoDuration - endTime < 1) {
+            endTime = undefined
+        }
+        if (typeof window.orientation === 'undefined' && matchRxl) {
+            let lessonDuration = videoDuration - keqianTime - kehouTime
+            setTimeout(() => {
+                let readingUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${lessonDuration}#入菩萨行论第${parseInt(matchRxl[1])}节课`
+                console.log('课诵念完，前往阅读页');
+                history.push(readingUrl)
+                setTimeout(() => {
+                    history.push('/playlist')
+                }, (lessonDuration + 3) * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000));
+
+            }, keqianTime * (localStorage.getItem('playbackRate') == 2 ? 500 : 1000))
+        }
+    };
 
     return (
         <div ref={wraperRef} className={styles['subtitle-container']}>
             <div className={styles.videoBox}>
-                {!/\.mp4/.test(videoSrc) && <img src='https://box.hdcxb.net/d/其他资料/p/上师.png' alt='上师法相' width={'500'} />}
+                {!/\.mp4/.test(videoSrc) && <img src='https://hdcx.s3.ap-northeast-1.wasabisys.com/hdv/p/上师.png' alt='上师知' width={'500'} />}
                 {videoSrc !== 'blank' && <video ref={videoRef}
                     className={styles.video}
                     src={videoSrc}
                     controls
+                    onLoadedMetadata={handleLoadedMetadata}
                     onEnded={handleVideoEnd}
                     autoPlay
                     playsInline
