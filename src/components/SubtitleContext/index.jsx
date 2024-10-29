@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import styles from './index.module.css';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { useHistory } from '@docusaurus/router';
-
+import useLocalStorageState from 'use-local-storage-state'
 
 export const parseTime = (timeString) => {
     if (!timeString) return timeString
@@ -53,6 +53,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
     let matchRxlQa = /入行论广解\d+-\d+课问答/.test(src)
     let keqianTime = 88;
     let kehouTime = 140;
+    const [playInfo, setPlayInfo] = useLocalStorageState('playInfo')
 
     const history = useHistory();
     const copyText = async (text) => {
@@ -116,7 +117,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
             // console.log({ current, isMp4 });
             if (isMp4) {
                 videoRef.current.className = styles.video
-                current != 0 && !document.fullscreenElement && videoRef.current.requestFullscreen()
+                current > 0 && !document.fullscreenElement && videoRef.current.requestFullscreen()
             } else {
                 document.fullscreenElement && document.exitFullscreen()
                 videoRef.current.className = styles.audio
@@ -133,9 +134,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                 })
                 .then(data => {
                     if (!data.includes('failed')) {
-                        setTimeout(() => {
-                            parseSubtitles(data)
-                        }, 1000);
+                        parseSubtitles(data)
                         wraperRef.current.parentElement.style.flexDirection = 'column'
                     }
                 })
@@ -146,7 +145,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
             let suburl = `https://box.hdcxb.net/d/慧灯禅修/001-入行论释/fudao/入行论辅导字幕（课诵部分）.srt`
             fetchSub(suburl)
         } else if (decodeURI(location.hash).includes("慧灯禅修课")) {
-            let videoName = videoSrc.slice(95, -4)
+            let videoName = videoSrc.slice(95)?.split('.mp4')[0]
             let suburl = `https://box.hdcxb.net/d/禅修课视频/${videoName}.srt`
             fetchSub(suburl)
         } else if (window.screen.orientation.type !== "portrait-primary") {
@@ -175,10 +174,10 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                     video?.removeEventListener('timeupdate', handleTimeUpdate);
                 }
 
-                if (currentTime >= parseTime(subtitles[currentSubtitleIndex + 1]?.startTime)
-                    && currentSubtitleIndex < subtitles.length - 1) {
-                    setCurrentSubtitleIndex(currentSubtitleIndex + 1);
-                    subAlignCenter && scrollSubtitleToView(currentSubtitleIndex);
+                const subIndex = subtitles.findIndex(subtitle => currentTime >= parseTime(subtitle.startTime) && currentTime <= parseTime(subtitle.endTime));
+                if (subIndex !== -1 && subIndex != currentSubtitleIndex) {
+                    setCurrentSubtitleIndex(subIndex);
+                    subAlignCenter && scrollSubtitleToView(subIndex);
                 }
             }
         };
@@ -239,7 +238,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
             endTime = undefined
         }
         if (typeof window.orientation === 'undefined' && matchRxl) {
-            let lessonDuration = videoDuration - keqianTime - kehouTime
+            let lessonDuration = Math.round(videoDuration) - keqianTime - kehouTime
             setTimeout(() => {
                 let readingUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${lessonDuration}#入菩萨行论第${parseInt(matchRxl[1])}节课`
                 console.log('课诵念完，前往阅读页');
@@ -264,6 +263,8 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                     onEnded={handleVideoEnd}
                     autoPlay
                     playsInline
+                    onPause={() => setPlayInfo({ ...playInfo, paused: true })}
+                    onPlay={() => setPlayInfo({ ...playInfo, paused: false })}
                     poster={/\/v\/[45]jx/.test(videoSrc) ?
                         'https://box.hdcxb.net/d/其他资料/f/up/untitled.png' : ''}
                 >

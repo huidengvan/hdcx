@@ -1,4 +1,15 @@
-.playBtn{
+.svg {
+    width: 20px;
+    height: 20px;
+}
+
+.playBtn:hover {
+    color: #33925d;
+}
+
+.playBtn {
     cursor: pointer;
     float: right;
+    padding-left: 5px;
+    padding-top: 5px;
 }

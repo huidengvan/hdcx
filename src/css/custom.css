@@ -38,3 +38,9 @@ p {
   line-height: 1.5;
   padding-left: 4px;
 }
+
+article p::before {
+  content: '['attr(id)'] ';
+  color: #2e8555;
+  font-size: 80%;
+}

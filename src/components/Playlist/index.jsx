@@ -16,9 +16,7 @@ export default function Playlist() {
     const [src, setSrc] = useState()
     const [current, setCurrent] = useState(currentParam || 0)
     const [edit, setEdit] = useState(false)
-    const [urltext, setUrltext] = useLocalStorageState('playlist', {
-        defaultValue: ['https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/恒常念诵愿文.mp4']
-    })
+    const [urltext, setUrltext] = useLocalStorageState('playlist')
 
     const parseUri = async () => {
         let res = await fetchTextFile(uriParam);
