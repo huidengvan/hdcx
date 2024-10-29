@@ -106,6 +106,7 @@ const config = {
                 alt: 'HuidengVan',
                 src: 'img/hdlogo.png',
             },
+            hideOnScroll: true,
             items: [
                 {
                     type: 'doc',

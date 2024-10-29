@@ -109,22 +109,23 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
             document.querySelector('article')?.parentElement.removeAttribute('class')
             let isMp4 = /\.(mp4|webm)/.test(videoSrc)
             let matchJx = /\/v\/[45]jx/.test(videoSrc)
-            try {
-                if (current != 0) {
-                    videoRef.current.play()
-                } else if (matchJx) {
-                    videoRef.current.pause()
-                }
+            if (matchJx) {
+                videoRef.current.pause()
+            }
 
-                // console.log({ current, isMp4 });
-                if (current != 0 && isMp4) {
-                    !document.fullscreenElement && videoRef.current.requestFullscreen()
-                } else {
-                    document.fullscreenElement && document.exitFullscreen()
-                }
-            } catch (error) { }
+            // console.log({ current, isMp4 });
+            if (isMp4) {
+                videoRef.current.className = styles.video
+                current != 0 && !document.fullscreenElement && videoRef.current.requestFullscreen()
+            } else {
+                document.fullscreenElement && document.exitFullscreen()
+                videoRef.current.className = styles.audio
+            }
         }
+
         const fetchSub = (suburl) => {
+            console.log(suburl);
+
             fetch(suburl)
                 .then(response => {
                     if (!response.ok) {
@@ -139,26 +140,28 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                         }, 1000);
                         wraperRef.current.parentElement.style.flexDirection = 'column'
                     }
-                });
+                })
+                .catch(e => console.error(e));
         }
-        let suburl
+
         if (matchRxl || matchRxlQa) {
-            suburl = `https://box.hdcxb.net/d/慧灯禅修/001-入行论释/fudao/入行论辅导字幕（课诵部分）.srt`
+            let suburl = `https://box.hdcxb.net/d/慧灯禅修/001-入行论释/fudao/入行论辅导字幕（课诵部分）.srt`
             fetchSub(suburl)
         } else if (decodeURI(location.hash).includes("慧灯禅修课")) {
             let videoName = videoSrc.slice(95, -4)
-            suburl = `https://box.hdcxb.net/d/禅修课视频/${videoName}.srt`
+            let suburl = `https://box.hdcxb.net/d/禅修课视频/${videoName}.srt`
             fetchSub(suburl)
-
-        } else {
+        } else if (window.screen.orientation.type !== "portrait-primary") {
             wraperRef.current.parentElement.style.flexDirection = 'row'
         }
+
         if (typeof window.orientation === 'undefined' && matchRxl && endTime) {
-            // 课诵念完，前往阅读页
             let duration = Math.ceil(endTime) - keqianTime - kehouTime
 
             setTimeout(() => {
                 let readingUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${duration}#入菩萨行论第${parseInt(matchRxl[1])}节课`
+                console.log('课诵念完，前往阅读页');
+
                 if (duration) {
                     history.push(readingUrl)
                     setTimeout(() => {
@@ -257,15 +260,20 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
 
     return (
         <div ref={wraperRef} className={styles['subtitle-container']}>
-            {videoSrc !== 'blank' && <video ref={videoRef}
-                src={videoSrc}
-                style={{ minWidth: '50%', maxHeight: '640px' }}
-                controls
-                onEnded={handleVideoEnd}
-                poster={/\/v\/[45]jx/.test(videoSrc) ?
-                    'https://box.hdcxb.net/d/其他资料/f/up/untitled.png' : ''}
-            >
-            </video>}
+            <div className={styles.videoBox}>
+                {!/\.mp4/.test(videoSrc) && <img src='https://box.hdcxb.net/d/其他资料/p/上师.png' alt='上师法相' width={'500'} />}
+                {videoSrc !== 'blank' && <video ref={videoRef}
+                    className={styles.video}
+                    src={videoSrc}
+                    controls
+                    onEnded={handleVideoEnd}
+                    autoPlay
+                    playsInline
+                    poster={/\/v\/[45]jx/.test(videoSrc) ?
+                        'https://box.hdcxb.net/d/其他资料/f/up/untitled.png' : ''}
+                >
+                </video>}
+            </div>
             {subtitles.length > 0 &&
                 <details open style={{ width: '100vw' }}>
                     <summary></summary>

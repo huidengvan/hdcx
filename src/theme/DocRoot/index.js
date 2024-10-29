@@ -6,13 +6,14 @@ import { ignoredCharacters, bgColors as colors, getTargetNode, locateParagraph, 
 
 export default function DocRootWrapper(props) {
   const location = useLocation();
-  let articleRef, duration, currentPara, endPara, autoPage, scrollY = 100;
+  let docRoot, articleRef, duration, currentPara, endPara, autoPage, scrollY = 100;
 
   useEffect(() => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const durationParam = urlParams.get('duration');
     articleRef = document.querySelector('article').parentElement.parentElement
+    docRoot = document.querySelector('[class*=docRoot]')
     duration = parseInt(durationParam);
 
     if (duration) {
@@ -21,7 +22,7 @@ export default function DocRootWrapper(props) {
 
     const bgColorIndex = localStorage.getItem('bgColorIndex');
     if (bgColorIndex && articleRef) {
-      articleRef.style.backgroundColor = colors[bgColorIndex].color;
+      docRoot.style.backgroundColor = colors[bgColorIndex].color;
     }
 
     window.addEventListener('keydown', handleKeyDown);
@@ -50,7 +51,7 @@ export default function DocRootWrapper(props) {
     } else {
       tocNode.style.display = 'none'
       articleRef.className = ''
-      articleRef.style.fontSize = 'x-large'
+      articleRef.style.fontSize = 'xx-large'
     }
 
     let sidebarButton = document.querySelector('[class*="collapseSidebarButton"]')
@@ -101,7 +102,7 @@ export default function DocRootWrapper(props) {
     } else if (event.altKey && (event.key === 'b' || event.key === 'B')) {
       const colorIndex = (Number(localStorage.getItem('bgColorIndex')) + 1) % colors.length;
       localStorage.setItem('bgColorIndex', colorIndex);
-      articleRef.style.backgroundColor = colors[colorIndex].color;
+      docRoot.style.backgroundColor = colors[colorIndex].color;
     }
   };
 

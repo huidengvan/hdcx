@@ -90,7 +90,7 @@ export default function Playlist() {
                 </details>
             </div>
             <div className={styles.footer}>
-                <img src="https://box.hdcxb.net/d/%E5%85%B6%E4%BB%96%E8%B5%84%E6%96%99/p/bajixiang.png" alt="" height={80} />
+                <img src="https://box.hdcxb.net/d/%E5%85%B6%E4%BB%96%E8%B5%84%E6%96%99/p/bajixiang.png" alt="供八吉祥" />
             </div>
         </>
     )
@@ -134,13 +134,18 @@ const Duration = ({ urltext }) => {
             if (duration < 2.5) {
                 let rest3minutes = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/恒常念诵愿文.mp4^0,3:27@恒常念诵愿文（休息三分钟）`
                 let meditation = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/4jx/寿命无常-上师念诵.mp4^0,1:00:07@寿命无常观修 1 小时`
-                videoUrls.splice(urltext?.length - 1, 0, rest3minutes)
-                videoUrls.splice(urltext?.length - 1, 0, meditation)
+                if (!videoUrls.includes(meditation)) {
+                    videoUrls.splice(urltext?.length - 1, 0, rest3minutes)
+                    videoUrls.splice(urltext?.length - 1, 0, meditation)
+                }
                 duration += 1.1
                 console.log(`添加打坐视频`);
             } else if (duration >= 2.5 && duration <= 3 && !videoUrls[videoUrls?.length - 2].includes('讨论')) {
                 let discussTime = Math.ceil((3 - duration) * 6) * 10
-                videoUrls.splice(urltext?.length - 1, 0, `blank@研究讨论${discussTime}分钟`)
+                let discussItem = `blank@研究讨论${discussTime}分钟`
+                if (!videoUrls.includes(discussItem)) {
+                    videoUrls.splice(urltext?.length - 1, 0,)
+                }
                 duration += discussTime / 60
                 console.log('添加暂停讨论');
             }

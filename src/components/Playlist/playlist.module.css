@@ -29,8 +29,21 @@
     color: #3cad6e
 }
 
+.footer>img {
+    object-fit: scale-down;
+    max-height: 70px;
+}
+
 .footer {
-    margin: 3rem;
+    padding-top: 2rem;
     display: flex;
     justify-content: center;
+    width: 50%;
+}
+
+@media screen and (orientation:portrait) {
+    .footer {
+        width: 100%;
+        padding: 1rem;
+    }
 }
