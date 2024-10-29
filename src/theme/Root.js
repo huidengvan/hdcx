@@ -3,11 +3,11 @@ import { useLocation } from '@docusaurus/router';
 import Playlist from '@site/src/components/Playlist'
 import SubtitleContext from '@site/src/components/SubtitleContext'
 
-const matchPlaylist = /^\/playlist\/?/.test(location.pathname)
-const shouldHide = /^\/(playlist|video)\/?/.test(location.pathname)
-
 export default function Root({ children }) {
     const location = useLocation();
+    const matchPlaylist = /^\/playlist\/?/.test(location.pathname)
+    const shouldHide = /^\/(playlist|video)\/?/.test(location.pathname)
+    
     useEffect(() => {
 
         setTimeout(() => {

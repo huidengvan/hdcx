@@ -3,11 +3,13 @@ import ColorModeToggle from '@theme-original/Navbar/ColorModeToggle';
 import { useHistory } from '@docusaurus/router';
 import styles from './index.module.css';
 import useLocalStorageState from 'use-local-storage-state'
+import { useLocation } from '@docusaurus/router';
 
 export default function ColorModeToggleWrapper(props) {
   const history = useHistory();
   const [playlist,] = useLocalStorageState('playlist')
   const [playInfo,] = useLocalStorageState('playInfo')
+  const location = useLocation();
 
   const switchShowList = () => {
     if (location.pathname != '/playlist') {

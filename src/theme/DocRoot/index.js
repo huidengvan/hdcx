@@ -9,7 +9,7 @@ export default function DocRootWrapper(props) {
   let docRoot, articleRef, duration, currentPara, endPara, autoPage, scrollY = 100;
 
   useEffect(() => {
-    const queryString = window.location.search;
+    const queryString = location.search;
     const urlParams = new URLSearchParams(queryString);
     const durationParam = urlParams.get('duration');
     articleRef = document.querySelector('article').parentElement.parentElement
@@ -66,7 +66,10 @@ export default function DocRootWrapper(props) {
     if (currentPara === 1) return;
     currentPara -= 1;
     locateParagraph(currentPara - 1, scrollY);
-    getTargetNode(currentPara).style.borderLeft = 'none'
+    let node = getTargetNode(currentPara)
+    if (node) {
+      node.style.borderLeft = ''
+    }
   };
 
   const nextParagraph = () => {
@@ -136,8 +139,8 @@ export default function DocRootWrapper(props) {
   };
 
   const calcAudioSpeed = async () => {
-    const startNode = getStartNode();
-    let endNode = getRxlEndNode();
+    const startNode = getStartNode(location);
+    let endNode = getRxlEndNode(location);
     if (!endNode || !duration) return -1;
 
     endNode = filterFootnote(endNode);

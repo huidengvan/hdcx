@@ -153,9 +153,6 @@ const Duration = ({ urltext }) => {
             setTotalDuration(`时长：${hour}小时`) :
             setTotalDuration(`时长：${hour ? hour + '小时' : ''}${Math.round((duration - hour) * 60)}分钟`)
 
-        if (urlsLength != videoUrls?.length) {
-            window.location.replace(`/playlist?urls=${urltext.join('|')}`)
-        }
         // console.log('--计算列表时长--', duration);
     };
 

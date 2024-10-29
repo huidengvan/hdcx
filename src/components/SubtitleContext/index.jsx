@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styles from './index.module.css';
-import BrowserOnly from '@docusaurus/BrowserOnly';
 import { useHistory } from '@docusaurus/router';
 import useLocalStorageState from 'use-local-storage-state'
+import { useLocation } from '@docusaurus/router';
 
 export const parseTime = (timeString) => {
     if (!timeString) return timeString
@@ -35,7 +35,8 @@ export const formatTime = (totalSeconds) => {
     return `${formattedHours}${formattedMinutes}:${formattedSeconds},${formattedMillSeconds}`;
 };
 
-const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
+const VideoPlayer = ({ src, current, setCurrent }) => {
+    const location = useLocation();
     const baseUrl = location.hash.includes('http') ? '' : 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/';
     let videoSrc = (src === undefined ? `${baseUrl}${location.hash.slice(1)}` : src);
     const [duration, setDuration] = useState(0);
@@ -300,7 +301,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
                                     {showtime && <span title='点击复制' className={styles.timeline}
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            copyText(`${window.location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`)
+                                            copyText(`${location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`)
                                         }}
                                     >{subtitle.startTime?.split(',')[0]}</span>}
                                     <p className={`${index === currentSubtitleIndex ? styles['current-line'] : ''}`}
@@ -324,11 +325,7 @@ const VideoPlayer = ({ src, current, setCurrent, subPath }) => {
 
 
 export default function SubtitleContext(props) {
-    return (
-        <BrowserOnly>
-            {() => (location.hash || props.src) && <VideoPlayer {...props} />}
-        </BrowserOnly>
-    );
+    return <VideoPlayer {...props} />
 };
 
 function getRxlSection(lesson) {

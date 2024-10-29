@@ -22,7 +22,7 @@ export const locateParagraph = (currentPara, scrollY) => {
     }
 };
 
-export function getStartNode() {
+export function getStartNode(location) {
     let targetPara = location.hash.slice(1)
 
     if (/p\d+/.test(targetPara)) {
@@ -31,7 +31,7 @@ export function getStartNode() {
     return document.getElementById(decodeURI(targetPara))?.nextElementSibling
 }
 
-export function getRxlEndNode() {
+export function getRxlEndNode(location) {
     let targetName = decodeURI(location.hash.substring(1))
     const match = targetName?.match(/入菩萨行论第(\d+)节课/);
     // console.log({ match });
