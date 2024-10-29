@@ -3,6 +3,7 @@ import styles from './index.module.css';
 import { useHistory } from '@docusaurus/router';
 import useLocalStorageState from 'use-local-storage-state'
 import { useLocation } from '@docusaurus/router';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
 export const parseTime = (timeString) => {
     if (!timeString) return timeString
@@ -325,7 +326,11 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
 
 
 export default function SubtitleContext(props) {
-    return <VideoPlayer {...props} />
+    return (
+        <BrowserOnly  fallback={<div>Loading...</div>}>
+            {() => (location.hash || props.src) && <VideoPlayer {...props} />}
+        </BrowserOnly>
+    );
 };
 
 function getRxlSection(lesson) {
