@@ -14,7 +14,7 @@ export default function ColorModeToggleWrapper(props) {
   const switchShowList = () => {
     if (location.pathname != '/playlist') {
       history.push('/playlist')
-    } else {
+    } else if (history.length > 2) {
       history.goBack()
     }
   }

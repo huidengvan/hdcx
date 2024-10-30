@@ -26,13 +26,7 @@ export default function DocRootWrapper(props) {
       docRoot.style.backgroundColor = colors[bgColorIndex].color;
     }
 
-    window.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('dblclick', handleFullscreen);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
+  },[]);
 
   const handleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -106,7 +100,6 @@ export default function DocRootWrapper(props) {
     if (speed > 1) {
       autoNextParagraph(speed);
       handleWidescreen();
-
       console.log(`${autoPage ? '开始' : '暂停'}自动阅读`);
     }
   };
@@ -166,6 +159,13 @@ export default function DocRootWrapper(props) {
     if (para) {
       locateParagraph(para.slice(1), -200)
     }
+
+    window.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('dblclick', handleFullscreen);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   return (
