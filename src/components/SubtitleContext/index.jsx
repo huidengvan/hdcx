@@ -10,10 +10,8 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
     const location = useLocation();
     const baseUrl = location.hash.includes('http') ? '' : 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/';
     let videoSrc = (src === undefined ? `${baseUrl}${location.hash.slice(1)}` : src);
-    const [duration, setDuration] = useState(0);
     const [subtitles, setSubtitles] = useState([]);
     const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(-1);
-    const [showtime, setShowtime] = useState(localStorage.getItem('showtime') !== 'false');
     const [subAlignCenter, setSubAlignCenter] = useState(true);
     const videoRef = useRef(null);
     const subRef = useRef(null);
@@ -149,23 +147,22 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
         }
 
         if (matchRxl || matchRxlQa) {
-            let suburl = `https://box.hdcxb.net/d/慧灯禅修/001-入行论释/fudao/入行论辅导字幕（课诵部分）.srt`
+            let suburl = `https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/入行论辅导字幕（课诵部分）.srt`
             handleSubtitleFetch(suburl)
         } else if (decodeURI(location.hash).includes("慧灯禅修课")) {
             let videoName = videoSrc.slice(95)?.split('.mp4')[0]
-            let suburl = `https://box.hdcxb.net/d/禅修课视频/${videoName}.srt`
+            let suburl = `https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/慧灯禅修课/${videoName}.srt`
             handleSubtitleFetch(suburl)
         } else if (window.screen.orientation.type !== "portrait-primary") {
             wraperRef.current.parentElement.style.flexDirection = 'row'
         }
 
-        setDuration(videoDuration);
         if (videoDuration - endTime < 1) {
             endTime = undefined
         }
         if (typeof window.orientation === 'undefined' && matchRxl) {
             let lessonDuration = Math.round(videoDuration) - keqianTime - kehouTime
-            setTimeout(() => {
+            !playInfo?.paused && setTimeout(() => {
                 let readingUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${lessonDuration}#入菩萨行论第${parseInt(matchRxl[1])}节课`
                 console.log('课诵念完，前往阅读页');
                 history.push(readingUrl)
@@ -212,11 +209,8 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                         <ul ref={ulRef} onDoubleClick={() => subFullscreen(ulRef)}>
                             <span className={styles['subtitle-switch']}>
                                 <input type="checkbox"
-                                    checked={showtime}
-                                    onChange={() => {
-                                        localStorage.setItem('showtime', !showtime)
-                                        setShowtime(value => !value)
-                                    }} />
+                                    checked={playInfo.showTimeLine}
+                                    onChange={() => setPlayInfo({ ...playInfo, showTimeLine: !playInfo.showTimeLine })} />
                                 <span>时间轴</span>
                                 <input type="checkbox"
                                     checked={subAlignCenter}
@@ -232,7 +226,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                             </span>
                             {subtitles.map((subtitle, index) => (
                                 <li key={index} id={`subtitle-${index}`} className={styles['subtitle-line']}>
-                                    {showtime && <span title='点击复制' className={styles.timeline}
+                                    {playInfo.showTimeLine && <span title='点击复制' className={styles.timeline}
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             copyText(`${location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`)
