@@ -14,7 +14,7 @@ export default function Playlist() {
     let urls = urlsParam?.split('|');
     const [current, setCurrent] = useState(currentParam || 0)
     const [edit, setEdit] = useState(false)
-    const [urltext, setUrltext] = useLocalStorageState('playlist')
+    const [urltext, setUrltext] = useLocalStorageState('playlist', { defaultValue: urls })
 
     const parseUri = async () => {
         let res = await fetchTextFile(uriParam);
@@ -24,17 +24,12 @@ export default function Playlist() {
     const buildSrc = (url) => url.split('@')[0].replace('^', '#t=')
 
     useEffect(() => {
-
-    }, [urltext])
-
-    useEffect(() => {
-        // console.log(urltext);
+        // console.log(urltext,urls);
         if (urls?.length > 0 && urltext?.join() != urls?.join()) {
             setUrltext(urls)
-        } else
-            if (!urlsParam && uriParam) {
-                parseUri()
-            }
+        } else if (!urlsParam && uriParam) {
+            parseUri()
+        }
     }, [])
 
     const changeSrc = (e) => {
@@ -61,7 +56,7 @@ export default function Playlist() {
                                 </svg>
                                 {!urltext && ' 点击编辑'}
                             </span>
-                            <Duration urltext={urltext} setUrltext={setUrltext} />
+                            <Duration urltext={urls} setUrltext={setUrltext} />
                         </span>
                     </summary>
                     {edit ?
@@ -91,8 +86,8 @@ export default function Playlist() {
 
 const Duration = ({ urltext, setUrltext }) => {
     const [totalDuration, setTotalDuration] = useState('');
-    let urlsLength = urltext?.length
-    let videoUrls = urltext
+    let videoUrls = urltext;
+    let urlsLength = urltext?.length;
     const calculateTotalDuration = async () => {
         let t = 0
         let matchRxl
@@ -137,7 +132,7 @@ const Duration = ({ urltext, setUrltext }) => {
                 let discussTime = Math.ceil((3 - duration) * 6) * 10
                 let discussItem = `blank@研究讨论${discussTime}分钟`
                 if (!videoUrls.includes(discussItem)) {
-                    videoUrls.splice(urltext?.length - 1, 0,discussItem)
+                    videoUrls.splice(urltext?.length - 1, 0, discussItem)
                     duration += discussTime / 60
                     console.log('添加暂停讨论');
                 }
@@ -148,11 +143,11 @@ const Duration = ({ urltext, setUrltext }) => {
         if (duration > 0) {
             setTotalDuration(`时长：${hour ? hour + '小时' : ''}${minute ? minute + '分钟' : ''}`)
         }
-
         if (urlsLength != videoUrls?.length) {
+            // window.location.replace(`/playlist?urls=${urltext.join('|')}`)
             setUrltext(videoUrls)
         }
-        // console.log('--计算列表时长--', duration, videoUrls);
+        console.log(`--计算列表时长-- ${duration}小时, 列表长度：${videoUrls?.length}`);
     };
 
     useEffect(() => {
@@ -173,10 +168,8 @@ const Duration = ({ urltext, setUrltext }) => {
 export async function getVideoDuration(videoUrl) {
     return new Promise((resolve, reject) => {
         const video = document.createElement('video');
-
         video.preload = 'metadata'; // 只加载元数据
         video.src = videoUrl;
-
         video.onloadedmetadata = () => {
             resolve(Math.floor(video.duration)); // 获取视频时长
             video.pause(); // 可选：暂停视频

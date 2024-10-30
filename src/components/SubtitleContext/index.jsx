@@ -137,6 +137,9 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
 
     const handleLoadedMetadata = (event) => {
         const videoDuration = event.target.duration;
+        if (videoSrc === 'blank') {
+            videoRef?.current.pause
+        }
         // console.log({videoDuration});
         const handleSubtitleFetch = async (suburl) => {
             let subText = await fetchText(suburl)
@@ -190,8 +193,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
     return (
         <div ref={wraperRef} className={styles['subtitle-container']}>
             <div className={styles.videoBox}>
-                {videoSrc !== 'blank' &&
-                    /\.(mp4|webm)/.test(videoSrc) ?
+                {/\.(mp4|webm)/.test(videoSrc) ?
                     <video
                         {...mediaProps}
                         poster={/\/v\/[45]jx/.test(videoSrc) ?
