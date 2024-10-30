@@ -162,13 +162,15 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
         if (typeof window.orientation === 'undefined' && matchRxl) {
             let lessonDuration = Math.round(videoDuration) - keqianTime - kehouTime
 
-            !playInfo?.paused && setTimeout(() => {
+            setTimeout(() => {
                 let readingUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${lessonDuration}#入菩萨行论第${parseInt(matchRxl[1])}节课`
                 console.log('课诵念完，前往阅读页');
-                history.push(readingUrl)
-                setTimeout(() => {
-                    history.push('/playlist')
-                }, (lessonDuration + 3) * (1 / playInfo?.playbackRate ?? 1) * 1000);
+                if (!playInfo?.paused && matchRxl) {
+                    history.push(readingUrl)
+                    setTimeout(() => {
+                        history.push('/playlist')
+                    }, (lessonDuration + 3) * (1 / playInfo?.playbackRate ?? 1) * 1000);
+                }
             }, keqianTime * (1 / playInfo?.playbackRate ?? 1) * 1000)
         }
     };

@@ -24,12 +24,18 @@ export default function Playlist() {
     const buildSrc = (url) => url.split('@')[0].replace('^', '#t=')
 
     useEffect(() => {
+
+    }, [urltext])
+
+    useEffect(() => {
+        // console.log(urltext);
         if (urls?.length > 0 && urltext?.join() != urls?.join()) {
             setUrltext(urls)
-        } else if (!urlsParam && uriParam) {
-            parseUri()
-        }
-    }, [urltext])
+        } else
+            if (!urlsParam && uriParam) {
+                parseUri()
+            }
+    }, [])
 
     const changeSrc = (e) => {
         const { value } = e.target
@@ -47,7 +53,6 @@ export default function Playlist() {
                                 e.stopPropagation()
                                 e.preventDefault()
                             }}
-
                         >
                             <span onClick={(e) => setEdit(prev => !prev)}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -56,7 +61,7 @@ export default function Playlist() {
                                 </svg>
                                 {!urltext && ' 点击编辑'}
                             </span>
-                            <Duration urltext={urltext} />
+                            <Duration urltext={urltext} setUrltext={setUrltext} />
                         </span>
                     </summary>
                     {edit ?
@@ -84,7 +89,7 @@ export default function Playlist() {
     )
 }
 
-const Duration = ({ urltext }) => {
+const Duration = ({ urltext, setUrltext }) => {
     const [totalDuration, setTotalDuration] = useState('');
     let urlsLength = urltext?.length
     let videoUrls = urltext
@@ -132,10 +137,10 @@ const Duration = ({ urltext }) => {
                 let discussTime = Math.ceil((3 - duration) * 6) * 10
                 let discussItem = `blank@研究讨论${discussTime}分钟`
                 if (!videoUrls.includes(discussItem)) {
-                    videoUrls.splice(urltext?.length - 1, 0,)
+                    videoUrls.splice(urltext?.length - 1, 0,discussItem)
+                    duration += discussTime / 60
+                    console.log('添加暂停讨论');
                 }
-                duration += discussTime / 60
-                console.log('添加暂停讨论');
             }
         }
         let hour = parseInt(duration)
@@ -144,7 +149,10 @@ const Duration = ({ urltext }) => {
             setTotalDuration(`时长：${hour ? hour + '小时' : ''}${minute ? minute + '分钟' : ''}`)
         }
 
-        // console.log('--计算列表时长--', duration);
+        if (urlsLength != videoUrls?.length) {
+            setUrltext(videoUrls)
+        }
+        // console.log('--计算列表时长--', duration, videoUrls);
     };
 
     useEffect(() => {
