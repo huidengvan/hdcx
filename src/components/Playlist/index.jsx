@@ -56,7 +56,7 @@ export default function Playlist() {
                                 </svg>
                                 {!urltext && ' 点击编辑'}
                             </span>
-                            <Duration urltext={urls} setUrltext={setUrltext} />
+                            <Duration urltext={urls || urltext} setUrltext={setUrltext} />
                         </span>
                     </summary>
                     {edit ?
@@ -128,12 +128,12 @@ const Duration = ({ urltext, setUrltext }) => {
                 }
                 duration += 1.1
                 console.log(`添加打坐视频`);
-            } else if (duration >= 2.5 && duration <= 3 && !videoUrls[videoUrls?.length - 2].includes('讨论')) {
+            } else if (duration >= 2.5 && duration <= 3) {
                 let discussTime = Math.ceil((3 - duration) * 6) * 10
                 let discussItem = `blank@研究讨论${discussTime}分钟`
+                duration += discussTime / 60
                 if (!videoUrls.includes(discussItem)) {
                     videoUrls.splice(urltext?.length - 1, 0, discussItem)
-                    duration += discussTime / 60
                     console.log('添加暂停讨论');
                 }
             }
@@ -144,7 +144,6 @@ const Duration = ({ urltext, setUrltext }) => {
             setTotalDuration(`时长：${hour ? hour + '小时' : ''}${minute ? minute + '分钟' : ''}`)
         }
         if (urlsLength != videoUrls?.length) {
-            // window.location.replace(`/playlist?urls=${urltext.join('|')}`)
             setUrltext(videoUrls)
         }
         console.log(`--计算列表时长-- ${duration}小时, 列表长度：${videoUrls?.length}`);
