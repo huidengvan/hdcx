@@ -9,7 +9,7 @@ import { parseTime, parseSubtitles, fetchText, getRxlSection, copyText, subFulls
 const VideoPlayer = ({ src, current, setCurrent }) => {
     const location = useLocation();
     const baseUrl = location.hash.includes('http') ? '' : 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/';
-    let videoSrc = (src === undefined ? `${baseUrl}${location.hash.slice(1)}` : src);
+    const [videoSrc, setVideoSrc] = useState(src === undefined ? `${baseUrl}${location.hash.slice(1)}` : src);
     const [subtitles, setSubtitles] = useState([]);
     const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(-1);
     const [subAlignCenter, setSubAlignCenter] = useState(true);
@@ -22,10 +22,11 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
     let matchRxlQa = /入行论广解\d+-\d+课问答/.test(src)
     let keqianTime = 88;
     let kehouTime = 140;
-    const [playInfo, setPlayInfo] = useLocalStorageState('playInfo')
+    const [playInfo, setPlayInfo] = useLocalStorageState('playInfo', { defaultValue: { paused: true, showTimeLine: false } })
     const history = useHistory();
 
     useEffect(() => {
+        if (src && src !== videoSrc) { setVideoSrc(src) }
         if (videoRef.current) {
             // 清除栅格布局, 使宽度为100%
             document.querySelector('article')?.parentElement.removeAttribute('class')
@@ -35,7 +36,6 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                 videoRef.current.pause()
             }
 
-            // console.log({ current, isMp4 });
             if (isMp4) {
                 videoRef.current.className = styles.video
                 if (current && !videoSrc.includes("恒常念诵") && !document.fullscreenElement && videoRef.current?.requestFullscreen) {
@@ -48,7 +48,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
         }
 
         setSubtitles([])
-    }, [videoSrc]);
+    }, [src, videoSrc]);
 
     useEffect(() => {
         let timer;
@@ -97,7 +97,6 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             if (!event.altKey)
                 return;
 
-            let rate = 1
             if (event.key?.toLowerCase() === 'z' && videoRef.current.playbackRate > 0.25) {
                 changeSpeed('-')
             } else if (event.key?.toLowerCase() === 'x' && videoRef.current.playbackRate < 3) {
@@ -162,6 +161,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
         }
         if (typeof window.orientation === 'undefined' && matchRxl) {
             let lessonDuration = Math.round(videoDuration) - keqianTime - kehouTime
+
             !playInfo?.paused && setTimeout(() => {
                 let readingUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${lessonDuration}#入菩萨行论第${parseInt(matchRxl[1])}节课`
                 console.log('课诵念完，前往阅读页');
@@ -197,7 +197,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                     >
                     </video> :
                     <>
-                        <img src='https://hdcx.s3.ap-northeast-1.wasabisys.com/hdv/p/上师.png' alt='上师知' width={'500'} />
+                        <img src='https://hdcx.s3.ap-northeast-1.wasabisys.com/hdv/p/上师.jpg' alt='上师知' width={'500'} />
                         <audio {...mediaProps} />
                     </>
                 }
@@ -209,8 +209,8 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                         <ul ref={ulRef} onDoubleClick={() => subFullscreen(ulRef)}>
                             <span className={styles['subtitle-switch']}>
                                 <input type="checkbox"
-                                    checked={playInfo.showTimeLine}
-                                    onChange={() => setPlayInfo({ ...playInfo, showTimeLine: !playInfo.showTimeLine })} />
+                                    checked={playInfo?.showTimeLine}
+                                    onChange={() => setPlayInfo({ ...playInfo, showTimeLine: !playInfo?.showTimeLine })} />
                                 <span>时间轴</span>
                                 <input type="checkbox"
                                     checked={subAlignCenter}
@@ -226,7 +226,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                             </span>
                             {subtitles.map((subtitle, index) => (
                                 <li key={index} id={`subtitle-${index}`} className={styles['subtitle-line']}>
-                                    {playInfo.showTimeLine && <span title='点击复制' className={styles.timeline}
+                                    {playInfo?.showTimeLine && <span title='点击复制' className={styles.timeline}
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             copyText(`${location.href.split('#t=')[0]}#t=${parseTime(subtitle.startTime)}`)
@@ -253,7 +253,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
 export default function SubtitleContext(props) {
     return (
         <BrowserOnly fallback={<div>Loading...</div>}>
-            {() => (location.hash || props.src) && <VideoPlayer {...props} />}
+            {() => <VideoPlayer {...props} />}
         </BrowserOnly>
     );
 };

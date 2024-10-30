@@ -11,9 +11,7 @@ export default function Playlist() {
     const urlsParam = params.get('urls');
     const uriParam = params.get('uri'); // 可以传入一个列表文件
     const currentParam = params.get('index');
-    const subPathParam = params.get('subPath');
     let urls = urlsParam?.split('|');
-    const [src, setSrc] = useState()
     const [current, setCurrent] = useState(currentParam || 0)
     const [edit, setEdit] = useState(false)
     const [urltext, setUrltext] = useLocalStorageState('playlist')
@@ -26,20 +24,12 @@ export default function Playlist() {
     const buildSrc = (url) => url.split('@')[0].replace('^', '#t=')
 
     useEffect(() => {
-        if (urltext?.length > current) {
-            setSrc(buildSrc(urltext[current]))
-        }
-
-    }, [current])
-
-
-    useEffect(() => {
         if (urls?.length > 0 && urltext?.join() != urls?.join()) {
             setUrltext(urls)
         } else if (!urlsParam && uriParam) {
             parseUri()
         }
-    }, [])
+    }, [urltext])
 
     const changeSrc = (e) => {
         const { value } = e.target
@@ -49,7 +39,7 @@ export default function Playlist() {
     return (
         <>
             <div className={styles.root}>
-                {src && <SubtitleContext src={src} current={current} setCurrent={setCurrent} subPath={subPathParam} />}
+                {urltext?.length > current && <SubtitleContext src={buildSrc(urltext[current])} current={current} setCurrent={setCurrent} />}
                 <details open className={styles.details}>
                     <summary style={{ userSelect: 'none', marginBottom: '5px' }}>播放列表
                         <span style={{ marginLeft: '4px' }}
