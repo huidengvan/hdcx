@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useLocation } from '@docusaurus/router';
 import DocRoot from '@theme-original/DocRoot';
-import { ignoredCharacters, bgColors as colors, getTargetNode, locateParagraph, getStartNode, getRxlEndNode, filterFootnote } from '@site/src/utils/readingUtils.js'
-
+import { ignoredCharacters, bgColors as colors, getTargetNode, locateParagraph, getStartNode, getRxlEndNode, filterFootnote } from '@site/src/utils'
+import useLocalStorageState from 'use-local-storage-state'
 
 export default function DocRootWrapper(props) {
   const location = useLocation();
   let docRoot, articleRef, duration, currentPara, endPara, autoPage, scrollY = 100;
+  const [playInfo, _] = useLocalStorageState('playInfo')
 
   useEffect(() => {
     const queryString = location.search;
@@ -81,34 +82,6 @@ export default function DocRootWrapper(props) {
     }
   };
 
-  const handleKeyDown = (event) => {
-    if (event.altKey && (event.key === 'q' || event.key === 'Q')) {
-      event.preventDefault();
-      autoPaginate();
-    } else if (event.altKey && (event.key === 't' || event.key === 'T')) {
-      event.preventDefault();
-      handleWidescreen();
-    } else if (event.altKey && event.key === 'ArrowUp') {
-      event.preventDefault();
-      prevParagraph();
-    } else if (event.altKey && event.key === 'ArrowDown') {
-      event.preventDefault();
-      nextParagraph();
-    } else if (event.key === 'ArrowUp') {
-      event.preventDefault();
-      scrollY += 100;
-      locateParagraph(currentPara, scrollY);
-    } else if (event.key === 'ArrowDown') {
-      event.preventDefault();
-      scrollY -= 100;
-      locateParagraph(currentPara, scrollY);
-    } else if (event.altKey && (event.key === 'b' || event.key === 'B')) {
-      const colorIndex = (Number(localStorage.getItem('bgColorIndex')) + 1) % colors.length;
-      localStorage.setItem('bgColorIndex', colorIndex);
-      docRoot.style.backgroundColor = colors[colorIndex].color;
-    }
-  };
-
   const autoNextParagraph = (speed) => {
     const targetNode = getTargetNode(currentPara);
     if (!targetNode || !autoPage || currentPara === endPara) {
@@ -122,7 +95,7 @@ export default function DocRootWrapper(props) {
     setTimeout(() => {
       nextParagraph();
       autoNextParagraph(speed);
-    }, pagiTime * (localStorage.getItem('playbackRate') === '2' ? 500 : 1000));
+    }, pagiTime * (1 / playInfo?.playbackRate ?? 1) * 1000);
   };
 
   const autoPaginate = async () => {
@@ -159,6 +132,32 @@ export default function DocRootWrapper(props) {
     }
 
     return -1;
+  };
+
+
+  const keyActions = {
+    'q': autoPaginate,
+    't': handleWidescreen,
+    'arrowup': prevParagraph,
+    'arrowdown': nextParagraph,
+    'b': () => {
+      const colorIndex = (Number(localStorage.getItem('bgColorIndex')) + 1) % colors.length;
+      localStorage.setItem('bgColorIndex', colorIndex);
+      docRoot.style.backgroundColor = colors[colorIndex].color;
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    const key = event.key.toLowerCase();
+
+    if (event.altKey && keyActions[key]) {
+      event.preventDefault();
+      keyActions[key]();
+    } else if (key === 'arrowup' || key === 'arrowdown') {
+      event.preventDefault();
+      scrollY += (key === 'arrowdown' ? -100 : 100);
+      locateParagraph(currentPara, scrollY);
+    }
   };
 
   useEffect(() => {

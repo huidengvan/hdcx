@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from '@docusaurus/router';
 import SubtitleContext from '@site/src/components/SubtitleContext'
 import styles from './playlist.module.css'
-import { parseTime } from '../SubtitleContext';
+import { parseTime } from '@site/src/utils'
 import useLocalStorageState from 'use-local-storage-state'
 
 export default function Playlist() {
@@ -149,9 +149,10 @@ const Duration = ({ urltext }) => {
             }
         }
         let hour = parseInt(duration)
-        duration === hour ?
-            setTotalDuration(`时长：${hour}小时`) :
-            setTotalDuration(`时长：${hour ? hour + '小时' : ''}${Math.round((duration - hour) * 60)}分钟`)
+        let minute = Math.round((duration - hour) * 60)
+        if (duration > 0) {
+            setTotalDuration(`时长：${hour ? hour + '小时' : ''}${minute ? minute + '分钟' : ''}`)
+        }
 
         // console.log('--计算列表时长--', duration);
     };

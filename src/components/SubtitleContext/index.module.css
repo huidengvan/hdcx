@@ -14,11 +14,12 @@
 }
 
 .videoBox>img {
-    min-height: 400px;
+    min-height: 350px;
     align-self: center;
 }
 
 .videoBox {
+    padding-top: 10px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -33,6 +34,7 @@
 .audio {
     height: 4rem;
     max-width: 50vw;
+    align-self: center;
 }
 
 .item:last-child {
@@ -138,6 +140,11 @@
 
     .subtitle-container {
         flex-direction: column;
+    }
+
+    .audio {
+        height: 3rem;
+        max-width: 95vw;
     }
 }
 
