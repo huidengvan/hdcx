@@ -9,25 +9,15 @@ export const bgColors = [
     { name: '白色', color: 'white' }
 ];
 
-export const getTargetNode = (currentPara) => document.getElementById(`p${currentPara}`);
+export const getTargetNode = (target) => document.getElementById(target);
 
-export const locateParagraph = (currentPara, scrollY) => {
+export const locateParagraph = (currentPara) => {
+    if (/^\d+$/.test(currentPara)) { currentPara = `p${currentPara}` }
     const targetNode = getTargetNode(currentPara);
-    if (targetNode) {
-        const targetRect = targetNode.getBoundingClientRect();
-        const offset = window.innerHeight / 2 + scrollY;
-        const targetScrollPosition = window.scrollY + targetRect.top - offset;
-
-        window.scrollTo({ top: targetScrollPosition });
-    }
+    targetNode?.scrollIntoView({ block: 'center' });
 };
 
-export function getStartNode(location) {
-    let targetPara = location.hash.slice(1)
-
-    if (/p\d+/.test(targetPara)) {
-        return getTargetNode(targetPara.slice(1))
-    }
+export function getStartNode(targetPara) {
     return document.getElementById(decodeURI(targetPara))?.nextElementSibling
 }
 
@@ -49,9 +39,8 @@ export function getRxlSection(lesson) {
     return foundSection ? foundSection.section : undefined;
 }
 
-export function getRxlEndNode(location) {
-    const targetName = decodeURI(location.hash.substring(1));
-    const match = targetName?.match(/入菩萨行论第(\d+)节课/);
+export function getRxlEndNode(startPara) {
+    const match = startPara?.match(/入菩萨行论第(\d+)节课/);
     if (!match) return;
 
     const specialEndNodes = {
@@ -71,24 +60,39 @@ export function getRxlEndNode(location) {
     const endNode = specialEndNodes[lessonNumber] || `入菩萨行论第${parseInt(lessonNumber) + 1}节课`;
 
     if (/p\d+/.test(endNode)) {
-        return getTargetNode(endNode.slice(1));
+        return getTargetNode(endNode);
     }
-    return document.getElementById(endNode)?.previousElementSibling;
+
+    return getTargetNode(endNode)?.previousElementSibling;
 }
 
 export function filterFootnote(node) {
     if (!node) return;
 
     if (node.previousElementSibling.tagName === 'HR') {
-
-        return node.previousElementSibling?.previousElementSibling.firstChild
+        return node.previousElementSibling?.previousElementSibling
     }
 
-    if (!/\[\d+\]/.test(node.nextSibling?.textContent)) {
-        return node
+    if (/\[\d+\]/.test(node.textContent)) {
+        return filterFootnote(node.previousElementSibling)
     }
 
-    return filterFootnote(node.previousElementSibling.firstChild)
+    return node
+}
+
+export function isSameLesson(lesson, title) {
+    if (!lesson || !title) return;
+
+    // 检查主题是否包含相同的内容
+    const themeCheck = lesson.includes("入菩萨行论") && title.includes("入行论广解");
+
+    // 提取课次
+    const lessonNumber1 = lesson.match(/第(\d+)/) ? lesson.match(/第(\d+)/)[1] : null;
+    const lessonNumber2 = title.match(/广解(\d+)/) ? title.match(/广解(\d+)/)[1] : null;
+    // console.log(themeCheck, lessonNumber1, title,lessonNumber2);
+
+    // 返回主题和课次是否相同
+    return themeCheck && parseInt(lessonNumber1) === parseInt(lessonNumber2);
 }
 
 export const copyText = async (text) => {
@@ -100,16 +104,6 @@ export const copyText = async (text) => {
         return true;
     } catch (err) {
         return false;
-    }
-}
-
-export const subFullscreen = (ref) => {
-    if (!document.fullscreenElement) {
-        ref.current.style.overflowY = 'hidden'
-        subRef.current.requestFullscreen()
-    } else {
-        ref.current.style.overflowY = 'auto'
-        document.exitFullscreen()
     }
 }
 
@@ -164,16 +158,14 @@ export const parseSubtitles = (data, duration, src, keqianTime) => {
         const time = parts[1]?.split(' --> ');
         const text = parts.slice(2).join('\n');
         let timeStart = time[0]
+        let timeEnd = time[1]
 
         if ((matchRxl || matchRxlQa) && parseTime(timeStart) > keqianTime + 5) {
-            timeStart = matchRxlQa ?
-                parseTime(timeStart) + (duration - 2868) :
-                parseTime(timeStart) + (duration - 2870)
-
-            timeStart = formatTime(timeStart)
+            timeStart = formatTime(parseTime(timeStart) + (duration - 2870))
+            timeEnd = formatTime(parseTime(timeEnd) + (duration - 2870))
         }
 
-        subtitlesArray.push({ index, startTime: timeStart, endTime: time[1], text });
+        subtitlesArray.push({ index, startTime: timeStart, endTime: timeEnd, text });
     });
 
     return subtitlesArray;

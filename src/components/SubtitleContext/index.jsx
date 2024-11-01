@@ -4,9 +4,9 @@ import { useHistory } from '@docusaurus/router';
 import useLocalStorageState from 'use-local-storage-state'
 import { useLocation } from '@docusaurus/router';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import { parseTime, parseSubtitles, fetchText, getRxlSection, copyText, subFullscreen } from '@site/src/utils'
+import { parseTime, parseSubtitles, fetchText, getRxlSection, copyText } from '@site/src/utils'
 
-const VideoPlayer = ({ src, current, setCurrent }) => {
+const VideoPlayer = ({ src }) => {
     const location = useLocation();
     const baseUrl = location.hash.includes('http') ? '' : 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/';
     const [videoSrc, setVideoSrc] = useState(src === undefined ? `${baseUrl}${location.hash.slice(1)}` : src);
@@ -14,15 +14,13 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
     const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(-1);
     const [subAlignCenter, setSubAlignCenter] = useState(true);
     const videoRef = useRef(null);
-    const subRef = useRef(null);
-    const ulRef = useRef(null);
     const wraperRef = useRef(null);
     let endTime = parseTime(src?.split(',')[1])
     let matchRxl = videoSrc?.match(/入行论广解(\d+)课/);
     let matchRxlQa = /入行论广解\d+-\d+课问答/.test(src)
     let keqianTime = 88;
     let kehouTime = 140;
-    const [playInfo, setPlayInfo] = useLocalStorageState('playInfo', { defaultValue: { paused: true, showTimeLine: false } })
+    const [playInfo, setPlayInfo] = useLocalStorageState('playInfo', { defaultValue: { paused: true, showTimeLine: false, currentTime: 0, title: '', current: 0 } })
     const history = useHistory();
 
     useEffect(() => {
@@ -38,7 +36,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
 
             if (isMp4) {
                 videoRef.current.className = styles.video
-                if (current && !videoSrc.includes("恒常念诵") && !document.fullscreenElement && videoRef.current?.requestFullscreen) {
+                if (playInfo.current && !videoSrc.includes("恒常念诵") && !document.fullscreenElement && videoRef.current?.requestFullscreen) {
                     videoRef.current?.requestFullscreen()
                 }
             } else {
@@ -47,25 +45,39 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             }
         }
 
+        setPlayInfo(prevPlayInfo => ({
+            ...prevPlayInfo,
+            title: src?.slice(src?.lastIndexOf('/') + 1)
+        }))
+
         setSubtitles([])
     }, [src, videoSrc]);
 
     useEffect(() => {
-        let timer;
         const video = videoRef.current;
         if (!video) return;
 
         video.playbackRate = playInfo?.playbackRate || 1
 
+        let timer;
         const handleTimeUpdate = () => {
             let currentTime = video?.currentTime;
             // console.log(currentTime, endTime, video.duration)
+
             if (currentTime != null) {
+                if (!timer) {
+                    timer = setTimeout(() => {
+                        setPlayInfo({ ...playInfo, currentTime })
+                        timer = null; // 重置 timer
+                    }, 1000);
+                }
+
                 // 当播放时间超过 endTime 时，切换到下一个视频
                 if (endTime && currentTime >= endTime) {
                     clearTimeout(timer)
                     console.log('play next video', { currentTime, endTime })
-                    setCurrent(prev => prev + 1)
+                    setPlayInfo({ ...playInfo, current: playInfo.current + 1 })
+
                     video?.removeEventListener('timeupdate', handleTimeUpdate);
                 }
 
@@ -119,20 +131,13 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
     const handleVideoEnd = () => {
         console.log('ended');
         if (videoSrc !== 'blank') {
-            setCurrent(prev => prev + 1)
+            setPlayInfo({ ...playInfo, current: playInfo.current + 1 })
         }
     }
 
     const scrollSubtitleToView = (index) => {
         const subtitleElement = document.getElementById(`subtitle-${index}`);
-        const parentElement = ulRef.current;
-
-        if (parentElement) {
-            parentElement.scroll({
-                behavior: 'auto',
-                top: subtitleElement?.offsetTop + 60 - (parentElement?.clientHeight - subtitleElement?.clientHeight) / 2
-            });
-        }
+        subtitleElement.scrollIntoView({ block: 'center' })
     };
 
     const handleLoadedMetadata = (event) => {
@@ -162,20 +167,19 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
         if (videoDuration - endTime < 1) {
             endTime = undefined
         }
-        if (typeof window.orientation === 'undefined' && matchRxl) {
-            let lessonDuration = Math.round(videoDuration) - keqianTime - kehouTime
-
-            setTimeout(() => {
-                let readingUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${lessonDuration}#入菩萨行论第${parseInt(matchRxl[1])}节课`
-                console.log('课诵念完，前往阅读页');
-                if (!playInfo?.paused && matchRxl) {
-                    history.push(readingUrl)
-                    setTimeout(() => {
-                        history.push('/playlist')
-                    }, (lessonDuration + 3) * (1 / playInfo?.playbackRate ?? 1) * 1000);
-                }
-            }, keqianTime * (1 / playInfo?.playbackRate ?? 1) * 1000)
-        }
+        // if (typeof window.orientation === 'undefined' && matchRxl) {
+        //     let lessonDuration = Math.round(videoDuration) - keqianTime - kehouTime
+        //     setTimeout(() => {
+        //         let readingUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${lessonDuration}#入菩萨行论第${parseInt(matchRxl[1])}节课`
+        //         if (!playInfo?.paused && matchRxl) {
+        //             console.log(keqianTime,'课诵念完，前往阅读页',lessonDuration);
+        //             history.push(readingUrl)
+        //             setTimeout(() => {
+        //                 history.push('/playlist')
+        //             }, (lessonDuration + 3) * (1 / playInfo?.playbackRate ?? 1) * 1000);
+        //         }
+        //     }, keqianTime * (1 / playInfo?.playbackRate ?? 1) * 1000)
+        // }
     };
 
     const mediaProps = {
@@ -209,8 +213,8 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             {subtitles?.length > 0 &&
                 <details open style={{ width: '100vw' }}>
                     <summary></summary>
-                    <div className={`${styles['subtitle-box']} ${styles.item}`} ref={subRef}>
-                        <ul ref={ulRef} onDoubleClick={() => subFullscreen(ulRef)}>
+                    <div className={`${styles['subtitle-box']} ${styles.item}`}>
+                        <ul>
                             <span className={styles['subtitle-switch']}>
                                 <input type="checkbox"
                                     checked={playInfo?.showTimeLine}
@@ -222,11 +226,6 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                                         setSubAlignCenter(value => !value)
                                     }} />
                                 <span>垂直居中</span>
-                                <button onClick={() => subFullscreen(ulRef)}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
-                                        <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5" />
-                                    </svg>
-                                </button>
                             </span>
                             {subtitles.map((subtitle, index) => (
                                 <li key={index} id={`subtitle-${index}`} className={styles['subtitle-line']}>

@@ -1,32 +1,53 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from '@docusaurus/router';
 import DocRoot from '@theme-original/DocRoot';
-import { ignoredCharacters, bgColors as colors, getTargetNode, locateParagraph, getStartNode, getRxlEndNode, filterFootnote } from '@site/src/utils'
+import { ignoredCharacters, bgColors as colors, getTargetNode, locateParagraph, isSameLesson, getStartNode, getRxlEndNode, filterFootnote } from '@site/src/utils'
 import useLocalStorageState from 'use-local-storage-state'
 
 export default function DocRootWrapper(props) {
   const location = useLocation();
-  let docRoot, articleRef, duration, currentPara, endPara, autoPage, scrollY = 100;
+  const queryString = location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const duration = parseInt(urlParams.get('duration'));
+  const start = parseInt(urlParams.get('start') || 88);
+
+  let docRoot, articleRef, endPara;
   const [playInfo, _] = useLocalStorageState('playInfo')
+  const [articleTitle, setArticleTitle] = useState()
+  const [currentPara, setCurrentPara] = useState(0)
+  const [timeLines, setTimeLines] = useState([])
 
   useEffect(() => {
-    const queryString = location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const durationParam = urlParams.get('duration');
     articleRef = document.querySelector('article').parentElement.parentElement
     docRoot = document.querySelector('[class*=docRoot]')
-    duration = parseInt(durationParam);
-
-    if (duration) {
-      autoPaginate();
-    }
 
     const bgColorIndex = localStorage.getItem('bgColorIndex');
     if (bgColorIndex && articleRef) {
       docRoot.style.backgroundColor = colors[bgColorIndex].color;
     }
+    let para = decodeURI(location.hash?.slice(1))
+    setArticleTitle(para)
 
-  },[]);
+    if (duration) {
+      calcAudioSpeed()
+    } else if (para) {
+      locateParagraph(para)
+    }
+    // console.log({ currentPara, para });
+
+    window.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('dblclick', handleFullscreen);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (duration && playInfo.currentTime > 1) {
+      // console.log(timeLines[currentPara], currentPara);
+    }
+  }, [playInfo, articleTitle, currentPara]);
 
   const handleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -34,7 +55,7 @@ export default function DocRootWrapper(props) {
     } else {
       document.exitFullscreen();
     }
-    locateParagraph(currentPara, scrollY);
+    locateParagraph(currentPara);
   };
 
   const handleWidescreen = () => {
@@ -46,87 +67,86 @@ export default function DocRootWrapper(props) {
     } else {
       tocNode.style.display = 'none'
       articleRef.className = ''
-      articleRef.style.fontSize = 'xx-large'
+      articleRef.style.fontSize = 'x-large'
     }
 
     let sidebarButton = document.querySelector('[class*="collapseSidebarButton"]')
     sidebarButton?.click()
+    console.log(123);
 
+    console.log({ currentPara });
     setTimeout(() => {
-      locateParagraph(currentPara, scrollY);
-    }, 10)
+
+      locateParagraph(currentPara);
+    }, 100)
   };
 
   const prevParagraph = () => {
     if (currentPara === 1) return;
-    currentPara -= 1;
-    locateParagraph(currentPara - 1, scrollY);
-    let node = getTargetNode(currentPara)
+    let cur = currentPara - 1
+    setCurrentPara(prev => prev - 1)
+    locateParagraph(cur - 1);
+    let node = getTargetNode(`p{cur}`)
     if (node) {
       node.style.borderLeft = ''
     }
   };
 
   const nextParagraph = () => {
-    currentPara += 1;
-    locateParagraph(currentPara + 1, scrollY);
-    let node = getTargetNode(currentPara)
+    let cur = currentPara + 1
+    console.log({ currentPara });
+    setCurrentPara(prev => prev + 1)
+    locateParagraph(cur + 1);
+    let node = getTargetNode(`p{cur}`)
     if (node) {
       node.style.borderLeft = '.5px solid #2e8555'
     }
   };
 
-  const autoNextParagraph = (speed) => {
-    const targetNode = getTargetNode(currentPara);
-    if (!targetNode || !autoPage || currentPara === endPara) {
-      autoPage = false;
-      console.log(autoPage, `自动阅读停止`);
+  const autoNextParagraph = () => {
+    let targetNode = getTargetNode(`p{currentPara}`)
+    if (!isSameLesson(articleTitle, playInfo.title) || !targetNode || currentPara === endPara) {
+      console.log(`自动阅读停止`);
       return;
     }
-    const textLength = targetNode.lastChild?.textContent.replace(ignoredCharacters, '').length;
-    const pagiTime = Math.round(textLength / speed);
-
-    setTimeout(() => {
-      nextParagraph();
-      autoNextParagraph(speed);
-    }, pagiTime * (1 / playInfo?.playbackRate ?? 1) * 1000);
   };
 
   const autoPaginate = async () => {
-    autoPage = !autoPage;
-    const speed = await calcAudioSpeed();
 
-    console.log('read speed', speed);
-    if (speed > 1) {
-      autoNextParagraph(speed);
-      handleWidescreen();
-      console.log(`${autoPage ? '开始' : '暂停'}自动阅读`);
-    }
+    // console.log(`${autoPage ? '开始' : '暂停'}自动阅读`);
   };
 
-  const calcAudioSpeed = async () => {
-    const startNode = getStartNode(location);
-    let endNode = getRxlEndNode(location);
-    if (!endNode || !duration) return -1;
-
-    endNode = filterFootnote(endNode);
-    if (startNode?.id) currentPara = parseInt(startNode.id?.slice(1));
-    if (endNode?.id) endPara = parseInt(endNode.id?.slice(1));
-    let totalWordCount = startNode.lastChild?.textContent.replace(ignoredCharacters, '').length;
-
-    if (startNode && endNode) {
-      let currentNode = startNode;
-      while (currentNode && parseInt(currentNode?.id?.slice(1)) < parseInt(endNode?.id?.slice(1))) {
-        totalWordCount += currentNode.lastChild?.textContent.replace(ignoredCharacters, '').length;
-        currentNode = currentNode.nextElementSibling;
-      }
-      console.log({ totalWordCount, duration }, startNode.id, endNode.id);
-      return Math.round(totalWordCount / duration * 1000) / 1000;
+  const calcAudioSpeed = () => {
+    const startNode = getStartNode(location.hash.slice(1));
+    let endNode = filterFootnote(getRxlEndNode(decodeURI(location.hash.slice(1))));
+    // console.log(startNode, endNode, duration);
+    if (!startNode || !endNode || !duration) { return; }
+    if (endNode?.id) {
+      setCurrentPara(parseInt(startNode.id?.slice(1)))
+      endPara = parseInt(endNode.id?.slice(1));
     }
 
-    return -1;
-  };
+    let totalWordCount = 0;
+    let currentNode = startNode;
+    // console.log(parseInt(currentNode?.id?.slice(1)) < endPara);
 
+    let lines = []
+    while (currentNode && parseInt(currentNode?.id?.slice(1)) < endPara) {
+      let count = currentNode.lastChild?.textContent.replace(ignoredCharacters, '').length;
+      lines.push({ para: currentNode?.id, count })
+      totalWordCount += count
+      currentNode = currentNode.nextElementSibling;
+    }
+
+    let speed = Math.round(totalWordCount / duration * 1000) / 1000;
+
+    for (let i = 0; i < lines.length - 1; i++) {
+      lines[i].duration = Math.round(lines[i]?.count / speed)
+    }
+
+    setTimeLines(lines)
+    console.log({ totalWordCount, duration }, startNode.id, endNode.id, lines.length);
+  };
 
   const keyActions = {
     'q': autoPaginate,
@@ -146,27 +166,8 @@ export default function DocRootWrapper(props) {
     if (event.altKey && keyActions[key]) {
       event.preventDefault();
       keyActions[key]();
-    } else if (key === 'arrowup' || key === 'arrowdown') {
-      event.preventDefault();
-      scrollY += (key === 'arrowdown' ? -100 : 100);
-      locateParagraph(currentPara, scrollY);
     }
   };
-
-  useEffect(() => {
-    let para = decodeURI(location.hash?.slice(1))
-
-    if (para) {
-      locateParagraph(para.slice(1), -200)
-    }
-
-    window.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('dblclick', handleFullscreen);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
 
   return (
     <>

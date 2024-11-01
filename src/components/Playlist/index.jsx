@@ -12,7 +12,8 @@ export default function Playlist() {
     const uriParam = params.get('uri'); // 可以传入一个列表文件
     const currentParam = params.get('index');
     let urls = urlsParam?.split('|');
-    const [current, setCurrent] = useState(currentParam || 0)
+    const [playInfo, setPlayInfo] = useLocalStorageState('playInfo', { defaultValue: { current: currentParam || 0 } })
+
     const [edit, setEdit] = useState(false)
     const [urltext, setUrltext] = useLocalStorageState('playlist', { defaultValue: urls })
 
@@ -34,13 +35,13 @@ export default function Playlist() {
 
     const changeSrc = (e) => {
         const { value } = e.target
-        setCurrent(value - 1)
+        setPlayInfo({ ...playInfo, current: value - 1 })
     }
 
     return (
         <>
             <div className={styles.root}>
-                {urltext?.length > current && <SubtitleContext src={buildSrc(urltext[current])} current={current} setCurrent={setCurrent} />}
+                {urltext?.length > playInfo.current && <SubtitleContext src={buildSrc(urltext[playInfo.current])} />}
                 <details open className={styles.details}>
                     <summary style={{ userSelect: 'none', marginBottom: '5px' }}>播放列表
                         <span style={{ marginLeft: '4px' }}
@@ -70,7 +71,7 @@ export default function Playlist() {
                             {urltext && urltext[0] != '' &&
                                 urltext.map((url, index) => {
                                     return (
-                                        <li key={index} className={`${styles.item} ${current == index ? styles.active : ''}`} value={++index} onClick={changeSrc}>{decodeURI(url.split('@')[1] || url.split('/')[url.split('/')?.length - 1])?.split('.m')[0]}</li>
+                                        <li key={index} className={`${styles.item} ${playInfo.current == index ? styles.active : ''}`} value={++index} onClick={changeSrc}>{decodeURI(url.split('@')[1] || url.split('/')[url.split('/')?.length - 1])?.split('.m')[0]}</li>
                                     )
                                 })
                             }
@@ -146,7 +147,7 @@ const Duration = ({ urltext, setUrltext }) => {
         if (urlsLength != videoUrls?.length) {
             setUrltext(videoUrls)
         }
-        console.log(`--计算列表时长-- ${duration}小时, 列表长度：${videoUrls?.length}`);
+        // console.log(`--计算列表时长-- ${duration}小时, 列表长度：${videoUrls?.length}`);
     };
 
     useEffect(() => {
@@ -176,7 +177,7 @@ export async function getVideoDuration(videoUrl) {
         };
 
         video.onerror = () => {
-            console.warn(`无法加载视频: ${videoUrl}`);
+            // console.warn(`无法加载视频: ${videoUrl}`);
             resolve(0)
         };
     });
