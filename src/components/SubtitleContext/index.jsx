@@ -6,7 +6,7 @@ import { useLocation } from '@docusaurus/router';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { parseTime, parseSubtitles, fetchText, getRxlSection, copyText } from '@site/src/utils'
 
-const VideoPlayer = ({ src }) => {
+const VideoPlayer = ({ src, current, setCurrent }) => {
     const location = useLocation();
     const baseUrl = location.hash.includes('http') ? '' : 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/';
     const [videoSrc, setVideoSrc] = useState(src === undefined ? `${baseUrl}${location.hash.slice(1)}` : src);
@@ -36,7 +36,7 @@ const VideoPlayer = ({ src }) => {
 
             if (isMp4) {
                 videoRef.current.className = styles.video
-                if (playInfo.current && !videoSrc.includes("恒常念诵") && !document.fullscreenElement && videoRef.current?.requestFullscreen) {
+                if (current && !videoSrc.includes("恒常念诵") && !document.fullscreenElement && videoRef.current?.requestFullscreen) {
                     videoRef.current?.requestFullscreen()
                 }
             } else {
@@ -76,7 +76,7 @@ const VideoPlayer = ({ src }) => {
                 if (endTime && currentTime >= endTime) {
                     clearTimeout(timer)
                     console.log('play next video', { currentTime, endTime })
-                    setPlayInfo({ ...playInfo, current: playInfo.current + 1 })
+                    setCurrent(prev => prev + 1)
 
                     video?.removeEventListener('timeupdate', handleTimeUpdate);
                 }
@@ -131,7 +131,7 @@ const VideoPlayer = ({ src }) => {
     const handleVideoEnd = () => {
         console.log('ended');
         if (videoSrc !== 'blank') {
-            setPlayInfo({ ...playInfo, current: playInfo.current + 1 })
+            setCurrent(prev => prev + 1)
         }
     }
 

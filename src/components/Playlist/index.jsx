@@ -12,7 +12,7 @@ export default function Playlist() {
     const uriParam = params.get('uri'); // 可以传入一个列表文件
     const currentParam = params.get('index');
     let urls = urlsParam?.split('|');
-    const [playInfo, setPlayInfo] = useLocalStorageState('playInfo', { defaultValue: { current: currentParam || 0 } })
+    const [current, setCurrent] = useState(currentParam || 0)
 
     const [edit, setEdit] = useState(false)
     const [urltext, setUrltext] = useLocalStorageState('playlist', { defaultValue: urls })
@@ -35,13 +35,13 @@ export default function Playlist() {
 
     const changeSrc = (e) => {
         const { value } = e.target
-        setPlayInfo({ ...playInfo, current: value - 1 })
+        setCurrent(value - 1)
     }
 
     return (
         <>
             <div className={styles.root}>
-                {urltext?.length > playInfo.current && <SubtitleContext src={buildSrc(urltext[playInfo.current])} />}
+                {urltext?.length > current && <SubtitleContext src={buildSrc(urltext[current])} current={current} setCurrent={setCurrent} />}
                 <details open className={styles.details}>
                     <summary style={{ userSelect: 'none', marginBottom: '5px' }}>播放列表
                         <span style={{ marginLeft: '4px' }}
@@ -71,7 +71,7 @@ export default function Playlist() {
                             {urltext && urltext[0] != '' &&
                                 urltext.map((url, index) => {
                                     return (
-                                        <li key={index} className={`${styles.item} ${playInfo.current == index ? styles.active : ''}`} value={++index} onClick={changeSrc}>{decodeURI(url.split('@')[1] || url.split('/')[url.split('/')?.length - 1])?.split('.m')[0]}</li>
+                                        <li key={index} className={`${styles.item} ${current == index ? styles.active : ''}`} value={++index} onClick={changeSrc}>{decodeURI(url.split('@')[1] || url.split('/')[url.split('/')?.length - 1])?.split('.m')[0]}</li>
                                     )
                                 })
                             }
