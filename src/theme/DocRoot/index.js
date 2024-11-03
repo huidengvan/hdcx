@@ -13,10 +13,10 @@ export default function DocRootWrapper(props) {
 
   let docRoot, articleRef, endPara;
   const [playInfo, _] = useLocalStorageState('playInfo')
-  const [articleTitle, setArticleTitle] = useState()
+  const [articleTitle, setArticleTitle] = useState('')
   const [currentPara, setCurrentPara] = useState(0)
   const [timeLines, setTimeLines] = useState([])
-  let matchSameLesson = isSameLesson(articleTitle, playInfo.title)
+  let matchSameLesson = isSameLesson(articleTitle, playInfo?.title)
 
   useEffect(() => {
     articleRef = document.querySelector('article').parentElement.parentElement
