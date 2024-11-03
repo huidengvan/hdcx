@@ -9,13 +9,14 @@ export default function DocRootWrapper(props) {
   const queryString = location.search;
   const urlParams = new URLSearchParams(queryString);
   const duration = parseInt(urlParams.get('duration'));
-  const start = parseInt(urlParams.get('start') || 88);
+  let startTime = parseInt(urlParams.get('start') || 88);
 
   let docRoot, articleRef, endPara;
   const [playInfo, _] = useLocalStorageState('playInfo')
   const [articleTitle, setArticleTitle] = useState()
   const [currentPara, setCurrentPara] = useState(0)
   const [timeLines, setTimeLines] = useState([])
+  let matchSameLesson = isSameLesson(articleTitle, playInfo.title)
 
   useEffect(() => {
     articleRef = document.querySelector('article').parentElement.parentElement
@@ -28,7 +29,7 @@ export default function DocRootWrapper(props) {
     let para = decodeURI(location.hash?.slice(1))
     setArticleTitle(para)
 
-    if (duration) {
+    if (duration && matchSameLesson) {
       calcAudioSpeed()
     } else if (para) {
       locateParagraph(para)
@@ -44,9 +45,20 @@ export default function DocRootWrapper(props) {
   }, []);
 
   useEffect(() => {
-    if (duration && playInfo.currentTime > 1) {
-      // console.log(timeLines[currentPara], currentPara);
+    if (!duration || !matchSameLesson) return;
+    let currentLine = timeLines.find(x => playInfo.currentTime >= x.start && playInfo.currentTime < x.end)
+    let timer;
+    console.log(playInfo.currentTime, currentLine);
+
+    if (currentLine) {
+      locateParagraph(currentPara)
+      timer = setTimeout(() => {
+        setCurrentPara(currentLine.para)
+      }, 1100);
+      console.log({ currentLine });
     }
+    console.log(`update`, currentPara);
+    return clearTimeout(timer)
   }, [playInfo, articleTitle, currentPara]);
 
   const handleFullscreen = () => {
@@ -133,7 +145,7 @@ export default function DocRootWrapper(props) {
     let lines = []
     while (currentNode && parseInt(currentNode?.id?.slice(1)) < endPara) {
       let count = currentNode.lastChild?.textContent.replace(ignoredCharacters, '').length;
-      lines.push({ para: currentNode?.id, count })
+      lines.push({ para: parseInt(currentNode?.id?.slice(1)), count })
       totalWordCount += count
       currentNode = currentNode.nextElementSibling;
     }
@@ -141,7 +153,10 @@ export default function DocRootWrapper(props) {
     let speed = Math.round(totalWordCount / duration * 1000) / 1000;
 
     for (let i = 0; i < lines.length - 1; i++) {
-      lines[i].duration = Math.round(lines[i]?.count / speed)
+      lines[i].start = startTime
+      let duration = Math.round(lines[i]?.count / speed)
+      startTime += duration
+      lines[i].end = startTime
     }
 
     setTimeLines(lines)
@@ -166,6 +181,12 @@ export default function DocRootWrapper(props) {
     if (event.altKey && keyActions[key]) {
       event.preventDefault();
       keyActions[key]();
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault()
+      window.scrollBy(0, 100 - window.innerHeight);
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault()
+      window.scrollBy(0, window.innerHeight - 100);
     }
   };
 
