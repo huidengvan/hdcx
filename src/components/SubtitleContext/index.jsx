@@ -164,7 +164,8 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             wraperRef.current.parentElement.style.flexDirection = 'row'
         }
 
-        if (videoDuration - endTime < 1) {
+        // console.log({ videoDuration, endTime }, '清除endTime');
+        if (videoDuration - endTime <= 1) {
             endTime = undefined
         }
         // if (typeof window.orientation === 'undefined' && matchRxl) {
@@ -189,7 +190,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
         controls: true,
         onLoadedMetadata: handleLoadedMetadata,
         onEnded: handleVideoEnd,
-        autoPlay: true,
+        autoPlay: current === 0 ? false : true,
         onPause: () => setPlayInfo({ ...playInfo, paused: true }),
         onPlay: () => setPlayInfo({ ...playInfo, paused: false }),
     };
