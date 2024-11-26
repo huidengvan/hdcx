@@ -84,7 +84,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                 const subIndex = subtitles?.findIndex(subtitle => currentTime >= parseTime(subtitle.startTime) && currentTime <= parseTime(subtitle.endTime));
                 if (subIndex !== -1 && subIndex != currentSubtitleIndex) {
                     setCurrentSubtitleIndex(subIndex);
-                    subAlignCenter && scrollSubtitleToView(subIndex);
+                    subAlignCenter && subtitles.length - 5 > subIndex && scrollSubtitleToView(subIndex);
                 }
             }
         };
@@ -206,7 +206,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                     >
                     </video> :
                     <>
-                        <img src='https://hdcx.s3.ap-northeast-1.wasabisys.com/hdv/p/上师.jpg' alt='上师知' width={'500'} />
+                        <img src='https://hdcx.s3.ap-northeast-1.wasabisys.com/hdv/p/上师.jpg' alt='上师知' width={'450'} />
                         <audio {...mediaProps} />
                     </>
                 }
