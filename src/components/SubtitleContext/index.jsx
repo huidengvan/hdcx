@@ -126,7 +126,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             video?.removeEventListener('timeupdate', handleTimeUpdate);
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [subtitles, currentSubtitleIndex]);
+    }, [subtitles, currentSubtitleIndex,playInfo]);
 
     const handleVideoEnd = () => {
         console.log('ended');
