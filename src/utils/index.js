@@ -189,5 +189,3 @@ export const fetchText = async (suburl) => {
         console.error(e);
     }
 };
-
-export const getPlayerDom = () => document.getElementById('player')

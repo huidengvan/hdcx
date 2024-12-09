@@ -180,7 +180,6 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             <div className={styles.videoBox}>
                 {/\.(mp4|webm)/.test(videoSrc) ?
                     <video
-                        id='player'
                         {...mediaProps}
                         poster={/\/v\/[45]jx/.test(videoSrc) ?
                             'https://box.hdcxb.net/d/其他资料/f/up/untitled.png' : ''}
@@ -188,7 +187,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                     </video> :
                     <>
                         <img src='https://hdcx.s3.ap-northeast-1.wasabisys.com/hdv/p/上师.jpg' alt='上师知' width={'450'} />
-                        <audio id='player' {...mediaProps} />
+                        <audio {...mediaProps} />
                     </>
                 }
             </div>
