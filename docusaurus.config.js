@@ -9,7 +9,7 @@ import paraAnchor from './src/plugins/para-anchor.js';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-    title: '慧灯禅修班',
+    title: '禅修班',
     tagline: '学修指南及参考课程进度安排',
     url: 'https://huidengchanxiu.net',
     baseUrl: '/',
@@ -124,7 +124,7 @@ const config = {
             searchPagePath: 'search',
         },
         navbar: {
-            title: '慧灯禅修',
+            title: '禅修班',
             logo: {
                 alt: 'HuidengVan',
                 src: 'img/hdlogo.png',
