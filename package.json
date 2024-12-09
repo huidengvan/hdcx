@@ -17,8 +17,8 @@
     "write-heading-ids": "docusaurus write-heading-ids"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.5.2",
-    "@docusaurus/preset-classic": "^3.5.2",
+    "@docusaurus/core": "^3.6.3",
+    "@docusaurus/preset-classic": "^3.6.3",
     "@gera2ld/jsx-dom": "^2.2.2",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^1.2.1",
@@ -28,7 +28,7 @@
     "use-local-storage-state": "^19.4.1"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.5.2",
+    "@docusaurus/module-type-aliases": "^3.6.3",
     "esbuild-loader": "^4.2.2"
   },
   "browserslist": {
