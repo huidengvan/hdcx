@@ -14,8 +14,8 @@ export default function Root({ children }) {
                 footer.style.display = 'none'
                 document.querySelector('main')?.removeAttribute('class')
             }
-        }, 200);
-    }, [location]);
+        }, 300);
+    }, [location.pathname]);
 
     return (
         <>

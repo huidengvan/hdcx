@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from '@docusaurus/router';
 import DocRoot from '@theme-original/DocRoot';
-import { ignoredCharacters, bgColors as colors, getTargetNode, locateParagraph, isSameLesson, getStartNode, getRxlEndNode, filterFootnote } from '@site/src/utils'
-import useLocalStorageState from 'use-local-storage-state'
+import { ignoredCharacters, bgColors as colors, locateParagraph, getStartNode, getRxlEndNode, filterFootnote, getPlayerDom, isSameLesson } from '@site/src/utils'
+import useLocalStorageState from 'use-local-storage-state';
 
 export default function DocRootWrapper(props) {
   const location = useLocation();
-  const queryString = location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const duration = parseInt(urlParams.get('duration'));
-  let startTime = parseInt(urlParams.get('start') || 88);
 
   let docRoot, articleRef, endPara;
   const [playInfo, _] = useLocalStorageState('playInfo')
-  const [articleTitle, setArticleTitle] = useState('')
-  const [currentPara, setCurrentPara] = useState(0)
   const [timeLines, setTimeLines] = useState([])
-  let matchSameLesson = isSameLesson(articleTitle, playInfo?.title)
+  const articleTitle = decodeURI(location.hash?.slice(1))
+  const [currentPara, setCurrentPara] = useLocalStorageState('currentPara')
+  const [autoRead, setAutoRead] = useState(false)
+  const matchSameLesson = isSameLesson(articleTitle, playInfo?.title)
+  const video = getPlayerDom()
 
   useEffect(() => {
+    const duration = video?.duration
+
     articleRef = document.querySelector('article').parentElement.parentElement
     docRoot = document.querySelector('[class*=docRoot]')
 
@@ -26,15 +26,13 @@ export default function DocRootWrapper(props) {
     if (bgColorIndex && articleRef) {
       docRoot.style.backgroundColor = colors[bgColorIndex].color;
     }
-    let para = decodeURI(location.hash?.slice(1))
-    setArticleTitle(para)
 
-    if (duration && matchSameLesson) {
-      calcAudioSpeed()
-    } else if (para) {
-      locateParagraph(para)
+    if (!isNaN(duration) && matchSameLesson) {
+      calcAudioSpeed(duration)
+      console.log({ duration, currentPara, articleTitle });
+    } else if (articleTitle) {
+      locateParagraph(articleTitle)
     }
-    // console.log({ currentPara, para });
 
     window.addEventListener('keydown', handleKeyDown);
     document.addEventListener('dblclick', handleFullscreen);
@@ -42,24 +40,28 @@ export default function DocRootWrapper(props) {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [getPlayerDom]);
 
   useEffect(() => {
-    if (!duration || !matchSameLesson) return;
-    let currentLine = timeLines.find(x => playInfo.currentTime >= x.start && playInfo.currentTime < x.end)
-    let timer;
-    console.log(playInfo.currentTime, currentLine);
+    console.log({ autoRead }, timeLines.length, video?.duration);
+    if (!video || !autoRead || timeLines.length === 0) return;
 
-    if (currentLine) {
-      locateParagraph(currentPara)
-      timer = setTimeout(() => {
-        setCurrentPara(currentLine.para)
-      }, 1100);
-      console.log({ currentLine });
+    let currentLine = timeLines[0];
+    const handleTimeUpdate = ({ target: { currentTime } }) => {
+      if (currentTime >= currentLine?.end) {
+        currentLine = timeLines.find(x => currentTime >= x.start && currentTime < x.end)
+
+        if (currentLine) {
+          locateParagraph(currentLine.para)
+          setCurrentPara(currentLine.para)
+        }
+        console.log({ currentLine });
+        console.log(`update`, { currentTime }, 'currentPara:', currentLine?.para);
+      }
     }
-    console.log(`update`, currentPara);
-    return clearTimeout(timer)
-  }, [playInfo, articleTitle, currentPara]);
+
+    video.addEventListener('timeupdate', handleTimeUpdate);
+  }, [getPlayerDom, timeLines, autoRead]);
 
   const handleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -84,51 +86,14 @@ export default function DocRootWrapper(props) {
 
     let sidebarButton = document.querySelector('[class*="collapseSidebarButton"]')
     sidebarButton?.click()
-    console.log(123);
 
-    console.log({ currentPara });
     setTimeout(() => {
-
+      console.log('宽屏模式切换，重新定位段落', { currentPara });
       locateParagraph(currentPara);
-    }, 100)
+    }, 200)
   };
 
-  const prevParagraph = () => {
-    if (currentPara === 1) return;
-    let cur = currentPara - 1
-    setCurrentPara(prev => prev - 1)
-    locateParagraph(cur - 1);
-    let node = getTargetNode(`p{cur}`)
-    if (node) {
-      node.style.borderLeft = ''
-    }
-  };
-
-  const nextParagraph = () => {
-    let cur = currentPara + 1
-    console.log({ currentPara });
-    setCurrentPara(prev => prev + 1)
-    locateParagraph(cur + 1);
-    let node = getTargetNode(`p{cur}`)
-    if (node) {
-      node.style.borderLeft = '.5px solid #2e8555'
-    }
-  };
-
-  const autoNextParagraph = () => {
-    let targetNode = getTargetNode(`p{currentPara}`)
-    if (!isSameLesson(articleTitle, playInfo.title) || !targetNode || currentPara === endPara) {
-      console.log(`自动阅读停止`);
-      return;
-    }
-  };
-
-  const autoPaginate = async () => {
-
-    // console.log(`${autoPage ? '开始' : '暂停'}自动阅读`);
-  };
-
-  const calcAudioSpeed = () => {
+  const calcAudioSpeed = (duration) => {
     const startNode = getStartNode(location.hash.slice(1));
     let endNode = filterFootnote(getRxlEndNode(decodeURI(location.hash.slice(1))));
     // console.log(startNode, endNode, duration);
@@ -150,6 +115,7 @@ export default function DocRootWrapper(props) {
       currentNode = currentNode.nextElementSibling;
     }
 
+    let startTime = playInfo?.keqianTime ?? 89
     let speed = Math.round(totalWordCount / duration * 1000) / 1000;
 
     for (let i = 0; i < lines.length - 1; i++) {
@@ -160,14 +126,24 @@ export default function DocRootWrapper(props) {
     }
 
     setTimeLines(lines)
-    console.log({ totalWordCount, duration }, startNode.id, endNode.id, lines.length);
+    console.log({ totalWordCount, duration }, '段落数量：', lines.length, '语速：', speed);
+    setAutoRead(true)
+    handleWidescreen()
   };
 
+  const toggleAutoread = () => {
+    setAutoRead(prev => {
+      if (prev === true) {
+        alert("自动阅读停止")
+      }
+
+      return !prev
+    })
+  }
+
   const keyActions = {
-    'q': autoPaginate,
     't': handleWidescreen,
-    'arrowup': prevParagraph,
-    'arrowdown': nextParagraph,
+    'a': toggleAutoread,
     'b': () => {
       const colorIndex = (Number(localStorage.getItem('bgColorIndex')) + 1) % colors.length;
       localStorage.setItem('bgColorIndex', colorIndex);

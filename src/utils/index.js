@@ -5,7 +5,7 @@ export const ignoredCharacters = /[【】〖〗\[\]《》：:"'“”]/g;
 export const bgColors = [
     { name: '褐色', color: '#FFF2E2' },
     { name: '绿色', color: '#CCE8CF' },
-    { name: '黄色', color: '#F8FD89' },
+    { name: '黄色', color: '#FAF9DE' },
     { name: '白色', color: 'white' }
 ];
 
@@ -14,7 +14,10 @@ export const getTargetNode = (target) => document.getElementById(target);
 export const locateParagraph = (currentPara) => {
     if (/^\d+$/.test(currentPara)) { currentPara = `p${currentPara}` }
     const targetNode = getTargetNode(currentPara);
-    targetNode?.scrollIntoView({ block: 'center' });
+    if (targetNode) {
+        targetNode.scrollIntoView({ block: 'center' });
+        targetNode.style.borderLeft = '.5px solid #2e8555'
+    }
 };
 
 export function getStartNode(targetPara) {
@@ -186,3 +189,5 @@ export const fetchText = async (suburl) => {
         console.error(e);
     }
 };
+
+export const getPlayerDom = () => document.getElementById('player')

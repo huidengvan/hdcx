@@ -2,25 +2,22 @@ import React, { useEffect, useState, useRef } from 'react';
 import styles from './index.module.css';
 import { useHistory } from '@docusaurus/router';
 import useLocalStorageState from 'use-local-storage-state'
-import { useLocation } from '@docusaurus/router';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { parseTime, parseSubtitles, fetchText, getRxlSection, copyText } from '@site/src/utils'
 
 const VideoPlayer = ({ src, current, setCurrent }) => {
-    const location = useLocation();
-    const baseUrl = location.hash.includes('http') ? '' : 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%e6%85%a7%e7%81%af%e7%a6%85%e4%bf%ae%e8%af%be/';
+    const baseUrl = location.hash.includes('http') ? '' : 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/慧灯禅修课/';
     const [videoSrc, setVideoSrc] = useState(src === undefined ? `${baseUrl}${location.hash.slice(1)}` : src);
     const [subtitles, setSubtitles] = useState([]);
     const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(-1);
-    const [subAlignCenter, setSubAlignCenter] = useState(true);
     const videoRef = useRef(null);
     const wraperRef = useRef(null);
     let endTime = parseTime(src?.split(',')[1])
     let matchRxl = videoSrc?.match(/入行论广解(\d+)课/);
     let matchRxlQa = /入行论广解\d+-\d+课问答/.test(src)
-    let keqianTime = 88;
+    let keqianTime = 90;
     let kehouTime = 140;
-    const [playInfo, setPlayInfo] = useLocalStorageState('playInfo', { defaultValue: { paused: true, showTimeLine: false, currentTime: 0, title: '', current: 0 } })
+    const [playInfo, setPlayInfo] = useLocalStorageState('playInfo', { defaultValue: { paused: true, showTimeLine: false, subAlignCenter: true, currentTime: 0, title: '', current: 0, keqianTime } })
     const history = useHistory();
 
     useEffect(() => {
@@ -57,35 +54,29 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
         const video = videoRef.current;
         if (!video) return;
 
-        video.playbackRate = playInfo?.playbackRate || 1
+        video.playbackRate = playInfo?.playbackRate ?? 1
+        let huixiangTime = video.duration - kehouTime
+        // console.log(matchRxl);
+        let readingUrl = matchRxl ? `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}#入菩萨行论第${parseInt(matchRxl[1])}节课` : ''
 
-        let timer;
-        const handleTimeUpdate = () => {
-            let currentTime = video?.currentTime;
-            // console.log(currentTime, endTime, video.duration)
-
-            if (currentTime != null) {
-                if (!timer) {
-                    timer = setTimeout(() => {
-                        setPlayInfo({ ...playInfo, currentTime })
-                        timer = null; // 重置 timer
-                    }, 1000);
-                }
-
-                // 当播放时间超过 endTime 时，切换到下一个视频
-                if (endTime && currentTime >= endTime) {
-                    clearTimeout(timer)
-                    console.log('play next video', { currentTime, endTime })
-                    setCurrent(prev => prev + 1)
-
-                    video?.removeEventListener('timeupdate', handleTimeUpdate);
-                }
-
-                const subIndex = subtitles?.findIndex(subtitle => currentTime >= parseTime(subtitle.startTime) && currentTime <= parseTime(subtitle.endTime));
-                if (subIndex !== -1 && subIndex != currentSubtitleIndex) {
-                    setCurrentSubtitleIndex(subIndex);
-                    subAlignCenter && subtitles.length - 5 > subIndex && scrollSubtitleToView(subIndex);
-                }
+        const handleTimeUpdate = ({ target: { currentTime } }) => {
+            // console.log(currentTime, endTime, duration)
+            const subIndex = subtitles?.findIndex(subtitle => currentTime >= parseTime(subtitle?.startTime) && currentTime <= parseTime(subtitle?.endTime));
+            // 当播放时间超过 endTime 时，切换到下一个视频
+            if (endTime && currentTime >= endTime) {
+                console.log('play next video', { currentTime, endTime })
+                setCurrent(prev => prev + 1)
+                video?.removeEventListener('timeupdate', handleTimeUpdate);
+            } else if (matchRxl && currentTime > keqianTime && currentTime < keqianTime + 1) {
+                // 当播放是入行论辅导时 typeof window.orientation === 'undefined' && 不是移动端时
+                console.log(keqianTime, '课诵念完，前往阅读页');
+                history.push(readingUrl)
+            } else if (matchRxl && currentTime > huixiangTime && currentTime < huixiangTime + 1) {
+                console.log(keqianTime, '回向阶段，返回列表页');
+                history.push('/playlist')
+            } else if (subIndex !== -1 && subIndex != currentSubtitleIndex) {
+                setCurrentSubtitleIndex(subIndex);
+                playInfo.subAlignCenter && subtitles.length - 5 > subIndex && scrollSubtitleToView(subIndex);
             }
         };
 
@@ -126,7 +117,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             video?.removeEventListener('timeupdate', handleTimeUpdate);
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [subtitles, currentSubtitleIndex,playInfo]);
+    }, [subtitles, currentSubtitleIndex, playInfo]);
 
     const handleVideoEnd = () => {
         console.log('ended');
@@ -140,26 +131,26 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
         subtitleElement.scrollIntoView({ block: 'center' })
     };
 
+    const handleSubtitleFetch = async (suburl, duration) => {
+        let subText = await fetchText(suburl)
+        let subtitlesArray = parseSubtitles(subText, duration, src, keqianTime)
+        setSubtitles(subtitlesArray);
+        wraperRef.current.parentElement.style.flexDirection = 'column'
+    }
+
     const handleLoadedMetadata = (event) => {
         const videoDuration = event.target.duration;
         if (videoSrc === 'blank') {
             videoRef?.current.pause
         }
-        // console.log({videoDuration});
-        const handleSubtitleFetch = async (suburl) => {
-            let subText = await fetchText(suburl)
-            let subtitlesArray = parseSubtitles(subText, videoDuration, src, keqianTime)
-            setSubtitles(subtitlesArray);
-            wraperRef.current.parentElement.style.flexDirection = 'column'
-        }
+        // console.log({ videoDuration });
 
         if (matchRxl || matchRxlQa) {
             let suburl = `https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/入行论辅导字幕（课诵部分）.srt`
-            handleSubtitleFetch(suburl)
+            handleSubtitleFetch(suburl, videoDuration)
         } else if (decodeURI(location.hash).includes("慧灯禅修课")) {
-            let videoName = videoSrc.slice(95)?.split('.mp4')[0]
-            let suburl = `https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/慧灯禅修课/${videoName}.srt`
-            handleSubtitleFetch(suburl)
+            let suburl = videoSrc?.replace('mp4', 'srt')
+            handleSubtitleFetch(suburl, videoDuration)
         } else if (window.screen.orientation.type !== "portrait-primary") {
             wraperRef.current.parentElement.style.flexDirection = 'row'
         }
@@ -168,19 +159,6 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
         if (videoDuration - endTime <= 1) {
             endTime = undefined
         }
-        // if (typeof window.orientation === 'undefined' && matchRxl) {
-        //     let lessonDuration = Math.round(videoDuration) - keqianTime - kehouTime
-        //     setTimeout(() => {
-        //         let readingUrl = `/refs/rxl/fudao/rxl-fd${getRxlSection(matchRxl[1])}?duration=${lessonDuration}#入菩萨行论第${parseInt(matchRxl[1])}节课`
-        //         if (!playInfo?.paused && matchRxl) {
-        //             console.log(keqianTime,'课诵念完，前往阅读页',lessonDuration);
-        //             history.push(readingUrl)
-        //             setTimeout(() => {
-        //                 history.push('/playlist')
-        //             }, (lessonDuration + 3) * (1 / playInfo?.playbackRate ?? 1) * 1000);
-        //         }
-        //     }, keqianTime * (1 / playInfo?.playbackRate ?? 1) * 1000)
-        // }
     };
 
     const mediaProps = {
@@ -200,6 +178,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             <div className={styles.videoBox}>
                 {/\.(mp4|webm)/.test(videoSrc) ?
                     <video
+                        id='player'
                         {...mediaProps}
                         poster={/\/v\/[45]jx/.test(videoSrc) ?
                             'https://box.hdcxb.net/d/其他资料/f/up/untitled.png' : ''}
@@ -207,7 +186,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                     </video> :
                     <>
                         <img src='https://hdcx.s3.ap-northeast-1.wasabisys.com/hdv/p/上师.jpg' alt='上师知' width={'450'} />
-                        <audio {...mediaProps} />
+                        <audio id='player' {...mediaProps} />
                     </>
                 }
             </div>
@@ -222,10 +201,8 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                                     onChange={() => setPlayInfo({ ...playInfo, showTimeLine: !playInfo?.showTimeLine })} />
                                 <span>时间轴</span>
                                 <input type="checkbox"
-                                    checked={subAlignCenter}
-                                    onChange={() => {
-                                        setSubAlignCenter(value => !value)
-                                    }} />
+                                    checked={playInfo?.subAlignCenter}
+                                    onChange={() => setPlayInfo({ ...playInfo, subAlignCenter: !playInfo?.subAlignCenter })} />
                                 <span>垂直居中</span>
                             </span>
                             {subtitles.map((subtitle, index) => (

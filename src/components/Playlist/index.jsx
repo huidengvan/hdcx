@@ -119,26 +119,26 @@ const Duration = ({ urltext, setUrltext }) => {
         }
 
         let duration = parseFloat((t / 3600).toFixed(2));
-        if (matchRxl) {
-            if (duration < 2.5) {
-                let rest3minutes = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/恒常念诵愿文.mp4^0,3:27@恒常念诵愿文（休息三分钟）`
-                let meditation = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/4jx/寿命无常-上师念诵.mp4^0,1:00:07@寿命无常观修 1 小时`
-                if (!videoUrls.includes(meditation)) {
-                    videoUrls.splice(urltext?.length - 1, 0, rest3minutes)
-                    videoUrls.splice(urltext?.length - 1, 0, meditation)
-                }
-                duration += 1.1
-                console.log(`添加打坐视频`);
-            } else if (duration >= 2.5 && duration <= 3) {
-                let discussTime = Math.ceil((3 - duration) * 6) * 10
-                let discussItem = `blank@研究讨论${discussTime}分钟`
-                duration += discussTime / 60
-                if (!videoUrls.includes(discussItem)) {
-                    videoUrls.splice(urltext?.length - 1, 0, discussItem)
-                    console.log('添加暂停讨论');
-                }
-            }
-        }
+        // if (matchRxl) {
+        //     if (duration < 2.5) {
+        //         let rest3minutes = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/恒常念诵愿文.mp4^0,3:27@恒常念诵愿文（休息三分钟）`
+        //         let meditation = `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/v/4jx/寿命无常-上师念诵.mp4^0,1:00:07@寿命无常观修 1 小时`
+        //         if (!videoUrls.includes(meditation)) {
+        //             videoUrls.splice(urltext?.length - 1, 0, rest3minutes)
+        //             videoUrls.splice(urltext?.length - 1, 0, meditation)
+        //         }
+        //         duration += 1.1
+        //         console.log(`添加打坐视频`);
+        //     } else if (duration >= 2.5 && duration <= 3) {
+        //         let discussTime = Math.ceil((3 - duration) * 6) * 10
+        //         let discussItem = `blank@研究讨论${discussTime}分钟`
+        //         duration += discussTime / 60
+        //         if (!videoUrls.includes(discussItem)) {
+        //             videoUrls.splice(urltext?.length - 1, 0, discussItem)
+        //             console.log('添加暂停讨论');
+        //         }
+        //     }
+        // }
         let hour = parseInt(duration)
         let minute = Math.round((duration - hour) * 60)
         if (duration > 0) {
@@ -163,7 +163,6 @@ const Duration = ({ urltext, setUrltext }) => {
         </>
     );
 };
-
 
 export async function getVideoDuration(videoUrl) {
     return new Promise((resolve, reject) => {
