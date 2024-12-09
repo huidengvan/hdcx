@@ -60,26 +60,26 @@ const config = {
         //         rehypePlugins: [paraAnchor],
         //     },
         // ],
-        [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'refs',
-                path: 'refs',
-                routeBasePath: 'refs',
-                sidebarPath: require.resolve('./sidebars.js'),
-                rehypePlugins: [paraAnchor],
-            },
-        ],
         // [
         //     '@docusaurus/plugin-content-docs',
         //     {
-        //         id: '4jx',
-        //         path: '4jx',
-        //         routeBasePath: '4jx',
+        //         id: 'refs',
+        //         path: 'refs',
+        //         routeBasePath: 'refs',
         //         sidebarPath: require.resolve('./sidebars.js'),
         //         rehypePlugins: [paraAnchor],
         //     },
         // ],
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: '4jx',
+                path: '4jx',
+                routeBasePath: '4jx',
+                sidebarPath: require.resolve('./sidebars.js'),
+                rehypePlugins: [paraAnchor],
+            },
+        ],
         // [
         //     '@docusaurus/plugin-content-docs',
         //     {
@@ -121,13 +121,13 @@ const config = {
                 //     position: 'left',
                 //     label: '课程法本',
                 // },
-                {
-                    type: 'doc',
-                    docId: 'index',
-                    docsPluginId: 'refs',
-                    position: 'left',
-                    label: '参考法本',
-                },
+                // {
+                //     type: 'doc',
+                //     docId: 'index',
+                //     docsPluginId: 'refs',
+                //     position: 'left',
+                //     label: '参考法本',
+                // },
                 // {
                 //     type: 'doc',
                 //     docId: 'book1',
@@ -135,13 +135,13 @@ const config = {
                 //     position: 'left',
                 //     label: '闻思班',
                 // },
-                // {
-                //     type: 'doc',
-                //     docId: '1xm',
-                //     docsPluginId: '4jx',
-                //     position: 'left',
-                //     label: '四加行',
-                // },
+                {
+                    type: 'doc',
+                    docId: '1xm',
+                    docsPluginId: '4jx',
+                    position: 'left',
+                    label: '四加行',
+                },
                 // {
                 //     type: 'doc',
                 //     docId: '1gy',

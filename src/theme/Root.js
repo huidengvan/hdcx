@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLocation } from '@docusaurus/router';
 import Playlist from '@site/src/components/Playlist'
+import { VideoProvider } from '../components/SubtitleContext/VideoContext';
 
 export default function Root({ children }) {
     const location = useLocation();
@@ -18,10 +19,10 @@ export default function Root({ children }) {
     }, [location.pathname]);
 
     return (
-        <>
+        <VideoProvider>
             {children}
             <div style={{ display: matchPlaylist ? 'block' : 'none' }}>
                 <Playlist />
             </div>
-        </>);
+        </VideoProvider>);
 }

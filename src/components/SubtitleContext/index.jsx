@@ -4,20 +4,21 @@ import { useHistory } from '@docusaurus/router';
 import useLocalStorageState from 'use-local-storage-state'
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { parseTime, parseSubtitles, fetchText, getRxlSection, copyText } from '@site/src/utils'
+import { useVideo } from './VideoContext';
 
 const VideoPlayer = ({ src, current, setCurrent }) => {
     const baseUrl = location.hash.includes('http') ? '' : 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/慧灯禅修课/';
     const [videoSrc, setVideoSrc] = useState(src === undefined ? `${baseUrl}${location.hash.slice(1)}` : src);
     const [subtitles, setSubtitles] = useState([]);
     const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(-1);
-    const videoRef = useRef(null);
+    const videoRef = useVideo();
     const wraperRef = useRef(null);
     let endTime = parseTime(src?.split(',')[1])
     let matchRxl = videoSrc?.match(/入行论广解(\d+)课/);
     let matchRxlQa = /入行论广解\d+-\d+课问答/.test(src)
     let keqianTime = 90;
     let kehouTime = 140;
-    const [playInfo, setPlayInfo] = useLocalStorageState('playInfo', { defaultValue: { paused: true, showTimeLine: false, subAlignCenter: true, currentTime: 0, title: '', current: 0, keqianTime } })
+    const [playInfo, setPlayInfo] = useLocalStorageState('playInfo', { defaultValue: { paused: true, showTimeLine: false, subAlignCenter: true, currentTime: 0, title: '', current: 0 } })
     const history = useHistory();
 
     useEffect(() => {
@@ -44,6 +45,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
 
         setPlayInfo(prevPlayInfo => ({
             ...prevPlayInfo,
+            keqianTime,
             title: src?.slice(src?.lastIndexOf('/') + 1)
         }))
 

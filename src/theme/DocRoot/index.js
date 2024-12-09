@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from '@docusaurus/router';
 import DocRoot from '@theme-original/DocRoot';
-import { ignoredCharacters, bgColors as colors, locateParagraph, getStartNode, getRxlEndNode, filterFootnote, getPlayerDom, isSameLesson } from '@site/src/utils'
+import { ignoredCharacters, bgColors as colors, locateParagraph, getStartNode, getRxlEndNode, filterFootnote, isSameLesson } from '@site/src/utils'
 import useLocalStorageState from 'use-local-storage-state';
+import { useVideo } from '../../components/SubtitleContext/VideoContext';
 
 export default function DocRootWrapper(props) {
   const location = useLocation();
@@ -14,7 +15,8 @@ export default function DocRootWrapper(props) {
   const [currentPara, setCurrentPara] = useLocalStorageState('currentPara')
   const [autoRead, setAutoRead] = useState(false)
   const matchSameLesson = isSameLesson(articleTitle, playInfo?.title)
-  const video = getPlayerDom()
+  const videoRef = useVideo();
+  const video = videoRef.current
 
   useEffect(() => {
     const duration = video?.duration
@@ -40,7 +42,7 @@ export default function DocRootWrapper(props) {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [getPlayerDom]);
+  }, [videoRef]);
 
   useEffect(() => {
     console.log({ autoRead }, timeLines.length, video?.duration);
@@ -61,7 +63,7 @@ export default function DocRootWrapper(props) {
     }
 
     video.addEventListener('timeupdate', handleTimeUpdate);
-  }, [getPlayerDom, timeLines, autoRead]);
+  }, [videoRef, timeLines, autoRead]);
 
   const handleFullscreen = () => {
     if (!document.fullscreenElement) {
