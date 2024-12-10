@@ -79,7 +79,7 @@ export default function Playlist() {
                 </details>
             </div>
             <div className={styles.footer}>
-                <img src="https://box.hdcxb.net/d/%E5%85%B6%E4%BB%96%E8%B5%84%E6%96%99/p/bajixiang.png" alt="供八吉祥" />
+                <img src="https://box.hdcxb.net/d/%E5%85%B6%E4%BB%96%E8%B5%84%E6%96%99/p/bajixiang.jpg" alt="供八吉祥" />
             </div>
         </>
     )

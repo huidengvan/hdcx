@@ -13,11 +13,6 @@
 
 }
 
-.videoBox>img {
-    min-height: 350px;
-    align-self: center;
-}
-
 .videoBox {
     padding-top: 10px;
     width: 100%;
@@ -28,13 +23,13 @@
 .video {
     max-width: 100%;
     min-width: 50%;
-    max-height: 640px
+    max-height: 640px;
 }
 
 .audio {
-    height: 4rem;
-    max-width: 50vw;
-    align-self: center;
+    background: url('https://hdcx.s3.ap-northeast-1.wasabisys.com/hdv/p/上师.jpg') no-repeat center center / contain;
+    width: 100%;
+    min-height: 500px;
 }
 
 .item:last-child {

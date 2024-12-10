@@ -189,3 +189,7 @@ export const fetchText = async (suburl) => {
         console.error(e);
     }
 };
+
+export const isShortKesong = (lessonNo) => (['31', '32'].includes(lessonNo) || parseInt(lessonNo) >= 47)
+
+export const getLessonNo = (pathSegment) => pathSegment.match(/广解(\d+)/)[1] 

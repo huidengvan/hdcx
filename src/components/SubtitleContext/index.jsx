@@ -5,6 +5,7 @@ import useLocalStorageState from 'use-local-storage-state'
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import { parseTime, parseSubtitles, fetchText, getRxlSection, copyText } from '@site/src/utils'
 import { useVideo } from './VideoContext';
+import { isShortKesong } from '../../utils';
 
 const VideoPlayer = ({ src, current, setCurrent }) => {
     const baseUrl = location.hash.includes('http') ? '' : 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/慧灯禅修课/';
@@ -16,8 +17,11 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
     let endTime = parseTime(src?.split(',')[1])
     let matchRxl = videoSrc?.match(/入行论广解(\d+)课/);
     let matchRxlQa = /入行论广解\d+-\d+课问答/.test(src)
-    let keqianTime = 90;
-    let kehouTime = 140;
+    let shortKesong = isShortKesong(src?.slice(src?.lastIndexOf('/') + 1))
+    let keqianTime = shortKesong ? 90 : 17;
+    let kehouTime = shortKesong ? 10 : 140;
+    const isMp4 = /\.(mp4|webm)/.test(videoSrc)
+
     const [playInfo, setPlayInfo] = useLocalStorageState('playInfo', { defaultValue: { paused: true, showTimeLine: false, subAlignCenter: true, currentTime: 0, title: '', current: 0 } })
     const history = useHistory();
 
@@ -26,20 +30,17 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
         if (videoRef.current) {
             // 清除栅格布局, 使宽度为100%
             document.querySelector('article')?.parentElement.removeAttribute('class')
-            let isMp4 = /\.(mp4|webm)/.test(videoSrc)
             let matchJx = /\/v\/[45]jx/.test(videoSrc)
             if (matchJx) {
                 videoRef.current.pause()
             }
 
-            if (isMp4) {
-                videoRef.current.className = styles.video
+            if (!matchRxl) {
                 if (current && !videoSrc.includes("恒常念诵") && !document.fullscreenElement && videoRef.current?.requestFullscreen) {
                     videoRef.current?.requestFullscreen()
                 }
             } else {
                 document.fullscreenElement && document.exitFullscreen()
-                videoRef.current.className = styles.audio
             }
         }
 
@@ -49,7 +50,8 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             title: src?.slice(src?.lastIndexOf('/') + 1)
         }))
 
-        setSubtitles([])
+        // 切换src后清空字幕
+        return setSubtitles([])
     }, [src, videoSrc]);
 
     useEffect(() => {
@@ -66,9 +68,9 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             const subIndex = subtitles?.findIndex(subtitle => currentTime >= parseTime(subtitle?.startTime) && currentTime <= parseTime(subtitle?.endTime));
             // 当播放时间超过 endTime 时，切换到下一个视频
             if (endTime && currentTime >= endTime) {
+                video?.removeEventListener('timeupdate', handleTimeUpdate);
                 console.log('play next video', { currentTime, endTime })
                 setCurrent(prev => prev + 1)
-                video?.removeEventListener('timeupdate', handleTimeUpdate);
             } else if (matchRxl && currentTime > keqianTime && currentTime < keqianTime + 1) {
                 // 当播放是入行论辅导时 typeof window.orientation === 'undefined' && 不是移动端时
                 console.log(keqianTime, '课诵念完，前往阅读页');
@@ -147,7 +149,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
         }
         // console.log({ videoDuration });
 
-        if (matchRxl || matchRxlQa) {
+        if (keqianTime > 20 && (matchRxl || matchRxlQa)) {
             let suburl = `https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/入行论辅导字幕（课诵部分）.srt`
             handleSubtitleFetch(suburl, videoDuration)
         } else if (decodeURI(location.hash).includes("慧灯禅修课")) {
@@ -165,7 +167,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
 
     const mediaProps = {
         ref: videoRef,
-        className: styles.video,
+        className: isMp4 ? styles.video : styles.audio,
         src: videoSrc,
         controls: true,
         onLoadedMetadata: handleLoadedMetadata,
@@ -178,17 +180,13 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
     return (
         <div ref={wraperRef} className={styles['subtitle-container']}>
             <div className={styles.videoBox}>
-                {/\.(mp4|webm)/.test(videoSrc) ?
+                {
                     <video
                         {...mediaProps}
                         poster={/\/v\/[45]jx/.test(videoSrc) ?
                             'https://box.hdcxb.net/d/其他资料/f/up/untitled.png' : ''}
                     >
-                    </video> :
-                    <>
-                        <img src='https://hdcx.s3.ap-northeast-1.wasabisys.com/hdv/p/上师.jpg' alt='上师知' width={'450'} />
-                        <audio {...mediaProps} />
-                    </>
+                    </video>
                 }
             </div>
             {subtitles?.length > 0 &&
