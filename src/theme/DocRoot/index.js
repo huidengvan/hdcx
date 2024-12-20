@@ -21,7 +21,7 @@ export default function DocRootWrapper(props) {
   useEffect(() => {
     const duration = video?.duration
 
-    articleRef = document.querySelector('article').parentElement.parentElement
+    articleRef = document.querySelector('article')?.parentElement?.parentElement
     docRoot = document.querySelector('[class*=docRoot]')
 
     const bgColorIndex = localStorage.getItem('bgColorIndex');
