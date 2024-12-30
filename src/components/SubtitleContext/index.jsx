@@ -143,7 +143,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
     }
 
     const handleLoadedMetadata = (event) => {
-        const videoDuration = event.target.duration;
+        const { duration: videoDuration } = event?.target;
         if (videoSrc === 'blank') {
             videoRef?.current.pause
         }
