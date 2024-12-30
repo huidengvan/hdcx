@@ -139,7 +139,8 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
         let subText = await fetchText(suburl)
         let subtitlesArray = parseSubtitles(subText, duration, src, keqianTime)
         setSubtitles(subtitlesArray);
-        wraperRef.current?.parentElement.style.flexDirection = 'column'
+        const subtitleWrapper = wraperRef.current?.parentElement
+        if (subtitleWrapper) subtitleWrapper.style.flexDirection = 'column'
     }
 
     const handleLoadedMetadata = (event) => {
@@ -156,7 +157,8 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             let suburl = videoSrc?.replace('mp4', 'srt')
             handleSubtitleFetch(suburl, videoDuration)
         } else if (window.screen.orientation.type !== "portrait-primary") {
-            wraperRef.current?.parentElement.style.flexDirection = 'row'
+            const subtitleWrapper = wraperRef.current?.parentElement
+            if (subtitleWrapper) subtitleWrapper.style.flexDirection = 'row'
         }
 
         // console.log({ videoDuration, endTime }, '清除endTime');
