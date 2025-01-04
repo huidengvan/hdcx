@@ -1,12 +1,49 @@
+.root {
+    display: flex;
+}
+
+@media screen and (orientation:portrait) {
+    .root {
+        flex-direction: column;
+    }
+}
+
+.details {
+    justify-content: center;
+    align-self: center;
+    min-width: 35%;
+    padding: 1rem;
+    margin: .5rem;
+}
+
 .playlist {
     margin: 0 .5rem;
 }
 
 .active {
-    color: burlywood;
+    color: #2e8555;
 }
 
 .item:hover {
     cursor: pointer;
-    color: brown;
+    color: #3cad6e
+}
+
+.footer>img {
+    object-fit: scale-down;
+    max-height: 70px;
+}
+
+.footer {
+    padding-top: 2rem;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+}
+
+@media screen and (orientation:portrait) {
+    .footer {
+        width: 100%;
+        padding: 1rem;
+    }
 }

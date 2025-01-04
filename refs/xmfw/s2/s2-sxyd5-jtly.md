@@ -12,10 +12,6 @@ import TOCInline from '@theme/TOCInline';
 <TOCInline toc={toc} maxHeadingLevel='6' />
 </details>
 
-import Mypara from '@site/src/components/myp';
-
-<Mypara />
-
 ---
 
 ## 法轨解脱利益01

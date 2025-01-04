@@ -16,9 +16,8 @@ tags:
 
 
 
-import ReactPlayer from 'react-player'
 
-<ReactPlayer id='hdvplayer' light='/img/lamp-hope.png' controls url='https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%E6%85%A7%E7%81%AF%E7%A6%85%E4%BF%AE%E8%AF%BE/%E6%85%A7%E7%81%AF%E7%A6%85%E4%BF%AE%E8%AF%BE%E7%AC%AC%E4%B8%89%E5%86%8C/%E4%BD%9B%E8%AF%B4%E7%A8%BB%E7%A7%86%E7%BB%8F/%E4%BB%8E%E3%80%8A%E4%BD%9B%E8%AF%B4%E7%A8%BB%E7%A7%86%E7%BB%8F%E3%80%8B%e8%b0%88%e4%bd%9b%e6%95%99%e4%ba%ba%e7%94%9f%e8%a7%82%e5%92%8c%e4%b8%96%e7%95%8c%e8%a7%821.mp4' />
+<video poster='/img/lamp-hope.png' controls url='https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/%E6%85%A7%E7%81%AF%E7%A6%85%E4%BF%AE%E8%AF%BE/%E6%85%A7%E7%81%AF%E7%A6%85%E4%BF%AE%E8%AF%BE%E7%AC%AC%E4%B8%89%E5%86%8C/%E4%BD%9B%E8%AF%B4%E7%A8%BB%E7%A7%86%E7%BB%8F/%E4%BB%8E%E3%80%8A%E4%BD%9B%E8%AF%B4%E7%A8%BB%E7%A7%86%E7%BB%8F%E3%80%8B%e8%b0%88%e4%bd%9b%e6%95%99%e4%ba%ba%e7%94%9f%e8%a7%82%e5%92%8c%e4%b8%96%e7%95%8c%e8%a7%821.mp4' />
 
 
 

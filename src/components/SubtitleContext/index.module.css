@@ -1,38 +1,59 @@
 .subtitle-container {
     display: flex;
     flex-direction: row;
-    margin-bottom: 1rem;
     justify-content: space-around;
+    min-width: 50%;
 }
 
 .item:first-child {
     flex: 3;
     display: inline-flex;
     justify-content: center;
+    max-width: 55px;
+
 }
 
-.item>video {
+.videoBox {
+    padding-top: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.video {
     max-width: 100%;
+    min-width: 50%;
+    max-height: 640px;
+}
+
+.audio {
+    background: url('https://hdcx.s3.ap-northeast-1.wasabisys.com/hdv/p/上师.jpg') no-repeat center center / contain;
+    width: 100%;
+    min-height: 500px;
 }
 
 .item:last-child {
     flex: 2;
-    margin-left: 1rem;
-    max-width: 40%;
+    padding-left: 1rem;
+    min-width: 45%;
 }
 
 .item>ul {
     padding: .75rem;
     width: fit-content;
     max-width: 100%;
-    max-height: 80vh;
+    max-height: 85vh;
     overflow-y: scroll;
-    border: 1px solid #ccc;
+    /* background-color: #FFF2E2; */
+    margin: 0 !important;
+    font-size: 22px;
 }
 
 .item>ul>li {
     cursor: pointer;
     list-style: none;
+    max-width: fit-content;
+    display: flex;
 }
 
 .item>ul>li>span {
@@ -40,9 +61,19 @@
     max-width: 100%;
 }
 
+.item>ul>li>p {
+    /* 保留换行符并自动换行 */
+    white-space: pre-wrap;
+}
+
 .current-line {
-    font-size: 1.15rem;
-    color: #4299e1;
+    font-size: 26px;
+    color: #2e8555
+}
+
+::selection {
+    background-color: yellow;
+    /* 高亮色 */
 }
 
 .timeline {
@@ -54,26 +85,33 @@
 
 .subtitle-box {
     position: relative;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: -2rem;
 }
 
 .subtitle-switch {
     display: flex;
     position: absolute;
-    bottom: -7px;
-    left: 1px;
+    bottom: -24px;
+    left: 40px;
     font-size: 12px;
+    align-items: flex-end;
 }
 
 .show-copied::after {
     position: absolute;
     width: max-content;
     left: 6rem;
-    margin-left: .2rem;
+    top: 1.5rem;
+    padding-left: .2rem;
     content: '播放位置已复制';
     font-size: 11px;
     border-width: 1px;
     border-style: solid;
-    border-color: #ccc;
+    border-color: #359962;
     padding: 3px 6px;
     background-color: #3b75f4;
     border-radius: 5px;
@@ -88,7 +126,6 @@
 
     .item:last-child {
         margin-left: 0;
-        margin-bottom: 1rem;
         min-width: 100%;
     }
 
@@ -99,4 +136,14 @@
     .subtitle-container {
         flex-direction: column;
     }
+
+    .audio {
+        height: 3rem;
+        max-width: 95vw;
+    }
+}
+
+button {
+    background-color: transparent;
+    border: none;
 }

@@ -15,6 +15,7 @@
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-leading: .5rem;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -29,6 +30,13 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
-.markdown>p>a{
-  user-select: none
+.theme-doc-markdown>p {
+  line-height: 1.5;
+  padding-left: 4px;
+}
+
+.theme-doc-markdown>p>a {
+  font-size: 80%;
+  padding-right: 2px;
+  user-select: none;
 }

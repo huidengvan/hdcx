@@ -11,10 +11,6 @@ import TOCInline from '@theme/TOCInline';
 
 <TOCInline toc={toc} maxHeadingLevel='6' />
 
-import Mypara from '@site/src/components/myp';
-
-<Mypara />
-
 ---
 
 大圆满心性休息颂（显宗部分）
@@ -1924,7 +1920,7 @@ import Mypara from '@site/src/components/myp';
 
 欲度众后自寂灭。依次三十三大劫，
 
-七劫三劫得解脱，即是根基之次第。
+七劫三劫得解脱，即是根机之次第。
 
 诸佛子众学一切，主要学六波罗蜜。
 
