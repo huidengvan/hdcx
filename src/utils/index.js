@@ -15,7 +15,8 @@ export const locateParagraph = (currentPara) => {
     if (/^\d+$/.test(currentPara)) { currentPara = `p${currentPara}` }
     const targetNode = getTargetNode(currentPara);
     if (targetNode) {
-        targetNode.scrollIntoView({ block: 'center' });
+        const scrollBlock = sessionStorage.getItem('scrollBlock');
+        targetNode.scrollIntoView({ block: scrollBlock || 'center' });
         targetNode.style.borderLeft = '.5px solid #2e8555'
     }
 };

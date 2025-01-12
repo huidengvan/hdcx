@@ -17,7 +17,8 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
     let endTime = parseTime(src?.split(',')[1])
     let matchRxl = videoSrc?.match(/入行论广解(\d+)课/);
     let matchRxlQa = /入行论广解\d+-\d+课问答/.test(src)
-    let shortKesong = isShortKesong(src?.slice(src?.lastIndexOf('/') + 1))
+    let shortKesong = isShortKesong(src?.slice(src?.lastIndexOf('/') + 6))
+    
     let keqianTime = shortKesong ? 17 : 90;
     let kehouTime = shortKesong ? 10 : 140;
     const isMp4 = /\.(mp4|webm)/.test(videoSrc)

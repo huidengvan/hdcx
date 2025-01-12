@@ -9,11 +9,10 @@ export default function DocRootWrapper(props) {
   const location = useLocation();
 
   let docRoot, articleRef, endPara;
-  const [playInfo, _] = useLocalStorageState('playInfo')
+  const [playInfo, setPlayInfo] = useLocalStorageState('playInfo')
   const [timeLines, setTimeLines] = useState([])
   const articleTitle = decodeURI(location.hash?.slice(1))
   const [currentPara, setCurrentPara] = useLocalStorageState('currentPara')
-  const [autoRead, setAutoRead] = useState(false)
   const matchSameLesson = isSameLesson(articleTitle, playInfo?.title)
   const videoRef = useVideo();
   const video = videoRef.current
@@ -45,25 +44,33 @@ export default function DocRootWrapper(props) {
   }, [videoRef]);
 
   useEffect(() => {
-    console.log({ autoRead }, timeLines.length, video?.duration);
-    if (!video || !autoRead || timeLines.length === 0) return;
+    console.log('autoRead:', playInfo.autoRead, timeLines.length, video?.duration);
+    if (!video || timeLines.length === 0) return;
 
     let currentLine = timeLines[0];
     const handleTimeUpdate = ({ target: { currentTime } }) => {
+      // 只在 autoRead 为 true 时执行
+      if (!playInfo.autoRead) return;
+
       if (currentTime >= currentLine?.end) {
-        currentLine = timeLines.find(x => currentTime >= x.start && currentTime < x.end)
+        currentLine = timeLines.find(x => currentTime >= x.start && currentTime < x.end);
 
         if (currentLine) {
-          locateParagraph(currentLine.para)
-          setCurrentPara(currentLine.para)
+          locateParagraph(currentLine.para);
+          setCurrentPara(currentLine.para);
         }
         console.log({ currentLine });
         console.log(`update`, { currentTime }, 'currentPara:', currentLine?.para);
       }
-    }
+    };
 
     video.addEventListener('timeupdate', handleTimeUpdate);
-  }, [videoRef, timeLines, autoRead]);
+
+    // 清理事件监听器
+    return () => {
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+    };
+  }, [videoRef, timeLines, playInfo.autoRead]);
 
   const handleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -129,18 +136,11 @@ export default function DocRootWrapper(props) {
 
     setTimeLines(lines)
     console.log({ totalWordCount, duration }, '段落数量：', lines.length, '语速：', speed);
-    setAutoRead(true)
     handleWidescreen()
   };
 
   const toggleAutoread = () => {
-    setAutoRead(prev => {
-      if (prev === true) {
-        alert("自动阅读停止")
-      }
-
-      return !prev
-    })
+    setPlayInfo({ ...playInfo, autoRead: !playInfo?.autoRead })
   }
 
   const keyActions = {
@@ -155,10 +155,15 @@ export default function DocRootWrapper(props) {
 
   const handleKeyDown = (event) => {
     const key = event.key.toLowerCase();
+    console.log({ key });
 
     if (event.altKey && keyActions[key]) {
       event.preventDefault();
       keyActions[key]();
+    } else if (event.key === 'ArrowUp') {
+      sessionStorage.setItem('scrollBlock', 'end');
+    } else if (event.key === 'ArrowDown') {
+      sessionStorage.setItem('scrollBlock', 'start');
     } else if (event.key === 'ArrowLeft') {
       event.preventDefault()
       window.scrollBy(0, 100 - window.innerHeight);
@@ -168,8 +173,25 @@ export default function DocRootWrapper(props) {
     }
   };
 
+
   return (
     <>
+      {video?.duration &&
+        <label style={{
+          position: 'fixed',
+          bottom: '0',
+          right: '0',
+          padding: '5px 10px',
+          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          zIndex: 999,
+          borderRadius: '5px',
+          color: 'b0b0d0'
+        }}><input type="checkbox"
+          checked={playInfo?.autoRead}
+          onChange={toggleAutoread}
+          />
+          自动阅读
+        </label>}
       <DocRoot {...props} />
     </>
   );
