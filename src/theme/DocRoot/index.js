@@ -44,13 +44,13 @@ export default function DocRootWrapper(props) {
   }, [videoRef]);
 
   useEffect(() => {
-    console.log('autoRead:', playInfo.autoRead, timeLines.length, video?.duration);
+    console.log('autoRead:', playInfo?.autoRead, timeLines.length, video?.duration);
     if (!video || timeLines.length === 0) return;
 
     let currentLine = timeLines[0];
     const handleTimeUpdate = ({ target: { currentTime } }) => {
       // 只在 autoRead 为 true 时执行
-      if (!playInfo.autoRead) return;
+      if (!playInfo?.autoRead) return;
 
       if (currentTime >= currentLine?.end) {
         currentLine = timeLines.find(x => currentTime >= x.start && currentTime < x.end);
@@ -70,7 +70,7 @@ export default function DocRootWrapper(props) {
     return () => {
       video.removeEventListener('timeupdate', handleTimeUpdate);
     };
-  }, [videoRef, timeLines, playInfo.autoRead]);
+  }, [videoRef, timeLines, playInfo?.autoRead]);
 
   const handleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -155,7 +155,6 @@ export default function DocRootWrapper(props) {
 
   const handleKeyDown = (event) => {
     const key = event.key.toLowerCase();
-    console.log({ key });
 
     if (event.altKey && keyActions[key]) {
       event.preventDefault();
