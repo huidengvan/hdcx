@@ -5,9 +5,9 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
-    "build": "export NODE_OPTIONS=--max-old-space-size=16000 && docusaurus build",
-    "dev": "set NODE_OPTIONS=--max-old-space-size=16000 && docusaurus start --host 0.0.0.0 --no-open",
-    "build:win": "set NODE_OPTIONS=--max-old-space-size=16000 && docusaurus build --config dev.config.js",
+    "build": "export NODE_OPTIONS=--max-old-space-size=20000 && docusaurus build",
+    "dev": "set NODE_OPTIONS=--max-old-space-size=20000 && docusaurus start --host 0.0.0.0 --no-open",
+    "build:win": "set NODE_OPTIONS=--max-old-space-size=20000 && docusaurus build --config dev.config.js",
     "check": "npx docusaurus-mdx-checker",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
