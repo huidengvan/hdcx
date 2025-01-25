@@ -99,18 +99,6 @@ export function isSameLesson(lesson, title) {
     return themeCheck && parseInt(lessonNumber1) === parseInt(lessonNumber2);
 }
 
-export const copyText = async (text) => {
-    const msgEl = document.querySelector(`.${styles['subtitle-switch']}`);
-    try {
-        await navigator.clipboard.writeText(text);
-        msgEl?.classList.add(`${styles['show-copied']}`);
-        setTimeout(() => msgEl?.classList.remove(`${styles['show-copied']}`), 1000)
-        return true;
-    } catch (err) {
-        return false;
-    }
-}
-
 export const parseTime = (timeString) => {
     if (!timeString) return timeString
 

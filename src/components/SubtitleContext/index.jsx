@@ -3,13 +3,14 @@ import styles from './index.module.css';
 import { useHistory } from '@docusaurus/router';
 import useLocalStorageState from 'use-local-storage-state'
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import { parseTime, parseSubtitles, fetchText, getRxlSection, copyText } from '@site/src/utils'
+import { parseTime, parseSubtitles, fetchText, getRxlSection } from '@site/src/utils'
 import { useVideo } from './VideoContext';
 import { isShortKesong } from '../../utils';
 
 const VideoPlayer = ({ src, current, setCurrent }) => {
     const baseUrl = location.hash.includes('http') ? '' : 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/慧灯禅修课/';
-    const [videoSrc, setVideoSrc] = useState(src === undefined ? `${baseUrl}${location.hash.slice(1)}` : src);
+    const [videoSrc, setVideoSrc] = useState(src|| `${baseUrl}${location.hash.slice(1)}`);
+    
     const [subtitles, setSubtitles] = useState([]);
     const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(-1);
     const videoRef = useVideo();
@@ -18,7 +19,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
     let matchRxl = videoSrc?.match(/入行论广解(\d+)课/);
     let matchRxlQa = /入行论广解\d+-\d+课问答/.test(src)
     let shortKesong = isShortKesong(src?.slice(src?.lastIndexOf('/') + 6))
-    
+
     let keqianTime = shortKesong ? 17 : 90;
     let kehouTime = shortKesong ? 10 : 140;
     const isMp4 = /\.(mp4|webm)/.test(videoSrc)
@@ -37,7 +38,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             }
 
             if (!matchRxl) {
-                if (current && !videoSrc.includes("恒常念诵") && !document.fullscreenElement && videoRef.current?.requestFullscreen) {
+                if (current && !document.fullscreenElement && videoRef.current?.requestFullscreen) {
                     videoRef.current?.requestFullscreen()
                 }
             } else {
@@ -81,7 +82,8 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                 history.push('/playlist')
             } else if (subIndex !== -1 && subIndex != currentSubtitleIndex) {
                 setCurrentSubtitleIndex(subIndex);
-                playInfo.subAlignCenter && subtitles.length - 5 > subIndex && scrollSubtitleToView(subIndex);
+
+                playInfo.subAlignCenter && subtitles && subtitles.length - subIndex > 5 && scrollSubtitleToView(subIndex);
             }
         };
 
@@ -240,3 +242,15 @@ export default function SubtitleContext(props) {
         </BrowserOnly>
     );
 };
+
+async function copyText(text) {
+    const msgEl = document.querySelector(`.${styles['subtitle-switch']}`);
+    try {
+        await navigator.clipboard.writeText(text);
+        msgEl?.classList.add(`${styles['show-copied']}`);
+        setTimeout(() => msgEl?.classList.remove(`${styles['show-copied']}`), 1000)
+        return true;
+    } catch (err) {
+        return false;
+    }
+}
