@@ -15,6 +15,8 @@ import TOCInline from '@theme/TOCInline';
 
 ---
 
+### [普贤上师言教（01）·听闻轨理讲记.pdf](./assets/普贤上师言教（01）·听闻轨理讲记.pdf) （包含听闻轨理之应断和应取行为！！！）
+
 | 课时 | 文档 | 音频 | 视频 |
 | --- | --- | --- | --- |
 | 1 |  [前行引导文-听闻轨理01.docx](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/xmfw/s3/01/%e5%89%8d%e8%a1%8c%e5%bc%95%e5%af%bc%e6%96%87-%e5%90%ac%e9%97%bb%e8%bd%a8%e7%90%8601.docx) |  [前行引导文-听闻轨理01.mp3](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/xmfw/s3/01/%e5%89%8d%e8%a1%8c%e5%bc%95%e5%af%bc%e6%96%87-%e5%90%ac%e9%97%bb%e8%bd%a8%e7%90%8601.mp3) |  [前行引导文-听闻轨理01.mp4](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/xmfw/s3/01/%e5%89%8d%e8%a1%8c%e5%bc%95%e5%af%bc%e6%96%87-%e5%90%ac%e9%97%bb%e8%bd%a8%e7%90%8601.mp4) |
