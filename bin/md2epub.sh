@@ -4,7 +4,7 @@ BASEDIR=$(dirname "$0")
 
 for d in `ls *.md`; do
  echo $d
- pandoc $(PWD)/$d --toc --number-section --lua-filter $BASEDIR/count-para.lua  -o $(PWD)/$d.epub
+ pandoc $(PWD)/$d --toc --toc-depth=6 --number-section --lua-filter $BASEDIR/count-para.lua  -o $(PWD)/$d.epub
 done
 
 
