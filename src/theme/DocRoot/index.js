@@ -174,7 +174,7 @@ export default function DocRootWrapper(props) {
 
   return (
     <>
-      {!video?.paused &&
+      {video && !video?.paused &&
         <label style={{
           position: 'fixed',
           bottom: '0',
