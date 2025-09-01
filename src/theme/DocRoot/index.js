@@ -156,7 +156,7 @@ export default function DocRootWrapper(props) {
   const handleKeyDown = (event) => {
     const key = event.key.toLowerCase();
 
-    if (event.altKey && keyActions[key]) {
+    if ((event.altKey || event.metaKey) && keyActions[key]) {
       event.preventDefault();
       keyActions[key]();
     } else if (event.key === 'ArrowUp') {

@@ -104,7 +104,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             setPlayInfo({ ...playInfo, playbackRate: rate })
         }
         const handleKeyDown = (event) => {
-            if (!event.altKey)
+            if (!event.altKey || event.metaKey)
                 return;
 
             if (event.key?.toLowerCase() === 'z' && videoRef.current.playbackRate > 0.25) {
