@@ -44,7 +44,7 @@ import TOCInline from '@theme/TOCInline';
 
 - [量理宝藏论广释01.pdf（01~21课）](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/PDF法本/量理宝藏论广释01.pdf)
 - [量理宝藏论广释02.pdf（22~42课）](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/PDF法本/量理宝藏论广释02.pdf)
-- [量理宝藏论广释03.pdf（43~84课）](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/PDF法本/量理宝藏论广释03.pdf)
+- [量理宝藏论广释03.pdf（43~63课）](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/PDF法本/量理宝藏论广释03.pdf)
 - [量理宝藏论广释04.pdf（63~84课）](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/PDF法本/量理宝藏论广释04.pdf)
 - [《量理宝藏论》-全论科判.pdf](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/037-量理宝藏论/科判/《量理宝藏论》-全论科判.pdf)
 - [量理宝藏论/辅导-智诚堪布第1次讲解于2006至07年](https://box.hdcxb.net/禅修班/037-量理宝藏论/辅导-智诚堪布第1次讲解于2006至07年)
