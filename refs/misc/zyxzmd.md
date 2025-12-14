@@ -68,7 +68,8 @@ import TOCInline from '@theme/TOCInline';
 
 ## 忠言心之明点忏悔要义颂 1
 
-[视频](https://youtu.be/Bx5dBHvknYU)
+- [视频(box.hdcxb.net)](https://box.hdcxb.net/%E7%A6%85%E4%BF%AE%E7%8F%AD/2024%E9%87%91%E8%90%A8%E6%B3%95%E4%BC%9A/08%E5%BF%A0%E8%A8%80%E5%BF%83%E4%B9%8B%E6%98%8E%E7%82%B9%E2%80%A2%E5%BF%8F%E6%82%94%E8%A6%81%E4%B9%89%E9%A2%82/%E8%A7%86%E9%A2%91)
+- [视频(Youtube)](https://youtu.be/Bx5dBHvknYU)
 
 忠言心之明点忏悔要义颂讲记
 
@@ -196,7 +197,8 @@ import TOCInline from '@theme/TOCInline';
 
 ## 忠言心之明点忏悔要义颂 2
 
-[视频](https://youtu.be/hsa7htMtaDE)
+- [视频(box.hdcxb.net)](https://box.hdcxb.net/%E7%A6%85%E4%BF%AE%E7%8F%AD/2024%E9%87%91%E8%90%A8%E6%B3%95%E4%BC%9A/08%E5%BF%A0%E8%A8%80%E5%BF%83%E4%B9%8B%E6%98%8E%E7%82%B9%E2%80%A2%E5%BF%8F%E6%82%94%E8%A6%81%E4%B9%89%E9%A2%82/%E8%A7%86%E9%A2%91)
+- [视频(Youtube)](https://youtu.be/hsa7htMtaDE)
 
 上一次我们讲到“于何处还净”这一科的内容：
 
@@ -268,7 +270,8 @@ import TOCInline from '@theme/TOCInline';
 
 ## 忠言心之明点忏悔要义颂 3
 
-[视频](https://youtu.be/11BMCsyJaiE)
+- [视频(box.hdcxb.net)](https://box.hdcxb.net/%E7%A6%85%E4%BF%AE%E7%8F%AD/2024%E9%87%91%E8%90%A8%E6%B3%95%E4%BC%9A/08%E5%BF%A0%E8%A8%80%E5%BF%83%E4%B9%8B%E6%98%8E%E7%82%B9%E2%80%A2%E5%BF%8F%E6%82%94%E8%A6%81%E4%B9%89%E9%A2%82/%E8%A7%86%E9%A2%91)
+- [视频(Youtube)](https://youtu.be/11BMCsyJaiE)
 
 （二）业是妄心造作，故是客尘
 
@@ -342,7 +345,8 @@ import TOCInline from '@theme/TOCInline';
 
 ## 忠言心之明点忏悔要义颂 4
 
-[视频](https://youtu.be/cRruhUzbg-0)
+- [视频(box.hdcxb.net)](https://box.hdcxb.net/%E7%A6%85%E4%BF%AE%E7%8F%AD/2024%E9%87%91%E8%90%A8%E6%B3%95%E4%BC%9A/08%E5%BF%A0%E8%A8%80%E5%BF%83%E4%B9%8B%E6%98%8E%E7%82%B9%E2%80%A2%E5%BF%8F%E6%82%94%E8%A6%81%E4%B9%89%E9%A2%82/%E8%A7%86%E9%A2%91)
+- [视频(Youtube)](https://youtu.be/cRruhUzbg-0)
 
 这节课再次讲讲所净业障的体性。还要进一步深入认识“本无”和“本有”的涵义。
 
@@ -461,7 +465,8 @@ import TOCInline from '@theme/TOCInline';
 
 ## 忠言心之明点忏悔要义颂 5
 
-[视频](https://youtu.be/-mTHlFY0KZM)
+- [视频(box.hdcxb.net)](https://box.hdcxb.net/%E7%A6%85%E4%BF%AE%E7%8F%AD/2024%E9%87%91%E8%90%A8%E6%B3%95%E4%BC%9A/08%E5%BF%A0%E8%A8%80%E5%BF%83%E4%B9%8B%E6%98%8E%E7%82%B9%E2%80%A2%E5%BF%8F%E6%82%94%E8%A6%81%E4%B9%89%E9%A2%82/%E8%A7%86%E9%A2%91)
+- [视频(Youtube)](https://youtu.be/-mTHlFY0KZM)
 
 三、未净之过患
 
@@ -588,7 +593,8 @@ import TOCInline from '@theme/TOCInline';
 
 ## 忠言心之明点忏悔要义颂 6
 
-[视频](https://youtu.be/I1aDgqrMqgg)
+- [视频(box.hdcxb.net)](https://box.hdcxb.net/%E7%A6%85%E4%BF%AE%E7%8F%AD/2024%E9%87%91%E8%90%A8%E6%B3%95%E4%BC%9A/08%E5%BF%A0%E8%A8%80%E5%BF%83%E4%B9%8B%E6%98%8E%E7%82%B9%E2%80%A2%E5%BF%8F%E6%82%94%E8%A6%81%E4%B9%89%E9%A2%82/%E8%A7%86%E9%A2%91)
+- [视频(Youtube)](https://youtu.be/I1aDgqrMqgg)
 
 四、能净之对治
 
@@ -795,7 +801,8 @@ import TOCInline from '@theme/TOCInline';
 
 ## 忠言心之明点忏悔要义颂【四力忏悔】
 
-[视频](https://youtu.be/H2dvgaYL4uE)
+- [视频(box.hdcxb.net)](https://box.hdcxb.net/%E7%A6%85%E4%BF%AE%E7%8F%AD/2024%E9%87%91%E8%90%A8%E6%B3%95%E4%BC%9A/08%E5%BF%A0%E8%A8%80%E5%BF%83%E4%B9%8B%E6%98%8E%E7%82%B9%E2%80%A2%E5%BF%8F%E6%82%94%E8%A6%81%E4%B9%89%E9%A2%82/%E8%A7%86%E9%A2%91)
+- [视频(Youtube)](https://youtu.be/H2dvgaYL4uE)
 
 今天是金刚萨埵法会第一天，我们正在讲法王上师《忠言心之明点》忏悔法义，为了帮助大家有质有量地念修，这堂课就“四力忏悔”作一个特别开示。
 
