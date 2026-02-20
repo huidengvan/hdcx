@@ -1,9 +1,9 @@
 ---
 sidebar_position: 6
-sidebar_label: 实修引导讲记一· 暇满难得
+sidebar_label: 实修引导念住·归依
 ---
 
-# 实修引导念住一·归依
+# 实修引导念住·归依
 
 晋美朗巴尊者  取藏 | 益西彭措堪布  译讲
 
@@ -165,7 +165,7 @@ import TOCInline from '@theme/TOCInline';
 
 5.正式观修时应如何观想归依境？对于归依境应生起怎样的信心？
 
-## 实修引导念住一·归依2
+## 实修引导念住一·归依02
 
 - [法本pdf](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/xmfw/s2/%E5%AE%9E%E4%BF%AE%E5%BC%95%E5%AF%BC%E4%B9%8B%E5%BF%B5%E4%BD%8F%E4%B8%80%E2%80%A2%E5%BD%92%E4%BE%9D02.pdf)
 - [讲解音频mp3](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/xmfw/s2/%E5%AE%9E%E4%BF%AE%E5%BC%95%E5%AF%BC%E4%B9%8B%E5%BF%B5%E4%BD%8F%E4%B8%80%E2%80%A2%E5%BD%92%E4%BE%9D02.mp3)
