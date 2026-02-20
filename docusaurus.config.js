@@ -110,19 +110,19 @@ const config = {
                 autoCollapseCategories: true,
             },
         },
-        algolia: {
-            // Algolia 提供的应用 ID
-            appId: 'YZCX64HE2F',
-            //  公开 API 密钥：提交它没有危险
-            apiKey: '9da5cd9155e50fff844a06f84e3ee642',
-            indexName: 'hdcx',
-            // 可选：见下文
-            contextualSearch: false,
-            // 可选: Algolia 搜索参数
-            searchParameters: {},
-            // 可选: 搜索页面的路径，默认启用(可用`false`禁用)
-            searchPagePath: 'search',
-        },
+        // algolia: {
+        //     // Algolia 提供的应用 ID
+        //     appId: 'YZCX64HE2F',
+        //     //  公开 API 密钥：提交它没有危险
+        //     apiKey: '9da5cd9155e50fff844a06f84e3ee642',
+        //     indexName: 'hdcx',
+        //     // 可选：见下文
+        //     contextualSearch: false,
+        //     // 可选: Algolia 搜索参数
+        //     searchParameters: {},
+        //     // 可选: 搜索页面的路径，默认启用(可用`false`禁用)
+        //     searchPagePath: 'search',
+        // },
         navbar: {
             title: '禅修班',
             logo: {
