@@ -19,7 +19,7 @@
   "dependencies": {
     "@docusaurus/core": "^3.7.0",
     "@docusaurus/preset-classic": "^3.7.0",
-    "@gera2ld/jsx-dom": "^2.2.2",
+    
     "@mdx-js/react": "^3.0.0",
     "clsx": "^1.2.1",
     "prism-react-renderer": "^2.1.0",
@@ -29,7 +29,8 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.7.0",
-    "esbuild-loader": "^4.2.2"
+    "@tsconfig/docusaurus": "^2.0.0"
+    
   },
   "browserslist": {
     "production": [

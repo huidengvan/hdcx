@@ -208,16 +208,16 @@ const config = {
             darkTheme: prismThemes.dracula,
         },
     },
-    webpack: {
-        jsLoader: (isServer) => ({
-            loader: require.resolve('esbuild-loader'),
-            options: {
-                loader: 'jsx',
-                format: isServer ? 'cjs' : undefined,
-                target: isServer ? 'node12' : 'es2017',
-            },
-        }),
-    },
+    // webpack: {
+    //     jsLoader: (isServer) => ({
+    //         loader: require.resolve('esbuild-loader'),
+    //         options: {
+    //             loader: 'jsx',
+    //             format: isServer ? 'cjs' : undefined,
+    //             target: isServer ? 'node12' : 'es2017',
+    //         },
+    //     }),
+    // },
 
 };
 
