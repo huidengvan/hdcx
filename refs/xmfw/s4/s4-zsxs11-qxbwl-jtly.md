@@ -3,7 +3,7 @@ sidebar_position: 11
 sidebar_label: 11-前行备忘录.解脱利益
 ---
 
-# 系列四.祖师心髓11-前行备忘录.解脱利益
+# 前行备忘录.解脱利益
 
 
 import TOCInline from '@theme/TOCInline';
