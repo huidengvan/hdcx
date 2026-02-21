@@ -1,6 +1,6 @@
 ---
 sidebar_position: 3
-sidebar_label: 前行引导文三· 寿命无常
+sidebar_label: 前行引导文三·寿命无常
 ---
 
 # 系列三·大圆满龙钦宁体前行引导文.普贤上师言教讲记三-寿命无常

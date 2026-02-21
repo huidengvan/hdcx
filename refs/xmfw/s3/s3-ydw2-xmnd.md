@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-sidebar_label: 前行引导文二· 暇满难得
+sidebar_label: 前行引导文二·暇满难得
 ---
 
 # 系列三.大圆满龙钦宁体前行引导文.普贤上师言教讲记二-暇满难得

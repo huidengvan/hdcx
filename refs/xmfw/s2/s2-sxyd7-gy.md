@@ -1,6 +1,6 @@
 ---
 sidebar_position: 7
-sidebar_label: 实修引导念住·归依
+sidebar_label: 实修引导念住·归依(2025)
 ---
 
 # 实修引导念住·归依

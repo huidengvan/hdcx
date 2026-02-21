@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-sidebar_label: 前行引导文一· 听闻轨理
+sidebar_label: 前行引导文一·听闻轨理
 ---
 
 # 系列三.大圆满龙钦宁体前行引导文.普贤上师言教讲记一-听闻轨理

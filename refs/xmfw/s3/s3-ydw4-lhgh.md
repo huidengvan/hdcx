@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-sidebar_label: 前行引导文四· 轮回过患
+sidebar_label: 前行引导文四·轮回过患
 ---
 
 # 系列三.大圆满龙钦宁体前行引导文.普贤上师言教讲记四-轮回过患

@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-sidebar_label: 前行引导文六· 解脱利益
+sidebar_label: 前行引导文六·解脱利益(2024)
 ---
 
 # 系列三.大圆满龙钦宁体前行引导文.普贤上师言教讲记六-解脱利益

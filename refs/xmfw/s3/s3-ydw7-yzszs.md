@@ -1,6 +1,6 @@
 ---
 sidebar_position: 7
-sidebar_label: 前行引导文·依止善知识
+sidebar_label: 前行引导文·依止善知识(2024)
 ---
 
 # 前行引导文·依止善知识

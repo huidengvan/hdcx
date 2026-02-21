@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-sidebar_label: 实修引导·依止善知识
+sidebar_label: 实修引导·依止善知识(2024)
 ---
 
 # 实修引导·依止善知识
