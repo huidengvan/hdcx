@@ -11,3 +11,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - 适配 Docusaurus v3 配置规范（迁移 `onBrokenMarkdownLinks` 至 `markdown.hooks` 并添加 `onBrokenAnchors`）
 - 添加 `@docusaurus/types` 开发依赖，解决配置文件的 TypeScript 类型定义解析报错
+- 适配 pnpm 11 安全策略（添加 `pnpm-workspace.yaml` 与 `.npmrc`），解决 CI 环境下因 `core-js` 等构建脚本导致的安装报错
+
