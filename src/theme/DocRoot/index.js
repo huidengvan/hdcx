@@ -44,6 +44,24 @@ export default function DocRootWrapper(props) {
   }, [videoRef]);
 
   useEffect(() => {
+    const hash = decodeURI(location.hash?.slice(1));
+    if (hash && !matchSameLesson) {
+      locateParagraph(hash);
+    }
+  }, [location.hash, location.pathname, matchSameLesson]);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = decodeURI(window.location.hash?.slice(1));
+      if (hash && !matchSameLesson) {
+        locateParagraph(hash);
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [matchSameLesson]);
+
+  useEffect(() => {
     console.log('autoRead:', playInfo?.autoRead, timeLines.length, video?.duration);
     if (!video || timeLines.length === 0) return;
 
