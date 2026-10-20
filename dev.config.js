@@ -14,7 +14,12 @@ const config = {
     url: 'https://huidengchanxiu.net',
     baseUrl: '/',
     onBrokenLinks: 'ignore',
-    onBrokenMarkdownLinks: 'ignore',
+    onBrokenAnchors: 'ignore',
+    markdown: {
+        hooks: {
+            onBrokenMarkdownLinks: 'ignore',
+        },
+    },
     favicon: 'img/favicon.ico',
     organizationName: 'huidengvan', // Usually your GitHub org/user name.
     projectName: 'huidengchanxiu', // Usually your repo name.
