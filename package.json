@@ -7,7 +7,7 @@
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "dev": "cross-env NODE_OPTIONS=--max-old-space-size=8192 docusaurus start --host 0.0.0.0 --no-open",
-    "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 docusaurus build",
+    "build": "cross-env NODE_OPTIONS=--max-old-space-size=6144 docusaurus build",
     "check": "npx docusaurus-mdx-checker",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",

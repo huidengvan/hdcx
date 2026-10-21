@@ -220,3 +220,24 @@ details .table-of-contents__link--active {
 .header-search-link svg {
   display: block;
 }
+
+/* 移动端侧边抽屉菜单中隐藏冗余搜索图标（顶部右上角已常驻搜索图标） */
+.navbar-sidebar .header-search-link {
+  display: none !important;
+}
+
+/* ─── 消除视频/播放列表页在移动端出现的左右不对齐及外溢 ────────── */
+[class*='mdxPageWrapper'] {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+[class*='mdxPageWrapper'] > [class*='col'],
+[class*='mdxPageWrapper'] article {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  max-width: 100% !important;
+}
+

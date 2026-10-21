@@ -45,14 +45,9 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             setVideoSrc(src);
         }
         if (videoRef.current) {
-            document.querySelector('article')?.parentElement?.removeAttribute('class');
             const matchJx = /\/v\/[45]jx/.test(videoSrc);
             if (matchJx) {
                 videoRef.current.pause();
-            }
-
-            if (current && !document.fullscreenElement && videoRef.current?.requestFullscreen) {
-                videoRef.current?.requestFullscreen();
             }
         }
 
@@ -100,7 +95,19 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
 
     const scrollSubtitleToView = (index) => {
         const el = document.getElementById(`subtitle-${index}`);
-        el?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        const list = listRef.current;
+        if (!el || !list) return;
+
+        // 仅滚动字幕卡片内部容器，避免触发 iOS Safari 整页窗口抖动与滚动
+        const elTop = el.offsetTop;
+        const elHeight = el.offsetHeight;
+        const listHeight = list.clientHeight / 2;
+        const targetScrollTop = elTop - (listHeight / 3) + (elHeight / 3);
+
+        list.scrollTo({
+            top: Math.max(0, targetScrollTop),
+            behavior: 'smooth',
+        });
     };
 
     const handleSubtitleFetch = async (suburl, duration) => {
@@ -164,6 +171,9 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                                 className={styles.video}
                                 src={videoSrc}
                                 controls
+                                playsInline
+                                webkit-playsinline="true"
+                                x5-playsinline="true"
                                 onLoadedMetadata={handleLoadedMetadata}
                                 onEnded={handleVideoEnd}
                                 autoPlay={current !== 0}
