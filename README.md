@@ -62,11 +62,11 @@ npm run check
 
 ## 自定义组件说明
 
-- theme/DocRoot refs等文档的根组件，添加了背景切换、自动翻页等
-- theme/Navbar 导航栏，加入了后台播放的图标
+- theme/DocRoot refs等文档的根组件，添加了宽屏阅读等功能
 - theme/Root 主程序的根组件，加入了Playlist组件，以实现后台播放
 - components/Playlist 播放列表组件，route为 `/playlist`
 - components/SubtitleContext 滚动播放字幕组件，是Playlist的子组件，有单独的route `/video`(禅修课的视频用)
+- components/ReaderToolbar 阅读工具栏侧边浮动组件，支持主题切换、字号调整、段落号显隐
   
 ## 行号插件
 位于`plugins/para-anchor`，插件运行在编译阶段，需要在config中引用。  
@@ -78,11 +78,9 @@ npm run check
 
 - `⬅️（左键）` 翻到上一页
 - `➡️（右键）` 翻到下一页
-- `Alt + B` 切换背景色
 - `Alt + T` 宽屏阅读，放大字号
-- `Alt + ⬆️（上键）` 定位到上一段（仅自动阅读时生效）
-- `Alt + ⬇️（下键）` 定位到下一段（仅自动阅读时生效）
 - 双击阅读区域，进入全屏（手机可用）
+- 阅读工具栏（页面右侧）：主题切换、字号调整、段落号显隐、宽屏模式切换
 
 ### 播放列表编辑
 - 点击播放列表右侧的编辑（铅笔），进入编辑模式，再次点击应用

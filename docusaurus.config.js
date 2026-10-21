@@ -178,9 +178,11 @@ const config = {
                     label: '五加行',
                 },
                 {
-                    href: 'https://sou.hdcxb.net',
-                    label: '法语搜索',
+                    to: '/search',
                     position: 'right',
+                    className: 'header-search-link',
+                    'aria-label': '搜索',
+                    html: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
                 },
             ],
         },
@@ -213,17 +215,6 @@ const config = {
             darkTheme: prismThemes.dracula,
         },
     },
-    // webpack: {
-    //     jsLoader: (isServer) => ({
-    //         loader: require.resolve('esbuild-loader'),
-    //         options: {
-    //             loader: 'jsx',
-    //             format: isServer ? 'cjs' : undefined,
-    //             target: isServer ? 'node12' : 'es2017',
-    //         },
-    //     }),
-    // },
-
 };
 
 export default config;

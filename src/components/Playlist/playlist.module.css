@@ -1,49 +1,406 @@
-.root {
+/* ─── 播放列表现代化 UI 样式 ───────────────────────── */
+
+.container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 10px 20px 40px;
+    width: 100%;
     display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-@media screen and (orientation:portrait) {
-    .root {
-        flex-direction: column;
-    }
+/* 播放列表主卡片 */
+.playlistCard {
+    border-radius: 14px;
+    background: var(--ifm-card-background-color, #ffffff);
+    border: 1px solid rgba(125, 125, 125, 0.16);
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.details {
-    justify-content: center;
-    align-self: center;
-    min-width: 35%;
-    padding: 1rem;
-    margin: .5rem;
+[data-theme='dark'] .playlistCard {
+    background: rgba(26, 27, 38, 0.95);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
-.playlist {
-    margin: 0 .5rem;
+/* 卡片头部 */
+.cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 20px;
+    background: rgba(125, 125, 125, 0.04);
+    border-bottom: 1px solid rgba(125, 125, 125, 0.12);
 }
 
-.active {
+.headerLeft {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.headerTitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ifm-font-color-base, #1c1e21);
+    margin: 0;
+}
+
+.headerIcon {
+    width: 18px;
+    height: 18px;
     color: #2e8555;
 }
 
-.item:hover {
+[data-theme='dark'] .headerIcon {
+    color: #4ade80;
+}
+
+.badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: rgba(125, 125, 125, 0.1);
+    color: var(--ifm-font-color-base, #555);
+}
+
+.durationBadge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    background: rgba(46, 133, 85, 0.1);
+    color: #2e8555;
+}
+
+[data-theme='dark'] .durationBadge {
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+}
+
+.clockIcon {
+    width: 12px;
+    height: 12px;
+}
+
+/* 操作按钮 */
+.actionBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(125, 125, 125, 0.2);
+    background: rgba(125, 125, 125, 0.05);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ifm-font-color-base, #444);
     cursor: pointer;
-    color: #3cad6e
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.footer>img {
-    object-fit: scale-down;
-    max-height: 70px;
+.actionBtn:hover {
+    background: rgba(46, 133, 85, 0.12);
+    border-color: #2e8555;
+    color: #2e8555;
+    transform: translateY(-1px);
 }
 
+[data-theme='dark'] .actionBtn:hover {
+    background: rgba(34, 197, 94, 0.2);
+    border-color: #4ade80;
+    color: #4ade80;
+}
+
+.actionIcon {
+    width: 14px;
+    height: 14px;
+}
+
+/* ─── 列表网格视图 ───────────────────────────────────── */
+.trackList {
+    padding: 12px 16px;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 480px;
+    overflow-y: auto;
+}
+
+.trackList::-webkit-scrollbar {
+    width: 5px;
+}
+
+.trackList::-webkit-scrollbar-thumb {
+    background: rgba(125, 125, 125, 0.2);
+    border-radius: 3px;
+}
+
+/* 单条曲目卡片 */
+.trackItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(125, 125, 125, 0.1);
+    background: rgba(125, 125, 125, 0.02);
+    cursor: pointer;
+    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.trackItem:hover {
+    background: rgba(125, 125, 125, 0.06);
+    border-color: rgba(125, 125, 125, 0.25);
+    transform: translateX(3px);
+}
+
+/* 正在播放项高亮 */
+.activeTrack {
+    background: rgba(46, 133, 85, 0.08) !important;
+    border-color: rgba(46, 133, 85, 0.45) !important;
+    box-shadow: 0 2px 12px rgba(46, 133, 85, 0.12);
+}
+
+[data-theme='dark'] .activeTrack {
+    background: rgba(34, 197, 94, 0.12) !important;
+    border-color: rgba(34, 197, 94, 0.5) !important;
+    box-shadow: 0 2px 14px rgba(34, 197, 94, 0.15);
+}
+
+.trackMain {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    flex: 1;
+}
+
+/* 曲目序号徽章 */
+.trackIndex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    background: rgba(125, 125, 125, 0.08);
+    color: #666;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+}
+
+[data-theme='dark'] .trackIndex {
+    color: #aaa;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.activeTrack .trackIndex {
+    background: #2e8555;
+    color: #ffffff;
+}
+
+[data-theme='dark'] .activeTrack .trackIndex {
+    background: #22c55e;
+    color: #0b0f17;
+}
+
+/* 曲目标题 */
+.trackTitle {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ifm-font-color-base, #2d2d2d);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.activeTrack .trackTitle {
+    font-weight: 700;
+    color: #166534;
+}
+
+[data-theme='dark'] .activeTrack .trackTitle {
+    color: #86efac;
+}
+
+/* 播放状态标签 */
+.playingTag {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #2e8555;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(46, 133, 85, 0.1);
+    flex-shrink: 0;
+}
+
+[data-theme='dark'] .playingTag {
+    color: #4ade80;
+    background: rgba(34, 197, 94, 0.16);
+}
+
+/* 音波跳动微动效 */
+.equalizer {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 12px;
+}
+
+.equalizer span {
+    width: 2px;
+    height: 100%;
+    background-color: currentColor;
+    border-radius: 1px;
+    animation: bounce 0.8s ease-in-out infinite alternate;
+}
+
+.equalizer span:nth-child(2) {
+    animation-delay: 0.25s;
+}
+
+.equalizer span:nth-child(3) {
+    animation-delay: 0.5s;
+}
+
+@keyframes bounce {
+    0% { height: 20%; }
+    100% { height: 100%; }
+}
+
+/* ─── 编辑模式 ───────────────────────────────────────── */
+.editPanel {
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.editTip {
+    font-size: 12px;
+    color: #666;
+    background: rgba(125, 125, 125, 0.05);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border-left: 3px solid #2e8555;
+}
+
+[data-theme='dark'] .editTip {
+    color: #aaa;
+}
+
+.textarea {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid rgba(125, 125, 125, 0.2);
+    background: rgba(125, 125, 125, 0.03);
+    color: var(--ifm-font-color-base, #2d2d2d);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 12px;
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.textarea:focus {
+    border-color: #2e8555;
+    box-shadow: 0 0 0 3px rgba(46, 133, 85, 0.18);
+}
+
+.editActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.saveBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: none;
+    background: #2e8555;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.saveBtn:hover {
+    background: #256945;
+    transform: translateY(-1px);
+}
+
+.cancelBtn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(125, 125, 125, 0.2);
+    background: transparent;
+    color: #666;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.cancelBtn:hover {
+    background: rgba(125, 125, 125, 0.08);
+}
+
+[data-theme='dark'] .cancelBtn {
+    color: #aaa;
+}
+
+/* ─── 底部八吉祥插画 ─────────────────────────────────── */
 .footer {
-    padding-top: 2rem;
     display: flex;
     justify-content: center;
-    width: 50%;
+    align-items: center;
+    padding: 24px 0 10px;
 }
 
-@media screen and (orientation:portrait) {
-    .footer {
-        width: 100%;
-        padding: 1rem;
-    }
+.footerImg {
+    max-height: 64px;
+    object-fit: contain;
+    border-radius: 8px;
+    opacity: 0.85;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.footerImg:hover {
+    opacity: 1;
+    transform: scale(1.02);
+}
+
+/* 空列表状态 */
+.emptyList {
+    padding: 32px 16px;
+    text-align: center;
+    color: #888;
+    font-size: 13px;
 }

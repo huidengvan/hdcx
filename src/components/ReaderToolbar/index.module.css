@@ -1,0 +1,356 @@
+/* ─── 侧边工具栏定位容器 ───────────────────────── */
+.container {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    user-select: none;
+}
+
+/* ─── 收起时：仅展示小巧侧边 'A' 悬浮把手（半透明不挡字） ─── */
+.fabTrigger {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 34px;
+    padding: 0;
+    border-radius: 8px 0 0 8px;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-right: none;
+    box-shadow: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2e8555;
+    opacity: 0.42;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1001;
+}
+
+.fabLetter {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Georgia, serif;
+    margin-left: 2px;
+}
+
+.fabTrigger:hover {
+    width: 32px;
+    opacity: 1;
+    background: #2e8555;
+    color: #ffffff;
+    box-shadow: -2px 3px 12px rgba(46, 133, 85, 0.35);
+}
+
+[data-theme='dark'] .fabTrigger {
+    background: rgba(30, 30, 46, 0.35);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #a6e3a1;
+}
+
+[data-theme='dark'] .fabTrigger:hover {
+    background: #2e8555;
+    color: #ffffff;
+}
+
+/* ─── 展开时：现代紧凑的阅读偏好面板 ───────────── */
+.panel {
+    position: fixed;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 178px;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.04);
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    animation: popIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1002;
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(16px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0) scale(1);
+    }
+}
+
+[data-theme='dark'] .panel {
+    background: rgba(28, 28, 42, 0.96);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* ─── 面板头部 ───────────────────────────────── */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 2px;
+}
+
+.headerTitle {
+    font-size: 11px;
+    font-weight: 700;
+    color: #888;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+[data-theme='dark'] .headerTitle {
+    color: #9ca3af;
+}
+
+.closeBtn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.closeBtn:hover {
+    background: rgba(0, 0, 0, 0.06);
+    color: #222;
+}
+
+[data-theme='dark'] .closeBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* ─── 分隔线 ─────────────────────────────────── */
+.divider {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.06);
+    margin: 2px 0;
+}
+
+[data-theme='dark'] .divider {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* ─── 各分节 ─────────────────────────────────── */
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sectionLabelRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #555;
+}
+
+[data-theme='dark'] .label {
+    color: #d1d5db;
+}
+
+.subLabel {
+    font-size: 10px;
+    color: #888;
+}
+
+[data-theme='dark'] .subLabel {
+    color: #9ca3af;
+}
+
+/* ─── 主题色块 ───────────────────────────────── */
+.themeRow {
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+}
+
+.themeBtn {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.themeBtn:hover {
+    transform: scale(1.18);
+}
+
+.themeBtnActive {
+    transform: scale(1.14);
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2e8555 !important;
+}
+
+[data-theme='dark'] .themeBtnActive {
+    box-shadow: 0 0 0 2px #1c1c2a, 0 0 0 4px #2e8555 !important;
+}
+
+/* ─── 字号控制步进器 ─────────────────────────── */
+.fontStepper {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 8px;
+    padding: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+[data-theme='dark'] .fontStepper {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.fontStepBtn {
+    flex: 1;
+    height: 24px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 700;
+    color: #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.fontStepBtn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.9);
+    color: #2e8555;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.fontStepBtn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+[data-theme='dark'] .fontStepBtn {
+    color: #e5e7eb;
+}
+
+[data-theme='dark'] .fontStepBtn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.15);
+    color: #a6e3a1;
+}
+
+.fontResetBtn {
+    flex: 1.1;
+    height: 24px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11px;
+    color: #777;
+    font-weight: 500;
+    transition: all 0.15s ease;
+}
+
+.fontResetBtn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    color: #2e8555;
+    font-weight: 600;
+}
+
+[data-theme='dark'] .fontResetBtn {
+    color: #9ca3af;
+}
+
+[data-theme='dark'] .fontResetBtn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #a6e3a1;
+}
+
+/* ─── 视图开关网格（宽屏 + 段落号） ─────────── */
+.toggleGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+
+.toggleCard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 30px;
+    border-radius: 7px;
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    background: rgba(0, 0, 0, 0.02);
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 500;
+    color: #555;
+    transition: all 0.15s ease;
+    padding: 0 6px;
+}
+
+.toggleCard:hover {
+    background: rgba(0, 0, 0, 0.06);
+    transform: translateY(-1px);
+}
+
+[data-theme='dark'] .toggleCard {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    color: #bbb;
+}
+
+[data-theme='dark'] .toggleCard:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.toggleCardActive {
+    background: #f0fdf4 !important;
+    border-color: #86efac !important;
+    color: #16a34a !important;
+    font-weight: 600 !important;
+}
+
+[data-theme='dark'] .toggleCardActive {
+    background: #132f22 !important;
+    border-color: #22c55e !important;
+    color: #86efac !important;
+}
+
+.toggleIcon {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+}
