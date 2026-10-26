@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [2026-10-26]
 
 ### Added
+- 在慧灯之光（`refs/hdzg/`）第 1~10 册 10 篇文档标题下批量嵌入配套有声书音频伴读卡片（`SectionAudio`），精准关联 Wasabi S3 共 115 集音频并自动处理多集有序排列
 - 在入行论辅导（`refs/rxl/fudao/`）10 篇文档共 201 节课标题下批量嵌入配套音频伴读组件（`SectionAudio`），精准关联 Wasabi S3 生西法师辅导音频
 - 新增 `AudioCompanion` 伴读音频播放器系统（`src/components/AudioCompanion/`），支持文章内嵌音频伴读卡片（`SectionAudio`）与右侧贴边半露半透明悬浮播放球（`FloatingPodcastPlayer`）
 - 在前行广释辅导 14 篇文档共 256 课标题下批量嵌入配套音频伴读组件
@@ -18,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - 新增 `SubtitleContext` PC 端充满屏幕「宽屏」切换功能：支持无边距边缘贴合布局（左侧视频、右侧字幕）与默认宽模式自由切换
 
 ### Changed
+- 悬浮伴读控制台在音频暂停时右上角折叠按钮动态切换为关闭（叉号）按钮，支持一键彻底退出伴读播放；播放时仍保持向下箭头折叠按钮
 - 优化音频伴读侧边悬浮按钮进度条：改为从左至右水平平滑覆盖背景，更新频率离散为每 3 秒一次，并优化填充层对比度以清晰辨识播放进度
 - 优化音频伴读界面：精简为单一主控播放按钮，去除多余状态文字；重构播放控制按钮黄金比例
 - 优化悬浮播放器体验：倍速与静音控件上移至标题栏，大幅压缩面板高度；收起时贴紧屏幕右边缘半露半透明展示（对齐主题调节 A 按钮风格），杜绝遮挡正文
@@ -27,6 +29,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - 优化目录与折叠框（`<details>`/`<summary>`）三角箭头对齐与边距，消除视觉歪斜
 
 ### Fixed
+- 修复悬浮面板进度条在手指滑过或悬停时变粗的问题，锁死轨道高度为 4px 并添加 `touch-action: pan-x`
 - 修复移动端触控点击按钮后永久残留 Hover 激活状态的问题，将悬停样式限制在桌面端并添加瞬时触控缩放反馈
 - 修复 `dev.config.js` 中缺失 `esbuild-loader` 依赖导致的本地启动报错
 - 修复首页 Hero 区域标题「禅修班」在白色主题下被全局变量影响变为黑色的问题，确保首页大字始终纯白高亮

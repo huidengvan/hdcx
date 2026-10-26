@@ -60,6 +60,22 @@ export const AudioProvider = ({ children }) => {
         }
     }, []);
 
+    // 关闭播放器并完全关闭悬浮组件
+    const closeCompanion = useCallback(() => {
+        const audio = audioRef.current;
+        if (audio) {
+            audio.pause();
+            audio.removeAttribute('src');
+            audio.load();
+        }
+        setIsPlaying(false);
+        setCurrentTrack(null);
+        setIsMiniVisible(false);
+        setIsDeckOpen(false);
+        setCurrentTime(0);
+        setDuration(0);
+    }, []);
+
     const togglePlay = useCallback((track) => {
         if (currentTrack?.id === track.id) {
             if (isPlaying) {
@@ -209,6 +225,7 @@ export const AudioProvider = ({ children }) => {
         playTrack,
         pauseTrack,
         togglePlay,
+        closeCompanion,
         seek,
         skip,
         changePlaybackRate,
@@ -244,6 +261,7 @@ export const useAudioCompanion = () => {
             playTrack: () => {},
             pauseTrack: () => {},
             togglePlay: () => {},
+            closeCompanion: () => {},
             seek: () => {},
             skip: () => {},
             changePlaybackRate: () => {},

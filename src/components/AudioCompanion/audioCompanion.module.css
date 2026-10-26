@@ -86,12 +86,6 @@
     background: rgba(125, 125, 125, 0.15);
     color: var(--ifm-font-color-base);
   }
-  .rangeInput:hover {
-    height: 6px;
-  }
-  .rangeInput:hover::-webkit-slider-thumb {
-    transform: scale(1.2);
-  }
 }
 
 /* ─── 1. 文章内段落音频卡片 (Section Audio Card - 简洁高雅) ─── */
@@ -431,7 +425,13 @@
   outline: none;
   cursor: pointer;
   position: relative;
-  transition: height 0.15s ease;
+  touch-action: pan-x;
+}
+
+.rangeInput:hover,
+.rangeInput:active,
+.rangeInput:focus {
+  height: 4px;
 }
 
 [data-theme='dark'] .rangeInput {

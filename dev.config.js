@@ -126,13 +126,13 @@ const config = {
                 //     position: 'left',
                 //     label: '课程法本',
                 // },
-                // {
-                //     type: 'doc',
-                //     docId: 'index',
-                //     docsPluginId: 'refs',
-                //     position: 'left',
-                //     label: '参考法本',
-                // },
+                {
+                    type: 'doc',
+                    docId: 'index',
+                    docsPluginId: 'refs',
+                    position: 'left',
+                    label: '参考法本',
+                },
                 // {
                 //     type: 'doc',
                 //     docId: 'book1',
@@ -147,13 +147,13 @@ const config = {
                     position: 'left',
                     label: '四加行',
                 },
-                // {
-                //     type: 'doc',
-                //     docId: '1gy',
-                //     docsPluginId: '5jx',
-                //     position: 'left',
-                //     label: '五加行',
-                // },
+                {
+                    type: 'doc',
+                    docId: '1gy',
+                    docsPluginId: '5jx',
+                    position: 'left',
+                    label: '五加行',
+                },
             ],
         },
         footer: {

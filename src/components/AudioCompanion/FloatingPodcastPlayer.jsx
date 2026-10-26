@@ -8,6 +8,7 @@ import {
   VolumeIcon,
   MuteIcon,
   ChevronDownIcon,
+  CloseIcon,
   Equalizer,
   formatTime,
 } from './Icons';
@@ -32,6 +33,7 @@ export default function FloatingPodcastPlayer() {
     isDeckOpen,
     setIsDeckOpen,
     togglePlay,
+    closeCompanion,
     seek,
     skip,
     changePlaybackRate,
@@ -111,18 +113,33 @@ export default function FloatingPodcastPlayer() {
                 {isMuted ? <MuteIcon size={16} /> : <VolumeIcon size={16} />}
               </button>
 
-              <button
-                type="button"
-                className={styles.closeDeckBtn}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsDeckOpen(false);
-                }}
-                title="收起到侧边悬浮球"
-                aria-label="收起面板"
-              >
-                <ChevronDownIcon size={18} />
-              </button>
+              {isPlaying ? (
+                <button
+                  type="button"
+                  className={styles.closeDeckBtn}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsDeckOpen(false);
+                  }}
+                  title="收起到侧边悬浮球"
+                  aria-label="收起面板"
+                >
+                  <ChevronDownIcon size={18} />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className={styles.closeDeckBtn}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    closeCompanion();
+                  }}
+                  title="关闭音频伴读"
+                  aria-label="关闭音频伴读"
+                >
+                  <CloseIcon size={18} />
+                </button>
+              )}
             </div>
           </div>
 
