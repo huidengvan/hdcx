@@ -3,6 +3,7 @@ import { useLocation } from '@docusaurus/router';
 import Playlist from '@site/src/components/Playlist';
 import { Toaster } from 'react-hot-toast';
 import { VideoProvider } from '../components/SubtitleContext/VideoContext';
+import { AudioProvider, FloatingPodcastPlayer } from '../components/AudioCompanion';
 
 const VALID_THEMES = ['white', 'warm', 'green', 'maroon'];
 
@@ -57,11 +58,14 @@ export default function Root({ children }) {
 
     return (
         <VideoProvider>
-            {children}
-            <div style={{ display: matchPlaylist ? 'block' : 'none' }}>
-                <Playlist />
-            </div>
-            <Toaster position="top-center" containerStyle={{ zIndex: 99999 }} />
+            <AudioProvider>
+                {children}
+                <div style={{ display: matchPlaylist ? 'block' : 'none' }}>
+                    <Playlist />
+                </div>
+                <FloatingPodcastPlayer />
+                <Toaster position="top-center" containerStyle={{ zIndex: 99999 }} />
+            </AudioProvider>
         </VideoProvider>
     );
 }

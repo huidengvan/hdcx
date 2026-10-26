@@ -5,6 +5,7 @@ title: "01引文(01-02)"
 ---
 
 import TOCInline from '@theme/TOCInline';
+import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 <TOCInline toc={toc} maxHeadingLevel='6' />
 
@@ -13,6 +14,13 @@ import TOCInline from '@theme/TOCInline';
 本稿仅为方便内部学习所用，非正式文稿，仅供参考！
 
 ## 前行之重要性辅导资料
+
+<SectionAudio
+  id="qxgs-zyx"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/前行之重要性的辅导2014年11月30日.m4a"
+  title="前行之重要性-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
 
 - [音频--前行之重要性的辅导2014年11月30日.m4a](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/前行之重要性的辅导2014年11月30日.m4a)
 - [音频--前行之重要性的辅导问答2014年11月30日.m4a](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/前行之重要性的辅导问答2014年11月30日.m4a)
@@ -258,6 +266,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》00A《前行广释》的重要性-法师辅导答疑（智诚堪布）
 
+<SectionAudio
+  id="qxgs-zyx-qa"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/前行之重要性的辅导问答2014年11月30日.m4a"
+  title="前行之重要性-答疑"
+  subtitle="智诚堪布 • 答疑音频"
+/>
+
 
 **《前行广释》 前行重要性**
 
@@ -354,6 +369,13 @@ import TOCInline from '@theme/TOCInline';
 **答：是的。**（生西法师）
 
 ## 上师瑜伽速赐加持辅导资料
+
+<SectionAudio
+  id="qxgs-ssyj-scjc"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/上师瑜伽速赐加持2014年12月07日.m4a"
+  title="上师瑜伽速赐加持-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
 
 - [辅导音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/上师瑜伽速赐加持2014年12月07日.m4a)
 - [问答音频](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/上师瑜伽速赐加持问答2014年12月07日.m4a)
@@ -667,6 +689,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》00B上师瑜伽速赐加持-法师辅导答疑（智诚堪布）
 
+<SectionAudio
+  id="qxgs-ssyj-scjc-qa"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/上师瑜伽速赐加持问答2014年12月07日.m4a"
+  title="上师瑜伽速赐加持-答疑"
+  subtitle="智诚堪布 • 答疑音频"
+/>
+
 问：顶礼法师！我想请问一下，我们现在在修上师瑜伽，五加行还有其他的，比如百字明等等。如果我觉得心有余力的情况下，可不可以把其他的加行提前进入修行呢？包括我们后面所学的观修要到18周才观修，可不可以现在就开始观修？
 
 **答：如果现在有时间，且不耽误自己的课程的前提之下，首先做一些观修、做一些预习，应该是可以的。反正修行并不是说一定要在什么时间开始。但是如果说是提前观修导致自己的修行安排紊乱的话就不合适。如果不紊乱，在不影响自己正常的修学的情况下，可以提前修，因为修的越多就越相应，按照原则性来讲应该是可以的。**（生西法师）
@@ -737,6 +766,13 @@ import TOCInline from '@theme/TOCInline';
 
 
 ## 前行广释第001课辅导
+
+<SectionAudio
+  id="qxgs-001"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/大圆满前行第01课2014年12月14日.m4a"
+  title="前行广释第001课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
 
 - [辅导音频--前行第01册1-21](/refs/qxgs/fudao/qxgsfd-audio-files#01引文1-2)
 - [大圆满前行第01课2014年12月14日.m4a](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/大圆满前行第01课2014年12月14日.m4a)
@@ -933,6 +969,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《前行广释》001课-法师辅导答疑（智诚堪布）
 
+<SectionAudio
+  id="qxgs-001-qa"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/大圆满前行第01课问答2014年12月14日.m4a"
+  title="前行广释第001课-答疑"
+  subtitle="智诚堪布 • 答疑音频"
+/>
+
 问：顶礼法师！在顶礼三大传承上师的如来密意传中，提到了大圆满的12大本师，弟子在网上没有查到，能不能请法师讲讲？
 
 **答：12大本师，有些地方是没有的，有些地方则讲到大圆满12大本师，在《蓝宝石》里面有12大本师的一种名号，还有是在《上师心滴》法本当中，但是有些人可能不能看《上师心滴》。有些本师是我们知道的，比如说释迦牟尼佛是第12位，迦叶佛也算一位。其他的很多，我们可能不是很清楚的。这些救慰勇士、无畏等等，像这样有很多本师的名称，但我也记不全，如果有必要，我们可以去其他的佛教史当中去看一看、查一查，这里面有些地方是有的，但是普遍来讲很多地方没讲这个12大本师。但是这个的确是大圆满方面的传讲大圆满的本师。今天我也没有去准备，所以说一下把12大本师背出来的话，就是背不出来，但是有些总的印象吧，我们可以去其他地方看一看。**（生西法师）
@@ -994,6 +1037,13 @@ import TOCInline from '@theme/TOCInline';
 **答：我的观点是可以供养，什么时间都可以供养。佛陀过午不食，并不是说佛陀过午吃了饭佛陀就犯戒了，然后佛陀犯戒了佛陀会堕落，这是绝对不可能的事情。佛陀过午不食，只是当年在僧团当中的时候，为了引导修行者有这样的必要性。但是佛陀本身早就已经远离了一切时间的概念，远离了这样一种执着，远离了分别念等等。所以我们供佛的时候，只要我们什么时候想供就都可以。就是上深夜班12点都可以供，什么时候你升起了想供佛的心，这个时候就应该供养，因为佛陀就是个大福田，这个大福田是没有任何执着的，是一个非常殊胜的福田，不可能给我们规定什么时间可以供什么时间不能供。也许在某些地方为了引导有些修行者这样讲，但是从实际情况来讲佛陀不会有这样执着的，否则即便是过午供养佛陀，佛陀不会因此不接受你的供养，或者说佛陀吃了之后犯戒律，这个情况绝对不会有。所以我们想要供佛的时候当下就可以供。不需要执着什么想法，我们只要供佛都是能够得到善根的，而且如果为了利他而供佛的力就更大。什么时候都是可以供的。**（生西法师）
 
 ## 前行广释第002课辅导
+
+<SectionAudio
+  id="qxgs-002"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/大圆满前行第02课2014年12月21日.m4a"
+  title="前行广释第002课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
 
 - [辅导音频--前行第01册1-21](/refs/qxgs/fudao/qxgsfd-audio-files#01引文1-2)
 
@@ -1308,6 +1358,13 @@ import TOCInline from '@theme/TOCInline';
 今天的课就讲到这个地方。
 
 ## 《前行广释》002课-法师辅导答疑（智诚堪布）
+
+<SectionAudio
+  id="qxgs-002-qa"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第01册1-21/大圆满前行第02课问答2014年12月21日.m4a"
+  title="前行广释第002课-答疑"
+  subtitle="智诚堪布 • 答疑音频"
+/>
 
 前行002课答疑
 

@@ -2,6 +2,8 @@
 title: "14结文(143-144)"
 ---
 
+import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
+
 
 import TOCInline from '@theme/TOCInline';
 
@@ -11,6 +13,13 @@ import TOCInline from '@theme/TOCInline';
 
 
 ## 前行广释第143课辅导
+
+<SectionAudio
+  id="qxgs-143"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第07册137-144/大圆满前行_第143课_2018年01月14日.m4a"
+  title="前行广释第143课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
@@ -433,6 +442,13 @@ import TOCInline from '@theme/TOCInline';
 哲波措利卓瓦卓瓦效  愿度有海诸有情
 
 ## 前行广释第144课辅导
+
+<SectionAudio
+  id="qxgs-144"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第07册137-144/大圆满前行_第144课_2018年01月21日.m4a"
+  title="前行广释第144课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
 
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 

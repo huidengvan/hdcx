@@ -65,16 +65,16 @@ const config = {
         //         rehypePlugins: [paraAnchor],
         //     },
         // ],
-        // [
-        //     '@docusaurus/plugin-content-docs',
-        //     {
-        //         id: 'refs',
-        //         path: 'refs',
-        //         routeBasePath: 'refs',
-        //         sidebarPath: require.resolve('./sidebars.js'),
-        //         rehypePlugins: [paraAnchor],
-        //     },
-        // ],
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'refs',
+                path: 'refs',
+                routeBasePath: 'refs',
+                sidebarPath: require.resolve('./sidebars.js'),
+                rehypePlugins: [paraAnchor],
+            },
+        ],
         [
             '@docusaurus/plugin-content-docs',
             {
@@ -85,16 +85,16 @@ const config = {
                 rehypePlugins: [paraAnchor],
             },
         ],
-        // [
-        //     '@docusaurus/plugin-content-docs',
-        //     {
-        //         id: '5jx',
-        //         path: '5jx',
-        //         routeBasePath: '5jx',
-        //         sidebarPath: require.resolve('./sidebars.js'),
-        //         rehypePlugins: [paraAnchor],
-        //     },
-        // ],
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: '5jx',
+                path: '5jx',
+                routeBasePath: '5jx',
+                sidebarPath: require.resolve('./sidebars.js'),
+                rehypePlugins: [paraAnchor],
+            },
+        ],
     ],
     themes: [],
     themeConfig:
@@ -186,16 +186,6 @@ const config = {
         },
     },
     // scripts: [{ src: '/js/global.js', async: false, },],
-    webpack: {
-        jsLoader: (isServer) => ({
-            loader: require.resolve('esbuild-loader'),
-            options: {
-                loader: 'jsx',
-                format: isServer ? 'cjs' : undefined,
-                target: isServer ? 'node12' : 'es2017',
-            },
-        }),
-    },
 };
 
 export default config;

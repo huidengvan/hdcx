@@ -6,7 +6,7 @@
     "preinstall": "npx only-allow pnpm",
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
-    "dev": "cross-env NODE_OPTIONS=--max-old-space-size=8192 docusaurus start --host 0.0.0.0 --no-open",
+    "dev": "cross-env NODE_OPTIONS=--max-old-space-size=8192 docusaurus start  --config dev.config.js --host 0.0.0.0 --no-open",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=6144 docusaurus build",
     "check": "npx docusaurus-mdx-checker",
     "swizzle": "docusaurus swizzle",
