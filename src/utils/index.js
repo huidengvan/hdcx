@@ -101,16 +101,48 @@ export const closeDetails = (details) => {
     details.removeAttribute('open');
 };
 
+let activeHighlightNode = null;
+let activeHighlightTimer = null;
+let activeHighlightCleanupTimer = null;
+
+export const highlightParagraph = (targetNode, duration = 2500) => {
+    if (!targetNode) return;
+
+    if (activeHighlightNode && activeHighlightNode !== targetNode) {
+        activeHighlightNode.style.backgroundColor = '';
+        activeHighlightNode.style.boxShadow = '';
+        activeHighlightNode.style.borderLeft = '';
+        activeHighlightNode.style.transition = '';
+    }
+    if (activeHighlightTimer) clearTimeout(activeHighlightTimer);
+    if (activeHighlightCleanupTimer) clearTimeout(activeHighlightCleanupTimer);
+
+    activeHighlightNode = targetNode;
+
+    // 使用 inset box-shadow 替代 borderLeft，完全不改变元素盒模型尺寸与排版流，文字绝不发生任何位移与折行变动
+    targetNode.style.boxShadow = 'inset 3px 0 0 #2e8555';
+    targetNode.style.backgroundColor = 'rgba(46, 133, 85, 0.2)';
+    targetNode.style.transition = 'background-color 0.5s ease, box-shadow 0.5s ease';
+
+    activeHighlightTimer = setTimeout(() => {
+        targetNode.style.backgroundColor = '';
+        targetNode.style.boxShadow = 'none';
+        activeHighlightCleanupTimer = setTimeout(() => {
+            if (activeHighlightNode === targetNode) {
+                targetNode.style.boxShadow = '';
+                targetNode.style.borderLeft = '';
+                targetNode.style.transition = '';
+                activeHighlightNode = null;
+            }
+        }, 500);
+    }, duration);
+};
+
 export const scrollToTarget = (targetNode, scrollBlock) => {
     if (!targetNode) return;
     const block = scrollBlock || sessionStorage.getItem('scrollBlock') || 'center';
     targetNode.scrollIntoView({ block, behavior: 'smooth' });
-    targetNode.style.borderLeft = '.5px solid #2e8555';
-    targetNode.style.transition = 'background-color 0.5s ease';
-    targetNode.style.backgroundColor = 'rgba(46, 133, 85, 0.2)';
-    setTimeout(() => {
-        targetNode.style.backgroundColor = '';
-    }, 2500);
+    highlightParagraph(targetNode, 2500);
 };
 
 export const showSecretDharmaPrompt = ({ warning, details, targetNode, scrollBlock }) => {

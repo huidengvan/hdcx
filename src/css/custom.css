@@ -42,6 +42,8 @@
 }
 
 /* ─── 目录与折叠框 (<details> / <summary>) 主题适配 ───────── */
+html body article details,
+html body details,
 details {
   background-color: rgba(125, 125, 125, 0.05) !important;
   border: 1px solid rgba(125, 125, 125, 0.18) !important;
@@ -54,44 +56,101 @@ details {
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
+html body article details > summary,
+html body article [class*='details_'] > summary,
+html body [class*='details_'] > summary,
 details summary {
   display: flex !important;
   align-items: center !important;
   cursor: pointer !important;
+  font-size: 15px !important;
   font-weight: 600 !important;
   color: inherit !important;
-  padding: 8px 14px !important;
+  padding: 10px 16px !important;
+  padding-left: 16px !important;
   margin: 0 !important;
   border-radius: 0 !important;
   background-color: rgba(125, 125, 125, 0.07) !important;
   outline: none !important;
   user-select: none !important;
   list-style: none !important;
+  list-style-type: none !important;
   transition: background-color 0.15s ease;
 }
 
+html body article details > summary::-webkit-details-marker,
+html body [class*='details_'] > summary::-webkit-details-marker,
 details summary::-webkit-details-marker {
   display: none !important;
 }
 
-/* 三角指示箭头颜色使用 currentColor，彻底跟随主题文字色 */
+html body article details > summary::marker,
+html body [class*='details_'] > summary::marker,
+details summary::marker {
+  display: none !important;
+  content: "" !important;
+  font-size: 0 !important;
+}
+
+/* 三角指示箭头：重置绝对定位、几何对称、与文字完美水平垂直居中对齐，留出舒适边距 */
+html body article details > summary::before,
+html body article [class*='details_'] > summary::before,
+html body [class*='details_'] > summary::before,
 details summary::before,
 details summary:before {
-  border-color: transparent transparent transparent currentColor !important;
-  margin-right: 8px !important;
-  opacity: 0.8;
+  content: "" !important;
+  position: relative !important;
+  display: inline-block !important;
+  width: 11px !important;
+  height: 11px !important;
+  min-width: 11px !important;
+  min-height: 11px !important;
+  margin: 0 10px 0 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: auto !important;
+  bottom: auto !important;
+  border: none !important;
+  border-style: none !important;
+  border-width: 0 !important;
+  border-color: transparent !important;
+  background-color: currentColor !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M8 5.14v13.72a1 1 0 0 0 1.56.83l10.29-6.86a1 1 0 0 0 0-1.66L9.56 4.31A1 1 0 0 0 8 5.14z'/%3E%3C/svg%3E") no-repeat center / contain !important;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M8 5.14v13.72a1 1 0 0 0 1.56.83l10.29-6.86a1 1 0 0 0 0-1.66L9.56 4.31A1 1 0 0 0 8 5.14z'/%3E%3C/svg%3E") no-repeat center / contain !important;
+  transform: rotate(0deg) !important;
+  transform-origin: 50% 50% !important;
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.15s ease !important;
+  opacity: 0.75 !important;
+  flex-shrink: 0 !important;
 }
 
+html body article details[open] > summary::before,
+html body article details[data-collapsed="false"] > summary::before,
+html body article [class*='details_'][open] > summary::before,
+html body article [class*='details_'][data-collapsed="false"] > summary::before,
+html body [class*='details_'][open] > summary::before,
+html body [class*='details_'][data-collapsed="false"] > summary::before,
 details[open] > summary::before,
-details[open] > summary:before {
-  border-color: currentColor transparent transparent transparent !important;
-  opacity: 0.8;
+details[open] > summary:before,
+details[data-collapsed="false"] > summary::before {
+  transform: rotate(90deg) !important;
+  opacity: 0.95 !important;
 }
 
+html body article details > summary:hover,
+html body [class*='details_'] > summary:hover,
 details summary:hover {
   background-color: rgba(125, 125, 125, 0.13) !important;
 }
 
+html body article details > summary:hover::before,
+html body [class*='details_'] > summary:hover::before,
+details summary:hover::before {
+  opacity: 1 !important;
+}
+
+html body article details[open] > summary,
+html body [class*='details_'][open] > summary,
 details[open] > summary {
   border-bottom: 1px solid rgba(125, 125, 125, 0.16) !important;
 }
@@ -127,79 +186,792 @@ details .table-of-contents__link--active {
   opacity: 1;
 }
 
-/* ─── 深色主题模式专属适配（夜间墨 & 系统深色） ───────────── */
-[data-theme='dark'] details,
-[data-reader-theme='dark'] details {
+/* ─── 全站平滑主题过渡 ───────────────────────────────── */
+body,
+.navbar,
+.footer,
+[class*='docSidebarContainer'],
+[class*='docRoot'],
+article,
+details,
+[class*='searchCard'],
+[class*='transcriptCard'] {
+  transition: background-color 0.25s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+/* ─── 深色夜间模式系统级适配 (Night Mode via Top Navbar) ───────── */
+[data-theme='dark'] {
+  --ifm-background-color: #18191a;
+  --ifm-background-surface-color: #242526;
+  --ifm-card-background-color: #242526;
+  --ifm-navbar-background-color: #1e1e2e;
+  --ifm-footer-background-color: #141517;
+  --ifm-font-color-base: #cdd6f4;
+  --ifm-heading-color: #e2e8f0;
+  --ifm-color-content: #cdd6f4;
+  --ifm-color-content-secondary: #a6adc8;
+  --ifm-navbar-link-color: #cdd6f4;
+  --ifm-menu-color: #cdd6f4;
+  --ifm-menu-color-active: #a6e3a1;
+  --ifm-menu-color-background-active: rgba(166, 227, 161, 0.12);
+  --ifm-menu-color-background-hover: rgba(255, 255, 255, 0.06);
+  --ifm-toc-border-color: rgba(255, 255, 255, 0.12);
+  --ifm-color-emphasis-100: rgba(255, 255, 255, 0.04);
+  --ifm-color-emphasis-200: rgba(255, 255, 255, 0.08);
+  --ifm-color-emphasis-300: rgba(255, 255, 255, 0.16);
+  --ifm-footer-color: #9ca3af;
+  --ifm-footer-title-color: #e2e8f0;
+  --ifm-footer-link-color: #bac2de;
+  --ifm-footer-link-hover-color: #a6e3a1;
+}
+
+[data-theme='dark'],
+[data-theme='dark'] body,
+[data-theme='dark'] [class*='docRoot'],
+[data-theme='dark'] .main-wrapper,
+[data-theme='dark'] main {
+  background-color: #18191a !important;
+  color: #cdd6f4 !important;
+}
+
+/* 深色模式：顶部导航栏 */
+[data-theme='dark'] .navbar {
+  background-color: #1e1e2e !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme='dark'] .navbar__title,
+[data-theme='dark'] .navbar__brand,
+[data-theme='dark'] .navbar__link,
+[data-theme='dark'] .header-search-link {
+  color: #cdd6f4 !important;
+}
+
+[data-theme='dark'] .navbar__link:hover,
+[data-theme='dark'] .navbar__link--active,
+[data-theme='dark'] .header-search-link:hover {
+  color: #a6e3a1 !important;
+}
+
+/* 深色模式：底部 Footer */
+[data-theme='dark'] .footer {
+  background-color: #141517 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #9ca3af !important;
+}
+
+[data-theme='dark'] .footer__title,
+[data-theme='dark'] .footer__link-item,
+[data-theme='dark'] .footer__copyright {
+  color: #9ca3af !important;
+}
+
+[data-theme='dark'] .footer__link-item:hover {
+  color: #cdd6f4 !important;
+}
+
+/* 深色模式：侧边栏与移动端抽屉 */
+[data-theme='dark'] [class*='docSidebarContainer'],
+[data-theme='dark'] .theme-doc-sidebar-menu,
+[data-theme='dark'] .navbar-sidebar {
+  background-color: #18191a !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme='dark'] .menu__link {
+  color: #cdd6f4 !important;
+}
+
+[data-theme='dark'] .menu__link:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+
+[data-theme='dark'] .menu__link--active {
+  background-color: rgba(166, 227, 161, 0.15) !important;
+  color: #a6e3a1 !important;
+}
+
+/* 深色模式：全站卡片 (搜索卡片、字幕卡片、播放卡片等) */
+[data-theme='dark'] [class*='searchCard'],
+[data-theme='dark'] [class*='introCard'],
+[data-theme='dark'] [class*='emptyCard'],
+[data-theme='dark'] [class*='errorCard'],
+[data-theme='dark'] [class*='transcriptCard'],
+[data-theme='dark'] [class*='playerCard'],
+[data-theme='dark'] .card {
+  background-color: #242526 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #cdd6f4 !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme='dark'] [class*='cardHeader'] {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme='dark'] [class*='cardTitleLink'] {
+  color: #f1f5f9 !important;
+}
+
+/* 深色模式：目录与折叠框 (<details> / <summary>) */
+[data-theme='dark'] details {
   background-color: rgba(255, 255, 255, 0.04) !important;
   border-color: rgba(255, 255, 255, 0.12) !important;
   color: #cdd6f4 !important;
 }
 
-[data-theme='dark'] details summary,
-[data-reader-theme='dark'] details summary {
+[data-theme='dark'] details summary {
   background-color: rgba(255, 255, 255, 0.06) !important;
   color: #cdd6f4 !important;
 }
 
-[data-theme='dark'] details summary:hover,
-[data-reader-theme='dark'] details summary:hover {
+[data-theme='dark'] details summary:hover {
   background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-[data-theme='dark'] details summary::before,
-[data-theme='dark'] details summary:before,
-[data-reader-theme='dark'] details summary::before,
-[data-reader-theme='dark'] details summary:before {
-  border-color: transparent transparent transparent #cdd6f4 !important;
-}
 
-[data-theme='dark'] details[open] > summary::before,
-[data-theme='dark'] details[open] > summary:before,
-[data-reader-theme='dark'] details[open] > summary::before,
-[data-reader-theme='dark'] details[open] > summary:before {
-  border-color: #cdd6f4 transparent transparent transparent !important;
-}
 
-[data-theme='dark'] details .table-of-contents__link,
-[data-reader-theme='dark'] details .table-of-contents__link {
+[data-theme='dark'] details .table-of-contents__link {
   color: #bac2de !important;
 }
 
 [data-theme='dark'] details .table-of-contents__link:hover,
-[data-theme='dark'] details .table-of-contents__link--active,
-[data-reader-theme='dark'] details .table-of-contents__link:hover,
-[data-reader-theme='dark'] details .table-of-contents__link--active {
+[data-theme='dark'] details .table-of-contents__link--active {
   color: #a6e3a1 !important;
 }
 
-/* 移动端/折叠目录组件适配 */
-.theme-doc-toc-mobile,
-[class*='tocCollapsible'] {
-  background-color: rgba(125, 125, 125, 0.08) !important;
-  border: 1px solid rgba(125, 125, 125, 0.18) !important;
-  color: inherit !important;
+/* 深色模式：正文、标题、分割线及链接 */
+[data-theme='dark'] article,
+[data-theme='dark'] .theme-doc-markdown {
+  color: #cdd6f4 !important;
 }
 
-[class*='tocCollapsibleButton'] {
-  color: inherit !important;
+[data-theme='dark'] article a:not([class*='anchor']) {
+  color: #89b4fa !important;
 }
 
-/* 深色模式下阅读区域分割线及段落标记优化 */
-[data-reader-theme='dark'] hr {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.15);
+[data-theme='dark'] article a:not([class*='anchor']):hover {
+  color: #b4befe !important;
 }
 
-[data-reader-theme='dark'] .theme-doc-markdown>p>a {
+[data-theme='dark'] .theme-doc-markdown > p > a {
   color: #a6e3a1 !important;
 }
 
-[data-reader-theme='dark'] article a:not([class*='anchor']) {
-  color: #89b4fa;
+[data-theme='dark'] hr {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
 }
 
-[data-reader-theme='dark'] article a:not([class*='anchor']):hover {
-  color: #b4befe;
+[data-theme='dark'] .table-of-contents__link {
+  color: #bac2de !important;
+}
+
+[data-theme='dark'] .table-of-contents__link:hover,
+[data-theme='dark'] .table-of-contents__link--active {
+  color: #a6e3a1 !important;
+}
+
+/* ─── 暖褐纸主题全站联动 (Warm Sepia) ───────────────────── */
+html[data-reader-theme='warm'] {
+  --ifm-background-color: #FFF2E2;
+  --ifm-background-surface-color: #FAF4EB;
+  --ifm-card-background-color: #FAF4EB;
+  --ifm-navbar-background-color: #F5E5D3;
+  --ifm-footer-background-color: #EFE0CD;
+  --ifm-font-color-base: #4a3728;
+  --ifm-heading-color: #382516;
+  --ifm-color-content: #4a3728;
+  --ifm-color-content-secondary: #705844;
+  --ifm-navbar-link-color: #4a3728;
+  --ifm-menu-color: #4a3728;
+  --ifm-menu-color-active: #8b4513;
+  --ifm-menu-color-background-active: rgba(139, 69, 19, 0.1);
+  --ifm-menu-color-background-hover: rgba(139, 69, 19, 0.06);
+  --ifm-toc-border-color: #E3D1BC;
+  --ifm-color-emphasis-100: rgba(74, 55, 40, 0.05);
+  --ifm-color-emphasis-200: rgba(74, 55, 40, 0.1);
+  --ifm-color-emphasis-300: rgba(74, 55, 40, 0.18);
+  --ifm-footer-color: #4a3728;
+  --ifm-footer-title-color: #382516;
+  --ifm-footer-link-color: #5c4736;
+  --ifm-footer-link-hover-color: #8b4513;
+}
+
+html[data-reader-theme='warm'],
+html[data-reader-theme='warm'] body,
+html[data-reader-theme='warm'] [class*='docRoot'],
+html[data-reader-theme='warm'] .main-wrapper,
+html[data-reader-theme='warm'] main {
+  background-color: #FFF2E2 !important;
+  color: #4a3728 !important;
+}
+
+/* 暖褐纸：顶部导航栏 */
+html[data-reader-theme='warm'] .navbar {
+  background-color: #F5E5D3 !important;
+  border-bottom: 1px solid #E6D4BF !important;
+  box-shadow: 0 1px 4px rgba(74, 55, 40, 0.06) !important;
+}
+
+html[data-reader-theme='warm'] .navbar__title,
+html[data-reader-theme='warm'] .navbar__brand,
+html[data-reader-theme='warm'] .navbar__link,
+html[data-reader-theme='warm'] .header-search-link {
+  color: #4a3728 !important;
+}
+
+html[data-reader-theme='warm'] .navbar__link:hover,
+html[data-reader-theme='warm'] .navbar__link--active,
+html[data-reader-theme='warm'] .header-search-link:hover {
+  color: #8b4513 !important;
+}
+
+/* 暖褐纸：底部 Footer */
+html[data-reader-theme='warm'] .footer {
+  background-color: #EFE0CD !important;
+  border-top: 1px solid #DFCBB4 !important;
+  color: #4a3728 !important;
+}
+
+html[data-reader-theme='warm'] .footer__title,
+html[data-reader-theme='warm'] .footer__link-item,
+html[data-reader-theme='warm'] .footer__copyright {
+  color: #4a3728 !important;
+}
+
+html[data-reader-theme='warm'] .footer__link-item:hover {
+  color: #8b4513 !important;
+}
+
+/* 暖褐纸：侧边栏与移动端抽屉 */
+html[data-reader-theme='warm'] [class*='docSidebarContainer'],
+html[data-reader-theme='warm'] .theme-doc-sidebar-menu,
+html[data-reader-theme='warm'] .navbar-sidebar {
+  background-color: #FAF2E6 !important;
+  border-right: 1px solid #E6D4BF !important;
+}
+
+html[data-reader-theme='warm'] .menu__link {
+  color: #4a3728 !important;
+}
+
+html[data-reader-theme='warm'] .menu__link:hover {
+  background-color: rgba(74, 55, 40, 0.08) !important;
+  color: #382516 !important;
+}
+
+html[data-reader-theme='warm'] .menu__link--active {
+  background-color: rgba(139, 69, 19, 0.12) !important;
+  color: #8b4513 !important;
+}
+
+/* 暖褐纸：全站卡片 */
+html[data-reader-theme='warm'] [class*='searchCard'],
+html[data-reader-theme='warm'] [class*='introCard'],
+html[data-reader-theme='warm'] [class*='emptyCard'],
+html[data-reader-theme='warm'] [class*='errorCard'],
+html[data-reader-theme='warm'] [class*='transcriptCard'],
+html[data-reader-theme='warm'] [class*='playerCard'],
+html[data-reader-theme='warm'] .card {
+  background-color: #FAF4EB !important;
+  border-color: #E8D9C7 !important;
+  color: #4a3728 !important;
+  box-shadow: 0 2px 10px rgba(74, 55, 40, 0.05) !important;
+}
+
+html[data-reader-theme='warm'] [class*='cardHeader'] {
+  border-bottom-color: #E8D9C7 !important;
+}
+
+html[data-reader-theme='warm'] [class*='cardTitleLink'] {
+  color: #382516 !important;
+}
+
+/* 暖褐纸：折叠框与目录 (details / summary) */
+html[data-reader-theme='warm'] details {
+  background-color: #F4E7D7 !important;
+  border-color: #E3D1BC !important;
+  color: #4a3728 !important;
+}
+
+html[data-reader-theme='warm'] details summary {
+  background-color: #EBDAC6 !important;
+  color: #4a3728 !important;
+}
+
+html[data-reader-theme='warm'] details summary:hover {
+  background-color: #E2CFBA !important;
+}
+
+
+
+/* 暖褐纸：正文、标题、分割线及链接 */
+html[data-reader-theme='warm'] article,
+html[data-reader-theme='warm'] .theme-doc-markdown {
+  color: #4a3728 !important;
+}
+
+html[data-reader-theme='warm'] article h1,
+html[data-reader-theme='warm'] article h2,
+html[data-reader-theme='warm'] article h3,
+html[data-reader-theme='warm'] article h4,
+html[data-reader-theme='warm'] article h5,
+html[data-reader-theme='warm'] article h6 {
+  color: #382516 !important;
+}
+
+html[data-reader-theme='warm'] article a:not([class*='anchor']) {
+  color: #8b4513 !important;
+}
+
+html[data-reader-theme='warm'] article a:not([class*='anchor']):hover {
+  color: #65330e !important;
+}
+
+html[data-reader-theme='warm'] .theme-doc-markdown > p > a {
+  color: #8b4513 !important;
+}
+
+html[data-reader-theme='warm'] hr {
+  background-color: #E3D1BC !important;
+  border-color: #E3D1BC !important;
+}
+
+html[data-reader-theme='warm'] .table-of-contents__link {
+  color: #5c4736 !important;
+}
+
+html[data-reader-theme='warm'] .table-of-contents__link:hover,
+html[data-reader-theme='warm'] .table-of-contents__link--active {
+  color: #8b4513 !important;
+}
+
+/* ─── 护眼绿主题全站联动 (Eye-care Green) ─────────────────── */
+html[data-reader-theme='green'] {
+  --ifm-background-color: #CCE8CF;
+  --ifm-background-surface-color: #D8EEDC;
+  --ifm-card-background-color: #D8EEDC;
+  --ifm-navbar-background-color: #BDDDBD;
+  --ifm-footer-background-color: #B6DAB9;
+  --ifm-font-color-base: #1b4028;
+  --ifm-heading-color: #13301d;
+  --ifm-color-content: #1b4028;
+  --ifm-color-content-secondary: #2f563d;
+  --ifm-navbar-link-color: #1b4028;
+  --ifm-menu-color: #1b4028;
+  --ifm-menu-color-active: #165b32;
+  --ifm-menu-color-background-active: rgba(22, 91, 50, 0.1);
+  --ifm-menu-color-background-hover: rgba(22, 91, 50, 0.06);
+  --ifm-toc-border-color: #A7CEB9;
+  --ifm-color-emphasis-100: rgba(27, 64, 40, 0.05);
+  --ifm-color-emphasis-200: rgba(27, 64, 40, 0.1);
+  --ifm-color-emphasis-300: rgba(27, 64, 40, 0.18);
+  --ifm-footer-color: #1b4028;
+  --ifm-footer-title-color: #13301d;
+  --ifm-footer-link-color: #244d32;
+  --ifm-footer-link-hover-color: #165b32;
+}
+
+html[data-reader-theme='green'],
+html[data-reader-theme='green'] body,
+html[data-reader-theme='green'] [class*='docRoot'],
+html[data-reader-theme='green'] .main-wrapper,
+html[data-reader-theme='green'] main {
+  background-color: #CCE8CF !important;
+  color: #1b4028 !important;
+}
+
+/* 护眼绿：顶部导航栏 */
+html[data-reader-theme='green'] .navbar {
+  background-color: #BDDDBD !important;
+  border-bottom: 1px solid #AACFAA !important;
+  box-shadow: 0 1px 4px rgba(27, 64, 40, 0.06) !important;
+}
+
+html[data-reader-theme='green'] .navbar__title,
+html[data-reader-theme='green'] .navbar__brand,
+html[data-reader-theme='green'] .navbar__link,
+html[data-reader-theme='green'] .header-search-link {
+  color: #1b4028 !important;
+}
+
+html[data-reader-theme='green'] .navbar__link:hover,
+html[data-reader-theme='green'] .navbar__link--active,
+html[data-reader-theme='green'] .header-search-link:hover {
+  color: #165b32 !important;
+}
+
+/* 护眼绿：底部 Footer */
+html[data-reader-theme='green'] .footer {
+  background-color: #B6DAB9 !important;
+  border-top: 1px solid #A4CCA8 !important;
+  color: #1b4028 !important;
+}
+
+html[data-reader-theme='green'] .footer__title,
+html[data-reader-theme='green'] .footer__link-item,
+html[data-reader-theme='green'] .footer__copyright {
+  color: #1b4028 !important;
+}
+
+html[data-reader-theme='green'] .footer__link-item:hover {
+  color: #165b32 !important;
+}
+
+/* 护眼绿：侧边栏与移动端抽屉 */
+html[data-reader-theme='green'] [class*='docSidebarContainer'],
+html[data-reader-theme='green'] .theme-doc-sidebar-menu,
+html[data-reader-theme='green'] .navbar-sidebar {
+  background-color: #C6E5C9 !important;
+  border-right: 1px solid #AACFAA !important;
+}
+
+html[data-reader-theme='green'] .menu__link {
+  color: #1b4028 !important;
+}
+
+html[data-reader-theme='green'] .menu__link:hover {
+  background-color: rgba(27, 64, 40, 0.08) !important;
+  color: #13301d !important;
+}
+
+html[data-reader-theme='green'] .menu__link--active {
+  background-color: rgba(22, 91, 50, 0.12) !important;
+  color: #165b32 !important;
+}
+
+/* 护眼绿：全站卡片 */
+html[data-reader-theme='green'] [class*='searchCard'],
+html[data-reader-theme='green'] [class*='introCard'],
+html[data-reader-theme='green'] [class*='emptyCard'],
+html[data-reader-theme='green'] [class*='errorCard'],
+html[data-reader-theme='green'] [class*='transcriptCard'],
+html[data-reader-theme='green'] [class*='playerCard'],
+html[data-reader-theme='green'] .card {
+  background-color: #D8EEDC !important;
+  border-color: #B8D8BA !important;
+  color: #1b4028 !important;
+  box-shadow: 0 2px 10px rgba(27, 64, 40, 0.05) !important;
+}
+
+html[data-reader-theme='green'] [class*='cardHeader'] {
+  border-bottom-color: #B8D8BA !important;
+}
+
+html[data-reader-theme='green'] [class*='cardTitleLink'] {
+  color: #13301d !important;
+}
+
+/* 护眼绿：折叠框与目录 (details / summary) */
+html[data-reader-theme='green'] details {
+  background-color: #C0DFC4 !important;
+  border-color: #A7CEB9 !important;
+  color: #1b4028 !important;
+}
+
+html[data-reader-theme='green'] details summary {
+  background-color: #B4D6C4 !important;
+  color: #1b4028 !important;
+}
+
+html[data-reader-theme='green'] details summary:hover {
+  background-color: #A7CEB9 !important;
+}
+
+
+
+/* 护眼绿：正文、标题、分割线及链接 */
+html[data-reader-theme='green'] article,
+html[data-reader-theme='green'] .theme-doc-markdown {
+  color: #1b4028 !important;
+}
+
+html[data-reader-theme='green'] article h1,
+html[data-reader-theme='green'] article h2,
+html[data-reader-theme='green'] article h3,
+html[data-reader-theme='green'] article h4,
+html[data-reader-theme='green'] article h5,
+html[data-reader-theme='green'] article h6 {
+  color: #13301d !important;
+}
+
+html[data-reader-theme='green'] article a:not([class*='anchor']) {
+  color: #1f6d3f !important;
+}
+
+html[data-reader-theme='green'] article a:not([class*='anchor']):hover {
+  color: #134d2b !important;
+}
+
+html[data-reader-theme='green'] .theme-doc-markdown > p > a {
+  color: #1f6d3f !important;
+}
+
+html[data-reader-theme='green'] hr {
+  background-color: #A7CEB9 !important;
+  border-color: #A7CEB9 !important;
+}
+
+html[data-reader-theme='green'] .table-of-contents__link {
+  color: #2d563d !important;
+}
+
+html[data-reader-theme='green'] .table-of-contents__link:hover,
+html[data-reader-theme='green'] .table-of-contents__link--active {
+  color: #165b32 !important;
+}
+
+/* ─── 藏红纸主题全站联动 (Tibetan Red Paper) ───────────────── */
+html[data-reader-theme='maroon'],
+html[data-reader-theme='yellow'] {
+  --ifm-background-color: #F8EDE8;
+  --ifm-background-surface-color: #FDF6F3;
+  --ifm-card-background-color: #FDF6F3;
+  --ifm-navbar-background-color: #F1DFD7;
+  --ifm-footer-background-color: #ECE0D9;
+  --ifm-font-color-base: #381E1C;
+  --ifm-heading-color: #5C1D1D;
+  --ifm-color-content: #381E1C;
+  --ifm-color-content-secondary: #5E3230;
+  --ifm-color-primary: #8E2324;
+  --ifm-navbar-link-color: #381E1C;
+  --ifm-menu-color: #381E1C;
+  --ifm-menu-color-active: #8E2324;
+  --ifm-menu-color-background-active: rgba(142, 35, 36, 0.12);
+  --ifm-menu-color-background-hover: rgba(56, 30, 28, 0.06);
+  --ifm-toc-border-color: #DFCCC5;
+  --ifm-color-emphasis-100: rgba(56, 30, 28, 0.05);
+  --ifm-color-emphasis-200: rgba(56, 30, 28, 0.1);
+  --ifm-color-emphasis-300: rgba(56, 30, 28, 0.18);
+  --ifm-footer-color: #381E1C;
+  --ifm-footer-title-color: #5C1D1D;
+  --ifm-footer-link-color: #5E3230;
+  --ifm-footer-link-hover-color: #8E2324;
+}
+
+html[data-reader-theme='maroon'],
+html[data-reader-theme='yellow'],
+html[data-reader-theme='maroon'] body,
+html[data-reader-theme='yellow'] body,
+html[data-reader-theme='maroon'] [class*='docRoot'],
+html[data-reader-theme='yellow'] [class*='docRoot'],
+html[data-reader-theme='maroon'] .main-wrapper,
+html[data-reader-theme='yellow'] .main-wrapper,
+html[data-reader-theme='maroon'] main,
+html[data-reader-theme='yellow'] main {
+  background-color: #F8EDE8 !important;
+  color: #381E1C !important;
+}
+
+/* 藏红纸：顶部导航栏 */
+html[data-reader-theme='maroon'] .navbar,
+html[data-reader-theme='yellow'] .navbar {
+  background-color: #F1DFD7 !important;
+  border-bottom: 1px solid #DEC5BB !important;
+  box-shadow: 0 1px 4px rgba(56, 30, 28, 0.06) !important;
+}
+
+html[data-reader-theme='maroon'] .navbar__title,
+html[data-reader-theme='yellow'] .navbar__title,
+html[data-reader-theme='maroon'] .navbar__brand,
+html[data-reader-theme='yellow'] .navbar__brand,
+html[data-reader-theme='maroon'] .navbar__link,
+html[data-reader-theme='yellow'] .navbar__link,
+html[data-reader-theme='maroon'] .header-search-link,
+html[data-reader-theme='yellow'] .header-search-link {
+  color: #381E1C !important;
+}
+
+html[data-reader-theme='maroon'] .navbar__link:hover,
+html[data-reader-theme='yellow'] .navbar__link:hover,
+html[data-reader-theme='maroon'] .navbar__link--active,
+html[data-reader-theme='yellow'] .navbar__link--active,
+html[data-reader-theme='maroon'] .header-search-link:hover,
+html[data-reader-theme='yellow'] .header-search-link:hover {
+  color: #8E2324 !important;
+}
+
+/* 藏红纸：底部 Footer */
+html[data-reader-theme='maroon'] .footer,
+html[data-reader-theme='yellow'] .footer {
+  background-color: #ECE0D9 !important;
+  border-top: 1px solid #D8C3BB !important;
+  color: #381E1C !important;
+}
+
+html[data-reader-theme='maroon'] .footer__title,
+html[data-reader-theme='yellow'] .footer__title,
+html[data-reader-theme='maroon'] .footer__link-item,
+html[data-reader-theme='yellow'] .footer__link-item,
+html[data-reader-theme='maroon'] .footer__copyright,
+html[data-reader-theme='yellow'] .footer__copyright {
+  color: #381E1C !important;
+}
+
+html[data-reader-theme='maroon'] .footer__link-item:hover,
+html[data-reader-theme='yellow'] .footer__link-item:hover {
+  color: #8E2324 !important;
+}
+
+/* 藏红纸：侧边栏与移动端抽屉 */
+html[data-reader-theme='maroon'] [class*='docSidebarContainer'],
+html[data-reader-theme='yellow'] [class*='docSidebarContainer'],
+html[data-reader-theme='maroon'] .theme-doc-sidebar-menu,
+html[data-reader-theme='yellow'] .theme-doc-sidebar-menu,
+html[data-reader-theme='maroon'] .navbar-sidebar,
+html[data-reader-theme='yellow'] .navbar-sidebar {
+  background-color: #F3E3DC !important;
+  border-right: 1px solid #E0CBC2 !important;
+}
+
+html[data-reader-theme='maroon'] .menu__link,
+html[data-reader-theme='yellow'] .menu__link {
+  color: #381E1C !important;
+}
+
+html[data-reader-theme='maroon'] .menu__link:hover,
+html[data-reader-theme='yellow'] .menu__link:hover {
+  background-color: rgba(56, 30, 28, 0.07) !important;
+  color: #261110 !important;
+}
+
+html[data-reader-theme='maroon'] .menu__link--active,
+html[data-reader-theme='yellow'] .menu__link--active {
+  background-color: rgba(142, 35, 36, 0.12) !important;
+  color: #8E2324 !important;
+}
+
+/* 藏红纸：全站卡片 */
+html[data-reader-theme='maroon'] [class*='searchCard'],
+html[data-reader-theme='yellow'] [class*='searchCard'],
+html[data-reader-theme='maroon'] [class*='introCard'],
+html[data-reader-theme='yellow'] [class*='introCard'],
+html[data-reader-theme='maroon'] [class*='emptyCard'],
+html[data-reader-theme='yellow'] [class*='emptyCard'],
+html[data-reader-theme='maroon'] [class*='errorCard'],
+html[data-reader-theme='yellow'] [class*='errorCard'],
+html[data-reader-theme='maroon'] [class*='transcriptCard'],
+html[data-reader-theme='yellow'] [class*='transcriptCard'],
+html[data-reader-theme='maroon'] [class*='playerCard'],
+html[data-reader-theme='yellow'] [class*='playerCard'],
+html[data-reader-theme='maroon'] .card,
+html[data-reader-theme='yellow'] .card {
+  background-color: #FDF6F3 !important;
+  border-color: #E6D2CA !important;
+  color: #381E1C !important;
+  box-shadow: 0 2px 10px rgba(56, 30, 28, 0.05) !important;
+}
+
+html[data-reader-theme='maroon'] [class*='cardHeader'],
+html[data-reader-theme='yellow'] [class*='cardHeader'] {
+  border-bottom-color: #E6D2CA !important;
+}
+
+html[data-reader-theme='maroon'] [class*='cardTitleLink'],
+html[data-reader-theme='yellow'] [class*='cardTitleLink'] {
+  color: #5C1D1D !important;
+}
+
+/* 藏红纸：折叠框与目录 (details / summary) */
+html[data-reader-theme='maroon'] details,
+html[data-reader-theme='yellow'] details {
+  background-color: #EFE0D9 !important;
+  border-color: #DEC8C0 !important;
+  color: #381E1C !important;
+}
+
+html[data-reader-theme='maroon'] details summary,
+html[data-reader-theme='yellow'] details summary {
+  background-color: #E6D3CB !important;
+  color: #381E1C !important;
+}
+
+html[data-reader-theme='maroon'] details summary:hover,
+html[data-reader-theme='yellow'] details summary:hover {
+  background-color: #DCBEB3 !important;
+}
+
+/* 藏红纸：正文、标题、分割线及链接 */
+html[data-reader-theme='maroon'] article,
+html[data-reader-theme='yellow'] article,
+html[data-reader-theme='maroon'] .theme-doc-markdown,
+html[data-reader-theme='yellow'] .theme-doc-markdown {
+  color: #381E1C !important;
+}
+
+html[data-reader-theme='maroon'] article h1,
+html[data-reader-theme='yellow'] article h1,
+html[data-reader-theme='maroon'] article h2,
+html[data-reader-theme='yellow'] article h2,
+html[data-reader-theme='maroon'] article h3,
+html[data-reader-theme='yellow'] article h3,
+html[data-reader-theme='maroon'] article h4,
+html[data-reader-theme='yellow'] article h4,
+html[data-reader-theme='maroon'] article h5,
+html[data-reader-theme='yellow'] article h5,
+html[data-reader-theme='maroon'] article h6,
+html[data-reader-theme='yellow'] article h6 {
+  color: #5C1D1D !important;
+}
+
+html[data-reader-theme='maroon'] article a:not([class*='anchor']),
+html[data-reader-theme='yellow'] article a:not([class*='anchor']) {
+  color: #8E2324 !important;
+}
+
+html[data-reader-theme='maroon'] article a:not([class*='anchor']):hover,
+html[data-reader-theme='yellow'] article a:not([class*='anchor']):hover {
+  color: #631415 !important;
+}
+
+html[data-reader-theme='maroon'] .theme-doc-markdown > p > a,
+html[data-reader-theme='yellow'] .theme-doc-markdown > p > a {
+  color: #8E2324 !important;
+}
+
+html[data-reader-theme='maroon'] hr,
+html[data-reader-theme='yellow'] hr {
+  background-color: #DEC8C0 !important;
+  border-color: #DEC8C0 !important;
+}
+
+html[data-reader-theme='maroon'] .table-of-contents__link,
+html[data-reader-theme='yellow'] .table-of-contents__link {
+  color: #5E3230 !important;
+}
+
+html[data-reader-theme='maroon'] .table-of-contents__link:hover,
+html[data-reader-theme='yellow'] .table-of-contents__link:hover,
+html[data-reader-theme='maroon'] .table-of-contents__link--active,
+html[data-reader-theme='yellow'] .table-of-contents__link--active {
+  color: #8E2324 !important;
+}
+
+/* ─── 默认白主题全站联动 (Default White) ───────────────────── */
+html[data-theme='light'][data-reader-theme='white'] {
+  --ifm-background-color: #ffffff;
+  --ifm-background-surface-color: #ffffff;
+  --ifm-card-background-color: #ffffff;
+  --ifm-navbar-background-color: #ffffff;
+  --ifm-footer-background-color: #f8f9fa;
+  --ifm-font-color-base: #2d2d2d;
+  --ifm-heading-color: inherit;
+  --ifm-navbar-link-color: #333333;
+}
+
+/* 首页 Hero 区域标题与副标题始终保持纯白 */
+.hero--primary,
+.hero--primary .hero__title,
+.hero--primary .hero__subtitle {
+  color: #ffffff !important;
+}
+
+html[data-theme='light'][data-reader-theme='white'] .footer {
+  background-color: #f8f9fa !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
 }
 
 /* ─── 导航栏搜索图标链接 ─────────────────────────────── */
@@ -240,4 +1012,32 @@ details .table-of-contents__link--active {
   padding-right: 0 !important;
   max-width: 100% !important;
 }
+
+/* ─── 阅读器字体切换 (Font Family Switching) ───────────────── */
+html[data-reader-font='lxgw'] article,
+html[data-reader-font='lxgw'] article p,
+html[data-reader-font='lxgw'] article h1,
+html[data-reader-font='lxgw'] article h2,
+html[data-reader-font='lxgw'] article h3,
+html[data-reader-font='lxgw'] article h4,
+html[data-reader-font='lxgw'] article h5,
+html[data-reader-font='lxgw'] article h6,
+html[data-reader-font='lxgw'] article li,
+html[data-reader-font='lxgw'] article blockquote {
+  font-family: 'LXGW WenKai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+html[data-reader-font='fangsong'] article,
+html[data-reader-font='fangsong'] article p,
+html[data-reader-font='fangsong'] article h1,
+html[data-reader-font='fangsong'] article h2,
+html[data-reader-font='fangsong'] article h3,
+html[data-reader-font='fangsong'] article h4,
+html[data-reader-font='fangsong'] article h5,
+html[data-reader-font='fangsong'] article h6,
+html[data-reader-font='fangsong'] article li,
+html[data-reader-font='fangsong'] article blockquote {
+  font-family: 'FangSong', '仿宋', 'STFangsong', '华文仿宋', 'ZhuqueFangsong', fangsong, serif !important;
+}
+
 

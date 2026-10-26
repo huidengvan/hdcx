@@ -1,18 +1,66 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styles from './index.module.css';
 import useLocalStorageState from 'use-local-storage-state';
+import { useColorMode } from '@docusaurus/theme-common';
 
 // ── 主题配置（背景色 + 文字色）──────────────────────────
 export const themes = [
-    { id: 'white',  name: '默认白', bg: 'white',   text: '#2d2d2d' },
-    { id: 'warm',   name: '暖褐纸', bg: '#FFF2E2', text: '#4a3728' },
-    { id: 'green',  name: '护眼绿', bg: '#CCE8CF', text: '#1e4030' },
-    { id: 'yellow', name: '淡黄纸', bg: '#FAF9DE', text: '#3d3a10' },
-    { id: 'dark',   name: '夜间墨', bg: '#1e1e2e', text: '#cdd6f4' },
+    { id: 'white',  name: '默认白', bg: '#ffffff', text: '#2d2d2d', accent: '#4b5563' },
+    { id: 'warm',   name: '暖褐纸', bg: '#FFF2E2', text: '#4a3728', accent: '#8c5e3c' },
+    { id: 'green',  name: '护眼绿', bg: '#CCE8CF', text: '#1b4028', accent: '#2e7d32' },
+    { id: 'maroon', name: '藏红纸', bg: '#F8EDE8', text: '#381E1C', accent: '#8E2324' },
 ];
 
+// ── 字体配置（支持系统默认、霞鹜文楷、经典仿宋）────────────
+export const fonts = [
+    {
+        id: 'default',
+        name: '系统默认',
+        label: '默认',
+    },
+    {
+        id: 'lxgw',
+        name: '霞鹜文楷',
+        label: '文楷',
+        cdnUrl: 'https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css',
+        linkId: 'reader-font-lxgw',
+    },
+    {
+        id: 'fangsong',
+        name: '经典仿宋',
+        label: '仿宋',
+        cdnUrl: 'https://cdn.jsdelivr.net/npm/@free-fonts/zhuque-fangsong/zhuque-fangsong.css',
+        linkId: 'reader-font-fangsong',
+    },
+];
+
+// 动态按需加载字体（使用默认字体时不额外发起网络请求，避免影响首屏加载速度）
+export const loadFontStylesheet = (fontId) => {
+    if (typeof document === 'undefined' || !fontId || fontId === 'default') return;
+    const font = fonts.find(f => f.id === fontId);
+    if (!font || !font.cdnUrl) return;
+
+    if (!document.getElementById(font.linkId)) {
+        // CDN 预连接以减少 DNS 和 TLS 握手耗时
+        if (!document.getElementById('reader-font-preconnect')) {
+            const preconnect = document.createElement('link');
+            preconnect.id = 'reader-font-preconnect';
+            preconnect.rel = 'preconnect';
+            preconnect.href = 'https://cdn.jsdelivr.net';
+            preconnect.crossOrigin = 'anonymous';
+            document.head.appendChild(preconnect);
+        }
+
+        const link = document.createElement('link');
+        link.id = font.linkId;
+        link.rel = 'stylesheet';
+        link.href = font.cdnUrl;
+        document.head.appendChild(link);
+    }
+};
+
 const FONT_MIN = 12;
-const FONT_MAX = 28;
+const FONT_MAX = 36;
 const FONT_STEP = 2;
 const FONT_DEFAULT = 16;
 
@@ -20,29 +68,57 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
     // 默认收起为小 A 悬浮按钮，支持本地持久化记录展开/收起状态
     const [collapsed, setCollapsed] = useLocalStorageState('readerToolbarCollapsed', { defaultValue: true });
     const [themeIndex, setThemeIndex] = useLocalStorageState('readerThemeIndex', { defaultValue: 0 });
+    const [fontFamily, setFontFamily] = useLocalStorageState('readerFontFamily', { defaultValue: 'default' });
     const [fontSize, setFontSize] = useLocalStorageState('readerFontSize', { defaultValue: FONT_DEFAULT });
     const [anchorsVisible, setAnchorsVisible] = useLocalStorageState('readerAnchorsVisible', { defaultValue: true });
     const containerRef = useRef(null);
+    const { colorMode, setColorMode } = useColorMode();
+
+    // 纠正超出当前主题数量的索引（例如历史缓存了 4: 夜间墨）
+    const safeThemeIndex = (typeof themeIndex === 'number' && themeIndex >= 0 && themeIndex < themes.length) ? themeIndex : 0;
 
     // 获取 docRoot DOM 节点
     const getDocRoot = useCallback(() =>
         document.querySelector('[class*=docRoot]'), []);
 
+    // 监听导航栏或其它地方派发的全局阅读主题变更事件
+    useEffect(() => {
+        const handleExternalThemeChange = (e) => {
+            if (e.detail && typeof e.detail.index === 'number') {
+                const idx = (e.detail.index >= 0 && e.detail.index < themes.length) ? e.detail.index : 0;
+                setThemeIndex(idx);
+            }
+        };
+        window.addEventListener('reader-theme-change', handleExternalThemeChange);
+        return () => window.removeEventListener('reader-theme-change', handleExternalThemeChange);
+    }, [setThemeIndex]);
+
     // 应用背景主题
     const applyTheme = useCallback((idx) => {
-        const root = getDocRoot();
-        if (!root) return;
-        const t = themes[idx] || themes[0];
-        root.style.backgroundColor = t.bg;
-        root.setAttribute('data-reader-theme', t.id);
+        const safeIdx = (typeof idx === 'number' && idx >= 0 && idx < themes.length) ? idx : 0;
+        const t = themes[safeIdx] || themes[0];
 
-        // 同步更新 article 内文字色与主题属性
-        const article = document.querySelector('article');
-        if (article) {
-            article.style.color = t.text;
-            article.setAttribute('data-reader-theme', t.id);
+        if (typeof document !== 'undefined') {
+            // 设置到全局 <html> 根节点，联动全站（导航栏、卡片、底部、侧边栏、正文）
+            document.documentElement.setAttribute('data-reader-theme', t.id);
+
+            // 清理 docRoot 与 article 内联硬编码颜色，让 CSS 变量与主题选择器生效
+            const root = getDocRoot();
+            if (root) {
+                root.style.backgroundColor = '';
+                root.setAttribute('data-reader-theme', t.id);
+            }
+            const article = document.querySelector('article');
+            if (article) {
+                article.style.color = '';
+                article.setAttribute('data-reader-theme', t.id);
+            }
         }
-        localStorage.setItem('bgColorIndex', idx);
+        try {
+            localStorage.setItem('readerTheme', t.id);
+            localStorage.setItem('readerThemeIndex', safeIdx);
+            localStorage.setItem('bgColorIndex', safeIdx);
+        } catch (e) {}
     }, [getDocRoot]);
 
     // 应用字体大小
@@ -69,8 +145,28 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
 
     // 初始化/更新时应用设置
     useEffect(() => {
-        applyTheme(themeIndex);
-    }, [themeIndex, applyTheme]);
+        applyTheme(safeThemeIndex);
+    }, [safeThemeIndex, applyTheme]);
+
+    // 字体变更与按需异步加载
+    useEffect(() => {
+        if (fontFamily && fontFamily !== 'default') {
+            loadFontStylesheet(fontFamily);
+        }
+        if (typeof document !== 'undefined') {
+            document.documentElement.setAttribute('data-reader-font', fontFamily || 'default');
+        }
+    }, [fontFamily]);
+
+    const handleFontFamilyChange = (id) => {
+        setFontFamily(id);
+        if (id !== 'default') {
+            loadFontStylesheet(id);
+        }
+        if (typeof document !== 'undefined') {
+            document.documentElement.setAttribute('data-reader-font', id);
+        }
+    };
 
     useEffect(() => {
         applyFontSize(fontSize);
@@ -102,17 +198,39 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
     }, [collapsed, setCollapsed]);
 
     const handleThemeChange = (idx) => {
-        setThemeIndex(idx);
+        const safeIdx = (typeof idx === 'number' && idx >= 0 && idx < themes.length) ? idx : 0;
+        // 如果当前是夜间模式，切换到指定纸张主题时，退出夜间模式，确保纸张色彩全站生效
+        if (colorMode === 'dark') {
+            setColorMode('light');
+        }
+        setThemeIndex(safeIdx);
+        applyTheme(safeIdx);
+        window.dispatchEvent(new CustomEvent('reader-theme-change', { detail: { index: safeIdx, id: themes[safeIdx].id } }));
     };
+
+    // 监听全局派发的阅读字号变更事件
+    useEffect(() => {
+        const handleExternalFontSize = (e) => {
+            if (e.detail && typeof e.detail.size === 'number') {
+                setFontSize(e.detail.size);
+            }
+        };
+        window.addEventListener('reader-fontsize-change', handleExternalFontSize);
+        return () => window.removeEventListener('reader-fontsize-change', handleExternalFontSize);
+    }, [setFontSize]);
 
     const handleFontSize = (delta) => {
         setFontSize(prev => {
             const next = Math.min(FONT_MAX, Math.max(FONT_MIN, prev + delta));
+            window.dispatchEvent(new CustomEvent('reader-fontsize-change', { detail: { size: next } }));
             return next;
         });
     };
 
-    const handleResetFont = () => setFontSize(FONT_DEFAULT);
+    const handleResetFont = () => {
+        setFontSize(FONT_DEFAULT);
+        window.dispatchEvent(new CustomEvent('reader-fontsize-change', { detail: { size: FONT_DEFAULT } }));
+    };
 
     const toggleAnchors = () => setAnchorsVisible(prev => !prev);
 
@@ -132,7 +250,7 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
             } else {
                 if (tocNode) tocNode.style.display = 'none';
                 articleCol.className = '';
-                articleCol.style.fontSize = 'x-large';
+                articleCol.style.fontSize = '';
             }
             const sidebarButton = document.querySelector('[class*="collapseSidebarButton"]');
             sidebarButton?.click();
@@ -144,7 +262,9 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
         ? isWidescreen
         : (typeof document !== 'undefined' && document.querySelector('article')?.parentElement?.parentElement?.className === '');
 
-    const currentTheme = themes[themeIndex] || themes[0];
+    const isDark = colorMode === 'dark';
+    const currentTheme = themes[safeThemeIndex] || themes[0];
+    const currentThemeLabel = (isDark && safeThemeIndex === 0) ? '夜间模式' : currentTheme.name;
 
     return (
         <div ref={containerRef} className={styles.container}>
@@ -183,28 +303,75 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
                     <div className={styles.section}>
                         <div className={styles.sectionLabelRow}>
                             <span className={styles.label}>主题</span>
-                            <span className={styles.subLabel}>{currentTheme.name}</span>
+                            <span className={styles.subLabel}>{currentThemeLabel}</span>
                         </div>
                         <div className={styles.themeRow}>
-                            {themes.map((t, i) => (
+                            {themes.map((t, i) => {
+                                const isActive = isDark ? (i === 0 && safeThemeIndex === 0) : (safeThemeIndex === i);
+                                return (
+                                    <button
+                                        key={t.name}
+                                        data-theme-id={t.id}
+                                        className={`${styles.themeBtn} ${isActive ? styles.themeBtnActive : ''} ${isDark && isActive ? styles.themeBtnDarkActive : ''}`}
+                                        style={{
+                                            backgroundColor: t.bg === 'white' ? '#fff' : t.bg,
+                                        }}
+                                        onClick={() => handleThemeChange(i)}
+                                        title={t.name}
+                                        aria-label={`主题：${t.name}`}
+                                        aria-pressed={isActive}
+                                    >
+                                        {isActive && (
+                                            <svg
+                                                className={styles.themeCheckIcon}
+                                                viewBox="0 0 16 16"
+                                                fill="none"
+                                                aria-hidden="true"
+                                            >
+                                                <path
+                                                    d="M3.5 8.5L6.5 11.5L12.5 4.5"
+                                                    stroke="currentColor"
+                                                    strokeWidth="2.2"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                />
+                                            </svg>
+                                        )}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    <div className={styles.divider} />
+
+                    {/* 2. 字体选择（系统默认、霞鹜文楷、经典仿宋） */}
+                    <div className={styles.section}>
+                        <div className={styles.sectionLabelRow}>
+                            <span className={styles.label}>字体</span>
+                            <span className={styles.subLabel}>
+                                {fonts.find(f => f.id === fontFamily)?.name || '系统默认'}
+                            </span>
+                        </div>
+                        <div className={styles.fontFamilyRow}>
+                            {fonts.map((f) => (
                                 <button
-                                    key={t.name}
-                                    className={`${styles.themeBtn} ${themeIndex === i ? styles.themeBtnActive : ''}`}
-                                    style={{
-                                        backgroundColor: t.bg === 'white' ? '#fff' : t.bg,
-                                    }}
-                                    onClick={() => handleThemeChange(i)}
-                                    title={t.name}
-                                    aria-label={`主题：${t.name}`}
-                                    aria-pressed={themeIndex === i}
-                                />
+                                    key={f.id}
+                                    className={`${styles.fontFamilyBtn} ${fontFamily === f.id ? styles.fontFamilyBtnActive : ''}`}
+                                    onClick={() => handleFontFamilyChange(f.id)}
+                                    title={f.name}
+                                    aria-label={`切换字体：${f.name}`}
+                                    aria-pressed={fontFamily === f.id}
+                                >
+                                    {f.label}
+                                </button>
                             ))}
                         </div>
                     </div>
 
                     <div className={styles.divider} />
 
-                    {/* 2. 字号调整 */}
+                    {/* 3. 字号调整 */}
                     <div className={styles.section}>
                         <div className={styles.sectionLabelRow}>
                             <span className={styles.label}>字号</span>

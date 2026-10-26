@@ -334,6 +334,185 @@
     color: #86efac !important;
 }
 
+/* 单独播放器卡片（无字幕时居中自适应） */
+.playerCardSolo {
+    flex: 1 !important;
+    width: 100% !important;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+/* 字幕加载标签 */
+.transcriptLoadingTag {
+    font-size: 11px;
+    font-weight: 500;
+    color: #2e8555;
+    background: rgba(46, 133, 85, 0.1);
+    padding: 1px 6px;
+    border-radius: 4px;
+}
+
+[data-theme='dark'] .transcriptLoadingTag {
+    color: #4ade80;
+    background: rgba(74, 222, 128, 0.12);
+}
+
+/* ─── 骨架屏样式 ───────────────────────────────────── */
+.skeletonContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.skeletonItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(125, 125, 125, 0.03);
+}
+
+.skeletonTime {
+    width: 44px;
+    height: 18px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, rgba(125, 125, 125, 0.08) 25%, rgba(125, 125, 125, 0.18) 50%, rgba(125, 125, 125, 0.08) 75%);
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.5s infinite ease-in-out;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.skeletonContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.skeletonLine {
+    height: 14px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, rgba(125, 125, 125, 0.08) 25%, rgba(125, 125, 125, 0.18) 50%, rgba(125, 125, 125, 0.08) 75%);
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.5s infinite ease-in-out;
+}
+
+.skeletonLineShort {
+    height: 12px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, rgba(125, 125, 125, 0.08) 25%, rgba(125, 125, 125, 0.18) 50%, rgba(125, 125, 125, 0.08) 75%);
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.5s infinite ease-in-out;
+}
+
+@keyframes skeletonShimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+[data-theme='dark'] .skeletonItem {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme='dark'] .skeletonTime,
+[data-theme='dark'] .skeletonLine,
+[data-theme='dark'] .skeletonLineShort {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.12) 50%, rgba(255, 255, 255, 0.05) 75%);
+    background-size: 200% 100%;
+}
+
+/* ─── PC 端充满屏幕（无边距视频在左字幕在右） ───────────── */
+@media screen and (min-width: 901px) {
+    .containerFull {
+        max-width: 100vw !important;
+        width: 100vw !important;
+        margin-left: calc(-50vw + 50%) !important;
+        margin-right: calc(-50vw + 50%) !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        padding: 0 !important;
+        overflow-x: hidden;
+    }
+
+    .layoutFull {
+        gap: 0 !important;
+        width: 100% !important;
+        height: calc(100vh - 60px) !important;
+        max-height: calc(100vh - 60px) !important;
+        align-items: stretch !important;
+        background: #000000;
+    }
+
+    .playerCardFull {
+        flex: 1.6 !important;
+        height: 100% !important;
+        max-height: 100% !important;
+        border-radius: 0 !important;
+        gap: 0 !important;
+        background: #000000;
+        overflow: hidden;
+        width: auto !important;
+        max-width: none !important;
+        margin: 0 !important;
+    }
+
+    .videoWrapperFull {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        height: calc(100% - 46px) !important;
+        aspect-ratio: auto !important;
+        flex: 1;
+        background: #000000;
+    }
+
+    .audioWrapperFull {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        height: calc(100% - 46px) !important;
+        flex: 1;
+    }
+
+    .mediaMetaFull {
+        border-radius: 0 !important;
+        border-left: none !important;
+        border-right: none !important;
+        border-bottom: none !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+        background: #111116 !important;
+        color: #f3f4f6 !important;
+        padding: 8px 16px !important;
+        height: 46px !important;
+        box-sizing: border-box;
+    }
+
+    .mediaMetaFull .mediaTitle {
+        color: #f3f4f6 !important;
+    }
+
+    .transcriptCardFull {
+        flex: 1 !important;
+        min-width: 360px !important;
+        max-width: 520px !important;
+        height: 100% !important;
+        max-height: 100% !important;
+        border-radius: 0 !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        border-right: none !important;
+        border-left: 1px solid rgba(125, 125, 125, 0.18) !important;
+        box-shadow: none !important;
+    }
+}
+
 /* 空字幕占位 */
 .emptyState {
     display: flex;
