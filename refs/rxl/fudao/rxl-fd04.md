@@ -1,12 +1,20 @@
 # 入行论辅导第3品(36-46)
 
 import TOCInline from '@theme/TOCInline';
+import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 <TOCInline toc={toc} maxHeadingLevel='6' />
 
 ---
 
 ## 《入菩萨行论》第36节课
+
+<SectionAudio
+  id="rxl-fd-036"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第02册24-46/入行论广解036课%202012年03月02日.mp3"
+  title="入行论广解第036课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 下面宣讲第四品不放逸：
 
@@ -172,6 +180,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第37节课
 
+<SectionAudio
+  id="rxl-fd-037"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第02册24-46/入行论广解037课%202012年03月05日.mp3"
+  title="入行论广解第037课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 今天继续学习寂天菩萨所造的殊胜论典《入菩萨行论》。
 
 《入菩萨行论》通过十品的教言教导我们发起殊胜的菩提心。菩提心是三世一切诸佛菩萨成佛的通衢大道，作为后学者，必须要了解、修行这样殊胜的成佛之道。十品中前三品讲到了菩提心没有产生而令生起，中间三品（四、五、六品）是生起之后如何不退转。现在正学习中间三品中的第一品，即第四品——不放逸。
@@ -294,6 +309,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第38节课
 
+<SectionAudio
+  id="rxl-fd-038"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第02册24-46/入行论广解038课%202012年03月06日.mp3"
+  title="入行论广解第038课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 现在继续学习寂天菩萨所造的《入行论》第四品不放逸中的不舍菩提心。
 
 辛三、教诫不舍菩提心：
@@ -383,6 +405,13 @@ import TOCInline from '@theme/TOCInline';
 人身是因为修善法而得，即生中如果中止了善法的修行，后世凭什么可以继续获得人身？是不会获得的。因为人身不是通过运气、力量获得，而是通过某种因缘，此因缘就是修善法。现在的人身是以前修善法而获得的，现在获得人身不继续修善法，以后通过什么因缘获得人身？不会获得的。现在已经获得暇满所依的人身应该谨慎，利用暇满人生，发掘他的潜力，尽量修持善法，不要造罪业。这就叫“谨慎所依圆满”。
 
 ## 《入菩萨行论》第39节课
+
+<SectionAudio
+  id="rxl-fd-039"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第02册24-46/入行论广解039课%202012年03月06日.mp3"
+  title="入行论广解第039课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 现在继续学习“谨慎所依暇满”的科判，下面讲第二个颂词：
 
@@ -478,6 +507,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第40节课
 
+<SectionAudio
+  id="rxl-fd-040"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第02册24-46/入行论广解040课%202012年03月10日.mp3"
+  title="入行论广解第040课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 我们继续学习不认真修学就会堕入恶趣的道理，今天通过理证加以说明:
 
 癸二、理证之依据：
@@ -545,6 +581,13 @@ import TOCInline from '@theme/TOCInline';
 学习这个颂词时要这样思维：现在我们是以一个快乐者、一个自在者的身份来看这个颂词、学习这个颂词，似乎颂词中的情景离自己特别远，没有丝毫关系，如果我们真正懈怠懒惰下去，没有认真修行，一旦堕到地狱之时，颂词所描绘的情况就会真实再现在自己身上。现在地狱中，仍有无数众生正在感受痛苦，正在承担以前所做恶行的后果，为此付出代价。如果我们不认认真真修行，就会变成第二批受苦者。这不是佛恐吓我们，我们观察后知道因果的确不虚的道理。那么，如果我们在修行佛法时没有谨慎取舍、没有思维果报，一旦荒废了时光，累积很多罪业，到临死的时候，痛苦就会降临在自己身上。。所以，对颂词的内容要做身临其境的观想，只有这样才能体会颂词当中殊胜的加持。今天的课程就讲到这地方。
 
 ## 《入菩萨行论》第41节课
+
+<SectionAudio
+  id="rxl-fd-041"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第02册24-46/入行论广解041课%202012年03月11日.mp3"
+  title="入行论广解第041课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，我们一起学习寂天菩萨所造的《入菩萨行论》。《入菩萨行论》分十品，现在宣讲的是第四品不放逸。
 
@@ -694,6 +737,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第42节课
 
+<SectionAudio
+  id="rxl-fd-042"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第02册24-46/入行论广解042课%202012年03月12日.mp3"
+  title="入行论广解第042课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 今天我们继续学习寂天菩萨所造的《入菩萨行论》。
 
 癸二、作大损害：
@@ -747,6 +797,13 @@ import TOCInline from '@theme/TOCInline';
 下面寂天菩萨会告诉我们，踏上调伏烦恼的路途中，会遇到各种各样的痛苦，我们应该怎样面对这些痛苦。本课就讲到这里。
 
 ## 《入菩萨行论》第43节课
+
+<SectionAudio
+  id="rxl-fd-043"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第02册24-46/入行论广解043课%202012年03月12日.mp3"
+  title="入行论广解第043课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 现在学习第四品不放逸，不放逸是修行菩萨道过程中的重要因素，无论修学任何善法，都需要具足不放逸。不放逸是修法的根本。放逸会使心处于散乱、不知取舍的状态，失坏修行者的身份；只有处于不放逸、谨慎取舍的状态中，才可以提醒自己哪些事情应该做，哪些事情不应该做；哪些应该想，哪些不应该想。
 
@@ -846,6 +903,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第44节课
 
+<SectionAudio
+  id="rxl-fd-044"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第02册24-46/入行论广解044课%202012年03月13日.mp3"
+  title="入行论广解第044课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 现在我们继续学习，对于断除烦恼要有强烈的意乐心。
 
 壬二（莫因痛苦而厌倦）分三：一、观察所断之罪过而不厌倦；二、观察对治之功德而不厌倦；三、观察自己承诺而不厌倦。
@@ -913,6 +977,13 @@ import TOCInline from '@theme/TOCInline';
 今天就讲到这里。
 
 ## 《入菩萨行论》第45节课
+
+<SectionAudio
+  id="rxl-fd-045"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第02册24-46/入行论广解045课%202012年03月19日.mp3"
+  title="入行论广解第045课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 寂天论师所造的《入菩萨行论》，宣讲的是帮助立志成佛度化众生的菩萨，修持菩提道的精要“菩提心”。
 
@@ -1039,6 +1110,13 @@ import TOCInline from '@theme/TOCInline';
 通过对比，我们应该知道，坚持不懈对治烦恼的确非常重要。今天的课就讲到这里。
 
 ## 《入菩萨行论》第46节课
+
+<SectionAudio
+  id="rxl-fd-046"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第02册24-46/入行论广解046课%202012年03月19日.mp3"
+  title="入行论广解第046课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 下面继续学习第三个科判“坚持不懈对治烦恼”：
 

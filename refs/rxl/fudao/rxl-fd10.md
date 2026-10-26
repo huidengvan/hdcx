@@ -1,12 +1,20 @@
 # 入行论辅导第10品(191-201)
 
 import TOCInline from '@theme/TOCInline';
+import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 <TOCInline toc={toc} maxHeadingLevel='6' />
 
 ---
 
 ## 《入菩萨行论》第191节课
+
+<SectionAudio
+  id="rxl-fd-191"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-191%202013年12月27日.mp3"
+  title="入行论广解第191课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，今天我们再次一起来学习寂天菩萨所造的《入菩萨行论》。《入菩萨行论》分十品，前面九品对世俗菩提心、胜义菩提心做了非常详尽的宣讲。《入行论》是专门论述菩提心、菩萨行的殊胜论典。
 
@@ -294,6 +302,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第192节课
 
+<SectionAudio
+  id="rxl-fd-192"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-192%202013年12月27日.mp3"
+  title="入行论广解第192课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 下面看第二堂课的内容。这节课宣讲“愿痛苦自息”当中的第二个科判，对怎样熄灭地狱痛苦的回向进行广说。
 
 子二、广说：
@@ -513,6 +528,13 @@ import TOCInline from '@theme/TOCInline';
 今天的课就讲到这个地方。
 
 ## 《入菩萨行论》第193节课
+
+<SectionAudio
+  id="rxl-fd-193"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-193%202014年01月05日.mp3"
+  title="入行论广解第193课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，今天我们再次一起学习寂天菩萨所造的《入菩萨行论》。《入菩萨行论》宣讲的主要是菩提心。前面我们说为利益一切众生而发菩提心，《入行论》就是教我们怎样发菩提心的殊胜方法。
 
@@ -774,6 +796,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第194节课
 
+<SectionAudio
+  id="rxl-fd-194"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-194%202014年01月05日.mp3"
+  title="入行论广解第194课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 我们再来看下面的内容。这一课也是宣讲愿他力而息灭地狱有情痛苦的回向，颂词是这样讲：
 
 复愿狱有情，以吾善根力，
@@ -923,6 +952,13 @@ import TOCInline from '@theme/TOCInline';
 今天就讲到这个地方。
 
 ## 《入菩萨行论》第195节课
+
+<SectionAudio
+  id="rxl-fd-195"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-195%202014年01月11日.mp3"
+  title="入行论广解第195课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，今天我们再次一起学习寂天菩萨造的《入行论》。
 
@@ -1216,6 +1252,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第196节课
 
+<SectionAudio
+  id="rxl-fd-196"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-196%202014年01月10日.mp3"
+  title="入行论广解第196课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 下面我们继续学习《入行论》，现在学的是第二个科判回向善趣众生的内容。
 
 前面针对地狱、饿鬼等有情离苦得乐的方便作了一些学习、回向。其实对人道众生来讲,更容易体会我们身边的各种痛苦、疾病等（有些是自己感受的，有些是看到的），所以本科判的内容更贴近我们的生活。这并不是说回向地狱饿鬼没有意义，最需要回向的还是三恶趣的众生，但以人世间可以现量见到的素材来作回向的话，更能修习我们的善心。
@@ -1472,6 +1515,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第197节课
 
+<SectionAudio
+  id="rxl-fd-197"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-197%202014年01月17日.mp3"
+  title="入行论广解第197课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 发了菩提心之后，今天再一次来学习寂天菩萨所造的《入菩萨行论》。
 
 《入菩萨行论》分了十品。前面九品为：殊胜的菩提心没有产生让其产生的，有第一、二、三品；生起之后让其不退转的，有第四、五、六品；在不退转的基础上再再增上的，有第七、八、九品；第十品是回向功德。
@@ -1695,6 +1745,13 @@ import TOCInline from '@theme/TOCInline';
 下面还有几个颂词，这一堂课先解释到这里，下堂课再把三个颂词一起解释。
 
 ## 《入菩萨行论》第198节课
+
+<SectionAudio
+  id="rxl-fd-198"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-198%202014年01月17日.mp3"
+  title="入行论广解第198课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 下面继续学入行论《回向品》。
 
@@ -1957,6 +2014,13 @@ import TOCInline from '@theme/TOCInline';
 今天我们就学习到这里。
 
 ## 《入菩萨行论》第199节课
+
+<SectionAudio
+  id="rxl-fd-199"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-199%202014年01月24日.mp3"
+  title="入行论广解第199课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，今天我们再次一起学习寂天菩萨所造的《入菩萨行论》。
 
@@ -2224,6 +2288,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第200节课
 
+<SectionAudio
+  id="rxl-fd-200"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-200%202014年01月24日.mp3"
+  title="入行论广解第200课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 下面我们继续学《入行论》回向品，接着讲为趋入佛教而回向的内容。
 
 愿离恶趣苦，以及诸艰困，
@@ -2409,6 +2480,13 @@ import TOCInline from '@theme/TOCInline';
 以成就无见顶相的福德广大千万倍可以成就十力者佛语深密具六十分支的梵音声中的一支。大目犍连去往西方无数世界也听得到佛陀的语声。由此也可了知这种功德。
 
 ## 《入菩萨行论》第201节课
+
+<SectionAudio
+  id="rxl-fd-201"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-201%202014年02月15日.mp3"
+  title="入行论广解第201课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，今天我们继续学习寂天菩萨所造的《入菩萨行论》。《入菩萨行论》是宣讲希求成佛的凡夫修学者如何趋入菩萨道的修行指南。如果我们想要成佛，必须经由非常正确的道路和方法来进行修学，而《入行论》就给我们提供了这样一种修学的方法和指导。按照华智仁波切对《入行论》的科判，全论分三大部分：
 

@@ -264,32 +264,33 @@
   height: 38px;
   padding: 0;
   border-radius: 19px 0 0 19px;
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(245, 248, 245, 0.75);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.25);
+  border: 1px solid rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.35);
   border-right: none;
-  box-shadow: none;
+  box-shadow: -1px 2px 6px rgba(0, 0, 0, 0.05);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--ifm-color-primary);
-  opacity: 0.42;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.55;
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
   overflow: hidden;
 }
 
 [data-theme='dark'] .floatingOrb {
-  background: rgba(30, 30, 46, 0.4);
-  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(28, 32, 40, 0.75);
+  border-color: rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.45);
   color: var(--ifm-color-primary);
 }
 
-/* 播放中稍微提升可见度 */
+/* 播放中提升可见度 */
 .floatingOrb.orbPlaying {
-  opacity: 0.65;
+  opacity: 0.78;
   border-color: var(--ifm-color-primary);
 }
 
@@ -297,7 +298,7 @@
 .floatingOrb.orbActive {
   width: 32px;
   opacity: 1;
-  background: var(--ifm-card-background-color, rgba(255, 255, 255, 0.9));
+  background: var(--ifm-card-background-color, rgba(255, 255, 255, 0.95));
   box-shadow: -2px 3px 12px rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.25);
 }
 
@@ -305,18 +306,25 @@
   background: rgba(30, 34, 42, 0.95);
 }
 
-/* 左侧贴边的垂直进度线 */
-.orbProgressBar {
+/* 从左向右覆盖背景的进度填充层 (有清晰对比度，每隔几秒平滑推进) */
+.orbProgressFill {
   position: absolute;
   left: 0;
+  top: 0;
   bottom: 0;
-  width: 2.5px;
-  background: var(--ifm-color-primary);
-  transition: height 0.2s linear;
-  border-radius: 0 0 0 19px;
+  background: rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.32);
+  transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+[data-theme='dark'] .orbProgressFill {
+  background: rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.45);
 }
 
 .orbCenter {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;

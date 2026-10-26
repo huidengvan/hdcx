@@ -1,12 +1,20 @@
 # 入行论辅导第9品(153-190)
 
 import TOCInline from '@theme/TOCInline';
+import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 <TOCInline toc={toc} maxHeadingLevel='6' />
 
 ---
 
 ## 《入菩萨行论》第153节课
+
+<SectionAudio
+  id="rxl-fd-153"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第07册139-161/入行论广解153课%202013年07月26日.mp3"
+  title="入行论广解第153课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，今天我们再一起学习寂天菩萨所造的《入菩萨行论》。按照华智仁波切的讲法，前面的九品是分了三个部分或者阶段：第一、二、三品是未生令生起，第四、五、六品是已生令不退，第七、八、九品，是不退而增上。现在我们学习的是第三部分——不退而增上。
 
@@ -362,6 +370,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第154节课
 
+<SectionAudio
+  id="rxl-fd-154"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第07册139-161/入行论广解154课%202013年07月26日.mp3"
+  title="入行论广解第154课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 下面继续学习《智慧品》的空性。
 
 前面讲了“为果不观察”，我们再对此补充一下。前面说在抉择世俗的时候不观察，在抉择胜义的时候要观察，是什么原因呢？其实，一切万法的显现，我们眼睛能看到、耳朵能听到的所有的显现，我们不观察的时候，它就如是的存在。对于这些存在的法，会有不同的一种认知。它该生灭就生灭，该生就生，该灭就灭了，就是这样一种状态。众生执着它或者使用它，像这样，这一切是纯世俗的。
@@ -613,6 +628,13 @@ import TOCInline from '@theme/TOCInline';
 因此，与教相违的过失、诤论，完全是可以通过中观宗的观察予以遣除的。这一堂课的内容就学习到这个地方。
 
 ## 《入菩萨行论》第155节课
+
+<SectionAudio
+  id="rxl-fd-155"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第07册139-161/入行论广解155课%202013年08月02日.mp3"
+  title="入行论广解第155课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，我们继续学习寂天菩萨所造的《入菩萨行论》。
 
@@ -936,6 +958,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第156节课
 
+<SectionAudio
+  id="rxl-fd-156"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第07册139-161/入行论广解156课%202013年08月02日.mp3"
+  title="入行论广解第156课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 下面继续学习《智慧品》。
 
 《智慧品》当中讲的智慧，并不是世俗当中的小聪明、小智慧，是了悟一切万法的究竟实相。说到了悟万法究竟实相，有时候我们会容易理解成和自己没有关系，其实它是了悟自己本体的心性、无我的殊胜智慧。
@@ -1254,6 +1283,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第157节课
 
+<SectionAudio
+  id="rxl-fd-157"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第07册139-161/入行论广解157课%202013年08月10日.mp3"
+  title="入行论广解第157课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 发了菩提心之后，下面一起学习寂天菩萨所造的《入菩萨行论》。
 
 《入菩萨行论》是凡夫众生趣入菩萨行的修法，里面讲了很多菩萨的作意、行为以及修行的窍诀。针对初学菩萨道的人来讲，可能很多的理念、修行的方法，相对来讲比较陌生。但是寂天菩萨应用了相合于我们分别念、相合于我们相续当中如来藏善性的内容，作了一些教诫。如果有一定的福报善根，再加上有殊胜上师的引导，其实我们也会发现，我们逐渐在适应菩萨道的理念，逐渐也可以修行菩萨道。
@@ -1544,6 +1580,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第158节课
 
+<SectionAudio
+  id="rxl-fd-158"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第07册139-161/入行论广解158课%202013年08月10日.mp3"
+  title="入行论广解第158课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 下面继续学习《入菩萨行论》。
 
 智慧品当中，我们在分析唯识在胜义当中实不实有的观点。在世俗当中，一切万法唯识，的确有很多的功德、利益，而且前面我们提到，在世俗当中，唯识是名言的实相。但在胜义当中，因为要了知一切万法的究竟实相，所以我们要通过胜义理论，观察是否存在哪怕微细如芝麻许的实有法。
@@ -1731,6 +1774,13 @@ import TOCInline from '@theme/TOCInline';
 以上我们就学完了今天的课程。
 
 ## 《入菩萨行论》第159节课
+
+<SectionAudio
+  id="rxl-fd-159"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第07册139-161/入行论广解159课%202013年08月16日.mp3"
+  title="入行论广解第159课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，我们一起学习寂天菩萨所造的《入菩萨行论》。
 
@@ -1992,6 +2042,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第160节课
 
+<SectionAudio
+  id="rxl-fd-160"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第07册139-161/入行论广解160课%202013年08月16日.mp3"
+  title="入行论广解第160课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 下面继续学习《智慧品》。
 
 现在讲到“修持有境正道”，首先是“了知世俗如幻而修道”，在“真实宣说”前面，讲到了对方的观点。其实对方的观点也代表我们心中的邪见、分别念，尤其是对于空性的正道，还没有了知的非常熟悉的时候，经常会产生“如果是空性的，那又怎么修道啊？”或者“是空性的，怎么能对治烦恼啊”等等很多不同的想法。我们内心当中如果有了这些不同的想法，就没有办法一心一意地去修持空性，因为内心当中有疑惑的缘故。虽然我们也修空性，但是内心当中的疑惑不解决，修空性的时候，力量也不会很强。
@@ -2252,6 +2309,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第161节课
 
+<SectionAudio
+  id="rxl-fd-161"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第07册139-161/入行论广解161课%202013年08月23日.mp3"
+  title="入行论广解第161课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 《入菩萨行论》分了三大内容：首先菩提心胜宝未生令生起，这是第一、二、三品；然后菩提心生起之后，不能退失的是第四、五、六品；最后在不退失的基础上，要让它辗转增上，这是第七、八、九品。
 
 其中第七品，在世俗菩提心和胜义菩提心不退失的基础上，都能增上的方便就是精进，不管是修世俗菩提心，还是修胜义菩提心，缺少了精进，是绝对无法让菩提心增上的；第八品主要是讲世俗菩提心，让世俗菩提心增上的窍诀就是静虑品。因为前面已经讲到了世俗菩提心的内容，但是要让它再再地增长，就是第八品——静虑；胜义菩提心是讲远离四边八戏的空性智慧，这种智慧增上就是第九品——智慧品。
@@ -2510,6 +2574,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第162节课
 
+<SectionAudio
+  id="rxl-fd-162"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解162课%202013年08月23日.mp3"
+  title="入行论广解第162课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 下面继续学习智慧品。
 
 辛二（了知胜义空性而修道）分二：一、辩诤；二、答辩。
@@ -2745,6 +2816,13 @@ import TOCInline from '@theme/TOCInline';
 今天我们就讲到这里。
 
 ## 《入菩萨行论》第163节课
+
+<SectionAudio
+  id="rxl-fd-163"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解163课%202013年08月30日.mp3"
+  title="入行论广解第163课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，我们一起学习寂天菩萨所造的《入菩萨行论》。《入菩萨行论》是改造凡夫自私自利的作意，令其生起大乘菩提心，并由菩提心趣向于菩萨行，最后获得佛果的窍诀关要，是趣入菩萨行为、修道的殊胜论典。所以，里面很多的思想和平常人的思想完全不一样。如果按照凡夫人的思维看《入菩萨行论》，有很多地方是不可思议、难以理解的。
 
@@ -3000,6 +3078,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第164节课
 
+<SectionAudio
+  id="rxl-fd-164"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解164课%202013年08月30日.mp3"
+  title="入行论广解第164课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 前面讲了未断烦恼不得涅槃。
 
 寅二、断烦恼亦不得涅槃：
@@ -3233,6 +3318,13 @@ import TOCInline from '@theme/TOCInline';
 这节课就讲到这个地方。
 
 ## 《入菩萨行论》第165节课
+
+<SectionAudio
+  id="rxl-fd-165"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解165课%202013年09月06日.mp3"
+  title="入行论广解第165课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，我们再一次一起学习寂天菩萨所造的《入菩萨行论》。
 
@@ -3505,6 +3597,13 @@ import TOCInline from '@theme/TOCInline';
 共同的摄义就是讲，不要破除空性，应该去恭敬空性，去珍惜空性的教言。这节课我们学习到这个地方。
 
 ## 《入菩萨行论》第166节课
+
+<SectionAudio
+  id="rxl-fd-166"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解166课%202013年09月06日.mp3"
+  title="入行论广解第166课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 己二（深入对境无我）
 
@@ -3789,6 +3888,13 @@ import TOCInline from '@theme/TOCInline';
 以上我们讲的是破俱生我，如果有些需要补充的内容，以后还可以再讲。今天的课就讲到这里。
 
 ## 《入菩萨行论》第167节课
+
+<SectionAudio
+  id="rxl-fd-167"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解167课%202013年09月13日.mp3"
+  title="入行论广解第167课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，我们再一次学习寂天菩萨造的《入菩萨行论》。这部论是让初学的凡夫人从自私自利的作意解脱出来，发起殊胜的利他菩提心。进一步要让菩提心得以清净，则要通过空正见进行对治。
 
@@ -4098,6 +4204,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第168节课
 
+<SectionAudio
+  id="rxl-fd-168"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解168课%202013年09月13日.mp3"
+  title="入行论广解第168课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 寅三（以相互不缘之推理而破）分二：一、安立推理；二、遣除不成立。
 
 卯一、安立推理：
@@ -4295,6 +4408,13 @@ import TOCInline from '@theme/TOCInline';
 今天的课就讲到这里。
 
 ## 《入菩萨行论》第169节课
+
+<SectionAudio
+  id="rxl-fd-169"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解169课%202013年09月21日.mp3"
+  title="入行论广解第169课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，我们一起学习寂天菩萨造的《入菩萨行论》。此论是引导凡夫趣向菩萨道和究竟成佛之道最为殊胜的窍诀指南，对生起菩提心的次第做了非常清晰、深广的宣说。
 
@@ -4538,6 +4658,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第170节课
 
+<SectionAudio
+  id="rxl-fd-170"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解170课%202013年09月21日.mp3"
+  title="入行论广解第170课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 下面继续学习智慧品。
 
 “遣除违教”这个科判，前面讲了一部分，下面还有一部分内容，通过比喻来说明：
@@ -4767,6 +4894,13 @@ import TOCInline from '@theme/TOCInline';
 今天的课就讲到这个地方。
 
 ## 《入菩萨行论》第171节课
+
+<SectionAudio
+  id="rxl-fd-171"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解171课%202013年09月28日.mp3"
+  title="入行论广解第171课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，我们再一次一起学习寂天菩萨所造的《入菩萨行论》。《入菩萨行论》是指导一个具有自私自利心念的具惑凡夫，趣向于菩提心、菩萨道，经由菩萨道而成佛的殊胜窍诀论典。
 
@@ -5014,6 +5148,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第172节课
 
+<SectionAudio
+  id="rxl-fd-172"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解172课%202013年09月28日.mp3"
+  title="入行论广解第172课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 我们继续学习《入行论》。前面观察了分支具有身体和分支相联之身，这些已经讲完了。
 
 子二、破与支分不相联之身：
@@ -5239,6 +5380,13 @@ import TOCInline from '@theme/TOCInline';
 这节课就讲到这里。
 
 ## 《入菩萨行论》第173节课
+
+<SectionAudio
+  id="rxl-fd-173"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解173课%202013年10月12日.mp3"
+  title="入行论广解第173课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 为度化一切众生，请大家发无上的菩提心！发了菩提心之后，今天我们再一次一起学习寂天菩萨所造的《入行论》。
 
@@ -5470,6 +5618,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第174节课
 
+<SectionAudio
+  id="rxl-fd-174"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解174课%202013年10月12日.mp3"
+  title="入行论广解第174课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 下面继续学习《智慧品》。
 
 前面的科判对于受的自性胜义中不成立，理论的观察已经讲完了。
@@ -5689,6 +5844,13 @@ import TOCInline from '@theme/TOCInline';
 今天的课就讲到这个地方。
 
 ## 《入菩萨行论》第175节课
+
+<SectionAudio
+  id="rxl-fd-175"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解175课%202013年10月19日.mp3"
+  title="入行论广解第175课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，我们今天再一次一起学习寂天菩萨所造的《入菩萨行论》。
 
@@ -5924,6 +6086,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第176节课
 
+<SectionAudio
+  id="rxl-fd-176"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解176课%202013年10月19日.mp3"
+  title="入行论广解第176课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 我们继续学习《入行论•智慧品》。
 
 现在学习的是观察身、受、心、法四念住的本性。前面对于身念住抉择身无自性，受念住抉择受无自性，都已经抉择完了。
@@ -6153,6 +6322,13 @@ import TOCInline from '@theme/TOCInline';
 今天我们课就讲到这里。
 
 ## 《入菩萨行论》第177节课
+
+<SectionAudio
+  id="rxl-fd-177"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解177课%202013年10月25日.mp3"
+  title="入行论广解第177课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 为度化一切众生，请大家发无上的菩提心！发了菩提心之后，今天我们继续学习寂天菩萨造的《入菩萨行论》。全论有十品，前面九品的次第是菩提心胜宝未生令生起、已生令不退、辗转令增长。第一、二、三品，是没有生起菩提心让它生起的窍诀；第四、五、六品，是生起之后，怎么样不退失；第七、八、九品，不退失的基础上，怎么样让它再再地增长。
 
@@ -6394,6 +6570,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第178节课
 
+<SectionAudio
+  id="rxl-fd-178"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解178课%202013年10月26日.mp3"
+  title="入行论广解第178课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 下面继续学习《入行论•智慧品》。
 
 己三（破除所断实执）分三：一、总说；二、遮破能立；三、宣说能害。
@@ -6545,6 +6728,13 @@ import TOCInline from '@theme/TOCInline';
 今天的课就讲到这里。
 
 ## 《入菩萨行论》第179节课
+
+<SectionAudio
+  id="rxl-fd-179"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解179课%202013年11月02日.mp3"
+  title="入行论广解第179课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，我们继续学习《入菩萨行论•智慧品》。智慧品抉择万法究竟的本性。平时我们眼睛看到的、耳朵听到的、心识感觉到的一切显现，是像眼识看到的那样真实存在，还是有其他存在的方式？按照一般世间人的见闻觉知，认为看到了一定就存在，所以就把看到的执为实有，好的就拼命追求，不悦意的就要排斥。如果谁在这个过程当中制造违缘，我们很自然就会产生嗔恨心。
 
@@ -6732,6 +6922,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第180节课
 
+<SectionAudio
+  id="rxl-fd-180"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解180课%202013年11月02日.mp3"
+  title="入行论广解第180课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 下面继续学习“破常因生”，前面针对大自在天作为万法生因的观点进行了分析。
 
 丑二、由彼所生不存在：
@@ -6867,6 +7064,13 @@ import TOCInline from '@theme/TOCInline';
 今天的课就讲到这个地方。
 
 ## 《入菩萨行论》第181节课
+
+<SectionAudio
+  id="rxl-fd-181"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解181课%202013年11月08日.mp3"
+  title="入行论广解第181课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 为度化一切众生，请大家发无上的菩提心！
 
@@ -7057,6 +7261,13 @@ import TOCInline from '@theme/TOCInline';
 这节课就讲到这里。
 
 ## 《入菩萨行论》第182节课
+
+<SectionAudio
+  id="rxl-fd-182"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解182课%202013年11月08日.mp3"
+  title="入行论广解第182课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 下面继续学习《智慧品》。《智慧品》抉择了一切万法的空性。万法的本体是远离四边八戏的，这种本体不是任何人创造的，而是万法本来如是安住于这样的状态中。只不过众生因为自己的无明、执著、分别念错解了，对这种状态不了知，产生了很多烦恼、业惑。
 
@@ -7261,6 +7472,13 @@ import TOCInline from '@theme/TOCInline';
 今天我们的课就讲到这里。
 
 ## 《入菩萨行论》第183节课
+
+<SectionAudio
+  id="rxl-fd-183"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解183课%202013年11月16日.mp3"
+  title="入行论广解第183课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，我们一起来学习寂天菩萨所造的《入菩萨行论》。
 
@@ -7482,6 +7700,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第184节课
 
+<SectionAudio
+  id="rxl-fd-184"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第08册162-184/入行论广解184课%202013年11月16日.mp3"
+  title="入行论广解第184课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 发了菩提心之后，我们继续学习《入行论•智慧品》。
 
 我们现在学习的是抉择胜义谛的空性，对于一切万法的空性，必须要通过正确的根据才能抉择出来。按照全知麦彭仁波切在《定解宝灯论》《智慧品注释》中的观点，如果缺少了前世的福报，或者没有比较深的空性习气，有些空性的术语即便思维一百年也没办法通达它的意义。
@@ -7676,6 +7901,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第185节课
 
+<SectionAudio
+  id="rxl-fd-185"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-185%202013年12月07日.mp3"
+  title="入行论广解第185课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 发了菩提心之后，今天我们再一次一起学习寂天菩萨所造的《入菩萨行论》。
 
 我们通过《入菩萨行论》前八品的内容，学习到了世俗菩提心的方方面面。首先是作为一个没有发菩提心、自私自利心很重的凡夫人，怎样对菩提心产生欢喜心，所以宣讲了菩提心的利益。懂得菩提心的利益之后，我们想要发菩提心的话，必须要忏悔罪业，所以讲了忏悔品。然后宣讲了怎样通过仪轨受持世俗菩提心，发愿菩提心和行菩提心，所以第三品讲了受菩萨戒的方法。然后是不放逸和正知正念品，可以让我们生起菩提心之后不退失。
@@ -7857,6 +8089,13 @@ import TOCInline from '@theme/TOCInline';
 这节课就讲到这个地方。
 
 ## 《入菩萨行论》第186节课
+
+<SectionAudio
+  id="rxl-fd-186"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-186%202013年12月07日.mp3"
+  title="入行论广解第186课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，我们继续学习《智慧品》。下面也是继续抉择诸法的空性，前面讲到了一切诸法的生不成立，灭也不成立，二边生、二边灭都没有。
 
@@ -8068,6 +8307,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第187节课
 
+<SectionAudio
+  id="rxl-fd-187"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-187%202013年12月14日.mp3"
+  title="入行论广解第187课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 发了菩提心之后，今天我们再一次一起来学习寂天菩萨所造的《入菩萨行论》。
 
 《入菩萨行论》对于一个修行者来讲是非常重要的修行指南，这部论典为我们指出了我执的危害性，关于如何舍弃我执，发起菩提心的殊胜方法、正确的心态、行为、殊胜的果，在《入行论》当中都讲得非常清楚。
@@ -8274,6 +8520,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 《入菩萨行论》第188节课
 
+<SectionAudio
+  id="rxl-fd-188"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-188%202013年12月14日.mp3"
+  title="入行论广解第188课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
+
 发了菩提心之后，我们一起来学习寂天菩萨所造的《入菩萨行论》。
 
 辛二、后世感受痛苦：
@@ -8421,6 +8674,13 @@ import TOCInline from '@theme/TOCInline';
 今天的课就讲到这个地方。
 
 ## 《入菩萨行论》第189节课
+
+<SectionAudio
+  id="rxl-fd-189"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-189%202013年12月21日.mp3"
+  title="入行论广解第189课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，今天我们继续一起学习寂天菩萨所造的《入菩萨行论》。
 
@@ -8615,6 +8875,13 @@ import TOCInline from '@theme/TOCInline';
 今天这节课就讲到这里。
 
 ## 《入菩萨行论》第190节课
+
+<SectionAudio
+  id="rxl-fd-190"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/001-入行论释/fudao/第09册185-201/入行论广解-190%202013年12月21日.mp3"
+  title="入行论广解第190课-辅导"
+  subtitle="生西法师 • 辅导音频"
+/>
 
 发了菩提心之后，下面我们继续学习《智慧品》最后几个颂词。
 

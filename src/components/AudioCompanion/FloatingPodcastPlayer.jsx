@@ -63,6 +63,8 @@ export default function FloatingPodcastPlayer() {
   }
 
   const progressPercent = duration > 0 ? Math.min(100, Math.max(0, (currentTime / duration) * 100)) : 0;
+  // 悬浮侧边按钮的进度填充：每 3 秒离散更新一次，避免过于频繁跳动，平滑覆盖背景
+  const orbProgressPercent = duration > 0 ? Math.min(100, Math.max(0, (Math.floor(currentTime / 3) * 3 / duration) * 100)) : 0;
 
   // 循环切换倍速
   const handleNextRate = (e) => {
@@ -192,10 +194,10 @@ export default function FloatingPodcastPlayer() {
         title={isDeckOpen ? '收起播放面板' : `展开播放器: ${currentTrack.title}`}
         aria-label="音频伴读悬浮球"
       >
-        {/* 贴在左边缘的垂直细微进度线 */}
+        {/* 从左向右覆盖背景的进度填充层 */}
         <div
-          className={styles.orbProgressBar}
-          style={{ height: `${progressPercent}%` }}
+          className={styles.orbProgressFill}
+          style={{ width: `${orbProgressPercent}%` }}
         />
 
         {/* 状态内容：播放中展示跳动均衡器，暂停展示播放按钮 */}
