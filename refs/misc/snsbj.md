@@ -498,7 +498,7 @@ import TOCInline from '@theme/TOCInline';
 
 ## 讲记音频
 
-- [随念三宝经释——无尽吉祥妙音讲记音频](https://box.hdcxb.net/%E6%85%A7%E7%81%AF%E7%A6%85%E4%BF%AE/xmfw/04%E9%9A%8F%E5%BF%B5%E4%B8%89%E5%AE%9D%E7%BB%8F%E9%87%8A)
+- [随念三宝经释——无尽吉祥妙音讲记音频](https://box.hdcxb.net/禅修班/xmfw/04%E9%9A%8F%E5%BF%B5%E4%B8%89%E5%AE%9D%E7%BB%8F%E9%87%8A)
 
 ## **随念三宝经释——无尽吉祥妙音讲记（上）**
 
