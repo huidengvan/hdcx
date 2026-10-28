@@ -6,6 +6,7 @@ sidebar_position: 52
 ---
 
 import TOCInline from '@theme/TOCInline';
+import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 <details>
 <summary>目录</summary>
@@ -13,6 +14,21 @@ import TOCInline from '@theme/TOCInline';
 </details>
 
 ## 🎧 《佛子行》第1课笔录
+
+<SectionAudio
+  id="fzxfd-00"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/佛子行/佛子行00 发心.mp3"
+  title="佛子行 课前发心"
+  subtitle="《佛子行》辅导音频"
+/>
+
+<SectionAudio
+  id="fzxfd-01"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/佛子行/佛子行01.mp3"
+  title="《佛子行》第1课辅导"
+  subtitle="《佛子行》辅导音频"
+/>
+
 
 
 诸法等性本基法界中，自现圆满三身游舞力，
@@ -228,6 +244,14 @@ import TOCInline from '@theme/TOCInline';
 
 ## 🎧 《佛子行》第2课笔录
 
+<SectionAudio
+  id="fzxfd-02"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/佛子行/佛子行02.mp3"
+  title="《佛子行》第2课辅导"
+  subtitle="《佛子行》辅导音频"
+/>
+
+
 诸法等性本基法界中，自现圆满三身游舞力，
 
 离障本来怙主龙钦巴，祈请无垢光尊常护我。
@@ -434,6 +458,14 @@ import TOCInline from '@theme/TOCInline';
 
 
 ## 🎧 《佛子行》第3课笔录
+
+<SectionAudio
+  id="fzxfd-03"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/佛子行/佛子行03.mp3"
+  title="《佛子行》第3课辅导"
+  subtitle="《佛子行》辅导音频"
+/>
+
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -678,6 +710,14 @@ import TOCInline from '@theme/TOCInline';
 
 ## 🎧 《佛子行》第4课笔录
 
+<SectionAudio
+  id="fzxfd-04"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/佛子行/佛子行04.mp3"
+  title="《佛子行》第4课辅导"
+  subtitle="《佛子行》辅导音频"
+/>
+
+
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -886,6 +926,14 @@ import TOCInline from '@theme/TOCInline';
 
 ## 🎧 《佛子行》第5课笔录
 
+<SectionAudio
+  id="fzxfd-05"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/佛子行/佛子行05.mp3"
+  title="《佛子行》第5课辅导"
+  subtitle="《佛子行》辅导音频"
+/>
+
+
 诸法等性本基法界中，自现圆满三身游舞力，
 
 离障本来怙主龙钦巴，祈请无垢光尊常护我。
@@ -1060,6 +1108,14 @@ import TOCInline from '@theme/TOCInline';
 
 
 ## 🎧 《佛子行》第6课笔录
+
+<SectionAudio
+  id="fzxfd-06"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/佛子行/佛子行06.mp3"
+  title="《佛子行》第6课辅导"
+  subtitle="《佛子行》辅导音频"
+/>
+
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -1266,6 +1322,14 @@ import TOCInline from '@theme/TOCInline';
 
 ## 🎧 《佛子行》第7课笔录
 
+<SectionAudio
+  id="fzxfd-07"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/佛子行/佛子行07.mp3"
+  title="《佛子行》第7课辅导"
+  subtitle="《佛子行》辅导音频"
+/>
+
+
 
 诸法等性本基法界中，自现圆满三身游舞力，
 
@@ -1437,6 +1501,21 @@ import TOCInline from '@theme/TOCInline';
 
 
 ## 🎧 《佛子行》第8课笔录
+
+<SectionAudio
+  id="fzxfd-08"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/佛子行/佛子行08.mp3"
+  title="《佛子行》第8课辅导"
+  subtitle="《佛子行》辅导音频"
+/>
+
+<SectionAudio
+  id="fzxfd-09"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/佛子行/佛子行09 回向.mp3"
+  title="佛子行 课后回向"
+  subtitle="《佛子行》辅导音频"
+/>
+
 
 
 诸法等性本基法界中，自现圆满三身游舞力，

@@ -16,7 +16,6 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
 
     const [subtitles, setSubtitles] = useState([]);
     const [isSubLoading, setIsSubLoading] = useState(false);
-    const [subFetchCompleted, setSubFetchCompleted] = useState(false);
     const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(-1);
     const videoRef = useVideo();
     const listRef = useRef(null);
@@ -33,11 +32,11 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             title: '',
             current: 0,
             playbackRate: 1,
-            fullWidth: false,
         }
     });
 
-    const isFullWidth = Boolean(playInfo?.fullWidth);
+    // PC 端默认使用宽屏 UI
+    const isFullWidth = true;
     const hasSubtitles = subtitles && subtitles.length > 0;
     const showTranscript = isSubLoading || hasSubtitles;
 
@@ -69,10 +68,8 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
 
         if (isHdcx) {
             setIsSubLoading(true);
-            setSubFetchCompleted(false);
         } else {
             setIsSubLoading(false);
-            setSubFetchCompleted(true);
         }
     }, [src, videoSrc]);
 
@@ -115,11 +112,11 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
         const list = listRef.current;
         if (!el || !list) return;
 
-        // 仅滚动字幕卡片内部容器，避免触发 iOS Safari 整页窗口抖动与滚动
+        // 仅滚动字幕卡片内部容器，使正在播放的字幕定位在字幕框约 40% 高度的位置
         const elTop = el.offsetTop;
         const elHeight = el.offsetHeight;
-        const listHeight = list.clientHeight / 2;
-        const targetScrollTop = elTop - (listHeight / 3) + (elHeight / 3);
+        const containerHeight = list.clientHeight;
+        const targetScrollTop = elTop - (containerHeight * 0.4) + (elHeight / 2);
 
         list.scrollTo({
             top: Math.max(0, targetScrollTop),
@@ -146,7 +143,6 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             setSubtitles([]);
         } finally {
             setIsSubLoading(false);
-            setSubFetchCompleted(true);
         }
     };
 
@@ -164,7 +160,6 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             handleSubtitleFetch(suburl, videoDuration);
         } else {
             setIsSubLoading(false);
-            setSubFetchCompleted(true);
             setSubtitles([]);
         }
 
@@ -254,50 +249,8 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                     <div className={`${styles.transcriptCard} ${isFullWidth ? styles.transcriptCardFull : ''}`}>
                         {/* 面板头部 */}
                         <div className={styles.transcriptHeader}>
-                            <div className={styles.transcriptTitle}>
-                                <svg className={styles.transcriptIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                                    <line x1="9" y1="9" x2="15" y2="9" />
-                                    <line x1="9" y1="13" x2="13" y2="13" />
-                                </svg>
-                                <span>同步字幕</span>
-                                {isSubLoading ? (
-                                    <span className={styles.transcriptLoadingTag}>加载中...</span>
-                                ) : (
-                                    subtitles.length > 0 && (
-                                        <span className={styles.transcriptCount}>({subtitles.length}句)</span>
-                                    )
-                                )}
-                            </div>
-
                             {/* 功能选项 */}
                             <div className={styles.transcriptActions}>
-                                <button
-                                    className={`${styles.pillToggle} ${isFullWidth ? styles.pillToggleActive : ''}`}
-                                    onClick={() => setPlayInfo(prev => ({ ...prev, fullWidth: !prev.fullWidth }))}
-                                    title={isFullWidth ? '恢复标准居中边距' : '开启充满屏幕（左侧视频右侧字幕无边距）'}
-                                    aria-label={isFullWidth ? '恢复标准边距' : '充满屏幕'}
-                                >
-                                    <svg className={styles.pillIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        {isFullWidth ? (
-                                            <>
-                                                <polyline points="4 14 10 14 10 20" />
-                                                <polyline points="20 10 14 10 14 4" />
-                                                <line x1="14" y1="10" x2="21" y2="3" />
-                                                <line x1="3" y1="21" x2="10" y2="14" />
-                                            </>
-                                        ) : (
-                                            <>
-                                                <polyline points="15 3 21 3 21 9" />
-                                                <polyline points="9 21 3 21 3 15" />
-                                                <line x1="21" y1="3" x2="14" y2="10" />
-                                                <line x1="3" y1="21" x2="10" y2="14" />
-                                            </>
-                                        )}
-                                    </svg>
-                                    <span>{'宽屏'}</span>
-                                </button>
-
                                 <button
                                     className={`${styles.pillToggle} ${playInfo?.showTimeLine ? styles.pillToggleActive : ''}`}
                                     onClick={() => setPlayInfo(prev => ({ ...prev, showTimeLine: !prev.showTimeLine }))}

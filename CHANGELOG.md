@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2026-10-28]
+
+### Added
+- 在《释迦牟尼佛广传·白莲花论》（`refs/cczj/blhl.md`）120 章节下批量嵌入配套有声书音频（`SectionAudio`），保持未转义原生中文路径规范
+- 在《一生修行的重点和归宿》（`refs/misc/ysxxdzdhgs.md`）第 1~13 讲下嵌入益西彭措堪布讲解配套音频（`SectionAudio`）
+- 在《佛子行》辅导（`refs/misc/fzxfd.md`）第 1~8 课下嵌入 10 集配套辅导音频（含课前发心与课后回向）
+- 在《七句祈祷文释·白莲花》辅导（`refs/misc/qjqdw-fudao.md`）第 1~8 课下嵌入智诚堪布讲解配套音频
+
+### Changed
+- 优化 `SubtitleContext` 视频同步字幕 UI：
+  - PC 端默认采用宽屏布局，移除宽屏切换按钮
+  - 移除加载中状态、同步字幕标题/图标及字幕句数统计，界面极简聚焦
+  - 调整字幕自动滚动计算策略，将高亮播放行定位在字幕视口约 40% 高度位置
+  - 清理组件内无用的状态变量及多余逻辑代码
+
+
 ## [2026-10-26]
 
 ### Added
