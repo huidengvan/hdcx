@@ -1044,7 +1044,19 @@ html[data-reader-font='fangsong'] article blockquote {
    打印样式：PDF 高保真导出优化（剔除所有页面无关元素，只保留正文）
    ============================================================ */
 @media print {
-  /* 彻底隐藏：侧边栏、阅读器控制台、顶部导航、右侧目录大纲、页脚、面包屑等全部非正文元素 */
+  /* 彻底隐藏：无障碍跳转标签（跳到主要内容）、侧边栏、阅读器控制台、顶部导航、右侧目录大纲、页脚、面包屑、悬浮播放器等全部非正文元素 */
+  [class*='skipToContent'],
+  a[href*='skipToContent'],
+  a[href^='#__docusaurus_skipToContent'],
+  div[role='region'][aria-label*='主要内容'],
+  div[role='region'][aria-label*='main content'],
+  [class*='announcementBar'],
+  .announcementBar,
+  [class*='backToTop'],
+  .theme-back-to-top-button,
+  [class*='floatingWrapper'],
+  [class*='floatingOrb'],
+  [class*='podcastDeck'],
   #reader-toolbar-root,
   .reader-toolbar-global,
   .no-print,
@@ -1071,7 +1083,15 @@ html[data-reader-font='fangsong'] article blockquote {
     display: none !important;
   }
 
-  /* 重置正文容器，彻底消除左右栏栅格限制，整洁铺满整张 A4 纸 */
+  /* 禁用全部过渡与动画，避免打印模式切换时触发 WebKit 动画回流循环 */
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+    -webkit-transition: none !important;
+    -webkit-animation: none !important;
+  }
+
+  /* 重置正文容器为纯 Block 流式布局，彻底消除 Flex 容器导致的 WebKit 分页死锁与 100% CPU 假死 */
   main,
   .main-wrapper,
   .container,
@@ -1081,9 +1101,11 @@ html[data-reader-font='fangsong'] article blockquote {
   main .row > div,
   article,
   .theme-doc-markdown {
+    display: block !important;
+    flex: none !important;
+    float: none !important;
     max-width: 100% !important;
     width: 100% !important;
-    flex: 0 0 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     position: static !important;
@@ -1099,21 +1121,13 @@ html[data-reader-font='fangsong'] article blockquote {
     line-height: 1.6;
   }
 
-  /* 智能防跨页截断处理（避免代码块、图片跨页腰斩） */
+  /* 仅针对块级预格式文本、表格、图片执行防截断，避免与内联元素或标题冲突导致死循环 */
   pre,
-  code,
-  blockquote,
   table,
-  img,
-  figure {
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
-  }
-
-  /* 避免标题孤留在页脚 */
-  h1, h2, h3, h4 {
-    page-break-after: avoid !important;
-    break-after: avoid !important;
+  figure,
+  blockquote {
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 
   /* 当用户未勾选保留行号时，打印 PDF 自动隐藏段落行号锚点 */

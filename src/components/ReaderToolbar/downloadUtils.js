@@ -136,15 +136,34 @@ export function serializeToXhtml(node, includeAnchors) {
         return `<${tag}${attrs} />`;
     }
 
+    let hasOpen = false;
     let attrs = '';
     for (const attr of node.attributes) {
         if (attr.name.startsWith('on') || attr.name.startsWith('data-')) continue;
+        if (attr.name === 'open') {
+            hasOpen = true;
+            attrs += ' open="open"';
+            continue;
+        }
+        if (attr.name === 'style') {
+            // 彻底剥离 Docusaurus 内部 React 折叠组件注入的行内隐藏样式
+            const cleaned = attr.value
+                .replace(/display\s*:\s*none;?/gi, '')
+                .replace(/height\s*:\s*0(px)?;?/gi, '')
+                .replace(/overflow\s*:\s*hidden;?/gi, '')
+                .replace(/will-change\s*:[^;]+;?/gi, '')
+                .trim();
+            if (cleaned) {
+                attrs += ` style="${escapeXml(cleaned)}"`;
+            }
+            continue;
+        }
         attrs += ` ${attr.name}="${escapeXml(attr.value)}"`;
     }
 
     // 在 EPUB 电子书中强制展开 <details> 目录
-    if (tag === 'details' && !node.hasAttribute('open')) {
-        attrs += ' open=""';
+    if (tag === 'details' && !hasOpen) {
+        attrs += ' open="open"';
     }
 
     let children = '';
@@ -207,33 +226,16 @@ export function exportTxt(includeAnchors) {
 export function exportPdf(includeAnchors, onBeforePrint) {
     if (onBeforePrint) onBeforePrint();
 
-    const { title, filename } = getArticleMetadata();
+    const { filename } = getArticleMetadata();
     const originalTitle = document.title;
 
-    // 自动展开所有文章内的折叠框（支持 Docusaurus React Collapsible 机制）
+    // 仅在原生 HTML 层面为未打开的折叠框添加 open 属性，绝不侵入修改内部 React 行内样式
     const closedDetails = Array.from(
-        document.querySelectorAll('article details:not([open]), main details:not([open]), details[data-collapsed="true"]')
+        document.querySelectorAll('article details:not([open]), main details:not([open])')
     );
-
-    // 记录被强制展开的 DOM 节点与其原始行内样式
-    const modifiedDivs = [];
     closedDetails.forEach(d => {
         d.setAttribute('open', '');
         d.open = true;
-
-        // Docusaurus 的 Collapsible 组件会在 details 的直接子 div 注入 display: none; height: 0px; 等行内样式
-        const innerDivs = d.querySelectorAll('div');
-        innerDivs.forEach(div => {
-            const prevDisplay = div.style.display;
-            const prevHeight = div.style.height;
-            const prevOverflow = div.style.overflow;
-            if (prevDisplay === 'none' || prevHeight === '0px' || prevOverflow === 'hidden') {
-                modifiedDivs.push({ el: div, display: prevDisplay, height: prevHeight, overflow: prevOverflow });
-                div.style.display = 'block';
-                div.style.height = 'auto';
-                div.style.overflow = 'visible';
-            }
-        });
     });
 
     let cleaned = false;
@@ -242,12 +244,6 @@ export function exportPdf(includeAnchors, onBeforePrint) {
         cleaned = true;
         document.title = originalTitle;
         document.body.classList.remove('hide-print-anchors');
-        // 恢复所有被展开的 details 与其内部 div 样式
-        modifiedDivs.forEach(({ el, display, height, overflow }) => {
-            el.style.display = display;
-            el.style.height = height;
-            el.style.overflow = overflow;
-        });
         closedDetails.forEach(d => {
             d.removeAttribute('open');
             d.open = false;
@@ -255,7 +251,9 @@ export function exportPdf(includeAnchors, onBeforePrint) {
         window.removeEventListener('afterprint', cleanup);
     };
 
-    window.addEventListener('afterprint', cleanup);
+    window.addEventListener('afterprint', cleanup, { once: true });
+    // 保底复原（针对部分移动端浏览器未触发 afterprint 事件的情况，2.5s 足够平滑过渡）
+    setTimeout(cleanup, 2500);
 
     try {
         if (!includeAnchors) {
@@ -266,17 +264,14 @@ export function exportPdf(includeAnchors, onBeforePrint) {
 
         document.title = filename;
 
-        // 等待 200ms 让 React 完成面板收起、DOM 目录展开渲染，确保纯净完整打印
+        // 留出 120ms 让 React 完成面板收起，随后调起打印
         setTimeout(() => {
             window.print();
-        }, 200);
+        }, 120);
     } catch (err) {
         console.error('PDF 打印调起失败:', err);
         cleanup();
         toast.error('PDF 打印调起失败');
-    } finally {
-        // 60秒安全保底，避免打印窗口开启时间较长时过早收拢
-        setTimeout(cleanup, 60000);
     }
 }
 
@@ -348,6 +343,39 @@ pre {
   overflow-x: auto;
   border-radius: 4px;
 }
+details {
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin: 1.2em 0;
+  background-color: #f8fafc;
+}
+details summary {
+  font-weight: 700;
+  font-size: 1.05em;
+  cursor: pointer;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 6px;
+}
+.table-of-contents, ul.table-of-contents {
+  list-style: disc;
+  padding-left: 20px;
+  margin: 8px 0;
+}
+.table-of-contents li {
+  margin: 4px 0;
+  line-height: 1.6;
+}
+.table-of-contents a {
+  color: #2563eb;
+  text-decoration: none;
+}
+.table-of-contents ul {
+  list-style: circle;
+  padding-left: 20px;
+  margin: 4px 0;
+}
 `;
         oebps.file('style.css', cssContent);
 
@@ -370,7 +398,21 @@ pre {
 </html>`;
         oebps.file('chapter1.xhtml', chapterContent);
 
-        // EPUB 规范 5: 目录 toc.xhtml
+        // EPUB 规范 5: 目录 toc.xhtml（提取正文章节生成原生导航大纲）
+        const headingEls = Array.from(contentEl.querySelectorAll('h1, h2, h3'));
+        let navList = '';
+        if (headingEls.length > 0) {
+            navList = headingEls
+                .map((h, i) => {
+                    const id = h.id || `heading-${i}`;
+                    const text = h.innerText.replace(/^#+\s*/, '').replace(/\[p\d+\]/g, '').trim();
+                    return `      <li><a href="chapter1.xhtml#${escapeXml(id)}">${escapeXml(text)}</a></li>`;
+                })
+                .join('\n');
+        } else {
+            navList = `      <li><a href="chapter1.xhtml">${escapeXml(title)}</a></li>`;
+        }
+
         const tocContent = `<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
@@ -382,7 +424,7 @@ pre {
   <nav epub:type="toc" id="toc">
     <h1>目录</h1>
     <ol>
-      <li><a href="chapter1.xhtml">${escapeXml(title)}</a></li>
+${navList}
     </ol>
   </nav>
 </body>

@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2026-10-30]
+
+### Fixed
+- 修复 iPhone / iOS Safari 导出 PDF 时页面无障碍跳转链接被 WebKit 打印引擎误提取并渲染在文档顶部的缺陷，在打印样式表中全面隐藏 `skipToContent` 及相关无障碍标签
+- 修复 iOS Safari 调起打印时因 Flex 容器与防跨页截断规则冲突引发的 WebKit 分页死锁（导致页面假死、手机发热与白屏崩溃），将打印正文容器重置为纯块级流式排版并禁用全部打印过渡动画
+- 修复 EPUB 电子书导出时顶部目录展开为空的缺陷：序列化 XHTML 时剥离 Docusaurus 内部注入的行内隐藏样式（`display: none; height: 0px`），补齐 EPUB 内嵌目录样式并自动提取正文各级章节生成原生导航大纲（`toc.xhtml`）
+
 ## [2026-10-29]
 
 ### Added
