@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2026-10-29]
+
+### Added
+- 在《正法念处经讲记》（`refs/misc/zfncj01.md` ~ `zfncj04.md`）各品章节下批量嵌入益西彭措堪布讲授有声书音频卡片（`SectionAudio`），共 33 个音频，自动繁体转简体精准匹配
+- 在《前行备忘录》（`refs/qxbwl/qxbwl.md`）共同外前行、不共内前行及往生法等各章节与观修段落下精准嵌入 28 个配套有声书音频组件（`SectionAudio`）
+
 ## [2026-10-28]
 
 ### Added
