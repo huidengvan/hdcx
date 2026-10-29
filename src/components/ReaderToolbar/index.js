@@ -181,7 +181,7 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
         applyAnchors(anchorsVisible);
     }, [anchorsVisible, applyAnchors]);
 
-    // 点击外部区域自动收起面板，提升阅读体验
+    // 点击外部区域自动收起面板，提升阅读体验（同时监听 pointerdown 提升移动端触摸关闭响应）
     useEffect(() => {
         if (collapsed) return;
         const handleOutsideClick = (e) => {
@@ -194,9 +194,11 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
                 setCollapsed(true);
             }
         };
+        document.addEventListener('pointerdown', handleOutsideClick);
         document.addEventListener('mousedown', handleOutsideClick);
         window.addEventListener('keydown', handleKeyDown);
         return () => {
+            document.removeEventListener('pointerdown', handleOutsideClick);
             document.removeEventListener('mousedown', handleOutsideClick);
             window.removeEventListener('keydown', handleKeyDown);
         };
@@ -450,7 +452,10 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
                     {isTargetDoc && (
                         <>
                             <div className={styles.divider} />
-                            <DownloadSection onRequestClose={() => setCollapsed(true)} />
+                            <DownloadSection
+                                onRequestClose={() => setCollapsed(true)}
+                                anchorsVisible={anchorsVisible}
+                            />
                         </>
                     )}
                 </div>

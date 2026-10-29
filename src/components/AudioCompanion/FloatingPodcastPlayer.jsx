@@ -97,6 +97,7 @@ export default function FloatingPodcastPlayer() {
                 className={styles.ratePill}
                 onClick={handleNextRate}
                 title="切换收听倍速"
+                aria-label="切换收听倍速"
               >
                 {playbackRate}x
               </button>
@@ -109,8 +110,9 @@ export default function FloatingPodcastPlayer() {
                   toggleMute();
                 }}
                 title={isMuted ? '取消静音' : '静音'}
+                aria-label={isMuted ? '取消静音' : '静音'}
               >
-                {isMuted ? <MuteIcon size={16} /> : <VolumeIcon size={16} />}
+                {isMuted ? <MuteIcon size={18} /> : <VolumeIcon size={18} />}
               </button>
 
               {isPlaying ? (
@@ -183,9 +185,9 @@ export default function FloatingPodcastPlayer() {
               aria-label={isPlaying ? '暂停' : '播放'}
             >
               {isPlaying ? (
-                <PauseIcon size={20} fill="#ffffff" />
+                <PauseIcon size={22} fill="#ffffff" />
               ) : (
-                <PlayIcon size={20} fill="#ffffff" />
+                <PlayIcon size={22} fill="#ffffff" />
               )}
             </button>
 

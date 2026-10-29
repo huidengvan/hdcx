@@ -111,7 +111,7 @@ export default function SectionAudio({
           </div>
         </div>
 
-        {/* 右侧控制项：激活时展示 快退30s / 快进10s / 倍速 / 静音，未激活时展示时长 */}
+        {/* 右侧控制项：激活时展示 快退10s / 快进10s / 倍速 / 静音，未激活时展示时长 */}
         {isCurrent ? (
           <div className={styles.cardActions}>
             <button
@@ -121,7 +121,7 @@ export default function SectionAudio({
               onClick={() => skip(-10)}
               aria-label="后退 10 秒"
             >
-              <Rewind10Icon size={20} />
+              <Rewind10Icon size={22} />
             </button>
             <button
               type="button"
@@ -130,13 +130,14 @@ export default function SectionAudio({
               onClick={() => skip(10)}
               aria-label="前进 10 秒"
             >
-              <Forward10Icon size={20} />
+              <Forward10Icon size={22} />
             </button>
             <button
               type="button"
               className={styles.ratePill}
               onClick={handleNextRate}
               title="切换收听倍速"
+              aria-label="切换收听倍速"
             >
               {playbackRate}x
             </button>
@@ -145,8 +146,9 @@ export default function SectionAudio({
               className={styles.iconBtn}
               onClick={toggleMute}
               title={isMuted ? '取消静音' : '静音'}
+              aria-label={isMuted ? '取消静音' : '静音'}
             >
-              {isMuted ? <MuteIcon size={16} /> : <VolumeIcon size={16} />}
+              {isMuted ? <MuteIcon size={18} /> : <VolumeIcon size={18} />}
             </button>
           </div>
         ) : (

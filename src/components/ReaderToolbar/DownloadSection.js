@@ -1,36 +1,32 @@
 import React, { useState, useCallback } from 'react';
-import useLocalStorageState from 'use-local-storage-state';
 import styles from './index.module.css';
 import { exportTxt, exportPdf, exportEpub } from './downloadUtils';
 
 /**
  * 离线文档下载面板组件（独立拆分，负责渲染下载卡片与交互状态）
  */
-export default function DownloadSection({ onRequestClose }) {
-    const [includeAnchors, setIncludeAnchors] = useLocalStorageState('docDownloadIncludeAnchors', {
-        defaultValue: false,
-    });
+export default function DownloadSection({ onRequestClose, anchorsVisible = true }) {
     const [isEpubLoading, setIsEpubLoading] = useState(false);
 
-    // 1. PDF 下载
+    // 1. PDF 下载（直接联动上方的段落号显隐状态）
     const handlePdf = useCallback(() => {
-        exportPdf(includeAnchors, onRequestClose);
-    }, [includeAnchors, onRequestClose]);
+        exportPdf(anchorsVisible, onRequestClose);
+    }, [anchorsVisible, onRequestClose]);
 
-    // 2. EPUB 电子书下载
+    // 2. EPUB 电子书下载（直接联动上方的段落号显隐状态）
     const handleEpub = useCallback(async () => {
         setIsEpubLoading(true);
         try {
-            await exportEpub(includeAnchors);
+            await exportEpub(anchorsVisible);
         } finally {
             setIsEpubLoading(false);
         }
-    }, [includeAnchors]);
+    }, [anchorsVisible]);
 
-    // 3. TXT 纯文本下载
+    // 3. TXT 纯文本下载（直接联动上方的段落号显隐状态）
     const handleTxt = useCallback(() => {
-        exportTxt(includeAnchors);
-    }, [includeAnchors]);
+        exportTxt(anchorsVisible);
+    }, [anchorsVisible]);
 
     return (
         <div className={styles.section}>
@@ -94,23 +90,9 @@ export default function DownloadSection({ onRequestClose }) {
                 </button>
             </div>
 
-            {/* 段落行号保留选项 */}
-            <div className={styles.anchorOptionRow}>
-                <label className={styles.checkboxLabel} title="控制下载的文件中是否包含 [p1] 等段落行号标记">
-                    <input
-                        type="checkbox"
-                        checked={includeAnchors}
-                        onChange={(e) => setIncludeAnchors(e.target.checked)}
-                        className={styles.checkboxInput}
-                    />
-                    <span>包含段落行号</span>
-                </label>
-            </div>
-
             <div className={styles.downloadTip}>
                 * PDF 调起打印后选「另存为 PDF」
             </div>
         </div>
     );
 }
-

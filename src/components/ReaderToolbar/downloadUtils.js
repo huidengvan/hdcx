@@ -39,6 +39,7 @@ export function getArticleMetadata() {
 /** 提取排版工整的纯文本（严格剥离 Markdown 语法标记） */
 export function extractPlainText(title, contentElement, includeAnchors) {
     let plain = `${title}\n${'='.repeat(Math.min(Math.max(title.length * 2, 10), 50))}\n\n`;
+    let firstH1Skipped = false;
 
     function walk(node) {
         if (node.nodeType === Node.TEXT_NODE) {
@@ -75,6 +76,11 @@ export function extractPlainText(title, contentElement, includeAnchors) {
 
         if (/^h[1-6]$/.test(tag)) {
             const cleanHeading = text.replace(/^#+\s*/g, '').trim();
+            // 严格跳过正文中的首个主标题 h1，避免与最顶部的文档总标题重复输出
+            if (tag === 'h1' && (!firstH1Skipped || cleanHeading === title.trim())) {
+                firstH1Skipped = true;
+                return '';
+            }
             return `\n\n${cleanHeading}\n\n`;
         } else if (tag === 'p') {
             return `\n\n${text.trim()}\n`;
@@ -306,20 +312,19 @@ export async function exportEpub(includeAnchors) {
 
         const oebps = zip.folder('OEBPS');
 
-        // EPUB 规范 3: CSS 样式表
+        // EPUB 规范 3: CSS 样式表（遵循电子书自适应规范，严禁硬编码纯黑纯白以完美兼容白天/黑夜模式）
         const cssContent = `
 body {
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   line-height: 1.8;
   margin: 1.2em;
-  color: #222222;
 }
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5, h6 {
   line-height: 1.35;
   margin-top: 1.3em;
   margin-bottom: 0.6em;
   font-weight: 700;
-  color: #111111;
+  color: inherit;
 }
 p {
   margin: 0.9em 0;
@@ -329,13 +334,12 @@ p {
 blockquote {
   margin: 1.2em 0;
   padding: 0.6em 1em;
-  border-left: 3px solid #ccc;
-  background-color: #f7f7f7;
-  color: #555555;
+  border-left: 3px solid rgba(125, 125, 125, 0.4);
+  background-color: rgba(125, 125, 125, 0.08);
 }
 pre, code {
   font-family: monospace;
-  background-color: #f3f3f3;
+  background-color: rgba(125, 125, 125, 0.1);
   font-size: 0.9em;
 }
 pre {
@@ -344,18 +348,18 @@ pre {
   border-radius: 4px;
 }
 details {
-  border: 1px solid #e2e8f0;
+  border: 1px solid rgba(125, 125, 125, 0.25);
   border-radius: 6px;
   padding: 10px 14px;
   margin: 1.2em 0;
-  background-color: #f8fafc;
+  background-color: rgba(125, 125, 125, 0.05);
 }
 details summary {
   font-weight: 700;
   font-size: 1.05em;
   cursor: pointer;
   margin-bottom: 8px;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid rgba(125, 125, 125, 0.2);
   padding-bottom: 6px;
 }
 .table-of-contents, ul.table-of-contents {
@@ -368,8 +372,8 @@ details summary {
   line-height: 1.6;
 }
 .table-of-contents a {
-  color: #2563eb;
-  text-decoration: none;
+  color: #3b82f6;
+  text-decoration: underline;
 }
 .table-of-contents ul {
   list-style: circle;
@@ -381,6 +385,9 @@ details summary {
 
         // EPUB 规范 4: 正文 XHTML
         const xhtmlBody = serializeToXhtml(contentEl, includeAnchors);
+        // 如果正文已经包含主标题 h1，则不重复添加顶部标题
+        const hasH1 = !!contentEl.querySelector('h1');
+        const headerHtml = hasH1 ? '' : `<h1>${escapeXml(title)}</h1>`;
         const chapterContent = `<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="zh-CN">
@@ -391,7 +398,7 @@ details summary {
 </head>
 <body>
   <div class="chapter-content">
-    <h1>${escapeXml(title)}</h1>
+    ${headerHtml}
     ${xhtmlBody}
   </div>
 </body>

@@ -137,9 +137,10 @@
 }
 
 .playControlBtn {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
@@ -191,8 +192,8 @@
   font-size: 12px;
   font-variant-numeric: tabular-nums;
   color: var(--ifm-color-emphasis-600);
-  padding: 2px 8px;
-  border-radius: 6px;
+  padding: 3px 9px;
+  border-radius: 8px;
   background: rgba(125, 125, 125, 0.08);
   white-space: nowrap;
 }
@@ -200,15 +201,20 @@
 .cardActions {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
 .iconBtn {
+  position: relative;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 6px;
-  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0;
+  border-radius: 50%;
   color: var(--ifm-color-emphasis-700);
   display: flex;
   align-items: center;
@@ -216,13 +222,23 @@
   transition: all 0.15s ease;
 }
 
+/* 扩展触控热区至 44x44pt，满足 iOS HIG 规范 */
+.iconBtn::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  left: -4px;
+  right: -4px;
+}
+
 .inlineScrubberContainer {
   margin-top: 10px;
-  padding-top: 8px;
+  padding-top: 6px;
   border-top: 1px solid var(--ifm-color-emphasis-200, rgba(0, 0, 0, 0.05));
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   animation: fadeIn 0.22s ease-out;
 }
 
@@ -233,9 +249,10 @@
 .timeRow {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
+  font-size: 11.5px;
   font-variant-numeric: tabular-nums;
   color: var(--ifm-color-emphasis-600);
+  padding: 0 1px;
 }
 
 /* ─── 2. 吸附在右边缘的半露悬浮播放把手 (与主题调节 A 按钮风格一致，半透明不挡字) ─── */
@@ -254,22 +271,22 @@
   pointer-events: auto;
   position: relative;
   right: 0;
-  width: 26px;
-  height: 38px;
+  width: 28px;
+  height: 42px;
   padding: 0;
-  border-radius: 19px 0 0 19px;
-  background: rgba(245, 248, 245, 0.75);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  border-radius: 21px 0 0 21px;
+  background: rgba(245, 248, 245, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.35);
   border-right: none;
-  box-shadow: -1px 2px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: -1px 2px 8px rgba(0, 0, 0, 0.06);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--ifm-color-primary);
-  opacity: 0.55;
+  opacity: 0.65;
   transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
               width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   user-select: none;
@@ -396,17 +413,30 @@
 }
 
 .closeDeckBtn {
-  background: none;
+  position: relative;
+  background: rgba(125, 125, 125, 0.08);
   border: none;
   cursor: pointer;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--ifm-color-emphasis-600);
+  color: var(--ifm-color-emphasis-700);
   transition: all 0.15s ease;
+}
+
+/* 扩展触控热区至 44pt，符合 iOS 触控标准 */
+.closeDeckBtn::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  bottom: -6px;
+  left: -6px;
+  right: -6px;
 }
 
 .scrubberWrapper {
@@ -420,12 +450,17 @@
   appearance: none;
   width: 100%;
   height: 4px;
+  border: none;
   border-radius: 9999px;
-  background: var(--ifm-color-emphasis-300, #e2e8f0);
+  background: var(--ifm-color-emphasis-300, rgba(125, 125, 125, 0.2));
   outline: none;
   cursor: pointer;
   position: relative;
-  touch-action: pan-x;
+  touch-action: none;
+  padding: 0;
+  margin: 6px 0 4px 0;
+  box-sizing: border-box;
+  display: block;
 }
 
 .rangeInput:hover,
@@ -441,22 +476,30 @@
 .rangeInput::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 13px;
-  height: 13px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: var(--ifm-color-primary);
+  border: 2px solid #ffffff;
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  transition: transform 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.rangeInput:hover::-webkit-slider-thumb,
+.rangeInput:active::-webkit-slider-thumb {
+  transform: scale(1.25);
+  box-shadow: 0 2px 8px rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.45);
 }
 
 .rangeInput::-moz-range-thumb {
-  width: 13px;
-  height: 13px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: var(--ifm-color-primary);
-  border: none;
+  border: 2px solid #ffffff;
   cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* 核心主控制区 (比例均衡协调) */
@@ -472,8 +515,10 @@
   background: rgba(125, 125, 125, 0.08);
   border: 1px solid rgba(125, 125, 125, 0.12);
   cursor: pointer;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 50%;
   color: var(--ifm-font-color-base);
   display: flex;
@@ -490,8 +535,10 @@
 }
 
 .deckPlayBtn {
-  width: 46px;
-  height: 46px;
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  min-height: 50px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
@@ -500,20 +547,36 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 3px 12px rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.35);
+  box-shadow: 0 4px 14px rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.38);
   transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease;
 }
 
 .ratePill {
-  font-size: 11px;
+  position: relative;
+  font-size: 11.5px;
   font-weight: 600;
   background: rgba(125, 125, 125, 0.09);
   color: var(--ifm-font-color-base);
   border: 1px solid rgba(125, 125, 125, 0.12);
-  padding: 2px 7px;
-  border-radius: 10px;
+  height: 30px;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 15px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.15s ease;
+}
+
+/* 扩展触控热区至 44pt，满足 iOS 规范 */
+.ratePill::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  bottom: -7px;
+  left: -2px;
+  right: -2px;
 }
 
 [data-theme='dark'] .ratePill {
@@ -522,16 +585,30 @@
 }
 
 .muteBtn {
+  position: relative;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
-  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 50%;
   color: var(--ifm-color-emphasis-700);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.15s ease;
+}
+
+/* 扩展触控热区至 44pt，满足 iOS 规范 */
+.muteBtn::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  bottom: -6px;
+  left: -6px;
+  right: -6px;
 }
 
 /* ─── 4. 微交互动画 (Animations) ─── */
@@ -575,33 +652,101 @@
   100% { height: 100%; }
 }
 
-/* ─── 5. 移动端自适应 (Mobile Adaptations) ─── */
+/* ─── 5. 移动端自适应 (Mobile Adaptations for iOS & Touch) ─── */
 @media (max-width: 768px) {
   .floatingWrapper {
     bottom: 84px;
   }
 
+  /* 悬浮把手尺寸符合 iOS 44pt 触控建议 */
   .floatingOrb {
-    width: 24px;
-    height: 36px;
+    width: 34px;
+    height: 46px;
+    border-radius: 23px 0 0 23px;
+  }
+
+  .floatingOrb.orbActive {
+    width: 38px;
   }
 
   .podcastDeck {
     width: calc(100vw - 20px);
-    max-width: 310px;
-    margin-right: 8px;
-    padding: 10px 12px 10px 12px;
+    max-width: 324px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 12px 14px;
+    border-radius: 18px;
+  }
+
+  .deckMainControls {
+    gap: 28px;
+  }
+
+  /* 段落音频卡片在移动端的布局优化 */
+  .sectionCard {
+    padding: 12px 14px;
+    border-radius: 14px;
+    margin: 12px 0;
   }
 
   .cardMainRow {
-    gap: 10px;
+    gap: 12px;
   }
 
-  .cardActions {
-    gap: 2px;
+  /* 激活状态下：第 1 行放播放大键+标题；第 2 行平铺展开 4 个触控大按键 */
+  .sectionCard.active .cardMainRow {
+    flex-wrap: wrap;
+    gap: 10px 12px;
+  }
+
+  .sectionCard.active .metaInfo {
+    flex: 1 1 calc(100% - 60px);
+  }
+
+  .sectionCard.active .cardActions {
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 8px;
+    margin-top: 2px;
+    border-top: 1px solid var(--ifm-color-emphasis-200, rgba(0, 0, 0, 0.05));
+    gap: 8px;
+  }
+
+  [data-theme='dark'] .sectionCard.active .cardActions {
+    border-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .sectionCard.active .cardActions .iconBtn {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    background: rgba(125, 125, 125, 0.08);
+  }
+
+  [data-theme='dark'] .sectionCard.active .cardActions .iconBtn {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .sectionCard.active .cardActions .ratePill {
+    height: 36px;
+    min-height: 36px;
+    padding: 0 14px;
+    font-size: 13px;
+    border-radius: 18px;
   }
 
   .cardTitle {
-    font-size: 13.5px;
+    font-size: 14px;
+  }
+
+  .rangeInput::-webkit-slider-thumb {
+    width: 16px;
+    height: 16px;
+  }
+
+  .rangeInput::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
   }
 }
