@@ -9,8 +9,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [2026-10-29]
 
 ### Added
+- 新增阅读设置（`ReaderToolbar`）内嵌离线文档导出模块（`DownloadSection`），支持将 `/books` 与 `/refs` 等目标文档一键导出为纯文本（TXT）、打印版（PDF）及电子书（EPUB）
+- 新增「包含段落行号」导出选项控制与状态本地持久化存储（`localStorage`），导出纯文本时自动剥离 Markdown 标题标记符号
+- 新增模块化离线文档下载底层工具集（`src/components/ReaderToolbar/downloadUtils.js`），支持纯前端离线组装规范 XHTML/EPUB 与 TXT 生成
 - 在《正法念处经讲记》（`refs/misc/zfncj01.md` ~ `zfncj04.md`）各品章节下批量嵌入益西彭措堪布讲授有声书音频卡片（`SectionAudio`），共 33 个音频，自动繁体转简体精准匹配
 - 在《前行备忘录》（`refs/qxbwl/qxbwl.md`）共同外前行、不共内前行及往生法等各章节与观修段落下精准嵌入 28 个配套有声书音频组件（`SectionAudio`）
+
+### Fixed
+- 修复打印导出 PDF 时 Docusaurus 内置 React Collapsible 折叠容器与 Infima 打印隐藏样式导致正文嵌入式目录（`<TOCInline>`）无法展开显示的缺陷
+- 修复打印 PDF 时页面侧边栏、控制面板等非正文元素残留的问题，调起打印流前自动折叠面板并隐藏干扰组件
 
 ## [2026-10-28]
 

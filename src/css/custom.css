@@ -1040,4 +1040,180 @@ html[data-reader-font='fangsong'] article blockquote {
   font-family: 'FangSong', '仿宋', 'STFangsong', '华文仿宋', 'ZhuqueFangsong', fangsong, serif !important;
 }
 
+/* ============================================================
+   打印样式：PDF 高保真导出优化（剔除所有页面无关元素，只保留正文）
+   ============================================================ */
+@media print {
+  /* 彻底隐藏：侧边栏、阅读器控制台、顶部导航、右侧目录大纲、页脚、面包屑等全部非正文元素 */
+  #reader-toolbar-root,
+  .reader-toolbar-global,
+  .no-print,
+  [class*='ReaderToolbar'],
+  [class*='fabTrigger'],
+  [class*='panel'],
+  aside,
+  [class*='docSidebarContainer'],
+  .theme-doc-sidebar-container,
+  .theme-doc-sidebar-menu,
+  [class*='sidebar_'],
+  .theme-doc-toc-desktop,
+  .theme-doc-toc-mobile,
+  [class*='tocCollapsible'],
+  .col--3,
+  .navbar,
+  .pagination-nav,
+  .theme-doc-footer,
+  .theme-edit-this-page,
+  footer,
+  .breadcrumbs,
+  button,
+  .clean-btn {
+    display: none !important;
+  }
+
+  /* 重置正文容器，彻底消除左右栏栅格限制，整洁铺满整张 A4 纸 */
+  main,
+  .main-wrapper,
+  .container,
+  .row,
+  .col,
+  main .col,
+  main .row > div,
+  article,
+  .theme-doc-markdown {
+    max-width: 100% !important;
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: static !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* 打印专用配色及排版字号 */
+  body {
+    background-color: #ffffff !important;
+    color: #111111 !important;
+    font-size: 12pt;
+    line-height: 1.6;
+  }
+
+  /* 智能防跨页截断处理（避免代码块、图片跨页腰斩） */
+  pre,
+  code,
+  blockquote,
+  table,
+  img,
+  figure {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* 避免标题孤留在页脚 */
+  h1, h2, h3, h4 {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  /* 当用户未勾选保留行号时，打印 PDF 自动隐藏段落行号锚点 */
+  body.hide-print-anchors article p > a[href^="#p"] {
+    display: none !important;
+  }
+
+  /* 打印时文章正文内的嵌入式目录与折叠框完整展示（覆盖 Infima 默认的 @media print 隐藏规则） */
+  article details,
+  main details,
+  details {
+    display: block !important;
+    border: 1px solid #e2e8f0 !important;
+    background-color: #f8fafc !important;
+    padding: 10px 14px !important;
+    margin: 12px 0 16px 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  details > summary {
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    margin-bottom: 8px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding-bottom: 6px !important;
+    list-style: none !important;
+  }
+
+  details > summary::-webkit-details-marker {
+    display: none !important;
+  }
+
+  /* 破除 Docusaurus React Collapsible 折叠容器注入的行内 display: none 与 height: 0px */
+  details > div,
+  details [class*='collapsibleContent'],
+  details > div > div {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  /* 核心修复：Infima 默认在 @media print 中将 .table-of-contents 强制设为了 display: none */
+  /* 针对文章正文/折叠框内的内联目录树全面恢复展示并优化打印排版 */
+  article .table-of-contents,
+  article [class*='tableOfContentsInline'],
+  details .table-of-contents,
+  details [class*='tableOfContentsInline'],
+  [class*='tableOfContentsInline'] .table-of-contents {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: 0 0 0 16px !important;
+    margin: 6px 0 !important;
+    list-style: disc !important;
+    list-style-type: disc !important;
+    border-left: none !important;
+  }
+
+  article .table-of-contents li,
+  details .table-of-contents li,
+  [class*='tableOfContentsInline'] li {
+    display: list-item !important;
+    visibility: visible !important;
+    margin: 4px 0 !important;
+    padding: 0 !important;
+    line-height: 1.5 !important;
+    font-size: 11pt !important;
+  }
+
+  article .table-of-contents a,
+  details .table-of-contents a,
+  article .table-of-contents__link,
+  details .table-of-contents__link,
+  [class*='tableOfContentsInline'] a {
+    display: inline !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #1a202c !important;
+    text-decoration: none !important;
+    border-bottom: none !important;
+  }
+
+  article .table-of-contents ul,
+  details .table-of-contents ul,
+  [class*='tableOfContentsInline'] ul {
+    display: block !important;
+    visibility: visible !important;
+    padding-left: 20px !important;
+    margin: 3px 0 !important;
+    list-style-type: circle !important;
+  }
+
+}
+
 

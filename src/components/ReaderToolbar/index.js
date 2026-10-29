@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styles from './index.module.css';
 import useLocalStorageState from 'use-local-storage-state';
 import { useColorMode } from '@docusaurus/theme-common';
+import { useLocation } from '@docusaurus/router';
+import DownloadSection from './DownloadSection';
 
 // ── 主题配置（背景色 + 文字色）──────────────────────────
 export const themes = [
@@ -72,6 +74,9 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
     const [fontSize, setFontSize] = useLocalStorageState('readerFontSize', { defaultValue: FONT_DEFAULT });
     const [anchorsVisible, setAnchorsVisible] = useLocalStorageState('readerAnchorsVisible', { defaultValue: true });
     const containerRef = useRef(null);
+    const location = useLocation();
+    // 覆盖 /books, /refs 以及本地常见 /4jx, /5jx, /wsb 等所有文档路径
+    const isTargetDoc = /^\/(books|refs|4jx|5jx|wsb)(\/|$)/.test(location.pathname);
     const { colorMode, setColorMode } = useColorMode();
 
     // 纠正超出当前主题数量的索引（例如历史缓存了 4: 夜间墨）
@@ -267,7 +272,7 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
     const currentThemeLabel = (isDark && safeThemeIndex === 0) ? '夜间模式' : currentTheme.name;
 
     return (
-        <div ref={containerRef} className={styles.container}>
+        <div ref={containerRef} id="reader-toolbar-root" className={`${styles.container} reader-toolbar-global no-print`}>
             {/* 收起状态：右侧边缘仅展示简洁小巧的 'A' 按钮 */}
             {collapsed && (
                 <button
@@ -440,6 +445,14 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
                             </button>
                         </div>
                     </div>
+
+                    {/* 4. 下载本篇（离线阅读专区） */}
+                    {isTargetDoc && (
+                        <>
+                            <div className={styles.divider} />
+                            <DownloadSection onRequestClose={() => setCollapsed(true)} />
+                        </>
+                    )}
                 </div>
             )}
         </div>
