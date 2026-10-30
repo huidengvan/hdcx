@@ -1,9 +1,13 @@
 import React, { createContext, useContext, useState, useRef, useEffect, useCallback } from 'react';
+import { useHistory } from '@docusaurus/router';
+import toast from 'react-hot-toast';
 
 const AudioContext = createContext(null);
 
 export const AudioProvider = ({ children }) => {
-    // 当前播放的音频元数据: { id, src, title, subtitle, duration }
+    const history = useHistory();
+
+    // 当前播放的音频元数据: { id, src, title, subtitle, duration, pagePath }
     const [currentTrack, setCurrentTrack] = useState(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
@@ -16,42 +20,81 @@ export const AudioProvider = ({ children }) => {
     const [isMiniVisible, setIsMiniVisible] = useState(false); // 是否由于离开可视区域而激活悬浮微缩条
     const [isDeckOpen, setIsDeckOpen] = useState(false);       // 是否呼出大播客控制面板
 
+    // 页面内聚焦高亮状态与跨页面跳转待定位 Track ID
+    const [focusedSectionId, setFocusedSectionId] = useState(null);
+    const pendingFocusTrackIdRef = useRef(null);
+    const focusTimerRef = useRef(null);
+
     // 真实全局唯一的 audio DOM 引用
     const audioRef = useRef(null);
 
     // 页面内所有注册的段落节点引用表 { [id]: HTMLElement }
     const registeredElementsRef = useRef(new Map());
 
+    // 执行聚焦到播放器出现位置并播放光环动画
+    const triggerFocusAnimation = useCallback((element, id) => {
+        if (!element) return;
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setFocusedSectionId(id);
+        setIsDeckOpen(false);
+
+        if (focusTimerRef.current) {
+            clearTimeout(focusTimerRef.current);
+        }
+        focusTimerRef.current = setTimeout(() => {
+            setFocusedSectionId((prev) => (prev === id ? null : prev));
+            focusTimerRef.current = null;
+        }, 2600);
+
+        try {
+            toast.success('已定位至音频播放位置', { id: 'audio-locate', duration: 1800 });
+        } catch (e) {}
+    }, []);
+
     // 注册段落 DOM（用于 IntersectionObserver 监听和平滑定位）
     const registerSection = useCallback((id, element) => {
         if (element) {
             registeredElementsRef.current.set(id, element);
+            // 若刚刚跨页面跳转过来定位此音频组件
+            if (pendingFocusTrackIdRef.current === id) {
+                pendingFocusTrackIdRef.current = null;
+                setTimeout(() => {
+                    triggerFocusAnimation(element, id);
+                }, 220);
+            }
         } else {
             registeredElementsRef.current.delete(id);
         }
-    }, []);
+    }, [triggerFocusAnimation]);
 
     // 播放/切歌逻辑（单例保证绝对互斥）
     const playTrack = useCallback((track) => {
         const audio = audioRef.current;
-        if (!audio) return;
+        if (!audio || !track) return;
 
         if (currentTrack?.id === track.id) {
             // 同一个音频：恢复播放
             audio.play().catch(() => {});
-        } else {
-            // 切换新音频
-            setCurrentTrack(track);
-            setIsLoading(true);
-            audio.src = track.src;
-            audio.playbackRate = playbackRate;
-            audio.muted = isMuted;
-            audio.currentTime = 0;
-            audio.play().catch(() => {
-                setIsLoading(false);
-            });
+            return;
         }
-    }, [currentTrack, playbackRate, isMuted]);
+
+        // 切换新音频
+        const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
+        const trackWithPage = {
+            ...track,
+            pagePath: track.pagePath || currentPath,
+        };
+
+        setCurrentTrack(trackWithPage);
+        setIsLoading(true);
+        audio.src = trackWithPage.src;
+        audio.playbackRate = playbackRate;
+        audio.muted = isMuted;
+        audio.currentTime = 0;
+        audio.play().catch(() => {
+            setIsLoading(false);
+        });
+    }, [currentTrack?.id, playbackRate, isMuted]);
 
     const pauseTrack = useCallback(() => {
         const audio = audioRef.current;
@@ -74,9 +117,16 @@ export const AudioProvider = ({ children }) => {
         setIsDeckOpen(false);
         setCurrentTime(0);
         setDuration(0);
+        setFocusedSectionId(null);
+        pendingFocusTrackIdRef.current = null;
+        if (focusTimerRef.current) {
+            clearTimeout(focusTimerRef.current);
+            focusTimerRef.current = null;
+        }
     }, []);
 
     const togglePlay = useCallback((track) => {
+        if (!track) return;
         if (currentTrack?.id === track.id) {
             if (isPlaying) {
                 pauseTrack();
@@ -86,7 +136,8 @@ export const AudioProvider = ({ children }) => {
         } else {
             playTrack(track);
         }
-    }, [currentTrack, isPlaying, pauseTrack, playTrack]);
+    }, [currentTrack?.id, isPlaying, pauseTrack, playTrack]);
+
 
     // 跳转指定进度
     const seek = useCallback((time) => {
@@ -126,16 +177,58 @@ export const AudioProvider = ({ children }) => {
         });
     }, []);
 
-    // 平滑滚动定位回当前正在播放的文章段落
+    // 平滑滚动定位回当前正在播放的文章段落并高亮聚焦
     const scrollToActiveSection = useCallback(() => {
         if (!currentTrack?.id) return;
-        const targetElement = registeredElementsRef.current.get(currentTrack.id);
-        if (targetElement) {
-            targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            // 定位回屏幕后，可以自动收起控制大面板
-            setIsDeckOpen(false);
+
+        const targetId = currentTrack.id;
+        const domId = `audio-section-${targetId}`;
+
+        // 1. DOM 优先判定：若当前 DOM 树中已存在目标音频组件，直接就地定位与高亮
+        const registeredEl = registeredElementsRef.current.get(targetId);
+        const domEl = (registeredEl?.isConnected ? registeredEl : null)
+            || (typeof document !== 'undefined' ? document.getElementById(domId) : null);
+
+        if (domEl) {
+            triggerFocusAnimation(domEl, targetId);
+            return;
         }
-    }, [currentTrack]);
+
+        // 2. 跨页面判定：若 DOM 中未找到目标，且指定了不同页面的目标路径，通过路由跳转
+        const targetPath = currentTrack.pagePath;
+        const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
+        const normalize = (p) => (p || '').replace(/\/+$/, '') || '/';
+        const isDifferentPage = Boolean(targetPath && normalize(currentPath) !== normalize(targetPath));
+
+        if (isDifferentPage) {
+            pendingFocusTrackIdRef.current = targetId;
+            setIsDeckOpen(false);
+            const destination = `${targetPath}#${domId}`;
+            if (history?.push) {
+                history.push(destination);
+            } else if (typeof window !== 'undefined') {
+                window.location.href = destination;
+            }
+            return;
+        }
+
+        // 3. 同页面兜底重试（应对 DOM 仍在初次挂载微任务中的边缘情况）
+        setTimeout(() => {
+            const retryEl = document.getElementById(domId);
+            if (retryEl) {
+                triggerFocusAnimation(retryEl, targetId);
+            }
+        }, 120);
+    }, [currentTrack, history, triggerFocusAnimation]);
+
+    // 组件卸载时清理聚焦动画定时器
+    useEffect(() => {
+        return () => {
+            if (focusTimerRef.current) {
+                clearTimeout(focusTimerRef.current);
+            }
+        };
+    }, []);
 
     // 音频核心事件绑定
     useEffect(() => {
@@ -189,7 +282,13 @@ export const AudioProvider = ({ children }) => {
         }
 
         const activeElem = registeredElementsRef.current.get(currentTrack.id);
-        if (!activeElem || typeof IntersectionObserver === 'undefined') return;
+        if (!activeElem || !activeElem.isConnected) {
+            // 当前页面不存在此音频卡片（例如处于跨文章浏览状态），悬浮条保持可见以供控制与一键回跳
+            setIsMiniVisible(true);
+            return;
+        }
+
+        if (typeof IntersectionObserver === 'undefined') return;
 
         const observer = new IntersectionObserver(
             ([entry]) => {
@@ -208,7 +307,7 @@ export const AudioProvider = ({ children }) => {
 
         observer.observe(activeElem);
         return () => observer.disconnect();
-    }, [currentTrack?.id]);
+    }, [currentTrack?.id, history?.location?.pathname]);
 
     const value = {
         currentTrack,
@@ -232,6 +331,7 @@ export const AudioProvider = ({ children }) => {
         toggleMute,
         registerSection,
         scrollToActiveSection,
+        focusedSectionId,
     };
 
     return (
@@ -268,6 +368,7 @@ export const useAudioCompanion = () => {
             toggleMute: () => {},
             registerSection: () => {},
             scrollToActiveSection: () => {},
+            focusedSectionId: null,
         };
     }
     return context;

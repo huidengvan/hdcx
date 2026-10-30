@@ -71,6 +71,29 @@ export const ChevronUpIcon = ({ size = 18 }) => (
   </svg>
 );
 
+// 🎯 定位到正文/准星定位图标 (LocateFixed)
+export const LocateIcon = ({ size = 18, fill = 'none', stroke = 'currentColor' }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill={fill}
+    stroke={stroke}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <line x1="2" y1="12" x2="5" y2="12" />
+    <line x1="19" y1="12" x2="22" y2="12" />
+    <line x1="12" y1="2" x2="12" y2="5" />
+    <line x1="12" y1="19" x2="12" y2="22" />
+    <circle cx="12" cy="12" r="7" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+);
+
+
 // 音频跳动均衡器动画
 export const Equalizer = ({ isPlaying = false }) => (
   <div className={`${styles.equalizer} ${!isPlaying ? styles.paused : ''}`}>

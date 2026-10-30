@@ -10,6 +10,7 @@ import {
   ChevronDownIcon,
   CloseIcon,
   Equalizer,
+  LocateIcon,
   formatTime,
 } from './Icons';
 import styles from './audioCompanion.module.css';
@@ -38,6 +39,7 @@ export default function FloatingPodcastPlayer() {
     skip,
     changePlaybackRate,
     toggleMute,
+    scrollToActiveSection,
   } = useAudioCompanion();
 
   const deckRef = useRef(null);
@@ -81,9 +83,16 @@ export default function FloatingPodcastPlayer() {
       {/* 呼出的全功能播客控制台 (紧凑简洁版) */}
       {isDeckOpen && (
         <div ref={deckRef} className={styles.podcastDeck}>
-          {/* 面板头部：左侧分类与标题，右侧集成倍速、静音与收起按钮 */}
+          {/* 面板头部：左侧分类与标题，右侧集成定位、倍速、静音与收起按钮 */}
           <div className={styles.deckHeader}>
-            <div className={styles.deckHeaderMeta}>
+            <div
+              className={`${styles.deckHeaderMeta} ${styles.clickableMeta}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                scrollToActiveSection();
+              }}
+              title="点击快速定位到正文播放位置"
+            >
               <span className={styles.deckCategory}>
                 {currentTrack.subtitle || '文章有声伴读'}
               </span>
@@ -92,6 +101,19 @@ export default function FloatingPodcastPlayer() {
               </h5>
             </div>
             <div className={styles.deckHeaderTools}>
+              <button
+                type="button"
+                className={styles.locateBtn}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  scrollToActiveSection();
+                }}
+                title="定位到正文播放位置并聚焦播放器"
+                aria-label="定位到正文播放位置并聚焦播放器"
+              >
+                <LocateIcon size={17} />
+              </button>
+
               <button
                 type="button"
                 className={styles.ratePill}

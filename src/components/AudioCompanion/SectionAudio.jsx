@@ -40,6 +40,7 @@ export default function SectionAudio({
     skip,
     seek,
     registerSection,
+    focusedSectionId,
   } = useAudioCompanion();
 
   // 循环切换倍速
@@ -53,6 +54,7 @@ export default function SectionAudio({
   // 判断本组件是否是当前全局正在激活的音频
   const isCurrent = currentTrack?.id === trackId;
   const isCurrentlyPlaying = isCurrent && isPlaying;
+  const isFocused = focusedSectionId === trackId;
 
   // 注册 DOM 引用，使全局 IntersectionObserver 可以感知此卡片是否在视口中
   useEffect(() => {
@@ -72,6 +74,7 @@ export default function SectionAudio({
       title,
       subtitle,
       duration: initialDuration,
+      pagePath: typeof window !== 'undefined' ? window.location.pathname : '',
     });
   };
 
@@ -82,7 +85,7 @@ export default function SectionAudio({
     <div
       ref={cardRef}
       id={`audio-section-${trackId}`}
-      className={`${styles.sectionCard} ${isCurrent ? styles.active : ''}`}
+      className={`${styles.sectionCard} ${isCurrent ? styles.active : ''} ${isFocused ? styles.cardFocused : ''}`}
     >
       <div className={styles.cardMainRow}>
         {/* 单一主控制圆形播放/暂停按钮 */}

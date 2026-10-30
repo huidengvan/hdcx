@@ -10,8 +10,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - 在《堪布阿琼仁波切密传》（`refs/cczj/aqrbq.md`）童年生活、依止善知识、开始修加行等各章节下嵌入配套有声书音频伴读卡片（`SectionAudio`）
+- 悬浮播客伴读控制器（`FloatingPodcastPlayer`）新增一键定位跳转按钮及标题区快捷点击定位，支持在阅读其他段落或跨文章浏览时快速平滑滚动回原音频所在段落，并触发呼吸光环聚焦高亮（`cardFocused`）
 
 ### Changed
+- 优化音频全局上下文（`AudioContext`）定位与状态管理：
+  - 采用 DOM 优先检测机制，消除原脆弱的 pathname 正则比对与尾斜杠误判；
+  - 将跨页定位待处理状态重构为 `pendingFocusTrackIdRef`，消除 `registerSection` 依赖变化导致的文章内全部音频组件连锁销毁与重注册；
+  - 消除 `togglePlay` 中重复的 track 对象拷贝；增加 `focusTimerRef` 管理高亮光环定时器并补齐组件卸载清理；
+  - 增强跨文章浏览体验，结合路由路径变化使微缩悬浮把手常驻，便于随时收听与回跳原文
+- 优化文章内音频卡片（`SectionAudio`）自适应布局：
+  - 统一单行布局（`flex-wrap: nowrap`），移除窄屏/半屏浏览器窗口（`≤ 768px`）下的强制换行与分割线，保持播放按钮、标题与 4 个控制按钮（快退 10s、快进 10s、倍速、静音）始终同屏单行整齐排列，避免半屏分屏模式下控制按钮折行掉落到下方
 - 在法本第一册（`books/b1/` 6 篇）、第二册（`books/b2/` 9 篇）及禅修班共修（`wsb/book2/b2-0.md`）共 16 篇文档中，将原生 HTML `<audio controls src="..." />` 标签全面替换为系统规范的音频伴读卡片组件（`SectionAudio`），支持倍速播放、快退 10s、快进 10s 及悬浮伴读球联动
 - 将替换后的 16 篇文档中音频资源链接（`src`）还原为未转义的原生中文路径规范（如 `慧灯禅修课/慧灯禅修课第二册/...`），统一全站资源链接规范
 - 阅读侧边栏（`ReaderToolbar`）限制仅在 `/books`（课程法本）与 `/refs`（参考法本）两个大分类下展示离线下载选项，其余文档页面不展示下载选项
