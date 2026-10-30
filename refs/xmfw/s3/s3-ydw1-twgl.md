@@ -15,7 +15,7 @@ import TOCInline from '@theme/TOCInline';
 
 ---
 
-### [普贤上师言教（01）·听闻轨理讲记.pdf](./assets/普贤上师言教（01）·听闻轨理讲记.pdf) （包含听闻轨理之应断和应取行为！！！）
+### [普贤上师言教（01）·听闻轨理讲记.pdf](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/xmfw/s3/01/普贤上师言教（01）·听闻轨理讲记.pdf) （包含听闻轨理之应断和应取行为！！！）
 
 | 课时 | 文档 | 音频 | 视频 |
 | --- | --- | --- | --- |
