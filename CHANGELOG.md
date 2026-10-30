@@ -27,10 +27,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - 侧边悬浮播放球放大至 `34px × 46px`，全功能面板按键放大至 44px/50px，右上角关闭按钮增大至 `32px`
 - 播放列表（`Playlist`）头部操作按钮增加 `min-height: 38px`，优化移动端点击体验
 
+### Removed
+- 清理项目历史遗留的无用生成文件与文档冗余（释放超 78MB 仓库与构建体积）：
+  - 移除散落在正文源码目录下的 33 个旧版离线生成电子书（`refs/qxgs/fudao/*.md.epub`、`refs/qxgs/*.md.epub`、`refs/xmfw/s3/*.md.epub` 及 `.mobi`）
+  - 移除 `static/docs/epub/` 目录下的 7 个旧版静态 EPUB 文件
+  - 移除 `static/docs/qxgsfd/` 重复导出的静态文档包（包含 14 个 `.md.epub`、14 个 `.md.docx`、14 个 `.pdf`、14 个重复 `.md`）
+  - 移除 `static/xmfw/` 下的 356 个历史 `.doc` / `.docx` 文档（实际正文均已直接接入 Wasabi S3 对象存储）
+  - 移除 `refs/qxgs/` 与 `refs/xmfw/s3/` 下的 5 个无用 Word / ODT / PDF 底稿文件
+
 ### Fixed
-- 修复 EPUB 电子书在微信读书与苹果图书（Apple Books）中页首目录点击无跳转反应的问题：将页内锚点统一转换为规范的 `chapter1.xhtml#id` 格式，并补全 EPUB 2 NCX 兼容大纲（`toc.ncx` 与 `<spine toc="ncx">`）
-- 修复 EPUB 电子书页首目录在深色/夜间阅读模式下文字仍为黑色的问题：移除目录与链接的所有固定文字颜色，强制继承阅读器主题色彩（`color: inherit !important;`）
-- 修复 iPhone / iOS Safari 导出 PDF 时目录缺失的问题：在调起打印前强制展开所有折叠框及其内部容器（`display: block !important; height: auto !important`）并触发 WebKit 重排，延迟打印调起时间至 350ms，且将状态复原时机绑定至打印弹窗退出后，避免过早关闭导致 PDF 目录空白
+- 彻底修复 EPUB 电子书在安卓（微信读书）与 iPhone（苹果图书）中内联目录点击失效与深色模式字体发黑问题：
+  - 将内联 `<details><summary>` 交互折叠结构在导出时重构为标准语义化的静态目录区块（`<div class="epub-toc-box"><h2 class="epub-toc-title">`），彻底消除移动端阅读器因手势冲突拦截目录链接点击的缺陷，并解决 `<summary>` 在微信读书暗黑模式下字体发黑看不清的缺陷
+  - 将所有章节锚点重写为符合 W3C XML 1.0 NameChar 规范的纯 ASCII 标识符（`sec-1`, `sec-2`...），彻底规避全角标点（如顿号 `、`）与中文导致移动端 XML 解析器判定 ID 非法而忽略跳转的问题
+  - 完善 EPUB 2 NCX 兼容大纲（`toc.ncx` 与 `<spine toc="ncx">`）与 EPUB 3 导航文件（`toc.xhtml`），并在样式表中添加全平台 `@media (prefers-color-scheme: dark)` 自适应规则
+- 彻底修复 iPhone / iOS Safari 导出 PDF 时目录未展开的缺陷：
+  - 针对 iOS Safari 系统打印弹窗（Print Preview Sheet）异步生成耗时长、原早退定时器与 `focus`/`visibilitychange` 提前收起折叠框的缺陷，彻底移除破坏性的自动收回机制，并在 `exportPdf` 中双重展开与重排 DOM
+  - 注册全局 `beforeprint` 打印钩子，使通过侧边栏导出或 Safari 原生分享打印均能自动展开正文全部折叠框
+  - 优化打印样式表：在 `@media print` 中隐藏折叠框伪元素标记箭头（`summary::before`），消除 WebKit 打印引擎将其误渲染为实心黑方块（`■`）的排版异常
 - 修复宽屏模式下音频伴读卡片进度条由于盒模型内边距撑开导致轨道异常肥厚变粗（26px）且滑块圆点垂直偏离轨道中心的缺陷，锁死高度为 `4px` 并重置盒模型
 - 修复导出 EPUB 与纯文本（TXT）时正文主标题出现两次的缺陷
 - 修复 EPUB 电子书在深色/夜间阅读模式下各级标题（`h1~h6`）文本颜色无法自动反转反色的缺陷

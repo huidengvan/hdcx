@@ -248,6 +248,58 @@ export function exportTxt(includeAnchors) {
     }
 }
 
+/** 展开文档内所有 details 折叠框（确保 PDF 打印与移动端 WebKit 完整渲染内联目录） */
+export function expandAllDetails() {
+    if (typeof document === 'undefined') return;
+
+    const allDetails = Array.from(
+        document.querySelectorAll('article details, main details, details')
+    );
+
+    allDetails.forEach(d => {
+        // 如果处于折叠状态，尝试模拟触发 summary 点击以唤醒 Docusaurus React 状态解冻
+        const isCollapsed = d.getAttribute('data-collapsed') === 'true' || !d.open;
+        if (isCollapsed) {
+            const summary = d.querySelector('summary');
+            if (summary) {
+                try {
+                    summary.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }));
+                } catch (e) {}
+            }
+        }
+
+        d.setAttribute('open', '');
+        d.open = true;
+        d.setAttribute('data-collapsed', 'false');
+
+        // 无论此前是否有行内样式，强制将内部全部容器和列表项设为可见流式布局
+        const innerNodes = d.querySelectorAll('*');
+        innerNodes.forEach(el => {
+            const tag = el.tagName.toLowerCase();
+            if (tag === 'li') {
+                el.style.setProperty('display', 'list-item', 'important');
+            } else if (tag === 'a') {
+                el.style.setProperty('display', 'inline', 'important');
+            } else if (tag !== 'summary') {
+                el.style.setProperty('display', 'block', 'important');
+            }
+            el.style.setProperty('visibility', 'visible', 'important');
+            el.style.setProperty('opacity', '1', 'important');
+            el.style.setProperty('height', 'auto', 'important');
+            el.style.setProperty('max-height', 'none', 'important');
+            el.style.setProperty('overflow', 'visible', 'important');
+        });
+    });
+
+    // 强制触发 DOM 几何回流，确保 WebKit 渲染树即时计算展开后的布局尺寸
+    void document.body.offsetHeight;
+}
+
+// 注册全局打印前置钩子：无论用户是通过侧边栏点击导出还是直接通过 Safari 系统菜单分享打印，均自动展开目录
+if (typeof window !== 'undefined') {
+    window.addEventListener('beforeprint', expandAllDetails);
+}
+
 /** 2. 导出 PDF（调起系统静默打印流） */
 export function exportPdf(includeAnchors, onBeforePrint) {
     if (onBeforePrint) onBeforePrint();
@@ -255,50 +307,8 @@ export function exportPdf(includeAnchors, onBeforePrint) {
     const { filename } = getArticleMetadata();
     const originalTitle = document.title;
 
-    // 1. 自动展开正文与主区域内的全部 details 折叠框（支持移动端及各主流浏览器）
-    const allDetails = Array.from(
-        document.querySelectorAll('article details, main details, details')
-    );
-
-    // 记录被强制展开的 DOM 状态与原本的行内样式，供打印结束后完整复原
-    const restoreList = [];
-
-    allDetails.forEach(d => {
-        const wasOpen = d.hasAttribute('open');
-        if (!wasOpen) {
-            d.setAttribute('open', '');
-            d.open = true;
-        }
-
-        // Docusaurus 的 Collapsible 组件会在 details 内部 div 上设置行内 style="display: none; height: 0px; overflow: hidden;"
-        // 在打印前强制重设为可见块级布局，确保 iPhone Safari WebKit 等移动打印引擎正常捕获并渲染目录内容
-        const innerDivs = d.querySelectorAll('div');
-        const modifiedDivs = [];
-        innerDivs.forEach(div => {
-            const prevDisplay = div.style.display;
-            const prevHeight = div.style.height;
-            const prevOverflow = div.style.overflow;
-            const prevMaxHeight = div.style.maxHeight;
-            if (prevDisplay === 'none' || prevHeight === '0px' || prevOverflow === 'hidden') {
-                modifiedDivs.push({ el: div, display: prevDisplay, height: prevHeight, overflow: prevOverflow, maxHeight: prevMaxHeight });
-                div.style.setProperty('display', 'block', 'important');
-                div.style.setProperty('height', 'auto', 'important');
-                div.style.setProperty('max-height', 'none', 'important');
-                div.style.setProperty('overflow', 'visible', 'important');
-            }
-        });
-
-        restoreList.push({
-            detail: d,
-            wasOpen,
-            modifiedDivs
-        });
-    });
-
-    // 2. 强制触发 DOM 几何回流，确保 WebKit 渲染树即时计算展开后的布局尺寸
-    if (typeof document !== 'undefined') {
-        void document.body.offsetHeight;
-    }
+    // 1. 自动展开正文与主区域内的全部 details 折叠框（确保 iPhone Safari 等移动端打印预览完整呈现目录）
+    expandAllDetails();
 
     let cleaned = false;
     const cleanup = () => {
@@ -306,41 +316,12 @@ export function exportPdf(includeAnchors, onBeforePrint) {
         cleaned = true;
         document.title = originalTitle;
         document.body.classList.remove('hide-print-anchors');
-
-        // 精确复原之前被展开的 details 及其内部 div 的原始状态
-        restoreList.forEach(({ detail, wasOpen, modifiedDivs }) => {
-            if (!wasOpen) {
-                detail.removeAttribute('open');
-                detail.open = false;
-            }
-            modifiedDivs.forEach(({ el, display, height, overflow, maxHeight }) => {
-                el.style.display = display;
-                el.style.height = height;
-                el.style.overflow = overflow;
-                el.style.maxHeight = maxHeight;
-            });
-        });
-
         window.removeEventListener('afterprint', cleanup);
-        window.removeEventListener('focus', cleanup);
-        document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
 
-    const handleVisibilityChange = () => {
-        if (document.visibilityState === 'visible') {
-            // 用户完成或关闭系统打印弹窗返回页面时复原
-            cleanup();
-        }
-    };
-
-    // 桌面端浏览器标准 afterprint 事件
+    // 仅在真实打印流结束（afterprint）时复原页面标题与锚点样式
+    // 严禁在 iOS Safari 弹窗期间通过定时器或 blur/focus 提早收起折叠框，确保打印快照永远捕获完整展开的目录
     window.addEventListener('afterprint', cleanup, { once: true });
-    // iOS Safari 打印弹窗关闭返回页面时的多重保底监听
-    window.addEventListener('focus', cleanup, { once: true });
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    // 超长安全兜底（60 秒，绝不在用户查看打印预览的数秒内提前关闭折叠框）
-    setTimeout(cleanup, 60000);
 
     try {
         if (!includeAnchors) {
@@ -351,10 +332,11 @@ export function exportPdf(includeAnchors, onBeforePrint) {
 
         document.title = filename;
 
-        // 留出 350ms 让移动端 WebKit 完成重排与渲染，随后调起打印流
+        // 留出 400ms 让移动端 WebKit 完成重排与渲染，随后调起打印流
         setTimeout(() => {
+            expandAllDetails();
             window.print();
-        }, 350);
+        }, 400);
     } catch (err) {
         console.error('PDF 打印调起失败:', err);
         cleanup();
@@ -377,11 +359,79 @@ export async function exportEpub(includeAnchors) {
         const JSZip = await loadJSZip();
         const zip = new JSZip();
 
-        // 确保所有标题节点都有标准 ID，保证 EPUB 目录跳转与原生导航 100% 对齐
-        const headingEls = Array.from(contentEl.querySelectorAll('h1, h2, h3, h4, h5, h6'));
-        headingEls.forEach((h, i) => {
-            if (!h.id) {
-                h.id = `heading-${i}`;
+        // 1. 克隆正文 DOM 树，完全在内存中独立处理 EPUB 专属排版与结构，不污染当前网页
+        const clonedEl = contentEl.cloneNode(true);
+
+        // 2. 收集正文中所有的章节标题，分配符合 XML 1.0 规范的纯 ASCII 标识符（sec-1, sec-2...）
+        // 彻底解决安卓与 iOS 平台各阅读器（微信读书、苹果图书）因中文或全角标点导致 XML ID 解析失败、点击无反应的根本问题
+        const idMap = new Map();
+        const headings = Array.from(clonedEl.querySelectorAll('h1, h2, h3, h4, h5, h6'));
+        const navEntries = [];
+
+        headings.forEach((h, index) => {
+            const rawId = h.getAttribute('id') || h.id || '';
+            const safeId = `sec-${index + 1}`;
+            if (rawId) {
+                idMap.set(rawId, safeId);
+                try {
+                    idMap.set(decodeURIComponent(rawId), safeId);
+                } catch (e) {}
+            }
+            h.setAttribute('id', safeId);
+            h.id = safeId;
+
+            const text = h.innerText.replace(/^#+\s*/, '').replace(/\[p\d+\]/g, '').trim();
+            navEntries.push({ id: safeId, text: text || `章节 ${index + 1}` });
+        });
+
+        // 3. 将网页端的交互式折叠框 <details><summary>目录</summary>...</details> 重构为电子书标准的静态目录区块
+        // 彻底杜绝移动端（iOS / Android）阅读器手势拦截导致的目录链接点不动，以及深色模式下 <summary> 颜色发黑无法看清的问题
+        const detailsList = Array.from(clonedEl.querySelectorAll('details'));
+        detailsList.forEach(details => {
+            const summary = details.querySelector('summary');
+            const summaryText = summary?.innerText?.trim() || '目录';
+
+            const tocContainer = document.createElement('div');
+            tocContainer.className = 'epub-toc-box';
+
+            const tocTitle = document.createElement('h2');
+            tocTitle.className = 'epub-toc-title';
+            tocTitle.innerText = summaryText;
+            tocContainer.appendChild(tocTitle);
+
+            // 将 details 内部的目录列表节点移入静态容器
+            const children = Array.from(details.childNodes);
+            children.forEach(child => {
+                if (child !== summary) {
+                    tocContainer.appendChild(child);
+                }
+            });
+
+            details.parentNode?.replaceChild(tocContainer, details);
+        });
+
+        // 4. 重写克隆树中的所有超链接：精准对齐至 chapter1.xhtml#sec-X
+        const links = Array.from(clonedEl.querySelectorAll('a'));
+        links.forEach(a => {
+            const href = a.getAttribute('href') || '';
+            const hashIdx = href.indexOf('#');
+            if (hashIdx !== -1) {
+                const rawHash = href.slice(hashIdx + 1);
+                let decodedHash = rawHash;
+                try {
+                    decodedHash = decodeURIComponent(rawHash);
+                } catch (e) {}
+
+                const mappedId = idMap.get(rawHash) || idMap.get(decodedHash);
+                if (mappedId) {
+                    a.setAttribute('href', `chapter1.xhtml#${mappedId}`);
+                } else if (rawHash.startsWith('p') && /^\d+$/.test(rawHash.slice(1))) {
+                    if (!includeAnchors) {
+                        a.remove();
+                    } else {
+                        a.setAttribute('href', `chapter1.xhtml#${rawHash}`);
+                    }
+                }
             }
         });
 
@@ -440,66 +490,71 @@ pre {
   overflow-x: auto;
   border-radius: 4px;
 }
-details {
+/* 电子书正文内嵌目录区块排版（完美支持微信读书与苹果图书深色模式） */
+.epub-toc-box {
+  margin: 1.5em 0;
+  padding: 12px 18px;
   border: 1px solid rgba(125, 125, 125, 0.25);
-  border-radius: 6px;
-  padding: 10px 14px;
-  margin: 1.2em 0;
+  border-radius: 8px;
   background-color: rgba(125, 125, 125, 0.05);
-  color: inherit !important;
+  color: inherit;
 }
-details > * {
-  display: block;
-}
-details summary {
+.epub-toc-title {
+  font-size: 1.15em;
   font-weight: 700;
-  font-size: 1.05em;
-  cursor: pointer;
-  margin-bottom: 8px;
-  border-bottom: 1px solid rgba(125, 125, 125, 0.2);
+  margin: 0 0 10px 0 !important;
   padding-bottom: 6px;
-  color: inherit !important;
-}
-/* 目录及链接全面继承阅读器字体颜色，深色模式自适应变亮，彻底解决字体发黑问题 */
-details *,
-.table-of-contents,
-.table-of-contents *,
-.table-of-contents li,
-.table-of-contents a,
-.table-of-contents a:link,
-.table-of-contents a:visited,
-[class*='tableOfContents'] * {
-  color: inherit !important;
+  border-bottom: 1px solid rgba(125, 125, 125, 0.2);
+  color: inherit;
 }
 .table-of-contents, ul.table-of-contents {
   list-style: disc;
   padding-left: 20px;
   margin: 8px 0;
+  color: inherit;
 }
 .table-of-contents li {
-  margin: 4px 0;
+  margin: 6px 0;
   line-height: 1.6;
+  color: inherit;
 }
 .table-of-contents a {
+  color: inherit !important;
   text-decoration: underline;
   text-decoration-color: rgba(125, 125, 125, 0.4);
   cursor: pointer;
-  pointer-events: auto !important;
   display: inline-block;
-  padding: 2px 0;
+  padding: 3px 0;
 }
 .table-of-contents ul {
   list-style: circle;
   padding-left: 20px;
   margin: 4px 0;
+  color: inherit;
+}
+/* 深色阅读模式全平台色彩适配（支持微信读书、苹果图书及各大安卓阅读器） */
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #e5e7eb !important;
+  }
+  .epub-toc-box {
+    background-color: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+  .epub-toc-title,
+  .table-of-contents,
+  .table-of-contents li,
+  .table-of-contents a {
+    color: #e5e7eb !important;
+  }
 }
 `;
         oebps.file('style.css', cssContent);
 
         // EPUB 规范 4: 正文 XHTML
-        const xhtmlBody = serializeToXhtml(contentEl, includeAnchors);
+        const xhtmlBody = serializeToXhtml(clonedEl, includeAnchors);
         // 如果正文已经包含主标题 h1，则不重复添加顶部标题
-        const hasH1 = !!contentEl.querySelector('h1');
+        const hasH1 = !!clonedEl.querySelector('h1');
         const headerHtml = hasH1 ? '' : `<h1>${escapeXml(title)}</h1>`;
         const chapterContent = `<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
@@ -519,30 +574,21 @@ details *,
         oebps.file('chapter1.xhtml', chapterContent);
 
         // EPUB 规范 5: 目录 toc.xhtml（EPUB 3 原生导航大纲）与 toc.ncx（EPUB 2 兼容导航，完美支持微信读书与老版阅读器）
-        const navHeadings = Array.from(contentEl.querySelectorAll('h1, h2, h3'));
         let navList = '';
         let ncxNavMap = '';
 
-        if (navHeadings.length > 0) {
-            navList = navHeadings
-                .map((h, i) => {
-                    const id = h.id || `heading-${i}`;
-                    const text = h.innerText.replace(/^#+\s*/, '').replace(/\[p\d+\]/g, '').trim();
-                    return `      <li><a href="chapter1.xhtml#${escapeXml(id)}">${escapeXml(text)}</a></li>`;
-                })
+        if (navEntries.length > 0) {
+            navList = navEntries
+                .map((entry) => `      <li><a href="chapter1.xhtml#${escapeXml(entry.id)}">${escapeXml(entry.text)}</a></li>`)
                 .join('\n');
 
-            ncxNavMap = navHeadings
-                .map((h, i) => {
-                    const id = h.id || `heading-${i}`;
-                    const text = h.innerText.replace(/^#+\s*/, '').replace(/\[p\d+\]/g, '').trim();
-                    return `    <navPoint id="navPoint-${i + 1}" playOrder="${i + 1}">
+            ncxNavMap = navEntries
+                .map((entry, i) => `    <navPoint id="navPoint-${i + 1}" playOrder="${i + 1}">
       <navLabel>
-        <text>${escapeXml(text)}</text>
+        <text>${escapeXml(entry.text)}</text>
       </navLabel>
-      <content src="chapter1.xhtml#${escapeXml(id)}"/>
-    </navPoint>`;
-                })
+      <content src="chapter1.xhtml#${escapeXml(entry.id)}"/>
+    </navPoint>`)
                 .join('\n');
         } else {
             navList = `      <li><a href="chapter1.xhtml">${escapeXml(title)}</a></li>`;

@@ -1199,17 +1199,24 @@ article h6,
     border-bottom: 1px solid #e2e8f0 !important;
     padding-bottom: 6px !important;
     list-style: none !important;
+    padding-left: 0 !important;
   }
 
-  details > summary::-webkit-details-marker {
+  details > summary::marker,
+  details > summary::-webkit-details-marker,
+  details > summary::before,
+  details > summary:before {
     display: none !important;
+    content: none !important;
   }
 
   /* 破除 Docusaurus React Collapsible 折叠容器注入的行内 display: none 与 height: 0px */
   details > *:not(summary),
   details > div,
   details [class*='collapsibleContent'],
-  details > div > div {
+  details > div > div,
+  details[data-collapsed="true"] > *:not(summary),
+  details:not([open]) > *:not(summary) {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
