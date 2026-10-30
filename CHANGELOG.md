@@ -12,6 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - 在《堪布阿琼仁波切密传》（`refs/cczj/aqrbq.md`）童年生活、依止善知识、开始修加行等各章节下嵌入配套有声书音频伴读卡片（`SectionAudio`）
 
 ### Changed
+- 阅读侧边栏（`ReaderToolbar`）限制仅在 `/books`（课程法本）与 `/refs`（参考法本）两个大分类下展示离线下载选项，其余文档页面不展示下载选项
+- 阅读侧边栏字号调整（A+ / A-）实现正文各级标题（`h1~h6`）与主体段落等比例联动缩放，将标题字号由固定的 `rem` 根相对单位重构为以当前正文字号为基准的 `em` 相对单位
 - 阅读侧边栏（`ReaderToolbar`）UI/UX 全面重构：
   - PC 端面板宽度拓宽 18px（由 `178px` 增加至 `196px`），排版更舒展通透
   - iPhone / 移动端窄屏自适应响应式重构：展开卡片宽度自适应为 `min(320px, calc(100vw - 24px))`，外框采用 `16px` 大圆角
@@ -26,6 +28,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - 播放列表（`Playlist`）头部操作按钮增加 `min-height: 38px`，优化移动端点击体验
 
 ### Fixed
+- 修复 EPUB 电子书在微信读书与苹果图书（Apple Books）中页首目录点击无跳转反应的问题：将页内锚点统一转换为规范的 `chapter1.xhtml#id` 格式，并补全 EPUB 2 NCX 兼容大纲（`toc.ncx` 与 `<spine toc="ncx">`）
+- 修复 EPUB 电子书页首目录在深色/夜间阅读模式下文字仍为黑色的问题：移除目录与链接的所有固定文字颜色，强制继承阅读器主题色彩（`color: inherit !important;`）
+- 修复 iPhone / iOS Safari 导出 PDF 时目录缺失的问题：在调起打印前强制展开所有折叠框及其内部容器（`display: block !important; height: auto !important`）并触发 WebKit 重排，延迟打印调起时间至 350ms，且将状态复原时机绑定至打印弹窗退出后，避免过早关闭导致 PDF 目录空白
 - 修复宽屏模式下音频伴读卡片进度条由于盒模型内边距撑开导致轨道异常肥厚变粗（26px）且滑块圆点垂直偏离轨道中心的缺陷，锁死高度为 `4px` 并重置盒模型
 - 修复导出 EPUB 与纯文本（TXT）时正文主标题出现两次的缺陷
 - 修复 EPUB 电子书在深色/夜间阅读模式下各级标题（`h1~h6`）文本颜色无法自动反转反色的缺陷

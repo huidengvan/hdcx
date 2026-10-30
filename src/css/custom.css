@@ -1041,6 +1041,49 @@ html[data-reader-font='fangsong'] article blockquote {
 }
 
 /* ============================================================
+   正文各级标题（h1~h6）字号与文章主体基准字号等比例缩放联动
+   ============================================================ */
+article,
+.theme-doc-markdown {
+  --ifm-h1-font-size: 2em;
+  --ifm-h2-font-size: 1.5em;
+  --ifm-h3-font-size: 1.25em;
+  --ifm-h4-font-size: 1.1em;
+  --ifm-h5-font-size: 1.05em;
+  --ifm-h6-font-size: 1em;
+}
+
+article h1,
+.theme-doc-markdown h1 {
+  font-size: 2em !important;
+}
+
+article h2,
+.theme-doc-markdown h2 {
+  font-size: 1.5em !important;
+}
+
+article h3,
+.theme-doc-markdown h3 {
+  font-size: 1.25em !important;
+}
+
+article h4,
+.theme-doc-markdown h4 {
+  font-size: 1.1em !important;
+}
+
+article h5,
+.theme-doc-markdown h5 {
+  font-size: 1.05em !important;
+}
+
+article h6,
+.theme-doc-markdown h6 {
+  font-size: 1em !important;
+}
+
+/* ============================================================
    打印样式：PDF 高保真导出优化（剔除所有页面无关元素，只保留正文）
    ============================================================ */
 @media print {
@@ -1163,6 +1206,7 @@ html[data-reader-font='fangsong'] article blockquote {
   }
 
   /* 破除 Docusaurus React Collapsible 折叠容器注入的行内 display: none 与 height: 0px */
+  details > *:not(summary),
   details > div,
   details [class*='collapsibleContent'],
   details > div > div {

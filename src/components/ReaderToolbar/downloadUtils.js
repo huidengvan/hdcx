@@ -152,17 +152,37 @@ export function serializeToXhtml(node, includeAnchors) {
             continue;
         }
         if (attr.name === 'style') {
-            // 彻底剥离 Docusaurus 内部 React 折叠组件注入的行内隐藏样式
+            // 彻底剥离 Docusaurus 内部 React 折叠组件注入的行内隐藏样式与固定文本颜色，允许深色模式自适应
             const cleaned = attr.value
                 .replace(/display\s*:\s*none;?/gi, '')
                 .replace(/height\s*:\s*0(px)?;?/gi, '')
                 .replace(/overflow\s*:\s*hidden;?/gi, '')
                 .replace(/will-change\s*:[^;]+;?/gi, '')
+                .replace(/color\s*:[^;]+;?/gi, '')
                 .trim();
             if (cleaned) {
                 attrs += ` style="${escapeXml(cleaned)}"`;
             }
             continue;
+        }
+        if (tag === 'a' && attr.name === 'href') {
+            const val = attr.value || '';
+            const hashIdx = val.indexOf('#');
+            if (hashIdx !== -1) {
+                const prefix = val.slice(0, hashIdx);
+                const hashPart = val.slice(hashIdx + 1);
+                const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
+                // 如果是页内锚点（以 # 开头），或者链接路径指向当前页面自身
+                if (val.startsWith('#') || !prefix || prefix === currentPath || (currentPath && prefix.endsWith(currentPath))) {
+                    try {
+                        const decodedHash = decodeURIComponent(hashPart);
+                        attrs += ` href="chapter1.xhtml#${escapeXml(decodedHash)}"`;
+                    } catch (e) {
+                        attrs += ` href="chapter1.xhtml#${escapeXml(hashPart)}"`;
+                    }
+                    continue;
+                }
+            }
         }
         attrs += ` ${attr.name}="${escapeXml(attr.value)}"`;
     }
@@ -235,14 +255,50 @@ export function exportPdf(includeAnchors, onBeforePrint) {
     const { filename } = getArticleMetadata();
     const originalTitle = document.title;
 
-    // 仅在原生 HTML 层面为未打开的折叠框添加 open 属性，绝不侵入修改内部 React 行内样式
-    const closedDetails = Array.from(
-        document.querySelectorAll('article details:not([open]), main details:not([open])')
+    // 1. 自动展开正文与主区域内的全部 details 折叠框（支持移动端及各主流浏览器）
+    const allDetails = Array.from(
+        document.querySelectorAll('article details, main details, details')
     );
-    closedDetails.forEach(d => {
-        d.setAttribute('open', '');
-        d.open = true;
+
+    // 记录被强制展开的 DOM 状态与原本的行内样式，供打印结束后完整复原
+    const restoreList = [];
+
+    allDetails.forEach(d => {
+        const wasOpen = d.hasAttribute('open');
+        if (!wasOpen) {
+            d.setAttribute('open', '');
+            d.open = true;
+        }
+
+        // Docusaurus 的 Collapsible 组件会在 details 内部 div 上设置行内 style="display: none; height: 0px; overflow: hidden;"
+        // 在打印前强制重设为可见块级布局，确保 iPhone Safari WebKit 等移动打印引擎正常捕获并渲染目录内容
+        const innerDivs = d.querySelectorAll('div');
+        const modifiedDivs = [];
+        innerDivs.forEach(div => {
+            const prevDisplay = div.style.display;
+            const prevHeight = div.style.height;
+            const prevOverflow = div.style.overflow;
+            const prevMaxHeight = div.style.maxHeight;
+            if (prevDisplay === 'none' || prevHeight === '0px' || prevOverflow === 'hidden') {
+                modifiedDivs.push({ el: div, display: prevDisplay, height: prevHeight, overflow: prevOverflow, maxHeight: prevMaxHeight });
+                div.style.setProperty('display', 'block', 'important');
+                div.style.setProperty('height', 'auto', 'important');
+                div.style.setProperty('max-height', 'none', 'important');
+                div.style.setProperty('overflow', 'visible', 'important');
+            }
+        });
+
+        restoreList.push({
+            detail: d,
+            wasOpen,
+            modifiedDivs
+        });
     });
+
+    // 2. 强制触发 DOM 几何回流，确保 WebKit 渲染树即时计算展开后的布局尺寸
+    if (typeof document !== 'undefined') {
+        void document.body.offsetHeight;
+    }
 
     let cleaned = false;
     const cleanup = () => {
@@ -250,16 +306,41 @@ export function exportPdf(includeAnchors, onBeforePrint) {
         cleaned = true;
         document.title = originalTitle;
         document.body.classList.remove('hide-print-anchors');
-        closedDetails.forEach(d => {
-            d.removeAttribute('open');
-            d.open = false;
+
+        // 精确复原之前被展开的 details 及其内部 div 的原始状态
+        restoreList.forEach(({ detail, wasOpen, modifiedDivs }) => {
+            if (!wasOpen) {
+                detail.removeAttribute('open');
+                detail.open = false;
+            }
+            modifiedDivs.forEach(({ el, display, height, overflow, maxHeight }) => {
+                el.style.display = display;
+                el.style.height = height;
+                el.style.overflow = overflow;
+                el.style.maxHeight = maxHeight;
+            });
         });
+
         window.removeEventListener('afterprint', cleanup);
+        window.removeEventListener('focus', cleanup);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
 
+    const handleVisibilityChange = () => {
+        if (document.visibilityState === 'visible') {
+            // 用户完成或关闭系统打印弹窗返回页面时复原
+            cleanup();
+        }
+    };
+
+    // 桌面端浏览器标准 afterprint 事件
     window.addEventListener('afterprint', cleanup, { once: true });
-    // 保底复原（针对部分移动端浏览器未触发 afterprint 事件的情况，2.5s 足够平滑过渡）
-    setTimeout(cleanup, 2500);
+    // iOS Safari 打印弹窗关闭返回页面时的多重保底监听
+    window.addEventListener('focus', cleanup, { once: true });
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // 超长安全兜底（60 秒，绝不在用户查看打印预览的数秒内提前关闭折叠框）
+    setTimeout(cleanup, 60000);
 
     try {
         if (!includeAnchors) {
@@ -270,10 +351,10 @@ export function exportPdf(includeAnchors, onBeforePrint) {
 
         document.title = filename;
 
-        // 留出 120ms 让 React 完成面板收起，随后调起打印
+        // 留出 350ms 让移动端 WebKit 完成重排与渲染，随后调起打印流
         setTimeout(() => {
             window.print();
-        }, 120);
+        }, 350);
     } catch (err) {
         console.error('PDF 打印调起失败:', err);
         cleanup();
@@ -295,6 +376,14 @@ export async function exportEpub(includeAnchors) {
         // 动态加载 JSZip 库，彻底规避 Webpack 动态 chunk 404 返回 HTML 的 SyntaxError 报错
         const JSZip = await loadJSZip();
         const zip = new JSZip();
+
+        // 确保所有标题节点都有标准 ID，保证 EPUB 目录跳转与原生导航 100% 对齐
+        const headingEls = Array.from(contentEl.querySelectorAll('h1, h2, h3, h4, h5, h6'));
+        headingEls.forEach((h, i) => {
+            if (!h.id) {
+                h.id = `heading-${i}`;
+            }
+        });
 
         // EPUB 规范 1: mimetype 必须非压缩存储
         zip.file('mimetype', 'application/epub+zip', { compression: 'STORE' });
@@ -318,6 +407,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   line-height: 1.8;
   margin: 1.2em;
+  color: inherit;
 }
 h1, h2, h3, h4, h5, h6 {
   line-height: 1.35;
@@ -330,17 +420,20 @@ p {
   margin: 0.9em 0;
   text-align: justify;
   text-indent: 2em;
+  color: inherit;
 }
 blockquote {
   margin: 1.2em 0;
   padding: 0.6em 1em;
   border-left: 3px solid rgba(125, 125, 125, 0.4);
   background-color: rgba(125, 125, 125, 0.08);
+  color: inherit;
 }
 pre, code {
   font-family: monospace;
   background-color: rgba(125, 125, 125, 0.1);
   font-size: 0.9em;
+  color: inherit;
 }
 pre {
   padding: 0.8em;
@@ -353,6 +446,10 @@ details {
   padding: 10px 14px;
   margin: 1.2em 0;
   background-color: rgba(125, 125, 125, 0.05);
+  color: inherit !important;
+}
+details > * {
+  display: block;
 }
 details summary {
   font-weight: 700;
@@ -361,6 +458,18 @@ details summary {
   margin-bottom: 8px;
   border-bottom: 1px solid rgba(125, 125, 125, 0.2);
   padding-bottom: 6px;
+  color: inherit !important;
+}
+/* 目录及链接全面继承阅读器字体颜色，深色模式自适应变亮，彻底解决字体发黑问题 */
+details *,
+.table-of-contents,
+.table-of-contents *,
+.table-of-contents li,
+.table-of-contents a,
+.table-of-contents a:link,
+.table-of-contents a:visited,
+[class*='tableOfContents'] * {
+  color: inherit !important;
 }
 .table-of-contents, ul.table-of-contents {
   list-style: disc;
@@ -372,8 +481,12 @@ details summary {
   line-height: 1.6;
 }
 .table-of-contents a {
-  color: #3b82f6;
   text-decoration: underline;
+  text-decoration-color: rgba(125, 125, 125, 0.4);
+  cursor: pointer;
+  pointer-events: auto !important;
+  display: inline-block;
+  padding: 2px 0;
 }
 .table-of-contents ul {
   list-style: circle;
@@ -405,19 +518,40 @@ details summary {
 </html>`;
         oebps.file('chapter1.xhtml', chapterContent);
 
-        // EPUB 规范 5: 目录 toc.xhtml（提取正文章节生成原生导航大纲）
-        const headingEls = Array.from(contentEl.querySelectorAll('h1, h2, h3'));
+        // EPUB 规范 5: 目录 toc.xhtml（EPUB 3 原生导航大纲）与 toc.ncx（EPUB 2 兼容导航，完美支持微信读书与老版阅读器）
+        const navHeadings = Array.from(contentEl.querySelectorAll('h1, h2, h3'));
         let navList = '';
-        if (headingEls.length > 0) {
-            navList = headingEls
+        let ncxNavMap = '';
+
+        if (navHeadings.length > 0) {
+            navList = navHeadings
                 .map((h, i) => {
                     const id = h.id || `heading-${i}`;
                     const text = h.innerText.replace(/^#+\s*/, '').replace(/\[p\d+\]/g, '').trim();
                     return `      <li><a href="chapter1.xhtml#${escapeXml(id)}">${escapeXml(text)}</a></li>`;
                 })
                 .join('\n');
+
+            ncxNavMap = navHeadings
+                .map((h, i) => {
+                    const id = h.id || `heading-${i}`;
+                    const text = h.innerText.replace(/^#+\s*/, '').replace(/\[p\d+\]/g, '').trim();
+                    return `    <navPoint id="navPoint-${i + 1}" playOrder="${i + 1}">
+      <navLabel>
+        <text>${escapeXml(text)}</text>
+      </navLabel>
+      <content src="chapter1.xhtml#${escapeXml(id)}"/>
+    </navPoint>`;
+                })
+                .join('\n');
         } else {
             navList = `      <li><a href="chapter1.xhtml">${escapeXml(title)}</a></li>`;
+            ncxNavMap = `    <navPoint id="navPoint-1" playOrder="1">
+      <navLabel>
+        <text>${escapeXml(title)}</text>
+      </navLabel>
+      <content src="chapter1.xhtml"/>
+    </navPoint>`;
         }
 
         const tocContent = `<?xml version="1.0" encoding="utf-8"?>
@@ -438,8 +572,26 @@ ${navList}
 </html>`;
         oebps.file('toc.xhtml', tocContent);
 
-        // EPUB 规范 6: 元数据清单 content.opf
+        // EPUB 2 NCX 导航文件（微信读书与旧版阅读器必备）
         const uuid = 'urn:uuid:' + Math.random().toString(36).substring(2, 15);
+        const ncxContent = `<?xml version="1.0" encoding="UTF-8"?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1">
+  <head>
+    <meta name="dtb:uid" content="${uuid}"/>
+    <meta name="dtb:depth" content="2"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+  <docTitle>
+    <text>${escapeXml(title)}</text>
+  </docTitle>
+  <navMap>
+${ncxNavMap}
+  </navMap>
+</ncx>`;
+        oebps.file('toc.ncx', ncxContent);
+
+        // EPUB 规范 6: 元数据清单 content.opf（配置 spine toc="ncx"，兼顾 EPUB 2/3 国际规范）
         const dateStr = new Date().toISOString().replace(/\.[0-9]+Z$/, 'Z');
         const opfContent = `<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookId" version="3.0">
@@ -451,11 +603,12 @@ ${navList}
     <meta property="dcterms:modified">${dateStr}</meta>
   </metadata>
   <manifest>
+    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
     <item id="toc" href="toc.xhtml" media-type="application/xhtml+xml" properties="nav"/>
     <item id="chapter1" href="chapter1.xhtml" media-type="application/xhtml+xml"/>
     <item id="style" href="style.css" media-type="text/css"/>
   </manifest>
-  <spine>
+  <spine toc="ncx">
     <itemref idref="chapter1"/>
   </spine>
 </package>`;

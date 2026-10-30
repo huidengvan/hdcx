@@ -75,8 +75,8 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
     const [anchorsVisible, setAnchorsVisible] = useLocalStorageState('readerAnchorsVisible', { defaultValue: true });
     const containerRef = useRef(null);
     const location = useLocation();
-    // 覆盖 /books, /refs 以及本地常见 /4jx, /5jx, /wsb 等所有文档路径
-    const isTargetDoc = /^\/(books|refs|4jx|5jx|wsb)(\/|$)/.test(location.pathname);
+    // 仅在 /books 与 /refs 两个大分类下展示离线下载选项
+    const isTargetDoc = /^\/(books|refs)(\/|$)/.test(location.pathname);
     const { colorMode, setColorMode } = useColorMode();
 
     // 纠正超出当前主题数量的索引（例如历史缓存了 4: 夜间墨）
