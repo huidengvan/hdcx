@@ -2,7 +2,6 @@
 title: "10念修金刚萨埵(114-118)"
 ---
 
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 
 import TOCInline from '@theme/TOCInline';

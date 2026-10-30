@@ -2,7 +2,6 @@
 title: "03暇满难得(14-27)"
 ---
 
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 import TOCInline from '@theme/TOCInline';
 

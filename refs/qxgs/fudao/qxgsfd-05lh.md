@@ -2,7 +2,6 @@
 title: "05轮回痛苦(40-58)"
 ---
 
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 import TOCInline from '@theme/TOCInline';
 

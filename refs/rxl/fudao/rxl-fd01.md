@@ -1,7 +1,6 @@
 # 入行论辅导第1品(1-14)
 
 import TOCInline from '@theme/TOCInline';
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 <TOCInline toc={toc} maxHeadingLevel='6' />
 

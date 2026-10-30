@@ -12,6 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - 在《堪布阿琼仁波切密传》（`refs/cczj/aqrbq.md`）童年生活、依止善知识、开始修加行等各章节下嵌入配套有声书音频伴读卡片（`SectionAudio`）
 
 ### Changed
+- 在法本第一册（`books/b1/` 6 篇）、第二册（`books/b2/` 9 篇）及禅修班共修（`wsb/book2/b2-0.md`）共 16 篇文档中，将原生 HTML `<audio controls src="..." />` 标签全面替换为系统规范的音频伴读卡片组件（`SectionAudio`），支持倍速播放、快退 10s、快进 10s 及悬浮伴读球联动
+- 将替换后的 16 篇文档中音频资源链接（`src`）还原为未转义的原生中文路径规范（如 `慧灯禅修课/慧灯禅修课第二册/...`），统一全站资源链接规范
 - 阅读侧边栏（`ReaderToolbar`）限制仅在 `/books`（课程法本）与 `/refs`（参考法本）两个大分类下展示离线下载选项，其余文档页面不展示下载选项
 - 阅读侧边栏字号调整（A+ / A-）实现正文各级标题（`h1~h6`）与主体段落等比例联动缩放，将标题字号由固定的 `rem` 根相对单位重构为以当前正文字号为基准的 `em` 相对单位
 - 阅读侧边栏（`ReaderToolbar`）UI/UX 全面重构：
@@ -28,6 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - 播放列表（`Playlist`）头部操作按钮增加 `min-height: 38px`，优化移动端点击体验
 
 ### Removed
+- 批量清理全站 41 篇参考法本文档（`refs/hdzg/`、`refs/rxl/fudao/`、`refs/cczj/`、`refs/qxbwl/`、`refs/qxgs/fudao/`、`refs/misc/`）中冗余的 `import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';` 语句，直接复用 `MDXComponents` 全局注入，简化 Markdown 头部结构
 - 清理项目历史遗留的无用生成文件与文档冗余（释放超 78MB 仓库与构建体积）：
   - 移除散落在正文源码目录下的 33 个旧版离线生成电子书（`refs/qxgs/fudao/*.md.epub`、`refs/qxgs/*.md.epub`、`refs/xmfw/s3/*.md.epub` 及 `.mobi`）
   - 移除 `static/docs/epub/` 目录下的 7 个旧版静态 EPUB 文件

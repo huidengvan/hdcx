@@ -4,7 +4,6 @@ title: "08皈依(84-90)"
 
 ---
 
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 
 import TOCInline from '@theme/TOCInline';

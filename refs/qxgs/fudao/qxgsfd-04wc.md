@@ -2,7 +2,6 @@
 title: "04寿命无常(28-39)"
 ---
 
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 
 import TOCInline from '@theme/TOCInline';

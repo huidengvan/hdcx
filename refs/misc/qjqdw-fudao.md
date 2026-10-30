@@ -4,7 +4,6 @@ sidebar_position: 44
 ---
 
 import TOCInline from '@theme/TOCInline';
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 <TOCInline toc={toc} maxHeadingLevel='6' />
 

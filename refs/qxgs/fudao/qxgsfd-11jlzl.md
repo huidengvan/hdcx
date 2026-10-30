@@ -2,7 +2,6 @@
 title: "11积累资粮(119-125)"
 ---
 
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 
 import TOCInline from '@theme/TOCInline';

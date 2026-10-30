@@ -6,7 +6,6 @@ sidebar_position: 1
 ---
 
 import TOCInline from '@theme/TOCInline';
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 <details>
 <summary>目录</summary>
@@ -1384,7 +1383,7 @@ import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 <SectionAudio
   id="blhl-001"
-  src="https://box.hdcxb.net/d/%E5%85%B6%E4%BB%96%E8%B5%84%E6%96%99/a/sound/%E9%87%8A%E8%BF%A6%E7%89%9F%E5%B0%BC%E4%BD%9B%E5%B9%BF%E4%BC%A0%C2%B7%E7%99%BD%E8%8E%B2%E8%8A%B1%E8%AE%BA/27%20-%20%E4%B8%89%20%E5%B8%83%E6%96%BD%E5%93%81%EF%BC%88%E7%A6%8F%E5%8A%9B%E7%8E%8B%E6%9C%89%E5%A4%A7%E7%A6%8F%E5%BE%B7%EF%BC%89.m4a"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/释迦牟尼佛广传·白莲花论/27 - 三 布施品（福力王有大福德）.m4a"
   title="福力王有大福德"
   subtitle="释迦牟尼佛广传 • 白莲花论 有声书"
 />

@@ -2,7 +2,6 @@
 title: "02闻法方式(03-13)"
 ---
 
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 import TOCInline from '@theme/TOCInline';
 

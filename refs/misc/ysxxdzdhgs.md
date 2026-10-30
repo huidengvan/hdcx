@@ -3,7 +3,6 @@ title: "一生修行的重点和归宿"
 sidebar_position: 42
 ---
 import TOCInline from '@theme/TOCInline';
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 <TOCInline toc={toc} maxHeadingLevel='6' />
 

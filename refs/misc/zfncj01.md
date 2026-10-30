@@ -3,7 +3,6 @@ title: "正法念处经讲记1"
 sidebar_position: 5
 ---
 import TOCInline from '@theme/TOCInline';
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 <TOCInline toc={toc} maxHeadingLevel='6' />
 

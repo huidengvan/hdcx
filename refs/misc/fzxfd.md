@@ -6,7 +6,6 @@ sidebar_position: 52
 ---
 
 import TOCInline from '@theme/TOCInline';
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 <details>
 <summary>目录</summary>

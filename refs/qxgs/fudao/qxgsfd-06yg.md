@@ -2,7 +2,6 @@
 title: "06因果不虚(59-72)"
 ---
 
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 import TOCInline from '@theme/TOCInline';
 

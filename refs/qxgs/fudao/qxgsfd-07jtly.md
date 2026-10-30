@@ -4,7 +4,6 @@ title: "07解脱利益 依止上师(73-83)"
 
 ---
 
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 
 import TOCInline from '@theme/TOCInline';

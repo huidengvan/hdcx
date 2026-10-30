@@ -2,7 +2,6 @@
 title: "12上师瑜伽(126-137)"
 ---
 
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 
 import TOCInline from '@theme/TOCInline';

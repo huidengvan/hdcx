@@ -2,7 +2,6 @@
 title: "13往生法(138-142)"
 ---
 
-import SectionAudio from '@site/src/components/AudioCompanion/SectionAudio';
 
 
 import TOCInline from '@theme/TOCInline';
