@@ -19,7 +19,8 @@ const hanzi = (text) => text.replace(/[^一-鿿]/g, '');
  * @param {{ doc: string, chunks: object[] }[]} docs 全部分类的切块结果（会就地写入 dupOf / dupGroup / alsoIn / metaHash）
  */
 export function annotateDuplicates(docs) {
-    const chunks = docs.flatMap((d) => d.chunks);
+    const textCats = new Set(categories.filter((c) => c.type !== 'srt').map((c) => c.id));
+    const chunks = docs.flatMap((d) => d.chunks).filter((c) => textCats.has(c.cat));
     for (const c of chunks) delete c.dupOf, delete c.dupGroup, delete c.alsoIn;
 
     // 各分类的 8 字片段索引（步长 1），用于被比对

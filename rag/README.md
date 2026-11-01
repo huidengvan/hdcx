@@ -1,485 +1,335 @@
-# AI 语义搜索（RAG 检索）设计文档
+# AI 语义搜索（RAG 检索）
 
-> 状态：课程法本第一～四册（40 篇 / 696 块）+ 慧灯之光 1~12 册（137 篇 / 2,561 块）已入库，约占存储额度 66.7%（2026-11-01）；API：`https://ragapi.hdcxb.net`（备用 `https://hdcx-rag-api.huidengvan.workers.dev`）  
-> 范围：`/books/b1` ~ `/books/b4`（分类「课程法本」）、`/refs/hdzg/01` ~ `/refs/hdzg/12`（分类「慧灯之光」，见 §13），后续可按分类追加其他书。  
-> 技术栈：Cloudflare Workers AI（`@cf/baai/bge-m3`，1024 维）+ Vectorize + Worker API；前端集成到现有 `/search` 页。
+> 接口：`https://ragapi.hdcxb.net`（Cloudflare Worker `hdcx-rag-api`，备用 `https://hdcx-rag-api.huidengvan.workers.dev`）
+> 向量库：Qdrant Cloud（AWS us-west-1，collection `hdcx`）
+> 模型：Cloudflare Workers AI——向量 `@cf/baai/bge-m3`（1024 维），重排 `@cf/baai/bge-reranker-base`
+> 前端：`/search` 页「AI 搜索」模式（`src/components/Search/`）
+
+| 分类 | 范围 | 规模 |
+|---|---|---|
+| 课程法本 | `books/b1~b4` | 40 篇 / 696 块 |
+| 慧灯之光 | `refs/hdzg/01~12` | 137 篇 / 2,561 块（其中 625 块与课程法本重复，见 §5.4） |
+| 课程视频 | `static/docs/srts/b1~b4`（四册视频字幕） | 76 个视频（约 119 小时）/ 3,267 块 |
+| 合计 | | 6,524 个向量 |
 
 ---
 
 ## 0. 日常维护（必读）
 
-**为什么要更新索引**：AI 搜索的结果按段落号（`#pN`）跳转原文。段落号是构建时按文章内段落顺序编的，**增删、合并、拆分段落都会让后面的段落号整体变化**。改了已入库的法本（目前是 `books/b1~b4`、`refs/hdzg/01~12`，以 `rag/categories.json` 为准）却不更新索引，搜索结果就会跳到错误的位置，新内容也搜不到。
+**为什么要更新索引**：
 
-### 修改法本内容后（有 Cloudflare 权限的维护者执行）
+- 法本的搜索结果按段落号（`#pN`）跳转原文。段落号是构建时按文章内段落顺序编的，**增删、合并、拆分段落都会让后面的段落号整体变化**。
+- 视频结果按字幕行的时间跳转，字幕改动后时间与文字也要同步。
+- 改了已入库的内容（以 `rag/categories.json` 为准：`books/b1~b4`、`refs/hdzg/01~12`、`static/docs/srts/b1~b4`）却不更新索引，搜索结果会跳错位置，新内容也搜不到。
+
+### 修改内容后（维护者执行）
 
 ```bash
-pnpm build        # 必须先构建：索引读取的是 build/ 下的 HTML
-pnpm rag:update   # 只重建有变化的文章 → 递增缓存版本 → 部署接口
+pnpm build        # 必须先构建：法本索引读取的是 build/ 下的 HTML（只改字幕可省略）
+pnpm rag:update   # 只重建有变化的文章 / 视频 → 递增缓存版本 → 部署接口
 ```
 
 然后提交 `rag/manifest.json` 和 `workers/rag-api/wrangler.toml` 的改动（脚本自动修改的），照常部署站点。
 
-- 没有改动时 `rag:update` 会提示「需更新 0 篇」，不会消耗额度。
+- 没有改动时 `rag:update` 会提示「需更新 0 篇」，不消耗额度。
 - 忘了 `pnpm build` 时脚本会报「源文件比构建产物新」并退出，不会写入错误数据。
-- 只改了错别字、没增删段落也建议执行：搜索结果里显示的原文来自索引。
+- 只改了错别字也建议执行：搜索结果里显示的文字来自索引。
 
-### 没有 Cloudflare 权限的协作者
+### 没有维护权限的协作者
 
-正常修改、提交内容即可，在提交说明或群里告知维护者「改了哪几篇」，由维护者执行上面的命令。
+正常修改、提交内容即可，在提交说明或群里告知维护者「改了哪几篇 / 哪几个字幕」，由维护者执行上面的命令。
 
 ### 首次在新电脑上执行（维护者）
 
 1. `pnpm install`
-2. 项目根目录创建 `.env.local`（已被 git 忽略，**不要提交**）：
+2. 项目根目录创建 `.env.local`（已被 git 忽略，**不要提交、不要发到聊天里**）：
    ```
    CLOUDFLARE_ACCOUNT_ID=…
-   CLOUDFLARE_API_TOKEN=…        # 权限：Workers AI Read+Edit、Vectorize Read+Edit
-   VECTORIZE_INDEX=hdcx-rag
+   CLOUDFLARE_API_TOKEN=…   # 权限：Account → Workers AI → Read + Edit（生成向量用）
+   QDRANT_URL=https://…      # Qdrant 集群地址（443 端口，Worker 不能访问 6333）
+   QDRANT_API_KEY=…
    ```
 3. 安装接口依赖并登录 Cloudflare（部署接口用，账号为 huidengvan@gmail.com）：
    ```bash
    pnpm --dir workers/rag-api install --ignore-workspace
    pnpm --dir workers/rag-api exec wrangler login
    ```
+4. Worker 的 Qdrant 地址与 Key 是加密变量（secret），已配置；更换 Key 时执行（按提示粘贴，不要写进文件）：
+   ```bash
+   pnpm --dir workers/rag-api exec wrangler secret put QDRANT_API_KEY
+   ```
 
 ### 其他常用操作
 
 | 场景 | 操作 |
 |---|---|
-| 新增一册 / 一个分类 | 在 `rag/categories.json` 加上（`id` 为路由路径，如 `books/b5`；整册为单个文件、文章是二级标题的书，分类加 `"articleHeading": 2`，册可加 `short` 作筛选按钮短名），然后 `pnpm build` → `pnpm rag:update` |
-| 删除文章 | 删除后 `pnpm build` → `pnpm rag:update`，脚本会自动删除对应向量 |
+| 新增一册法本 / 一个分类 | 在 `rag/categories.json` 添加（见 §5.1），然后 `pnpm build` → `pnpm rag:update` |
+| 新增视频字幕 | 放入 `static/docs/srts/bN/`，文件名须与线上视频同名（`.srt` ↔ `.mp4`），然后 `pnpm rag:update` |
+| 删除文章 / 字幕 | 删除后 `pnpm build` → `pnpm rag:update`，脚本自动删除对应向量 |
 | 只看会改什么，不写入 | `pnpm rag:index --dry-run` |
-| 只处理某一册 | `pnpm rag:index --only books/b2`，再 `pnpm rag:deploy` |
+| 只处理某一部分 | `pnpm rag:index --only books/b2`（或 `refs/hdzg/03`、`video/b1`），再 `pnpm rag:deploy` |
 | 调整相关度阈值等参数 | 改 `workers/rag-api/wrangler.toml` 的 `[vars]` → `pnpm rag:deploy`，无需重建索引 |
 | 修改接口代码 | 改 `workers/rag-api/src/` → `pnpm rag:deploy` |
 | 查看接口实时日志 | `pnpm --dir workers/rag-api exec wrangler tail` |
+| 检查 Qdrant collection | `pnpm rag:setup`（不存在则创建，并显示点数） |
 
 ---
 
-## 1. 目标
+## 1. 功能
 
-1. `/search` 页可在「字幕搜索」（现有，调用 `fayuapi.hdcxb.net`）与「AI 搜索」之间切换。
-2. AI 搜索按**语义**检索法本正文，支持按分类 / 册筛选；分类可配置，后续新增书只改配置 + 重跑索引。
-3. 结果按**文章分组**：一篇文章内多处命中时按相关度降序排列；相关度低于阈值的段落不显示，整篇都不达标的文章不出现。
-4. 点击任一命中，跳转到原文对应**段落**（`#pN` 锚点），并高亮该命中覆盖的段落范围。
-5. 全部运行在 Cloudflare 免费额度内。
-
-非目标（第一期不做）：大模型生成回答（RAG 的 "G"）。见 §9 后续扩展。
+1. `/search` 页可在「字幕搜索」（关键词匹配，`fayuapi.hdcxb.net`）与「AI 搜索」之间切换，关键词保留。
+2. AI 搜索按**语义**检索课程法本、慧灯之光与课程视频字幕，可直接提问；按分类 / 册筛选，每个分类一行。
+3. **文章结果**：按文章分组，一篇内多处命中按相关度降序；显示以关键句为中心的摘要，可展开全文、复制引用、跳转原文（定位并高亮对应段落）。与课程法本重复的慧灯之光内容只显示一条，注明「亦见于」。
+4. **视频结果**：复用「字幕搜索」的卡片，每处命中显示关键行及前后各 2 行字幕，点任一行跳到视频对应时间播放。
+5. 相关度低于阈值的内容不显示；无关问题返回空。
 
 ---
 
-## 2. 规模与免费额度（实测）
+## 2. 资源与额度
 
-从 `build/books/b1~b4/**/index.html` 抽取正文统计（`<p id="pN">` 段落）：
-
-| 项 | 数值 |
-|---|---|
-| 文章 | 40 篇 |
-| 带锚点段落 | 4,248 段（最长 610 字；`scripts/split_long_para.js` 不用于 `/books`、`/refs/hdzg`，段落保持原样） |
-| 正文字数 | 约 40.1 万（含标题、列表约 42.8 万） |
-| 按 600~800 字弹性切块 | 不考虑标题断块约 625 块（中位 647 字）；按标题断块后预计 **700~800 块** |
-
-> 注：早先用 `wc -m` 估算的 124 万「字符」实际是 UTF-8 字节数（中文 3 字节/字），以本表为准。
-
-额度占用（保守按 850 向量 × 1024 维估算）：
-
-| 免费额度 | 用量 | 占比 |
+| 资源 | 用量 | 说明 |
 |---|---|---|
-| Vectorize 存储 5M 维 | 850 × 1024 ≈ 0.87M | **约 17%** |
-| Vectorize 查询 30M 维/月 | 公式 `(查询次数 + 存量向量数) × 维度` → 存量固定占 0.87M | 剩余可支撑 **约 2.8 万次查询/月（≈ 930 次/天）** |
-| Workers AI 10,000 Neurons/天 | 全量建索引约 40 万 token ≈ 500 Neurons；单次查询 ≈ 0.02 Neurons | 可忽略 |
-| Workers 请求 100,000 次/天 | 每次搜索 1 次请求 | 可忽略 |
+| Qdrant（免费集群：1 GiB 内存 / 4 GiB 磁盘 / 0.5 vCPU，与另一项目共用） | 6,524 × 1024 维：原始向量约 25.5 MiB，int8 量化副本常驻内存，正文 payload 存磁盘 | 不按存储、查询次数计量；集群闲置会被暂停，但该集群另一项目每天都有访问，本项目上线后也有大量搜索，无需额外保活 |
+| Workers AI（免费 1 万 Neurons/天，北京时间 8 点重置） | 每次未命中缓存的搜索：查询向量约 0.02 + 重排 50 段约 4.9 | **约 2,000 次/天**，是主要瓶颈 |
+| Workers 请求（免费 10 万次/天） | 每次搜索 1 次 | 充足 |
+| 建索引 | 只在内容变化时消耗；正文未变、仅「亦见于」标注变化时复用已有向量 | 全量重建约 3,000 Neurons |
 
-瓶颈是 Vectorize 查询维度，通过 §6.4 的结果缓存进一步降低。
+**上线后（每天数千人使用）的应对**：
 
----
-
-## 3. 总体架构
-
-```
-           ┌──────────── 离线（发布时手动执行）────────────┐
- books/*.md │ pnpm build → build/books/**/index.html         │
-            │      │                                         │
-            │      ▼ rag/scripts/build-chunks.mjs            │
-            │  rag/out/chunks.jsonl（段落锚点 + 文本）        │
-            │      │                                         │
-            │      ▼ rag/scripts/index.mjs                    │
-            │  Workers AI REST (bge-m3) → 向量                │
-            │  Vectorize REST upsert / delete_by_ids          │
-            │  rag/manifest.json（每篇文章 hash + 向量 id）   │
-            └────────────────────────────────────────────────┘
-
-           ┌──────────── 在线 ──────────────────────────────┐
- /search    │  AI 模式  ──GET /search───▶  Worker rag-api      │
- (Docusaurus)│                             ├─ env.AI.run(bge-m3)│
-            │                             ├─ env.VECTORIZE.query│
-            │                             ├─ 阈值过滤 + 按文章分组│
-            │  ◀── JSON 结果（文章 → 命中段落）─┘  + Cache API    │
-            │                                                   │
-            │  点击命中 → /books/b1/1-01?hl=12-14#p12            │
-            │  DocRoot：locateParagraph('p12') + 高亮 p12~p14    │
-            └───────────────────────────────────────────────────┘
-```
+1. 结果缓存（TTL 1 天）吸收热门、重复的问题。
+2. 若 Neurons 不够：先把重排候选从 50 段降到 30 段（约 2.9 Neurons/次），用问题集确认效果不降；
+3. 仍不够则升级 Workers Paid（$5/月），超出 1 万 Neurons 后按 $0.011 / 千 Neurons 计费（每多 2,000 次搜索约 $0.1/天）。
+4. 注意：额度耗尽时生成查询向量也会失败，接口返回 503，前端提示可改用「字幕搜索」。
 
 ---
 
-## 4. 关键设计：如何精确跳回原文
-
-### 4.1 现有锚点机制（直接复用）
-
-- `src/plugins/para-anchor.js`（rehype 插件）在构建时给**每个 `<p>`** 按文档顺序编号：`<p id="pN">`，`books` 插件已启用。
-- `src/theme/DocRoot/index.js` 监听 `location.hash`，调用 `src/utils/index.js` 的 `locateParagraph('pN')`：滚动、高亮，并处理 `<details>` 折叠与密法警告确认。
-
-所以 RAG 只需要知道每个文本块对应的 `pStart ~ pEnd`，结果链接直接用 `#p{pStart}`。
-
-### 4.2 为什么从构建产物（HTML）而不是 Markdown 切块
-
-`pN` 的编号发生在 MDX → HAST 之后：admonition、blockquote、松散列表、MDX 组件里的 `<p>` 都会被计数。如果自己解析 Markdown 复刻编号，容易和线上错位。**以 `build/` 下的 HTML 为唯一真相**，读到的 `id="pN"` 就是线上锚点，零漂移。
-
-前提：索引必须基于与线上**同一份源文件**的构建结果（发布流程见 §7）。
-
-### 4.3 范围高亮（新增，小改动）
-
-一个块通常包含 2~3 段。链接形如：
+## 3. 架构
 
 ```
-/books/b1/1-01?hl=12-14#p12
-```
+离线（内容变化时，pnpm rag:update）
+  books/*.md、refs/hdzg/*.md ─ pnpm build ─▶ build/**/index.html ─┐
+  static/docs/srts/**/*.srt ──────────────────────────────────────┤
+                                                                   ▼
+            rag/scripts/build-chunks.mjs（正文切块）+ srt-chunks.mjs（字幕切块）
+                                                                   ▼
+            rag/scripts/dedupe.mjs（慧灯之光 ↔ 课程法本重复标注）
+                                                                   ▼
+            rag/scripts/index.mjs：Workers AI（bge-m3）→ Qdrant upsert / delete
+                                   rag/manifest.json（每篇 hash + 块 id，增量依据）
 
-- `#p12`：沿用现有逻辑滚动并高亮首段（含密法确认流程）。
-- `?hl=12-14`：DocRoot 新增一个 effect，`locateParagraph` 完成后，对 `p12..p14` 逐个调用 `highlightParagraph`（需把当前的“单节点高亮”扩展为支持多节点，或新增 `highlightParagraphRange(start, end)`）。
-- 查询参数对 Docusaurus 静态路由无副作用；不带 `hl` 时行为与现在完全一致。
+在线
+  /search（AI 模式）── GET /search?q=…&g=… ──▶ Worker hdcx-rag-api
+      ├─ Workers AI：问题 → 向量
+      ├─ Qdrant：向量检索 Top 50（按 group / cat 过滤）
+      ├─ 去重：慧灯之光重复块换成课程法本对应块
+      ├─ Workers AI：bge-reranker-base 重排，保留 ≥ RERANK_MIN
+      ├─ 分组：文章（命中段落 + 跳转链接）/ 视频（关键行 + 前后字幕）
+      └─ Cache API（自定义域名下生效，键含 INDEX_VERSION）
+  ◀── JSON
+  文章：/books/b1/1-01?hl=12-14#p12 → DocRoot 定位并高亮 p12~p14
+  视频：/video#慧灯禅修课第一册/01 三个差别(2014).mp4#t=00:12:05 → 从该时间播放
+```
 
 ---
 
-## 5. 索引管线
+## 4. 跳转定位
 
-### 5.1 分类配置（前端 / 索引脚本 / Worker 共用）
+### 4.1 法本段落
 
-`rag/categories.json`：
+- `src/plugins/para-anchor.js`（rehype 插件）构建时给每个 `<p>` 按文档顺序编号 `<p id="pN">`；`src/theme/DocRoot/index.js` 监听 `#pN` 调用 `locateParagraph`（滚动、高亮，处理折叠与密法确认）。
+- 索引**读取 `build/` 下的 HTML** 而不是 Markdown：`pN` 编号发生在 MDX → HAST 之后（admonition、引用、列表里的 `<p>` 都计数），读 HTML 才能与线上锚点零偏差。前提是索引基于与线上同一份源文件的构建结果。
+- 结果链接 `…?hl=起-止#p起`：`#p起` 走原有定位；`hl` 由 `highlightParagraphRange`（`src/utils/index.js`）把其余段落一并高亮。
+
+### 4.2 视频时间
+
+- 视频页 `/video#<系列>/<文件名>.mp4#t=HH:MM:SS`：播放页把 `#t=` 交给 `<video>` 从该时间起播，字幕列表自动定位当前行。链接由 `src/components/Search/api.js` 的 `buildVideoUrl(series, title, startTime)` 生成，与「字幕搜索」一致。
+- 字幕文件名须与线上视频同名；索引时已逐一核对 76 个视频均存在。
+
+---
+
+## 5. 索引
+
+### 5.1 分类配置 `rag/categories.json`
+
+索引脚本、接口、前端共用。分类在文件中的顺序即去重时的优先级。
 
 ```json
-{
-  "categories": [
-    {
-      "id": "books",
-      "label": "课程法本",
-      "groups": [
-        { "id": "books/b1", "label": "第一册" },
-        { "id": "books/b2", "label": "第二册" },
-        { "id": "books/b3", "label": "第三册" },
-        { "id": "books/b4", "label": "第四册" }
-      ]
-    }
-  ]
-}
+{ "id": "books", "label": "课程法本",
+  "groups": [{ "id": "books/b1", "label": "第一册" }, …] }
+
+{ "id": "hdzg", "label": "慧灯之光", "articleHeading": 2,
+  "groups": [{ "id": "refs/hdzg/01", "label": "慧灯之光一", "short": "一" }, …] }
+
+{ "id": "video", "label": "课程视频", "type": "srt",
+  "groups": [{ "id": "video/b1", "label": "第一册", "dir": "static/docs/srts/b1", "series": "慧灯禅修课第一册" }, …] }
 ```
 
-- `group.id` 直接取路由路径（去掉开头 `/`），天然全局唯一，也是 `build/` 下的目录。
-- 以后加书：追加一个 category（如 `4jx`）或在现有 category 里加 group，重跑索引即可，前端筛选自动出现。
+- 正文类 `group.id` 为路由路径，即 `build/` 下的目录。
+- `articleHeading`：整册为单个文件、文章是某级标题的书（慧灯之光为 2）。
+- `short`：筛选按钮上的短名。
+- `type: "srt"`：视频字幕，`dir` 为字幕目录，`series` 为视频所在的系列目录。
 
-### 5.2 切块规则（`rag/scripts/build-chunks.mjs`）
+### 5.2 正文切块（`rag/scripts/build-chunks.mjs`）
 
-输入：每个 group 目录下的 `build/<group>/*/index.html`。解析 `article .theme-doc-markdown`（用 `node-html-parser`，作为 devDependency）。
+1. 解析 `article .theme-doc-markdown`；跳过目录用的 `<details>` 与前有密法 / 灌顶警告的 `<details>`（与 `getSecretDharmaWarning` 同规则，慧灯之光中 1,687 段密法内容已核对无一入库）。
+2. 以 `<p id="pN">` 为单元（去掉插件注入的 `[pN]`），其后的无锚点文本（列表、表格）并入前一单元；`h2~h6` 维护章节路径。
+3. **600~800 字弹性合并**，不在段落中间切：已达 600 字或再加一段超过 800 字时断块；`h2/h3` 强制断块；过短（不足 150 字）的块并入相邻块。
+4. 单段超过 800 字时按句末标点拆成约 700 字的子块，沿用同一 `pN`；无标点的长句硬切。
+5. `articleHeading` 级标题处无条件断块，文章名记为 `article`，其下标题为章节；文章末尾过短的块并入同文章前一块。
+6. 向量输入加上下文前缀：`第一册《01三个差别》第一、外道和佛教的差别\n正文`；生成向量时去掉藏文字符（藏文偈颂段会以中等分数混入无关结果），显示文字保留。
 
-1. **跳过**：目录用的 `<details>`（summary 为「目录」）；前面紧邻密法 / 灌顶 / 警告类 admonition 的 `<details>`（与 `getSecretDharmaWarning` 同规则，避免在搜索结果里裸露密法内容）；脚注、导航、按钮等非正文。
-2. **标题**：`h1` 作为文章标题；`h2~h4` 维护章节路径（如 `第一、外道和佛教的差别`），作为块的 `section`。
-3. **基本单元**：每个 `<p id="pN">` 为一个单元，去掉开头插件注入的 `[pN] ` 链接文本。紧随其后的无锚点文本（`li`、`td` 等）并入前一个单元（锚点沿用前一段）。
-4. **合并（600~800 字弹性窗口，不在段落中间切）**：同一章节内按顺序累加整段；当前块已达 600 字，或加入下一段会超过 800 字时断块；遇到 `h2/h3` 强制断块；断出的块不足 150 字时并入同章节的下一块（允许略超 800）。
-5. **超长单元**（单段 >800 字，如慧灯之光中 3,070 字的《华严经·净行品》节选）：按句末标点拆成约 700 字的子单元，各子单元沿用同一 `pN`；无标点的长句硬切。
-6. **上下文前缀（只用于生成向量，不用于展示）**：
-   ```
-   第一册《01三个差别》第一、外道和佛教的差别
-   <块正文>
-   ```
-   让「这篇在讲什么」参与语义，显著提升短段落的召回。慧灯之光为「慧灯之光一《浅谈因果关系》章节」。
-7. **按文章分篇**（分类配置 `articleHeading`，慧灯之光为 2）：整册单文件的书以该级标题为文章名（metadata `article`），其下标题为章节；文章标题处无条件断块，文章末尾过短的块并入同文章前一块。
+### 5.3 字幕切块（`rag/scripts/srt-chunks.mjs`）
 
-输出 `rag/out/chunks.jsonl`（不入库，每行一个块）：
+1. 解析 srt；去掉片尾信息（最后 200 条中第一个网站 / 微博 / 公众号 / 网址 / 著作书单 / 出版社标记之后的全部字幕）。
+2. 连续字幕累加到 **300~450 字**（约 2 分钟）断块，达到 300 字后优先在 ≥ 3 秒的停顿处断开；相邻块重叠 4 行，避免一句话被切开。
+3. 块内保留每行开始时间（`starts`）与 srt 序号（`lineStart`/`lineEnd`），文字按行存（`text`，以换行分隔）。
+4. 向量输入：`第一册视频《01 三个差别(2014)》\n各行字幕`。
+5. 文档 id 为 `video/b1/<文件名 SHA-1 前 8 位>`（中文文件名过长）。
 
-```json
-{
-  "id": "books/b1/1-01#03",
-  "cat": "books",
-  "group": "books/b1",
-  "doc": "books/b1/1-01",
-  "url": "/books/b1/1-01",
-  "title": "01三个差别",
-  "section": "第一、外道和佛教的差别",
-  "pStart": 12,
-  "pEnd": 14,
-  "text": "……块正文……"
-}
-```
+### 5.4 慧灯之光与课程法本去重（`rag/scripts/dedupe.mjs`）
 
-脚本同时打印统计：块数、平均 / 最大长度、预计存储维度与占免费额度百分比，方便每次加书前预估。
+课程法本多选自慧灯之光（抽样 93% 的句子原文相同），两边切块边界不同，因此在**建索引时离线标注**：
 
-### 5.3 向量化与写入（`rag/scripts/index.mjs`）
+- 只取汉字做 8 字片段指纹；慧灯之光的块若 ≥ 60% 的片段见于课程法本，记 `dupOf`（对应课程法本块 id）与 `dupGroup`；被重复的课程法本块记 `alsoIn`（JSON 字符串，最多 3 条）。当前 625 块标为重复、590 块带「亦见于」。
+- 查询时若课程法本在搜索范围内，慧灯之光的重复块换成对应的课程法本块（不在候选中则按 id 取回）；只搜慧灯之光时不替换。
+- 字幕不参与去重（语音转写与书面文字几乎不重合：法本 696 块中仅 5 块与字幕重合 ≥ 30%）。
 
-- 凭据从 `.env.local` 读取（已在 `.gitignore` 中）：`CLOUDFLARE_ACCOUNT_ID`、`CLOUDFLARE_API_TOKEN`、`VECTORIZE_INDEX=hdcx-rag`。
-- 向量化：`POST /accounts/{id}/ai/run/@cf/baai/bge-m3`，`{ "text": [...] }` 每批 50 条。
-- 写入：`POST /accounts/{id}/vectorize/v2/indexes/{name}/upsert`（NDJSON），metadata 为上面 JSON 除 `id` 外的字段（`text` 约 2KB，低于 Vectorize 单向量 metadata 10KiB 上限）。
-- **增量**：`rag/manifest.json`（入库）记录 `{ doc: { hash, ids: [...] } }`，hash 取该文章的切块结果。
-  - hash 不变 → 跳过；
-  - hash 变化 → 先 `delete_by_ids` 删掉旧 ids，再 upsert 新块（段落编号可能整体位移，所以按**整篇**替换）；
-  - manifest 里有、本次没有的文章 → 删除。
-- 参数：`--dry-run`（只切块和统计）、`--only books/b2`、`--full`（忽略 manifest 全量重建）。
+### 5.5 写入 Qdrant（`rag/scripts/index.mjs`、`qdrant.mjs`）
 
-### 5.4 Vectorize 索引初始化（一次性，已完成）
-
-```bash
-node rag/scripts/setup-index.mjs   # 创建 hdcx-rag（1024 维，cosine）及 cat / group 两个 metadata 索引，可重复执行
-```
-
-另：生成向量时会去掉藏文字符（显示文本保留），否则藏文偈颂段会以 ~0.5 的分数混入无关结果。
-
-> ⚠️ metadata 索引必须在**写入向量之前**创建，否则已有向量不会参与过滤。
+- collection `hdcx`：1024 维、余弦距离、int8 标量量化（常驻内存）、payload 存磁盘；`cat`、`group`、`doc` 建 keyword 索引用于过滤。
+- 点 id 须为整数或 UUID：由块 id（如 `books/b1/1-01#003`）的 SHA-1 派生 UUID，原 id 存 `payload.cid`；接口用同样规则计算（`workers/rag-api/src/qdrant.js`）。
+- payload 为块的全部字段（除只用于生成向量的 `embedText`）。
+- **增量**：`rag/manifest.json` 记录每篇的 `hash`（正文切块结果）、`metaHash`（重复标注）与块 id。
+  - 正文变化 → 重新生成向量，整篇替换（先删多余旧块再写入，段落号可能整体位移）；
+  - 仅标注变化 → 从 Qdrant 取回已有向量重新写入，不消耗 Workers AI；
+  - 源已不存在 → 删除。
+- 有写入或删除时自动把 `wrangler.toml` 的 `INDEX_VERSION` 加 1，部署后接口缓存失效。
+- 请求遇到网络错误、429、5xx 自动退避重试；中断后重跑会从未完成的文章继续。
 
 ---
 
-## 6. Worker API（`workers/rag-api/`）
+## 6. 接口（`workers/rag-api/`）
 
-独立目录，自带 `package.json` 和 `wrangler.toml`，不加入根依赖。
+### 6.1 请求
 
-### 6.1 绑定与变量
+`GET /search?q=问题&g=books/b1,video/b3&c=hdzg`
 
-```toml
-name = "hdcx-rag-api"
-main = "src/index.js"
-compatibility_date = "2026-10-01"
+- `g`：按册筛选（优先）；`c`：按分类筛选；都不传搜索全部。`q` 最长 100 字。
+- `GET /meta`：返回分类配置。
 
-[ai]
-binding = "AI"
+### 6.2 处理流程（`src/index.js`）
 
-[[vectorize]]
-binding = "VECTORIZE"
-index_name = "hdcx-rag"
+1. 校验参数（册、分类须在配置白名单内），查缓存。
+2. bge-m3 生成问题向量 → Qdrant 检索 Top `TOP_K`（50），按 `group` / `cat` 过滤。
+3. 去重（§5.4）。
+4. **重排**：bge-reranker-base 逐段打分（0~1）。模型单段上限 512 token，长块以与问题字面重合最多的句子（字幕为行）为中心截取 `RERANK_CHARS`（380）字（`src/focus.js`）；保留 `≥ RERANK_MIN`（0.6）。重排失败时回退为向量相似度 + 关键词加分。
+5. **分组**（最多 `MAX_DOCS` 10 组，每组最多 `MAX_HITS_PER_DOC` 5 处，按最高分排序）：
+   - 文章：按「文档 + 文章名」分组，每处命中带 `href`、`section`、`text`、`alsoIn`；
+   - 视频：按视频分组，每处命中找出与问题字面重合最多的一行（无重合取中间行），取前后各 `CONTEXT_LINES`（2）行；同一视频中窗口重叠的命中只保留分数高的。
+6. 写缓存（TTL `CACHE_TTL` 1 天，键含 `INDEX_VERSION`），返回。
 
-[vars]
-ALLOWED_ORIGINS = "https://huidengchanxiu.net,http://localhost:3000"
-TOP_K = "50"            # returnMetadata=all 时 Vectorize 上限为 50
-MIN_SCORE = "0.52"      # 绝对下限，见 §8
-REL_GAP = "0.10"        # 与第 1 名的最大分差
-MAX_HITS_PER_DOC = "5"
-KEYWORD_BONUS = "0.03"  # 关键词（去疑问词）出现即加分，每多一次 +0.01，最多再 +0.03
-```
-
-### 6.2 接口
-
-`GET /search?q=什么是出离心&g=books/b1,books/b3`（GET 便于缓存且无 CORS 预检）
-
-- `g`：按册筛选；为空时看 `c`（分类）；都为空 → 全部
+### 6.3 返回
 
 ```json
-// 响应
-{
-  "q": "什么是出离心",
-  "tookMs": 180,
-  "results": [
-    {
-      "doc": "books/b1/1-01",
-      "url": "/books/b1/1-01",
-      "title": "01三个差别",
-      "group": "books/b1",
-      "groupLabel": "第一册",
-      "score": 0.71,
-      "hits": [
-        { "pStart": 31, "pEnd": 33, "section": "第二、世间法和出世间法的差别",
-          "score": 0.71, "text": "……", "href": "/books/b1/1-01?hl=31-33#p31" },
-        { "pStart": 24, "pEnd": 25, "section": "…", "score": 0.63, "text": "…", "href": "…" }
-      ]
-    }
-  ]
-}
+{ "q": "人身难得", "tookMs": 775, "ranker": "rerank", "results": [
+  { "doc": "books/b1/1-01|01三个差别", "url": "/books/b1/1-01", "title": "01三个差别", "group": "books/b1",
+    "groupLabel": "第一册", "score": 0.99,
+    "hits": [{ "pStart": 8, "pEnd": 12, "section": "…", "score": 0.99, "text": "…",
+               "href": "/books/b1/1-01?hl=8-12#p8",
+               "alsoIn": [{ "label": "慧灯之光一《三个差别》", "href": "/refs/hdzg/01?hl=7-13#p7" }] }] },
+  { "type": "video", "doc": "video/b3/…", "series": "慧灯禅修课第三册", "title": "02-4 慧灯禅修课5 人身难得4",
+    "groupLabel": "第三册", "score": 0.99, "count": 5,
+    "hits": [{ "score": 0.99, "lines": [
+      { "lineId": 1500, "startTime": "01:39:52.000", "text": "…", "ctx": true },
+      { "lineId": 1502, "startTime": "01:39:56.160", "text": "我们说人身难得 怎么难得呢", "hit": true }, … ] }] }
+] }
 ```
 
-`GET /meta`：返回 `categories.json`（可选，前端也可直接 import）。
+视频结果的 `series` / `title` / 字幕行与「字幕搜索」接口字段一致。
 
-### 6.3 处理流程
+### 6.4 配置
 
-1. 校验：`q` 去空白后 1~100 字；`groups` / `cats` 必须在配置白名单内。
-2. 查缓存（§6.4），命中直接返回。
-3. `env.AI.run('@cf/baai/bge-m3', { text: [q] })` 得到查询向量（bge-m3 查询端无需指令前缀）。
-4. `env.VECTORIZE.query(vec, { topK, returnMetadata: 'all', filter })`，filter 用 `{ group: { $in: groups } }` 或 `{ cat: { $in: cats } }`。
-   - `returnMetadata: 'all'` 时 topK 上限为 50，取 50 作为候选。
-5. **重排**：`env.AI.run('@cf/baai/bge-reranker-base', { query: q, contexts })`，contexts 为「篇名 章节
-正文」，逐段输出 0~1 相关度；保留 `score >= RERANK_MIN（0.6）`。
-   - 每次约 2.5 万 token ≈ 7 Neurons，免费额度约 1,400 次/天（仍以 Vectorize 每月查询额度为瓶颈）；耗时约 +1s，结果有缓存。
-   - 响应带 `ranker` 字段：`rerank` 或 `dense`。
-6. **回退（重排调用失败时）**：`score = cosine + 关键词加分`（去掉疑问词后的关键词出现即加 `KEYWORD_BONUS`，每多一次 +0.01，最多再 +0.03），保留 `score >= max(MIN_SCORE, top1 - REL_GAP)`。
-7. **按文章分组**：最多 `MAX_DOCS`（10）篇；同一 `doc` 的命中按 score 降序，最多 `MAX_HITS_PER_DOC` 条；**相邻块不合并**（实测合并会产生跨上百段的范围，失去定位精度）。文章按其最高分降序。
-8. 写缓存，返回。
-
-### 6.4 缓存与防滥用
-
-- `caches.default`，key = 规范化后的 `q + 排序后的 groups`，TTL 1 天；重建索引后通过在 key 中带 `INDEX_VERSION` 变量失效。
-- 可选：Workers Rate Limiting 绑定，每 IP 每分钟 20 次。
-- 超额或出错时返回 `503 + { error }`，前端提示「AI 搜索暂不可用，可改用字幕搜索」。
-
-### 6.5 CORS
-
-只允许 `ALLOWED_ORIGINS` 里的来源，处理 `OPTIONS` 预检。本地 `pnpm dev`（`--host 0.0.0.0`）若用局域网 IP 访问，需把对应 origin 加进去。
+| 位置 | 项 |
+|---|---|
+| `wrangler.toml` `[vars]` | `QDRANT_COLLECTION`、`ALLOWED_ORIGINS`、`ALLOW_DEV_ORIGINS`（允许 localhost / 局域网）、`TOP_K`、`RERANK_MIN`、`RERANK_CHARS`、`MIN_SCORE` / `REL_GAP` / `KEYWORD_BONUS`（重排失败时的回退阈值）、`MAX_HITS_PER_DOC`、`MAX_DOCS`、`CONTEXT_LINES`、`CACHE_TTL`、`INDEX_VERSION` |
+| Worker secret | `QDRANT_URL`、`QDRANT_API_KEY` |
+| 绑定 | `AI`（Workers AI） |
+| 路由 | 自定义域名 `ragapi.hdcxb.net` |
 
 ---
 
-## 7. 前端集成（`src/components/Search/`）
-
-### 7.1 模式切换
-
-- 页头加分段切换：「字幕搜索 | AI 搜索」，同步到 URL：`/search?mode=ai&q=…&g=books/b1,books/b3`。
-- 默认仍为字幕搜索，现有逻辑与 URL 参数（`q`、`page`）保持不变。
-- 页头标题 / 说明、空状态引导文字随模式切换。
-- API 地址与现有 `api.js` 一致，以常量写在 `src/components/Search/ragApi.js`（`RAG_API_URL`）。
-
-### 7.2 新增文件
+## 7. 前端（`src/components/Search/`）
 
 | 文件 | 作用 |
 |---|---|
-| `ragApi.js` | `ragSearch(q, groups)`，带 `AbortController`（新搜索取消旧请求） |
-| `AiFilter.jsx` | 分类 → 册的多选 chip；选中整个分类等于选中其下全部册；选择记忆在 URL `g` 参数 |
-| `AiResultList.jsx` | 结果容器（加载 / 空 / 错误）+ 文章卡片 + 命中段落块 |
-| `ai.module.css` | 模式切换、筛选、卡片与命中段落样式 |
+| `index.jsx` | 「字幕搜索 / AI 搜索」切换，URL 同步 `?mode=ai&q=…&g=…`；AI 模式的提示文字与「可以这样问」示例问句 |
+| `SearchBar.jsx` | 搜索框；提示文字、示例标签及其标题可由调用方传入 |
+| `AiFilter.jsx` | 每个分类一行（「全部」在第一行行首），分类按钮一键全选该分类 |
+| `AiResultList.jsx` | 结果列表：文章卡片（序号、册 / 篇名、相关度、关键句摘要、展开 / 复制引用 / 跳转原文、亦见于）；视频交给 `SearchCard` |
+| `SearchCard.jsx` | 「字幕搜索」的视频卡片，AI 搜索复用：可选序号、计数文案；字幕行支持 `hit`（关键行底色）、`ctx`（上下文淡色）、`gap`（命中之间分隔） |
+| `ragApi.js` | 请求接口；关键词片段提取、句子拆分、摘要窗口、相关度分级 |
+| `ai.module.css` | AI 模式样式（卡片通用样式复用 `search.module.css`） |
 
-筛选配置直接 `import categories from '@site/rag/categories.json'`。
-
-### 7.3 结果卡片
-
-- 头部：序号（01、02…）+ `第一册 / 篇名`（篇名链接到最相关段落）+ 命中数与相关度点（重排分映射为 1~5 级，不显示小数）。
-- 命中段落块（默认前 3 条，「查看本篇其余 N 处」）：
-  - 章节名（小字）；
-  - 折叠时显示以第一个含关键词的句子为中心、约 150 字的摘要，被截断处显示「…」；**展开**后显示完整段落；
-  - 含查询关键词（查询中出现在原文的 ≥2 字片段）的整句以米色底标出；
-  - 操作：「展开 / 收起」（左）、「复制引用」「跳转原文」（右）。
-- 复制引用格式：`正文
-——第一册《01皈依》二、皈依的含义（第 13～16 段）
-https://huidengchanxiu.net/books/b4/4-01#p13`，复制后 toast 提示。
-- 跳转：**同标签页**跳转 `href`（`@docusaurus/Link`），返回时 URL 里的 `q`、`g` 恢复搜索状态；Ctrl/⌘+点击照常新标签页打开。
-
-### 7.4 原文页（`src/theme/DocRoot/index.js`）
-
-- 新增 `hl` 参数处理（§4.3）。
-- 现有 `#pN` 定位、密法确认流程不变。
+- 复制引用格式：`正文\n——第一册《01皈依》二、皈依的含义（第 13～16 段）\nhttps://huidengchanxiu.net/books/b4/4-01#p13`。
+- 示例问句均已实测能命中对应文章：出离心和世间善法有什么区别 / 如何把病苦转为道用 / 放生怎样才算大乘法 / 皈依的目的是什么。
 
 ---
 
-## 8. 相关度校准
+## 8. 相关度校准记录
 
-第四册实测（2026-11-01）：相关问题 top 分 0.62~0.73；短词（「四无量心」）0.52~0.63；无关问题（「如何做红烧肉」「股票投资技巧」）最高 0.42~0.46。据此定 `MIN_SCORE=0.50`、`REL_GAP=0.10`。
-
-四册全部入库后复测：「股票投资技巧」最高 0.5055、「如何做红烧肉」命中《佛法融入生活》饮食段 0.559（语义上确有关联），故 `MIN_SCORE` 提到 0.52；`TOP_K` 提到 50，并把关键词加分改为“去疑问词后的关键词 + 出现次数递增”。
-
-纯向量打分的不足：短问题（如「什么是出离心」）区分度低，《01三个差别》中定义出离心的段落语义分仅 0.509，加分后仍略低于相对阈值；「二谛」把《09四谛》排在《10二谛》之前。
-
-**启用重排后（2026-11-01）**：无关问题最高重排分 0.17（股票）/ 0.07（红烧肉），相关段落 0.8~0.99，阈值定 `RERANK_MIN=0.5`；加入慧灯之光后「股票投资技巧」出现 0.52 的误报（禅修方法段落），相关段落最低约 0.62，`RERANK_MIN` 提到 **0.6**。复测：「二谛」《10二谛》第一；「什么是出离心」召回《01三个差别》；「如何做红烧肉」「股票投资技巧」均无结果。
-
-`MIN_SCORE` / `REL_GAP` 的初始值是经验值（bge-m3 中文：相关段落通常 0.55~0.75，无关 0.35~0.50），需要用真实问题校准：
-
-1. `rag/eval/queries.json`：20~30 条问题，每条标注应命中的文章（最好带大致段号），包括：
-   - 概念类（「什么是出离心」）、问题类（「放生怎样才算大乘法」）；
-   - 短词（「四谛」「人身难得」）；
-   - 应当**无结果**的问题（「如何做红烧肉」）。
-2. `rag/scripts/eval.mjs`：逐条调用 Worker（或直连 REST），输出每条的 top 分数分布、期望文章的排名、在当前阈值下的召回 / 误报。
-3. 调参直到：期望文章都在结果里，无关问题返回空。阈值改 `wrangler.toml` 的 vars，重新 `wrangler deploy` 即生效，无需重建索引。
-4. 若短词或近义问题效果不佳，再启用 §9 的重排。
+- bge-m3 余弦相似度：相关 0.55~0.75、无关 0.35~0.50，区分度不足（「什么是出离心」中定义出离心的段落仅 0.509；「二谛」会把《09四谛》排在《10二谛》前）。
+- 启用重排后：无关问题多在 0.2 以下（「股票投资技巧」偶有 0.52 的误报），相关段落 0.62~0.99，故 `RERANK_MIN = 0.6`。
+- 重排输入：全文（被截在 512 token）7.2 Neurons/次；以关键句为中心截取 380 字 4.9 Neurons/次且排序更好；460 字无改善。
+- 复测（四类内容入库后）：「二谛」《10二谛》视频与法本居前；「人身难得」定位到「我们说人身难得 怎么难得呢」；「如何做红烧肉」「股票投资技巧」无结果。
+- 调参只改 `wrangler.toml` 的 `[vars]` 并部署，无需重建索引。
 
 ---
 
-## 9. 后续扩展
+## 9. 数据预处理记录
 
-- **新增分类**：在 `categories.json` 追加 → `pnpm build` → `pnpm rag:index`。每加 1 万字约多 20 个向量，存储预算充足（§2）。
-- **生成回答**：基于命中块调用 LLM 生成带引用（`[第一册·01 ¶31]`）的回答。Workers AI 免费 Neurons 对大模型较紧，需单独评估模型与次数上限。
+- **字幕片尾清理**：10 个视频字幕末尾的网站、堪布微博 / 博客、公众号、「堪布著作」书单、出版社、ISBN 等共 517 条已删除；逐个核对保留的最后一条均为「今天就讲到这里」「回向」「谢谢大家」等结束语。切块脚本也会自动跳过此类片尾。
+- **繁转简**：`b1/08 佛教的定义` 整份繁体（3,957 字）、`b2/05-1 素食的意义01`（9 字）用 OpenCC 全量转换；另 6 个文件只替换零星繁体字（築、唸、會、決、袞、辦）。未全量转换其余文件：OpenCC 会把正当的「执著」改为「执着」、「抬」改为「擡」、藏文音译中的「錒」改为「锕」。
+- **重复字幕**：`b2/03-2 佛法融入生活：如何面对痛苦.srt` 与 `…痛苦2.srt` 内容完全相同，删除前者（线上视频为后者的名字）。
+- `static/docs/srts` 只作为 AI 搜索的数据源；视频播放页加载 wasabi 上与视频同名的 srt，「字幕搜索」使用 `fayuapi` 自己的数据，二者不受上述处理影响。
+- 仓库中字幕为 LF 换行，本地工作区可能是 CRLF；脚本写回统一用 LF，避免整份文件出现在 diff 中。
 
 ---
 
-## 10. 目录与命令约定
+## 10. 目录与命令
 
 ```
 rag/
   README.md                 本文档
-  categories.json           分类 / 册配置（索引脚本、接口、前端共用）
-  manifest.json             已索引文章 hash 与向量 id（入库，rag:index 自动维护）
+  categories.json           分类配置（索引脚本、接口、前端共用）
+  manifest.json             已索引文章 / 视频的 hash 与块 id（rag:index 自动维护，需提交）
   scripts/
-    lib.mjs                 公共配置与 Cloudflare REST 调用
-    setup-index.mjs         一次性创建 Vectorize 索引与 metadata 索引
-    build-chunks.mjs        build HTML → out/chunks.jsonl（切块）
-    index.mjs               向量化 + upsert/delete，更新 manifest，递增 INDEX_VERSION
+    lib.mjs                 公共配置、Workers AI REST 调用
+    qdrant.mjs              Qdrant 操作（collection、upsert、delete、取回向量、点 id 规则）
+    setup-index.mjs         初始化 / 检查 collection
+    build-chunks.mjs        正文切块（build HTML）；字幕分类转交 srt-chunks.mjs
+    srt-chunks.mjs          字幕解析、片尾清理、切块
+    dedupe.mjs              慧灯之光 ↔ 课程法本重复标注
+    index.mjs               增量向量化、写入 / 删除、更新 manifest 与 INDEX_VERSION
   out/                      生成物（已 .gitignore）
 workers/rag-api/
-  package.json              wrangler 依赖（独立安装，不进根 workspace）
-  wrangler.toml             绑定、自定义域名、阈值等参数
-  src/index.js              /search、/meta 接口
+  wrangler.toml             绑定、自定义域名、参数
+  src/index.js              /search、/meta
+  src/qdrant.js             Qdrant 检索
   src/focus.js              重排输入的关键句截取
 ```
-
-根 `package.json` 脚本：
 
 | 脚本 | 作用 |
 |---|---|
 | `pnpm rag:update` | **日常用这个**：`rag:index` + `rag:deploy` |
-| `pnpm rag:index` | 增量向量化并写入 Vectorize；有变化时递增 `INDEX_VERSION` |
-| `pnpm rag:deploy` | 部署接口（同时让结果缓存按新 `INDEX_VERSION` 失效） |
-| `pnpm rag:chunks` | 只切块并打印统计，不调用 Cloudflare |
-| `pnpm rag:setup` | 初始化索引（已完成，仅新建索引时用） |
-
-发布流程见 §0。
+| `pnpm rag:index` | 增量向量化并写入 Qdrant；参数 `--only`、`--dry-run`、`--full`、`--force` |
+| `pnpm rag:deploy` | 部署接口 |
+| `pnpm rag:chunks` | 只切块并打印统计，不调用任何服务 |
+| `pnpm rag:setup` | 初始化 / 检查 Qdrant collection |
 
 ---
 
-## 11. 实施阶段
+## 11. 后续可选
 
-| 阶段 | 内容 | 产出 / 验收 |
-|---|---|---|
-| P0 准备 | §12 清单 | 账号、Token、域名、问题集就绪 |
-| P1 切块 | `categories.json`、`build-chunks.mjs`、`--dry-run` 统计 | 抽查 10 个块的 `pStart` 与线上 `#pN` 一致 |
-| P2 索引 | Vectorize 初始化、`index.mjs`、manifest | 控制台可见约 800 个向量；改一篇文章后只重建这一篇 |
-| P3 API | Worker `/search`、过滤、分组、缓存、CORS，部署 | curl 返回分组结果；无关问题返回空 |
-| P4 前端 | 模式切换、筛选、结果卡片、`hl` 范围高亮 | 点击命中准确跳到并高亮原文段落；移动端可用 |
-| P5 校准 | `eval.mjs` 跑问题集，调阈值，视效果启用重排 | 期望文章全部召回、无关问题无结果 |
-
----
-
-## 12. 需要你准备 / 确认的事项
-
-1. **Cloudflare 账号**：Account ID；确认使用 Workers Free 计划。
-2. **API Token**（给本地索引脚本用，写入 `.env.local`，不要发到聊天里）：权限只需两项：*Account → Workers AI → Read + Edit*（可从「Workers AI」模板创建）、*Account → Vectorize → Edit*；Agents Gateway、AI Gateway、AI Search、Auto Rag、Websearch 等其他 AI 类权限都不需要。部署 Worker 可直接 `npx wrangler login`。
-3. **API 域名**：沿用 `hdcxb.net`（如 `ragapi.hdcxb.net`，需要该域名托管在 Cloudflare），还是先用 `*.workers.dev`？
-4. **站点部署方式**：`huidengchanxiu.net` 当前部署在哪（Cloudflare Pages / GitHub Pages / 其他）？决定 CORS 来源，以及索引是否放进 CI。
-5. **校准问题集**：20~30 条典型问题 + 期望出处（文章即可，有段号更好），含 3~5 条应无结果的问题。
-6. **命名确认**：分类名「课程法本」、切换按钮文案「字幕搜索 / AI 搜索」是否合适。
-
----
-
-## 13. 评估：慧灯之光 1~12 册（`refs/hdzg/01~12`，2026-11-01）
-
-### 13.1 规模（实测，按现有切块规则）
-
-| 项 | 数值 |
-|---|---|
-| 结构 | 每册一个文件（`refs/hdzg/01.md` …），文章为二级标题，共约 140 篇 |
-| 正文 | 约 161.8 万字（每册 8.9~17.9 万） |
-| 密法内容 | 需灌顶方可阅读的折叠内容共 1,687 段，**按 §5.2 规则全部排除**，已核对无一进入索引 |
-| 切块 | 2,564 块（中位 650 字）；18 块超过 800 字，最长 3,070 字（《华严经·净行品》节选，单段） |
-| 与课程法本重合 | 课程法本 40 篇中 29 篇标题见于慧灯之光；抽样 244 句，93% 在慧灯之光中原文出现 |
-
-### 13.2 免费额度
-
-| 额度 | 现状（课程法本 4 册） | 加入慧灯之光 12 册后 | 占比 |
-|---|---|---|---|
-| Vectorize 存储（5M 维） | 696 向量 / 0.71M | 3,260 向量 / 3.34M | **66.8%**，剩余约 1,600 向量（约 100 万字） |
-| Vectorize 查询（30M 维/月） | 约 2.86 万次/月 | 存量 3.34M 每月固定计入 → 约 **2.6 万次/月（≈ 870 次/天）** | — |
-| Workers AI（1 万 Neurons/天） | 每次搜索重排约 4.9 | 不变（候选固定 50 个）；一次性建索引约 1,700 Neurons | 建索引占当日 17% |
-
-结论：**免费额度够用**。瓶颈仍是每月查询次数，结果缓存可进一步降低实际消耗；之后再加书的空间约 100 万字。
-
-### 13.3 接入方案（已实施，2026-11-01）
-
-1. **超长段落拆分**：已实现（§5.2 第 5 条）。
-2. **按文章分组**：metadata 加入 `article`（二级标题），接口按「文档 + 文章」分组，卡片显示「慧灯之光一 / 浅谈因果关系」。课程法本的旧向量没有 `article`，接口回退为文档标题。
-3. **与课程法本去重**：两边都入库，重复关系在**建索引时离线标注**（`rag/scripts/dedupe.mjs`）：
-   - 只取汉字做 8 字片段指纹；慧灯之光的块若 ≥ 60% 的片段见于课程法本，记 `dupOf`（对应课程法本块 id）与 `dupGroup`；课程法本被重复的块记 `alsoIn`（JSON 字符串，最多 3 条）。实测 625 块标为重复、590 块带「亦见于」，计算约 2 秒。
-   - 查询时（重排之前）：候选带 `dupOf` 且对应的课程法本块在本次搜索范围内，就用课程法本块替换；对应块不在候选中则 `VECTORIZE.getByIds` 取回。只搜慧灯之光时不替换。
-   - 结果卡片显示「亦见于 慧灯之光一《三个差别》」并可跳转；同一文章只列一次。
-   - 标注只影响 metadata：`rag:index` 发现正文未变、仅标注变化时，用 `get_by_ids` 取回已有向量重新写入，不消耗 Workers AI。
-   - 最初在接口里对候选两两比对（重合 ≥ 50%），因两边切块边界不同、对应块常不在 50 个候选中，去重失败，改为上述方案。4. **增量成本**：修改某一册会整册重建（约 200 块、约 130 Neurons），可接受。
-5. **筛选界面**：每个分类一行，「全部」在第一行行首；慧灯之光的册按钮显示短名（一、二……十二）。
-
+- **关键词混合检索**：Qdrant 支持稀疏向量 / BM25，可与语义检索融合，对短词和字幕中的识别错字更友好。
+- **生成回答**：基于命中段落调用大模型生成带出处的回答（Workers AI 免费额度对大模型较紧，需单独评估）。
+- **清理旧索引**：早期使用的 Cloudflare Vectorize 索引 `hdcx-rag` 已不再使用，确认稳定后可在控制台删除。

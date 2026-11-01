@@ -3,6 +3,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import toast from 'react-hot-toast';
 import Skeleton from './Skeleton';
+import SearchCard from './SearchCard';
 import { matchedTerms, splitSentences, buildSnippet, relevanceLevel } from './ragApi';
 import styles from './search.module.css';
 import aiStyles from './ai.module.css';
@@ -148,6 +149,34 @@ function HitBlock({ doc, hit, query }) {
 }
 
 /**
+ * 视频字幕命中：复用「字幕搜索」的 SearchCard，各处命中为「关键行 + 前后几行」，命中之间加分隔
+ */
+function VideoResultCard({ doc, index, query }) {
+    const subtitles = useMemo(
+        () => JSON.stringify(doc.hits.flatMap((h, i) => h.lines.map((l, j) => (i > 0 && j === 0 ? { ...l, gap: true } : l)))),
+        [doc],
+    );
+    // 高亮：查询中出现在字幕里的片段，只保留不被更长片段包含的
+    const keyword = useMemo(() => {
+        const terms = [...new Set(doc.hits.flatMap((h) => h.lines.flatMap((l) => matchedTerms(query, l.text))))].sort((a, b) => b.length - a.length);
+        return terms.filter((t, i) => !terms.slice(0, i).some((longer) => longer.includes(t))).join(' ');
+    }, [doc, query]);
+    return (
+        <SearchCard
+            title={doc.title}
+            series={doc.series}
+            count={doc.count}
+            subtitles={subtitles}
+            searchKeyword={keyword}
+            index={index}
+            collapsedCount={doc.hits.slice(0, 2).reduce((n, h) => n + h.lines.length, 0)}
+            countLabel="处相关"
+            itemLabel="行字幕"
+        />
+    );
+}
+
+/**
  * 单篇文章的结果卡片：序号 + 册 / 篇名，命中段落按相关度降序
  * @param {{ doc: import('./ragApi').RagDoc, index: number, query: string, ranker: string }} props
  */
@@ -244,7 +273,7 @@ export default function AiResultList({ keywords, result, loading, error, onRetry
                     <div className={styles.introCard}>
                         <div className={styles.introIcon}>🎯</div>
                         <h4 className={styles.introTitle}>段落定位</h4>
-                        <p className={styles.introText}>可展开查看相关段落、复制引用，或跳转到原文对应段落并高亮显示。</p>
+                        <p className={styles.introText}>可展开查看相关段落、复制引用，或跳转到原文段落；视频字幕可直接跳到对应时间播放。</p>
                     </div>
                     <div className={styles.introCard}>
                         <div className={styles.introIcon}>📚</div>
@@ -297,9 +326,13 @@ export default function AiResultList({ keywords, result, loading, error, onRetry
                 </div>
             </div>
             <div className={styles.cardList}>
-                {docs.map((doc, i) => (
-                    <AiResultCard key={doc.doc} doc={doc} index={i} query={keywords} ranker={result.ranker} />
-                ))}
+                {docs.map((doc, i) =>
+                    doc.type === 'video' ? (
+                        <VideoResultCard key={doc.doc} doc={doc} index={i} query={keywords} />
+                    ) : (
+                        <AiResultCard key={doc.doc} doc={doc} index={i} query={keywords} ranker={result.ranker} />
+                    ),
+                )}
             </div>
         </div>
     );

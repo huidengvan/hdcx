@@ -3,15 +3,17 @@
  * GET /search?q=关键词&g=books/b1,books/b4&c=books
  *   g：按册（group）筛选，优先于 c；c：按分类筛选；都不传则搜索全部
  * GET /meta：分类配置
+ * 结果中 type 为 video 的是视频字幕命中，字段与「字幕搜索」接口一致（series / title / 字幕行），前端复用 SearchCard 展示
  */
 import config from '../../../rag/categories.json';
 import { QUESTION_WORDS, queryBigrams, focusText } from './focus.js';
+import { queryPoints, getPoints } from './qdrant.js';
 
 const EMBED_MODEL = '@cf/baai/bge-m3';
 const RERANK_MODEL = '@cf/baai/bge-reranker-base';
 const MAX_QUERY_CHARS = 100;
 
-const groupInfo = new Map(config.categories.flatMap((c) => c.groups.map((g) => [g.id, { ...g, cat: c.id }])));
+const groupInfo = new Map(config.categories.flatMap((c) => c.groups.map((g) => [g.id, { ...g, cat: c.id, type: c.type }])));
 const catIds = new Set(config.categories.map((c) => c.id));
 
 function corsHeaders(request, env) {
@@ -55,8 +57,8 @@ async function dedupe(matches, inScope, env) {
         }
     }
     if (missing.length) {
-        const fetched = await env.VECTORIZE.getByIds(missing);
-        for (const v of fetched) if (!byId.has(v.id)) kept.push({ id: v.id, score: 0, metadata: v.metadata });
+        const fetched = await getPoints(env, missing);
+        for (const v of fetched) if (!byId.has(v.id)) kept.push(v);
     }
     return kept;
 }
@@ -95,19 +97,54 @@ function denseScore(matches, q, env) {
 }
 
 const groupLabelOf = (group) => groupInfo.get(group)?.label || group;
+const isVideo = (m) => groupInfo.get(m.group)?.type === 'srt';
+
+// 视频命中：找出与问题字面重合最多的一行（无重合取中间行），取前后各 CONTEXT_LINES 行
+function videoWindow(m, grams, env) {
+    const texts = m.text.split('\n');
+    const starts = m.starts.split('|');
+    const around = Number(env.CONTEXT_LINES);
+    let focus = Math.floor(texts.length / 2);
+    let best = 0;
+    texts.forEach((t, i) => {
+        const score = grams.reduce((n, g) => n + (t.includes(g) ? 1 : 0), 0);
+        if (score > best) [best, focus] = [score, i];
+    });
+    const from = Math.max(0, focus - around);
+    const to = Math.min(texts.length, focus + around + 1);
+    return texts.slice(from, to).map((text, i) => ({
+        lineId: m.lineStart + from + i,
+        startTime: starts[from + i],
+        text,
+        ...(from + i === focus ? { hit: true } : { ctx: true }),
+    }));
+}
 
 // 按文章分组 → 文章内按分数降序（scored 已按分数降序且已过阈值）
 // 文章 = 文档本身，整册单文件的书（慧灯之光）为其中的二级标题，因此分组键为「文档 + 文章名」
-function groupResults(scored, env) {
+function groupResults(scored, q, env) {
     const maxHits = Number(env.MAX_HITS_PER_DOC);
     const maxDocs = Number(env.MAX_DOCS);
+    const grams = queryBigrams(q);
 
     const docs = new Map();
     for (const m of scored) {
         const key = `${m.doc}|${articleOf(m)}`;
         if (!docs.has(key)) {
             if (docs.size >= maxDocs) continue;
-            docs.set(key, { doc: key, url: m.url, title: articleOf(m), group: m.group, groupLabel: groupLabelOf(m.group), score: m.score, hits: [] });
+            docs.set(
+                key,
+                isVideo(m)
+                    ? { type: 'video', doc: key, series: m.series, title: m.title, group: m.group, groupLabel: groupLabelOf(m.group), score: m.score, hits: [] }
+                    : { doc: key, url: m.url, title: articleOf(m), group: m.group, groupLabel: groupLabelOf(m.group), score: m.score, hits: [] },
+            );
+        }
+        if (isVideo(m)) {
+            // 相邻块有 4 行重叠，同一视频里窗口重复的命中只保留分数高的
+            const lines = videoWindow(m, grams, env);
+            const d = docs.get(key);
+            if (!d.hits.some((h) => h.lines.some((l) => lines.some((x) => x.lineId === l.lineId && (x.hit || l.hit))))) d.hits.push({ score: m.score, lines });
+            continue;
         }
         // 同一文章被拆成多块时只列一次，链接到第一块
         const alsoIn = [];
@@ -120,6 +157,10 @@ function groupResults(scored, env) {
 
     // 各命中块保持独立（每块 2~3 段），保证跳转定位精确
     return [...docs.values()].map((d) => {
+        if (d.type === 'video') {
+            const hits = d.hits.slice(0, maxHits).map((h) => ({ ...h, score: Number(h.score.toFixed(4)) }));
+            return { ...d, score: Number(d.score.toFixed(4)), count: hits.length, hits };
+        }
         const hits = d.hits
             .slice(0, maxHits)
             .map((h) => ({ ...h, score: Number(h.score.toFixed(4)), href: `${d.url}?hl=${h.pStart}-${h.pEnd}#p${h.pStart}` }));
@@ -134,16 +175,16 @@ async function search(url, env) {
 
     const groups = parseList(url.searchParams.get('g')).filter((g) => groupInfo.has(g));
     const cats = parseList(url.searchParams.get('c')).filter((c) => catIds.has(c));
-    const filter = groups.length ? { group: { $in: groups } } : cats.length ? { cat: { $in: cats } } : undefined;
+    const filter = groups.length ? { key: 'group', values: groups } : cats.length ? { key: 'cat', values: cats } : undefined;
 
     const started = Date.now();
     const embedding = await env.AI.run(EMBED_MODEL, { text: [q] });
     const vector = (embedding.data || embedding.response)[0];
-    const result = await env.VECTORIZE.query(vector, { topK: Number(env.TOP_K), returnMetadata: 'all', ...(filter ? { filter } : {}) });
-    if (!result.matches.length) return [200, { q, tookMs: Date.now() - started, ranker: 'none', results: [] }];
+    const found = await queryPoints(env, vector, Number(env.TOP_K), filter);
+    if (!found.length) return [200, { q, tookMs: Date.now() - started, ranker: 'none', results: [] }];
     // 先去重再重排：重复内容不占重排名额，也省 Neurons
     const inScope = (group) => (groups.length ? groups.includes(group) : cats.length ? cats.includes(groupInfo.get(group)?.cat) : true);
-    const matches = await dedupe(result.matches, inScope, env);
+    const matches = await dedupe(found, inScope, env);
 
     let scored;
     let ranker = 'rerank';
@@ -155,7 +196,7 @@ async function search(url, env) {
         scored = denseScore(matches, q, env);
     }
 
-    return [200, { q, tookMs: Date.now() - started, ranker, results: groupResults(scored, env) }];
+    return [200, { q, tookMs: Date.now() - started, ranker, results: groupResults(scored, q, env) }];
 }
 
 export default {

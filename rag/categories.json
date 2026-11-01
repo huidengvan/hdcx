@@ -28,6 +28,17 @@
         { "id": "refs/hdzg/11", "label": "慧灯之光十一", "short": "十一" },
         { "id": "refs/hdzg/12", "label": "慧灯之光十二", "short": "十二" }
       ]
+    },
+    {
+      "id": "video",
+      "label": "课程视频",
+      "type": "srt",
+      "groups": [
+        { "id": "video/b1", "label": "第一册", "dir": "static/docs/srts/b1", "series": "慧灯禅修课第一册" },
+        { "id": "video/b2", "label": "第二册", "dir": "static/docs/srts/b2", "series": "慧灯禅修课第二册" },
+        { "id": "video/b3", "label": "第三册", "dir": "static/docs/srts/b3", "series": "慧灯禅修课第三册" },
+        { "id": "video/b4", "label": "第四册", "dir": "static/docs/srts/b4", "series": "慧灯禅修课第四册" }
+      ]
     }
   ]
 }

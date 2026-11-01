@@ -10,10 +10,16 @@ import styles from './search.module.css';
  *   series: string,
  *   count: number,
  *   subtitles: string,
- *   searchKeyword: string
+ *   searchKeyword: string,
+ *   index?: number,
+ *   countLabel?: string,
+ *   itemLabel?: string,
+ *   collapsedCount?: number
  * }} props
+ * 字幕项可带 hit（关键行，加底色）/ ctx（上下文行，淡色）/ gap（与上一组之间加分隔），供 AI 搜索复用
+ * collapsedCount：收起时显示的行数
  */
-export default function SearchCard({ title, series, count, subtitles, searchKeyword }) {
+export default function SearchCard({ title, series, count, subtitles, searchKeyword, index, countLabel = '处匹配', itemLabel = '条匹配字幕', collapsedCount = 8 }) {
     const [expanded, setExpanded] = useState(false);
     const videoBasePath = useBaseUrl('/video');
 
@@ -29,8 +35,8 @@ export default function SearchCard({ title, series, count, subtitles, searchKeyw
         }
     }, [subtitles]);
 
-    const displayedSubtitles = expanded ? subtitleList : subtitleList.slice(0, 5);
-    const remainingCount = subtitleList.length - 5;
+    const displayedSubtitles = expanded ? subtitleList : subtitleList.slice(0, collapsedCount);
+    const remainingCount = subtitleList.length - collapsedCount;
     const videoUrl = buildVideoUrl(series, title, null, videoBasePath);
 
     return (
@@ -39,8 +45,11 @@ export default function SearchCard({ title, series, count, subtitles, searchKeyw
             <div className={styles.cardHeader}>
                 <div className={styles.cardTitleArea}>
                     {series && (
-                        <span className={styles.seriesBadge} title={`所属系列: ${series}`}>
-                            {series}
+                        <span className={styles.cardBadgeRow}>
+                            {index !== undefined && <span className={styles.cardIndex}>{String(index + 1).padStart(2, '0')}</span>}
+                            <span className={styles.seriesBadge} title={`所属系列: ${series}`}>
+                                {series}
+                            </span>
                         </span>
                     )}
                     <a
@@ -57,7 +66,7 @@ export default function SearchCard({ title, series, count, subtitles, searchKeyw
 
                 <div className={styles.cardMetaArea}>
                     <span className={styles.matchCountBadge}>
-                        <span className={styles.matchCountNumber}>{count}</span> 处匹配
+                        <span className={styles.matchCountNumber}>{count}</span> {countLabel}
                     </span>
                     <a
                         href={videoUrl}
@@ -77,32 +86,31 @@ export default function SearchCard({ title, series, count, subtitles, searchKeyw
 
             {/* 字幕内容列表 */}
             <div className={styles.subtitlesContainer}>
-                {displayedSubtitles.map((sub, index) => {
+                {displayedSubtitles.map((sub, i) => {
                     const subUrl = buildVideoUrl(series, title, sub.startTime, videoBasePath);
                     const displayTime = formatDisplayTime(sub.startTime);
 
                     return (
+                        <React.Fragment key={`${sub.lineId}-${i}`}>
+                        {sub.gap && <div className={styles.subtitleGap} />}
                         <a
-                            key={sub.lineId || index}
                             href={subUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={styles.subtitleRow}
+                            className={`${styles.subtitleRow} ${sub.hit ? styles.subtitleHit : ''} ${sub.ctx ? styles.subtitleCtx : ''}`}
                             title={`第 ${sub.lineId} 行，点击跳转至 ${displayTime} 开始播放`}
                         >
-                            <span className={styles.timeTag}>
-                                <span className={styles.playTriangle}>▶</span>
-                                <span className={styles.timeText}>{displayTime}</span>
-                            </span>
+                            <span className={styles.timeTag}>{displayTime}</span>
                             <span className={styles.subtitleContent}>
                                 <Highlight search={searchKeyword} text={sub.text} />
                             </span>
                         </a>
+                        </React.Fragment>
                     );
                 })}
 
                 {/* 展开/收起按钮 */}
-                {subtitleList.length > 5 && (
+                {remainingCount > 0 && (
                     <div className={styles.expandArea}>
                         <button
                             type="button"
@@ -116,7 +124,7 @@ export default function SearchCard({ title, series, count, subtitles, searchKeyw
                                 </>
                             ) : (
                                 <>
-                                    <span>展开其余 {remainingCount} 条匹配字幕</span>
+                                    <span>展开其余 {remainingCount} {itemLabel}</span>
                                     <span className={styles.expandArrow}>▾</span>
                                 </>
                             )}

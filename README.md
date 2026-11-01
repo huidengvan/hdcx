@@ -74,16 +74,16 @@ npm run check
 
 ## AI 语义搜索（RAG）
 
-`/search` 页的「AI 搜索」检索 `rag/categories.json` 中列出的法本（目前为课程法本第一～四册、《慧灯之光》1~12 册），结果按段落号跳转原文。
+`/search` 页的「AI 搜索」检索 `rag/categories.json` 中列出的内容（目前为课程法本第一～四册、《慧灯之光》1~12 册、四册课程视频字幕 `static/docs/srts`），法本结果按段落号跳转原文，视频结果跳到对应时间播放。
 
-**修改这些法本后必须更新索引**，否则搜索结果会跳错段落：
+**修改这些法本或字幕后必须更新索引**，否则搜索结果会跳错位置：
 
 ```bash
 pnpm build
 pnpm rag:update
 ```
 
-需要 Cloudflare 权限；没有权限的协作者提交后告知维护者即可。完整说明见 [rag/README.md](rag/README.md) 第 0 节。
+需要 Cloudflare 与 Qdrant 凭据（`.env.local`）；没有权限的协作者提交后告知维护者即可。完整说明见 [rag/README.md](rag/README.md) 第 0 节。
 
 ## 使用文档
 

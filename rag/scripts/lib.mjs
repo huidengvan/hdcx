@@ -13,9 +13,9 @@ export const DIMENSIONS = 1024;
 export const categories = JSON.parse(fs.readFileSync(path.join(RAG_DIR, 'categories.json'), 'utf8')).categories;
 
 // 展平为 group 列表，附带所属分类
-// articleHeading：整册单文件的书以该级标题为文章名（如慧灯之光为 2）
+// articleHeading：整册单文件的书以该级标题为文章名（如慧灯之光为 2）；type 为 srt 的分类是视频字幕
 export const groups = categories.flatMap((cat) =>
-    cat.groups.map((g) => ({ ...g, cat: cat.id, catLabel: cat.label, articleHeading: cat.articleHeading })),
+    cat.groups.map((g) => ({ ...g, cat: cat.id, catLabel: cat.label, type: cat.type, articleHeading: cat.articleHeading })),
 );
 
 // 解析 --key value / --flag 形式的命令行参数
@@ -40,11 +40,11 @@ export function matchOnly(only, id) {
 export function loadEnv() {
     const file = path.join(ROOT, '.env.local');
     if (fs.existsSync(file)) process.loadEnvFile(file);
-    const { CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_API_TOKEN, VECTORIZE_INDEX } = process.env;
+    const { CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_API_TOKEN } = process.env;
     if (!CLOUDFLARE_ACCOUNT_ID || !CLOUDFLARE_API_TOKEN) {
         throw new Error('缺少 CLOUDFLARE_ACCOUNT_ID / CLOUDFLARE_API_TOKEN，请在 .env.local 中配置');
     }
-    return { accountId: CLOUDFLARE_ACCOUNT_ID, token: CLOUDFLARE_API_TOKEN, indexName: VECTORIZE_INDEX || 'hdcx-rag' };
+    return { accountId: CLOUDFLARE_ACCOUNT_ID, token: CLOUDFLARE_API_TOKEN };
 }
 
 // 调用 Cloudflare REST API，失败时抛出带错误信息的异常（不输出 token）

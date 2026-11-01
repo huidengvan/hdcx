@@ -10,6 +10,7 @@ import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { parse } from 'node-html-parser';
 import { ROOT, OUT_DIR, DIMENSIONS, groups, parseArgs, matchOnly } from './lib.mjs';
+import { buildSrtDocs } from './srt-chunks.mjs';
 
 const MIN_CHARS = 600; // 达到即可断块
 const MAX_CHARS = 800; // 加入下一段会超过则断块
@@ -216,6 +217,11 @@ export function buildChunks({ only, groupList = groups } = {}) {
     const docs = [];
     for (const g of groupList) {
         if (!matchOnly(only, g.id) && !String(only || '').split(',').some((o) => o.startsWith(`${g.id}/`))) continue;
+        // 视频字幕直接读 srt，不依赖构建产物
+        if (g.type === 'srt') {
+            docs.push(...buildSrtDocs(g, (doc) => matchOnly(only, doc)));
+            continue;
+        }
         for (const file of listDocFiles(g.id)) {
             const doc = path.relative(path.join(ROOT, 'build'), path.dirname(file)).split(path.sep).join('/');
             if (!matchOnly(only, doc)) continue;
@@ -263,7 +269,7 @@ export function printStats(docs) {
     if (!n) return console.log('没有可索引的内容');
     const dims = n * DIMENSIONS;
     console.log(`文章 ${docs.length} 篇，块 ${n} 个；长度 最短 ${lens[0]} / 中位 ${lens[n >> 1]} / 最长 ${lens[n - 1]}`);
-    console.log(`存储维度 ${(dims / 1e6).toFixed(2)}M，约占免费额度（5M）${((dims / 5e6) * 100).toFixed(1)}%`);
+    console.log(`向量 ${n} 个 × ${DIMENSIONS} 维，原始向量约 ${((dims * 4) / 2 ** 20).toFixed(1)} MiB（Qdrant 中另有 int8 量化副本与正文 payload）`);
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {

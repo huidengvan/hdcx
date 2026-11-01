@@ -1,5 +1,5 @@
 /**
- * 切块 → Workers AI 生成向量 → 写入 Vectorize，并维护 rag/manifest.json 做增量更新。
+ * 切块 → Workers AI（bge-m3）生成向量 → 写入 Qdrant，并维护 rag/manifest.json 做增量更新。
  * 文章内容（切块结果）有变化时整篇替换：先删旧向量再写新向量，因为段落编号可能整体位移。
  *
  * 有写入或删除时，自动把 workers/rag-api/wrangler.toml 的 INDEX_VERSION 加 1（使接口结果缓存失效），之后需部署接口；
@@ -13,10 +13,9 @@ import path from 'node:path';
 import { buildChunks, printStats } from './build-chunks.mjs';
 import { annotateDuplicates } from './dedupe.mjs';
 import { ROOT, EMBED_MODEL, MANIFEST_PATH, loadEnv, cfFetch, parseArgs, matchOnly, readJson, writeJson } from './lib.mjs';
+import { loadQdrant, ensureCollection, upsertPoints, deletePoints, getVectors } from './qdrant.mjs';
 
 const EMBED_BATCH = 20;
-const UPSERT_BATCH = 100;
-const GET_BATCH = 20;
 
 const WRANGLER_TOML = path.join(ROOT, 'workers/rag-api/wrangler.toml');
 
@@ -55,7 +54,8 @@ console.log(
 if (dryRun || (!changed.length && !metaOnly.length && !removed.length)) process.exit(0);
 
 const env = loadEnv();
-const base = `/vectorize/v2/indexes/${env.indexName}`;
+const q = loadQdrant();
+await ensureCollection(q);
 
 async function embed(texts) {
     const result = await cfFetch(env, `/ai/run/${EMBED_MODEL}`, { method: 'POST', body: { text: texts } });
@@ -64,23 +64,10 @@ async function embed(texts) {
     return vectors;
 }
 
-async function deleteIds(ids) {
-    for (let i = 0; i < ids.length; i += UPSERT_BATCH) {
-        await cfFetch(env, `${base}/delete_by_ids`, { method: 'POST', body: { ids: ids.slice(i, i + UPSERT_BATCH) } });
-    }
-}
+const deleteIds = (ids) => deletePoints(q, ids);
 
-// metadata 不含 embedText 与未标注的空字段
-async function upsert(d, vectors) {
-    const lines = d.chunks.map(({ id, embedText, ...metadata }, i) => JSON.stringify({ id, values: vectors[i], metadata }));
-    for (let i = 0; i < lines.length; i += UPSERT_BATCH) {
-        await cfFetch(env, `${base}/upsert`, {
-            method: 'POST',
-            contentType: 'application/x-ndjson',
-            body: lines.slice(i, i + UPSERT_BATCH).join('\n'),
-        });
-    }
-}
+// payload 不含 embedText（只用于生成向量）
+const upsert = (d, vectors) => upsertPoints(q, d.chunks.map(({ id, embedText, ...payload }, i) => ({ cid: id, vector: vectors[i], payload })));
 
 for (const doc of removed) {
     await deleteIds(manifest.docs[doc].ids);
@@ -106,13 +93,9 @@ for (const d of changed) {
 }
 
 for (const d of metaOnly) {
-    // 正文未变则块 id 不变，从 Vectorize 取回已有向量
-    const values = new Map();
+    // 正文未变则块 id 不变，从 Qdrant 取回已有向量
     const ids = d.chunks.map((c) => c.id);
-    for (let i = 0; i < ids.length; i += GET_BATCH) {
-        const got = await cfFetch(env, `${base}/get_by_ids`, { method: 'POST', body: { ids: ids.slice(i, i + GET_BATCH) } });
-        for (const v of got) values.set(v.id, v.values);
-    }
+    const values = await getVectors(q, ids);
     if (values.size !== ids.length) throw new Error(`${d.doc} 有 ${ids.length - values.size} 个向量未找到，请加 --only ${d.doc} --full 重建`);
     await upsert(d, ids.map((id) => values.get(id)));
     manifest.docs[d.doc] = { ...manifest.docs[d.doc], metaHash: d.metaHash };
@@ -126,4 +109,3 @@ const version = Number(toml.match(/^INDEX_VERSION = "(\d+)"/m)?.[1] || 0) + 1;
 fs.writeFileSync(WRANGLER_TOML, toml.replace(/^INDEX_VERSION = "\d+"/m, `INDEX_VERSION = "${version}"`));
 
 console.log(`完成。INDEX_VERSION 已更新为 ${version}，请部署接口（pnpm rag:deploy）使缓存失效。`);
-console.log('Vectorize 写入为异步，通常数秒到几分钟后可查询。');
