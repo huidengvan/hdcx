@@ -1013,6 +1013,15 @@ html[data-theme='light'][data-reader-theme='white'] .footer {
   max-width: 100% !important;
 }
 
+/* ─── 法本 Markdown 中直接书写的 <video>：限制不超出正文宽度 ─────
+   视频原始分辨率较大时，浏览器默认按固有宽度渲染，移动端会撑破视口
+   导致整页被缩放。仅匹配无 class 的裸 video，不影响 SubtitleContext 等组件 */
+.markdown video:not([class]) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
 /* ─── 阅读器字体切换 (Font Family Switching) ───────────────── */
 html[data-reader-font='lxgw'] article,
 html[data-reader-font='lxgw'] article p,
