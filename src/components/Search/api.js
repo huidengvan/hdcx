@@ -63,16 +63,19 @@ export async function searchRequest(keywords, page = 1, books = [], signal) {
         throw new Error(result?.error || `搜索请求失败: ${response.status} ${response.statusText}`);
     }
 
+    // 字段缺失（如浏览器缓存了旧接口的响应）时按无结果处理，不让页面报错
+    const results = Array.isArray(result.results) ? result.results : [];
     return {
+        ...emptyResult(),
         ...result,
         // 每组为命中行 ± 上下文：命中行加底色、上下文行淡色，组间加分隔（与 AI 搜索的视频结果一致）
-        data: result.results.map((r) => ({
+        data: results.map((r) => ({
             book: r.book,
             series: r.series,
             title: r.title,
             count: r.count,
             subtitles: JSON.stringify(
-                r.groups.flatMap((lines, gi) =>
+                (r.groups || []).flatMap((lines, gi) =>
                     lines.map((l, li) => ({
                         lineId: l.n,
                         startTime: l.t,

@@ -2,9 +2,13 @@ import React, { useEffect, useState, useRef, useMemo } from 'react';
 import styles from './index.module.css';
 import useLocalStorageState from 'use-local-storage-state';
 import BrowserOnly from '@docusaurus/BrowserOnly';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import { parseTime, parseSubtitles, fetchText } from '@site/src/utils';
 import { useVideo } from './VideoContext';
 import toast from 'react-hot-toast';
+
+// 四册课程视频的字幕在本站 static/docs/srts/b1~b4，文件名与视频相同
+const SRT_BOOKS = { 慧灯禅修课第一册: 'b1', 慧灯禅修课第二册: 'b2', 慧灯禅修课第三册: 'b3', 慧灯禅修课第四册: 'b4' };
 
 const VideoPlayer = ({ src, current, setCurrent }) => {
     const baseUrl = typeof window !== 'undefined' && location.hash.includes('http')
@@ -19,6 +23,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
     const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(-1);
     const videoRef = useVideo();
     const listRef = useRef(null);
+    const srtBase = useBaseUrl('/docs/srts/');
 
     let endTime = useMemo(() => parseTime(src?.split(',')[1]), [src]);
     const isMp4 = useMemo(() => /\.(mp4|webm)/i.test(videoSrc), [videoSrc]);
@@ -152,12 +157,9 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             videoRef?.current?.pause();
         }
 
-        const isHdcx = typeof window !== 'undefined' && 
-            (decodeURI(location.hash || '').includes('慧灯禅修课') || decodeURI(videoSrc || '').includes('慧灯禅修课') || decodeURI(src || '').includes('慧灯禅修课'));
-
-        if (isHdcx) {
-            const suburl = videoSrc?.replace('mp4', 'srt');
-            handleSubtitleFetch(suburl, videoDuration);
+        const [, series, title] = decodeURI(videoSrc || '').match(/([^/]+)\/([^/]+?)\.mp4/) || [];
+        if (SRT_BOOKS[series]) {
+            handleSubtitleFetch(`${srtBase}${SRT_BOOKS[series]}/${encodeURIComponent(title)}.srt`, videoDuration);
         } else {
             setIsSubLoading(false);
             setSubtitles([]);

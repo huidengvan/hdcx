@@ -209,6 +209,10 @@ export default {
             return json({ name: 'fayu-search', endpoints: ['/search?q=&page=&size=&b=', '/meta'] });
         } catch (err) {
             console.error(err);
+            // D1 免费额度（每天读 500 万行）用完时，到 UTC 0 点（北京时间 8 点）恢复
+            if (/daily row read limit/i.test(String(err?.message))) {
+                return json({ error: '今日搜索次数已达上限，北京时间 8 点后恢复' }, 503);
+            }
             return json({ error: '字幕搜索暂不可用，请稍后重试' }, 500);
         }
     },
