@@ -10,3 +10,4 @@
   - 本地已有开发服务器热更新（HMR），代码修改后直接响应交付即可。
   - **统一验证时机**：全量 Lint 检测与生产 Build 仅在用户明确要求**“提交代码 / commit”**或特别指定进行全局构建验证时，才统一集中执行。
 - **AI 搜索索引同步**：修改了 `rag/categories.json` 所列目录下的法本或字幕（目前为 `books/b1~b4`、`refs/hdzg/01~12`、`static/docs/srts/b1~b4`）后，交付时须提醒用户执行 `pnpm build` → `pnpm rag:update`（段落号或字幕时间变化会导致搜索跳转错位），详见 `rag/README.md` 第 0 节。
+- **字幕搜索数据同步**：修改了 `static/docs/srts/b1~b4` 下的字幕后，还须提醒用户执行 `pnpm fayu:import`（重新导入字幕搜索的 D1 数据库）；改了 `workers/fayu-api/src/normalize.js` 或 `t2s.js` 的规范化规则，须先重新导入再部署 Worker，详见 `workers/fayu-api/README.md`。

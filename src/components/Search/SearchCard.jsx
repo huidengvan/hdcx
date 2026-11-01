@@ -102,7 +102,7 @@ export default function SearchCard({ title, series, count, subtitles, searchKeyw
                         >
                             <span className={styles.timeTag}>{displayTime}</span>
                             <span className={styles.subtitleContent}>
-                                <Highlight search={searchKeyword} text={sub.text} />
+                                <Highlight search={searchKeyword} text={sub.text} ranges={sub.hl} />
                             </span>
                         </a>
                         </React.Fragment>

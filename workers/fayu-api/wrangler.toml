@@ -1,0 +1,21 @@
+# 沿用原 Worker 名称：自定义域名 fayuapi.hdcxb.net 在 Cloudflare 控制台绑定在该 Worker 上，部署时保持不变
+name = "fayu-worker"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "fayu"
+database_id = "918d314c-01d6-4e7d-aee2-f84ecf599829"
+
+[vars]
+# 多个关键词须在多少字以内同时出现才算一处匹配（规范化后的字数，字幕约 11 字一条，80 字约 7 条、20 秒）
+NEAR_CHARS = "80"
+# 命中行前后各显示几条字幕
+CONTEXT_LINES = "1"
+# 每个视频最多返回的字幕行数（含上下文）
+MAX_LINES = "120"
+PAGE_SIZE = "10"
+# 边缘结果缓存（缓存键含数据版本，重新导入后自动失效）与浏览器缓存时长（秒）
+CACHE_TTL = "86400"
+CLIENT_CACHE_TTL = "600"

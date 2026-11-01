@@ -85,6 +85,16 @@ pnpm rag:update
 
 需要 Cloudflare 与 Qdrant 凭据（`.env.local`）；没有权限的协作者提交后告知维护者即可。完整说明见 [rag/README.md](rag/README.md) 第 0 节。
 
+## 字幕搜索
+
+`/search` 页的「字幕搜索」按关键词字面检索四册课程视频字幕（`static/docs/srts/b1~b4`），接口为 `workers/fayu-api`（Cloudflare Worker + D1 数据库 `fayu`）。**修改字幕后须重新导入数据库**：
+
+```bash
+pnpm fayu:import
+```
+
+需要 wrangler 已登录（`wrangler login`）。匹配规则、表结构与部署说明见 [workers/fayu-api/README.md](workers/fayu-api/README.md)。
+
 ## 使用文档
 
 ### 文档阅读页 快捷键（不分大小写）

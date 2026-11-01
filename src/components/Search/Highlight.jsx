@@ -11,10 +11,34 @@ function escapeRegExp(str) {
 }
 
 /**
- * 关键词高亮组件
- * @param {{ search?: string, text: string }} props 
+ * 按区间高亮（区间由字幕搜索接口给出，已考虑词间空格、繁简差异与跨行）
+ * @param {{ text: string, ranges: number[][] }} props
  */
-export default function Highlight({ search, text }) {
+function RangeHighlight({ text, ranges }) {
+    const parts = [];
+    let pos = 0;
+    ranges.forEach(([from, to], i) => {
+        if (from > pos) parts.push(text.slice(pos, from));
+        parts.push(
+            <mark key={i} className={styles.highlightMark}>
+                {text.slice(from, to)}
+            </mark>,
+        );
+        pos = to;
+    });
+    if (pos < text.length) parts.push(text.slice(pos));
+    return <span className={styles.highlightWrapper}>{parts}</span>;
+}
+
+/**
+ * 关键词高亮组件：有 ranges 时按区间高亮，否则按 search 中的词字面匹配
+ * @param {{ search?: string, text: string, ranges?: number[][] }} props
+ */
+export default function Highlight({ search, text, ranges }) {
+    if (ranges?.length && text) {
+        return <RangeHighlight text={text} ranges={ranges} />;
+    }
+
     if (!search || !text) {
         return <span>{text}</span>;
     }

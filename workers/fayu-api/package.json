@@ -1,0 +1,16 @@
+{
+  "name": "hdcx-fayu-api",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail",
+    "t2s": "node scripts/gen-t2s.mjs"
+  },
+  "devDependencies": {
+    "opencc-js": "^1.0.5",
+    "wrangler": "^4.40.0"
+  }
+}

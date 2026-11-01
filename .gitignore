@@ -37,3 +37,4 @@ yarn-error.log*
 /rag/out/
 /workers/*/node_modules
 /workers/*/.wrangler
+/workers/*/out/

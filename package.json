@@ -19,7 +19,11 @@
     "rag:chunks": "node rag/scripts/build-chunks.mjs",
     "rag:index": "node rag/scripts/index.mjs",
     "rag:deploy": "pnpm --dir workers/rag-api --ignore-workspace exec wrangler deploy",
-    "rag:update": "pnpm rag:index && pnpm rag:deploy"
+    "rag:update": "pnpm rag:index && pnpm rag:deploy",
+    "fayu:install": "pnpm --dir workers/fayu-api --ignore-workspace install",
+    "fayu:import": "node workers/fayu-api/scripts/import.mjs",
+    "fayu:dev": "pnpm --dir workers/fayu-api --ignore-workspace exec wrangler dev",
+    "fayu:deploy": "pnpm --dir workers/fayu-api --ignore-workspace exec wrangler deploy"
   },
   "dependencies": {
     "@docusaurus/core": "^3.10.2",

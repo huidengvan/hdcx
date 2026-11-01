@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Layout from '@theme/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import SearchBar from './SearchBar';
-import SearchList from './SearchList';
+import SearchList, { validBooks } from './SearchList';
 import AiFilter from './AiFilter';
 import AiResultList from './AiResultList';
 import { searchRequest } from './api';
@@ -37,6 +37,7 @@ const validGroups = new Set(ragCategories.flatMap((c) => c.groups.map((g) => g.i
 function SearchPageContent() {
     const [mode, setMode] = useState('subtitle');
     const [groups, setGroups] = useState([]);
+    const [books, setBooks] = useState([]);
     const [keywords, setKeywords] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [result, setResult] = useState(null);
@@ -47,7 +48,7 @@ function SearchPageContent() {
     /**
      * 更新浏览器地址栏 URL（无刷新同步）
      */
-    const updateUrl = useCallback((kw, page, nextMode, nextGroups) => {
+    const updateUrl = useCallback((kw, page, nextMode, nextGroups, nextBooks) => {
         if (typeof window === 'undefined') return;
         const url = new URL(window.location.href);
 
@@ -74,13 +75,16 @@ function SearchPageContent() {
         if (nextMode === 'ai' && nextGroups.length) url.searchParams.set('g', nextGroups.join(','));
         else url.searchParams.delete('g');
 
+        if (nextMode !== 'ai' && nextBooks.length) url.searchParams.set('b', nextBooks.join(','));
+        else url.searchParams.delete('b');
+
         window.history.pushState({ q: kw, page }, '', url.toString());
     }, []);
 
     /**
      * 执行数据请求
      */
-    const doSearch = useCallback(async (kw, page = 1, searchMode = 'subtitle', searchGroups = []) => {
+    const doSearch = useCallback(async (kw, page = 1, searchMode = 'subtitle', searchGroups = [], searchBooks = []) => {
         abortRef.current?.abort();
         const cleanKw = (kw || '').trim();
         if (!cleanKw) {
@@ -98,7 +102,7 @@ function SearchPageContent() {
         try {
             const data = searchMode === 'ai'
                 ? await ragSearch(cleanKw, searchGroups, controller.signal)
-                : await searchRequest(cleanKw, page);
+                : await searchRequest(cleanKw, page, searchBooks, controller.signal);
             if (controller.signal.aborted) return;
             setResult(data);
         } catch (err) {
@@ -122,15 +126,17 @@ function SearchPageContent() {
         const validPage = isNaN(urlPage) || urlPage < 1 ? 1 : urlPage;
         const urlMode = params.get('mode') === 'ai' ? 'ai' : 'subtitle';
         const urlGroups = (params.get('g') || '').split(',').filter((g) => validGroups.has(g));
+        const urlBooks = (params.get('b') || '').split(',').filter((b) => validBooks.has(b));
 
         setKeywords(urlKw);
         setCurrentPage(validPage);
         setMode(urlMode);
         setGroups(urlGroups);
+        setBooks(urlBooks);
         setResult(null);
 
         if (urlKw) {
-            doSearch(urlKw, validPage, urlMode, urlGroups);
+            doSearch(urlKw, validPage, urlMode, urlGroups, urlBooks);
         } else {
             setError('');
         }
@@ -156,8 +162,8 @@ function SearchPageContent() {
         const trimmed = newKw.trim();
         setKeywords(trimmed);
         setCurrentPage(1);
-        updateUrl(trimmed, 1, mode, groups);
-        doSearch(trimmed, 1, mode, groups);
+        updateUrl(trimmed, 1, mode, groups, books);
+        doSearch(trimmed, 1, mode, groups, books);
     };
 
     /**
@@ -168,8 +174,8 @@ function SearchPageContent() {
         setMode(nextMode);
         setResult(null);
         setCurrentPage(1);
-        updateUrl(keywords, 1, nextMode, groups);
-        doSearch(keywords, 1, nextMode, groups);
+        updateUrl(keywords, 1, nextMode, groups, books);
+        doSearch(keywords, 1, nextMode, groups, books);
     };
 
     /**
@@ -177,8 +183,18 @@ function SearchPageContent() {
      */
     const handleGroupsChange = (nextGroups) => {
         setGroups(nextGroups);
-        updateUrl(keywords, 1, mode, nextGroups);
-        doSearch(keywords, 1, mode, nextGroups);
+        updateUrl(keywords, 1, mode, nextGroups, books);
+        doSearch(keywords, 1, mode, nextGroups, books);
+    };
+
+    /**
+     * 字幕搜索按册筛选，回到第一页
+     */
+    const handleBooksChange = (nextBooks) => {
+        setBooks(nextBooks);
+        setCurrentPage(1);
+        updateUrl(keywords, 1, mode, groups, nextBooks);
+        doSearch(keywords, 1, mode, groups, nextBooks);
     };
 
     /**
@@ -186,15 +202,15 @@ function SearchPageContent() {
      */
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
-        updateUrl(keywords, newPage, mode, groups);
-        doSearch(keywords, newPage, mode, groups);
+        updateUrl(keywords, newPage, mode, groups, books);
+        doSearch(keywords, newPage, mode, groups, books);
     };
 
     /**
      * 错误重试
      */
     const handleRetry = () => {
-        doSearch(keywords, currentPage, mode, groups);
+        doSearch(keywords, currentPage, mode, groups, books);
     };
 
     const modeInfo = MODES[mode];
@@ -250,9 +266,12 @@ function SearchPageContent() {
                     result={result}
                     loading={loading}
                     error={error}
+                    books={books}
+                    onBooksChange={handleBooksChange}
                     onPageChange={handlePageChange}
                     onRetry={handleRetry}
                     onSelectKeyword={handleSearchSubmit}
+                    onSwitchToAi={() => handleModeChange('ai')}
                 />
             )}
         </div>
