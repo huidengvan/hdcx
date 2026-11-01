@@ -13,7 +13,10 @@ export const DIMENSIONS = 1024;
 export const categories = JSON.parse(fs.readFileSync(path.join(RAG_DIR, 'categories.json'), 'utf8')).categories;
 
 // 展平为 group 列表，附带所属分类
-export const groups = categories.flatMap((cat) => cat.groups.map((g) => ({ ...g, cat: cat.id, catLabel: cat.label })));
+// articleHeading：整册单文件的书以该级标题为文章名（如慧灯之光为 2）
+export const groups = categories.flatMap((cat) =>
+    cat.groups.map((g) => ({ ...g, cat: cat.id, catLabel: cat.label, articleHeading: cat.articleHeading })),
+);
 
 // 解析 --key value / --flag 形式的命令行参数
 export function parseArgs(argv = process.argv.slice(2)) {
@@ -47,18 +50,30 @@ export function loadEnv() {
 // 调用 Cloudflare REST API，失败时抛出带错误信息的异常（不输出 token）
 export async function cfFetch(env, apiPath, { method = 'GET', body, contentType = 'application/json', allow404 = false } = {}) {
     const url = `https://api.cloudflare.com/client/v4/accounts/${env.accountId}${apiPath}`;
+    const backoff = (attempt) => new Promise((r) => setTimeout(r, 1000 * 2 ** attempt));
     for (let attempt = 1; ; attempt++) {
-        const res = await fetch(url, {
-            method,
-            headers: { Authorization: `Bearer ${env.token}`, ...(body ? { 'Content-Type': contentType } : {}) },
-            body: body && contentType === 'application/json' ? JSON.stringify(body) : body,
-        });
+        let res;
+        try {
+            res = await fetch(url, {
+                method,
+                headers: { Authorization: `Bearer ${env.token}`, ...(body ? { 'Content-Type': contentType } : {}) },
+                body: body && contentType === 'application/json' ? JSON.stringify(body) : body,
+            });
+        } catch (err) {
+            // 网络错误（连接重置、TLS 握手失败等）同样退避重试
+            if (attempt < 5) {
+                console.warn(`网络错误，${2 ** attempt} 秒后重试（${err.cause?.code || err.message}）`);
+                await backoff(attempt);
+                continue;
+            }
+            throw err;
+        }
         if (allow404 && res.status === 404) return null;
         const json = await res.json().catch(() => null);
         if (res.ok && json?.success !== false) return json?.result;
         // 限流或服务端错误时退避重试
         if ((res.status === 429 || res.status >= 500) && attempt < 5) {
-            await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt));
+            await backoff(attempt);
             continue;
         }
         const msg = json?.errors?.map((e) => `${e.code}: ${e.message}`).join('; ') || res.statusText;

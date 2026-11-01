@@ -72,6 +72,19 @@ npm run check
 位于`plugins/para-anchor`，插件运行在编译阶段，需要在config中引用。  
 相较于在运行时动态插入行号，当有几千行的长文时，运行在手机等性能较差的设备上会更快。
 
+## AI 语义搜索（RAG）
+
+`/search` 页的「AI 搜索」检索 `rag/categories.json` 中列出的法本（目前为课程法本第一～四册、《慧灯之光》1~12 册），结果按段落号跳转原文。
+
+**修改这些法本后必须更新索引**，否则搜索结果会跳错段落：
+
+```bash
+pnpm build
+pnpm rag:update
+```
+
+需要 Cloudflare 权限；没有权限的协作者提交后告知维护者即可。完整说明见 [rag/README.md](rag/README.md) 第 0 节。
+
 ## 使用文档
 
 ### 文档阅读页 快捷键（不分大小写）

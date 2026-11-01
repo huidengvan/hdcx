@@ -29,18 +29,21 @@ export default function AiFilter({ selected, onChange }) {
     };
 
     return (
+        // 每个分类一行，「全部」放在第一行行首
         <div className={styles.filterBar}>
-            <button
-                type="button"
-                className={`${styles.filterChip} ${selected.length === 0 ? styles.filterChipActive : ''}`}
-                onClick={() => onChange([])}
-            >
-                全部
-            </button>
-            {ragCategories.map((cat) => {
+            {ragCategories.map((cat, i) => {
                 const allOn = cat.groups.every((g) => selectedSet.has(g.id));
                 return (
                     <div key={cat.id} className={styles.filterGroup}>
+                        {i === 0 && (
+                            <button
+                                type="button"
+                                className={`${styles.filterChip} ${selected.length === 0 ? styles.filterChipActive : ''}`}
+                                onClick={() => onChange([])}
+                            >
+                                全部
+                            </button>
+                        )}
                         <button
                             type="button"
                             className={`${styles.filterCategory} ${allOn ? styles.filterChipActive : ''}`}
@@ -56,8 +59,9 @@ export default function AiFilter({ selected, onChange }) {
                                 className={`${styles.filterChip} ${selectedSet.has(g.id) ? styles.filterChipActive : ''}`}
                                 onClick={() => toggleGroup(g.id)}
                                 aria-pressed={selectedSet.has(g.id)}
+                                title={g.label}
                             >
-                                {g.label}
+                                {g.short || g.label}
                             </button>
                         ))}
                     </div>

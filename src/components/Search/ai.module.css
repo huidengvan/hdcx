@@ -39,11 +39,11 @@
 }
 
 /* ─── 范围筛选 ─────────────────────────────────────────────────── */
+/* 每个分类一行 */
 .filterBar {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem 0.75rem;
+    flex-direction: column;
+    gap: 0.5rem;
     margin: -1.5rem 0 2rem;
 }
 
@@ -217,6 +217,24 @@
 
 [data-theme='dark'] .sentenceMark {
     background: rgba(233, 200, 120, 0.2);
+}
+
+/* 跨分类重复内容：亦见于 */
+.alsoIn {
+    margin-top: 0.35rem;
+    font-size: 0.8rem;
+    color: var(--ifm-color-emphasis-600);
+}
+
+.alsoIn a {
+    color: var(--ifm-color-emphasis-700);
+    text-decoration: underline;
+    text-decoration-color: var(--ifm-color-emphasis-300);
+    text-underline-offset: 2px;
+}
+
+.alsoIn a:hover {
+    color: var(--ifm-color-primary);
 }
 
 .ellipsis {

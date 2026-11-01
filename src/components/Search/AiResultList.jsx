@@ -107,6 +107,18 @@ function HitBlock({ doc, hit, query }) {
                 )}
             </div>
 
+            {hit.alsoIn?.length > 0 && (
+                <div className={aiStyles.alsoIn}>
+                    亦见于
+                    {hit.alsoIn.map((a, i) => (
+                        <React.Fragment key={a.href}>
+                            {i > 0 ? '、' : ' '}
+                            <Link to={a.href}>{a.label}</Link>
+                        </React.Fragment>
+                    ))}
+                </div>
+            )}
+
             {/* 三栏：左留空 / 中间展开 / 右侧复制引用与跳转原文，保证展开按钮居中 */}
             <div className={aiStyles.hitActions}>
                 <span />

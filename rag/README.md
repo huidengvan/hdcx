@@ -1,8 +1,58 @@
 # AI 语义搜索（RAG 检索）设计文档
 
-> 状态：第一～四册已入库（40 篇 / 696 块，约占存储额度 14.3%，2026-11-01）；API：`https://ragapi.hdcxb.net`（备用 `https://hdcx-rag-api.huidengvan.workers.dev`）  
-> 范围：第一期覆盖 `/books/b1` ~ `/books/b4`（分类「课程法本」），后续可按分类追加其他书。  
+> 状态：课程法本第一～四册（40 篇 / 696 块）+ 慧灯之光 1~12 册（137 篇 / 2,561 块）已入库，约占存储额度 66.7%（2026-11-01）；API：`https://ragapi.hdcxb.net`（备用 `https://hdcx-rag-api.huidengvan.workers.dev`）  
+> 范围：`/books/b1` ~ `/books/b4`（分类「课程法本」）、`/refs/hdzg/01` ~ `/refs/hdzg/12`（分类「慧灯之光」，见 §13），后续可按分类追加其他书。  
 > 技术栈：Cloudflare Workers AI（`@cf/baai/bge-m3`，1024 维）+ Vectorize + Worker API；前端集成到现有 `/search` 页。
+
+---
+
+## 0. 日常维护（必读）
+
+**为什么要更新索引**：AI 搜索的结果按段落号（`#pN`）跳转原文。段落号是构建时按文章内段落顺序编的，**增删、合并、拆分段落都会让后面的段落号整体变化**。改了已入库的法本（目前是 `books/b1~b4`、`refs/hdzg/01~12`，以 `rag/categories.json` 为准）却不更新索引，搜索结果就会跳到错误的位置，新内容也搜不到。
+
+### 修改法本内容后（有 Cloudflare 权限的维护者执行）
+
+```bash
+pnpm build        # 必须先构建：索引读取的是 build/ 下的 HTML
+pnpm rag:update   # 只重建有变化的文章 → 递增缓存版本 → 部署接口
+```
+
+然后提交 `rag/manifest.json` 和 `workers/rag-api/wrangler.toml` 的改动（脚本自动修改的），照常部署站点。
+
+- 没有改动时 `rag:update` 会提示「需更新 0 篇」，不会消耗额度。
+- 忘了 `pnpm build` 时脚本会报「源文件比构建产物新」并退出，不会写入错误数据。
+- 只改了错别字、没增删段落也建议执行：搜索结果里显示的原文来自索引。
+
+### 没有 Cloudflare 权限的协作者
+
+正常修改、提交内容即可，在提交说明或群里告知维护者「改了哪几篇」，由维护者执行上面的命令。
+
+### 首次在新电脑上执行（维护者）
+
+1. `pnpm install`
+2. 项目根目录创建 `.env.local`（已被 git 忽略，**不要提交**）：
+   ```
+   CLOUDFLARE_ACCOUNT_ID=…
+   CLOUDFLARE_API_TOKEN=…        # 权限：Workers AI Read+Edit、Vectorize Read+Edit
+   VECTORIZE_INDEX=hdcx-rag
+   ```
+3. 安装接口依赖并登录 Cloudflare（部署接口用，账号为 huidengvan@gmail.com）：
+   ```bash
+   pnpm --dir workers/rag-api install --ignore-workspace
+   pnpm --dir workers/rag-api exec wrangler login
+   ```
+
+### 其他常用操作
+
+| 场景 | 操作 |
+|---|---|
+| 新增一册 / 一个分类 | 在 `rag/categories.json` 加上（`id` 为路由路径，如 `books/b5`；整册为单个文件、文章是二级标题的书，分类加 `"articleHeading": 2`，册可加 `short` 作筛选按钮短名），然后 `pnpm build` → `pnpm rag:update` |
+| 删除文章 | 删除后 `pnpm build` → `pnpm rag:update`，脚本会自动删除对应向量 |
+| 只看会改什么，不写入 | `pnpm rag:index --dry-run` |
+| 只处理某一册 | `pnpm rag:index --only books/b2`，再 `pnpm rag:deploy` |
+| 调整相关度阈值等参数 | 改 `workers/rag-api/wrangler.toml` 的 `[vars]` → `pnpm rag:deploy`，无需重建索引 |
+| 修改接口代码 | 改 `workers/rag-api/src/` → `pnpm rag:deploy` |
+| 查看接口实时日志 | `pnpm --dir workers/rag-api exec wrangler tail` |
 
 ---
 
@@ -136,13 +186,14 @@
 2. **标题**：`h1` 作为文章标题；`h2~h4` 维护章节路径（如 `第一、外道和佛教的差别`），作为块的 `section`。
 3. **基本单元**：每个 `<p id="pN">` 为一个单元，去掉开头插件注入的 `[pN] ` 链接文本。紧随其后的无锚点文本（`li`、`td` 等）并入前一个单元（锚点沿用前一段）。
 4. **合并（600~800 字弹性窗口，不在段落中间切）**：同一章节内按顺序累加整段；当前块已达 600 字，或加入下一段会超过 800 字时断块；遇到 `h2/h3` 强制断块；断出的块不足 150 字时并入同章节的下一块（允许略超 800）。
-5. **超长单元**（单段 >800 字，当前语料最长 610 字，暂不存在）：按 `。！？` 句末切成 600~800 字的子块，各子块沿用同一 `pN`。
+5. **超长单元**（单段 >800 字，如慧灯之光中 3,070 字的《华严经·净行品》节选）：按句末标点拆成约 700 字的子单元，各子单元沿用同一 `pN`；无标点的长句硬切。
 6. **上下文前缀（只用于生成向量，不用于展示）**：
    ```
    第一册《01三个差别》第一、外道和佛教的差别
    <块正文>
    ```
-   让「这篇在讲什么」参与语义，显著提升短段落的召回。
+   让「这篇在讲什么」参与语义，显著提升短段落的召回。慧灯之光为「慧灯之光一《浅谈因果关系》章节」。
+7. **按文章分篇**（分类配置 `articleHeading`，慧灯之光为 2）：整册单文件的书以该级标题为文章名（metadata `article`），其下标题为章节；文章标题处无条件断块，文章末尾过短的块并入同文章前一块。
 
 输出 `rag/out/chunks.jsonl`（不入库，每行一个块）：
 
@@ -252,7 +303,7 @@ KEYWORD_BONUS = "0.03"  # 关键词（去疑问词）出现即加分，每多一
 4. `env.VECTORIZE.query(vec, { topK, returnMetadata: 'all', filter })`，filter 用 `{ group: { $in: groups } }` 或 `{ cat: { $in: cats } }`。
    - `returnMetadata: 'all'` 时 topK 上限为 50，取 50 作为候选。
 5. **重排**：`env.AI.run('@cf/baai/bge-reranker-base', { query: q, contexts })`，contexts 为「篇名 章节
-正文」，逐段输出 0~1 相关度；保留 `score >= RERANK_MIN（0.5）`。
+正文」，逐段输出 0~1 相关度；保留 `score >= RERANK_MIN（0.6）`。
    - 每次约 2.5 万 token ≈ 7 Neurons，免费额度约 1,400 次/天（仍以 Vectorize 每月查询额度为瓶颈）；耗时约 +1s，结果有缓存。
    - 响应带 `ranker` 字段：`rerank` 或 `dense`。
 6. **回退（重排调用失败时）**：`score = cosine + 关键词加分`（去掉疑问词后的关键词出现即加 `KEYWORD_BONUS`，每多一次 +0.01，最多再 +0.03），保留 `score >= max(MIN_SCORE, top1 - REL_GAP)`。
@@ -319,7 +370,7 @@ https://huidengchanxiu.net/books/b4/4-01#p13`，复制后 toast 提示。
 
 纯向量打分的不足：短问题（如「什么是出离心」）区分度低，《01三个差别》中定义出离心的段落语义分仅 0.509，加分后仍略低于相对阈值；「二谛」把《09四谛》排在《10二谛》之前。
 
-**启用重排后（2026-11-01）**：无关问题最高重排分 0.17（股票）/ 0.07（红烧肉），相关段落 0.8~0.99，阈值定 `RERANK_MIN=0.5`。复测：「二谛」《10二谛》第一；「什么是出离心」召回《01三个差别》；「如何做红烧肉」「股票投资技巧」均无结果。
+**启用重排后（2026-11-01）**：无关问题最高重排分 0.17（股票）/ 0.07（红烧肉），相关段落 0.8~0.99，阈值定 `RERANK_MIN=0.5`；加入慧灯之光后「股票投资技巧」出现 0.52 的误报（禅修方法段落），相关段落最低约 0.62，`RERANK_MIN` 提到 **0.6**。复测：「二谛」《10二谛》第一；「什么是出离心」召回《01三个差别》；「如何做红烧肉」「股票投资技巧」均无结果。
 
 `MIN_SCORE` / `REL_GAP` 的初始值是经验值（bge-m3 中文：相关段落通常 0.55~0.75，无关 0.35~0.50），需要用真实问题校准：
 
@@ -345,36 +396,32 @@ https://huidengchanxiu.net/books/b4/4-01#p13`，复制后 toast 提示。
 ```
 rag/
   README.md                 本文档
-  categories.json           分类 / 册配置（三端共用）
-  manifest.json             已索引文章 hash 与向量 id（入库）
-  eval/queries.json         校准问题集
+  categories.json           分类 / 册配置（索引脚本、接口、前端共用）
+  manifest.json             已索引文章 hash 与向量 id（入库，rag:index 自动维护）
   scripts/
-    build-chunks.mjs        build HTML → out/chunks.jsonl
-    index.mjs               向量化 + upsert/delete，更新 manifest
-    eval.mjs                阈值校准
-  out/                      生成物（加入 .gitignore）
+    lib.mjs                 公共配置与 Cloudflare REST 调用
+    setup-index.mjs         一次性创建 Vectorize 索引与 metadata 索引
+    build-chunks.mjs        build HTML → out/chunks.jsonl（切块）
+    index.mjs               向量化 + upsert/delete，更新 manifest，递增 INDEX_VERSION
+  out/                      生成物（已 .gitignore）
 workers/rag-api/
-  package.json              wrangler 依赖（独立，不进根 workspace）
-  wrangler.toml
-  src/index.js
+  package.json              wrangler 依赖（独立安装，不进根 workspace）
+  wrangler.toml             绑定、自定义域名、阈值等参数
+  src/index.js              /search、/meta 接口
+  src/focus.js              重排输入的关键句截取
 ```
 
-根 `package.json` 新增脚本：
+根 `package.json` 脚本：
 
-```json
-"rag:chunks": "node rag/scripts/build-chunks.mjs",
-"rag:index":  "node rag/scripts/index.mjs",
-"rag:eval":   "node rag/scripts/eval.mjs"
-```
+| 脚本 | 作用 |
+|---|---|
+| `pnpm rag:update` | **日常用这个**：`rag:index` + `rag:deploy` |
+| `pnpm rag:index` | 增量向量化并写入 Vectorize；有变化时递增 `INDEX_VERSION` |
+| `pnpm rag:deploy` | 部署接口（同时让结果缓存按新 `INDEX_VERSION` 失效） |
+| `pnpm rag:chunks` | 只切块并打印统计，不调用 Cloudflare |
+| `pnpm rag:setup` | 初始化索引（已完成，仅新建索引时用） |
 
-**发布流程**（内容有更新时）：
-
-```bash
-pnpm build
-pnpm rag:index          # 仅处理有变化的文章
-```
-
-然后照常部署站点。Worker 代码有改动时，在 `workers/rag-api` 下执行 `npx wrangler deploy`。
+发布流程见 §0。
 
 ---
 
@@ -399,3 +446,40 @@ pnpm rag:index          # 仅处理有变化的文章
 4. **站点部署方式**：`huidengchanxiu.net` 当前部署在哪（Cloudflare Pages / GitHub Pages / 其他）？决定 CORS 来源，以及索引是否放进 CI。
 5. **校准问题集**：20~30 条典型问题 + 期望出处（文章即可，有段号更好），含 3~5 条应无结果的问题。
 6. **命名确认**：分类名「课程法本」、切换按钮文案「字幕搜索 / AI 搜索」是否合适。
+
+---
+
+## 13. 评估：慧灯之光 1~12 册（`refs/hdzg/01~12`，2026-11-01）
+
+### 13.1 规模（实测，按现有切块规则）
+
+| 项 | 数值 |
+|---|---|
+| 结构 | 每册一个文件（`refs/hdzg/01.md` …），文章为二级标题，共约 140 篇 |
+| 正文 | 约 161.8 万字（每册 8.9~17.9 万） |
+| 密法内容 | 需灌顶方可阅读的折叠内容共 1,687 段，**按 §5.2 规则全部排除**，已核对无一进入索引 |
+| 切块 | 2,564 块（中位 650 字）；18 块超过 800 字，最长 3,070 字（《华严经·净行品》节选，单段） |
+| 与课程法本重合 | 课程法本 40 篇中 29 篇标题见于慧灯之光；抽样 244 句，93% 在慧灯之光中原文出现 |
+
+### 13.2 免费额度
+
+| 额度 | 现状（课程法本 4 册） | 加入慧灯之光 12 册后 | 占比 |
+|---|---|---|---|
+| Vectorize 存储（5M 维） | 696 向量 / 0.71M | 3,260 向量 / 3.34M | **66.8%**，剩余约 1,600 向量（约 100 万字） |
+| Vectorize 查询（30M 维/月） | 约 2.86 万次/月 | 存量 3.34M 每月固定计入 → 约 **2.6 万次/月（≈ 870 次/天）** | — |
+| Workers AI（1 万 Neurons/天） | 每次搜索重排约 4.9 | 不变（候选固定 50 个）；一次性建索引约 1,700 Neurons | 建索引占当日 17% |
+
+结论：**免费额度够用**。瓶颈仍是每月查询次数，结果缓存可进一步降低实际消耗；之后再加书的空间约 100 万字。
+
+### 13.3 接入方案（已实施，2026-11-01）
+
+1. **超长段落拆分**：已实现（§5.2 第 5 条）。
+2. **按文章分组**：metadata 加入 `article`（二级标题），接口按「文档 + 文章」分组，卡片显示「慧灯之光一 / 浅谈因果关系」。课程法本的旧向量没有 `article`，接口回退为文档标题。
+3. **与课程法本去重**：两边都入库，重复关系在**建索引时离线标注**（`rag/scripts/dedupe.mjs`）：
+   - 只取汉字做 8 字片段指纹；慧灯之光的块若 ≥ 60% 的片段见于课程法本，记 `dupOf`（对应课程法本块 id）与 `dupGroup`；课程法本被重复的块记 `alsoIn`（JSON 字符串，最多 3 条）。实测 625 块标为重复、590 块带「亦见于」，计算约 2 秒。
+   - 查询时（重排之前）：候选带 `dupOf` 且对应的课程法本块在本次搜索范围内，就用课程法本块替换；对应块不在候选中则 `VECTORIZE.getByIds` 取回。只搜慧灯之光时不替换。
+   - 结果卡片显示「亦见于 慧灯之光一《三个差别》」并可跳转；同一文章只列一次。
+   - 标注只影响 metadata：`rag:index` 发现正文未变、仅标注变化时，用 `get_by_ids` 取回已有向量重新写入，不消耗 Workers AI。
+   - 最初在接口里对候选两两比对（重合 ≥ 50%），因两边切块边界不同、对应块常不在 50 个候选中，去重失败，改为上述方案。4. **增量成本**：修改某一册会整册重建（约 200 块、约 130 Neurons），可接受。
+5. **筛选界面**：每个分类一行，「全部」在第一行行首；慧灯之光的册按钮显示短名（一、二……十二）。
+

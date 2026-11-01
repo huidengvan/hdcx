@@ -18,7 +18,8 @@
     "rag:setup": "node rag/scripts/setup-index.mjs",
     "rag:chunks": "node rag/scripts/build-chunks.mjs",
     "rag:index": "node rag/scripts/index.mjs",
-    "rag:deploy": "pnpm --dir workers/rag-api --ignore-workspace exec wrangler deploy"
+    "rag:deploy": "pnpm --dir workers/rag-api --ignore-workspace exec wrangler deploy",
+    "rag:update": "pnpm rag:index && pnpm rag:deploy"
   },
   "dependencies": {
     "@docusaurus/core": "^3.10.2",

@@ -9,6 +9,25 @@
         { "id": "books/b3", "label": "第三册" },
         { "id": "books/b4", "label": "第四册" }
       ]
+    },
+    {
+      "id": "hdzg",
+      "label": "慧灯之光",
+      "articleHeading": 2,
+      "groups": [
+        { "id": "refs/hdzg/01", "label": "慧灯之光一", "short": "一" },
+        { "id": "refs/hdzg/02", "label": "慧灯之光二", "short": "二" },
+        { "id": "refs/hdzg/03", "label": "慧灯之光三", "short": "三" },
+        { "id": "refs/hdzg/04", "label": "慧灯之光四", "short": "四" },
+        { "id": "refs/hdzg/05", "label": "慧灯之光五", "short": "五" },
+        { "id": "refs/hdzg/06", "label": "慧灯之光六", "short": "六" },
+        { "id": "refs/hdzg/07", "label": "慧灯之光七", "short": "七" },
+        { "id": "refs/hdzg/08", "label": "慧灯之光八", "short": "八" },
+        { "id": "refs/hdzg/09", "label": "慧灯之光九", "short": "九" },
+        { "id": "refs/hdzg/10", "label": "慧灯之光十", "short": "十" },
+        { "id": "refs/hdzg/11", "label": "慧灯之光十一", "short": "十一" },
+        { "id": "refs/hdzg/12", "label": "慧灯之光十二", "short": "十二" }
+      ]
     }
   ]
 }

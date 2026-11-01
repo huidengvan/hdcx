@@ -14,6 +14,7 @@ import { ROOT, OUT_DIR, DIMENSIONS, groups, parseArgs, matchOnly } from './lib.m
 const MIN_CHARS = 600; // 达到即可断块
 const MAX_CHARS = 800; // 加入下一段会超过则断块
 const TINY_CHARS = 150; // 过短的块并入下一块
+const SPLIT_CHARS = 700; // 超长单段按句拆分后每份的目标字数
 const FORCE_BREAK_LEVEL = 3; // h2/h3 强制断块
 const SECRET_KEYWORDS = ['密法', '灌顶', '密宗', '请勿阅读', '警告'];
 // 切块规则或向量输入格式变化时递增，使 manifest 中所有文章重建
@@ -58,14 +59,14 @@ function extractUnits(markdownEl) {
     const sections = []; // [level, text]
     let current = null;
 
-    const sectionPath = () => sections.map(([, t]) => t).join(' › ');
+    const sectionPath = () => sections.map(([level, t]) => [level, t]);
     const append = (text) => {
         text = clean(text);
         if (!text) return;
         if (current) current.text += (current.text ? '\n' : '') + text;
         else {
             // 文首出现无锚点文本时挂到第一个段落上（遇到 pN 时再回填）
-            current = { p: null, text, section: sectionPath(), level: sections.at(-1)?.[0] ?? 1 };
+            current = { p: null, text, path: sectionPath() };
             units.push(current);
         }
     };
@@ -97,7 +98,7 @@ function extractUnits(markdownEl) {
                         current.p = p;
                         current.text += `\n${clean(child.text)}`;
                     } else {
-                        current = { p, text: clean(child.text), section: sectionPath() };
+                        current = { p, text: clean(child.text), path: sectionPath() };
                         units.push(current);
                     }
                 } else append(child.text);
@@ -121,31 +122,70 @@ function extractUnits(markdownEl) {
     return units;
 }
 
-// 600~800 字弹性窗口合并段落，不在段落中间切；h2/h3 强制断块
-function chunkUnits(units) {
+// 单段超过 MAX_CHARS 时按句拆成约 SPLIT_CHARS 字的子单元，子单元沿用同一段落号
+function splitLongUnits(units) {
+    return units.flatMap((u) => {
+        if (u.heading || !u.text || u.text.length <= MAX_CHARS) return [u];
+        const sentences = u.text.match(/[^。！？；\n]+[。！？；]*[”’」』）)]*|[。！？；]+|\n+/g) || [u.text];
+        const pieces = [];
+        let buf = '';
+        for (let sentence of sentences) {
+            // 单句本身过长（如无标点的偈颂）时硬切
+            while (sentence.length > SPLIT_CHARS) {
+                if (buf) pieces.push(buf);
+                pieces.push(sentence.slice(0, SPLIT_CHARS));
+                sentence = sentence.slice(SPLIT_CHARS);
+                buf = '';
+            }
+            if (buf && buf.length + sentence.length > SPLIT_CHARS) {
+                pieces.push(buf);
+                buf = '';
+            }
+            buf += sentence;
+        }
+        if (buf.trim()) pieces.push(buf);
+        return pieces.map((text) => ({ ...u, text: text.trim() }));
+    });
+}
+
+// 600~800 字弹性窗口合并段落，不在段落中间切；h2/h3 强制断块，文章标题层级（articleHeading）无条件断块
+function chunkUnits(units, articleHeading) {
     const chunks = [];
     let buf = null;
     const flush = () => {
         if (buf?.parts.length) chunks.push(buf);
         buf = null;
     };
+    // 文章末尾过短的块并入同一文章的前一块
+    const articleOf = (c) => c.path.find(([l]) => l === articleHeading)?.[1];
+    const flushArticleEnd = () => {
+        const prev = chunks.at(-1);
+        if (buf && buf.len < TINY_CHARS && prev && articleOf(prev) === articleOf(buf)) {
+            prev.parts.push(...buf.parts);
+            prev.pEnd = buf.pEnd;
+            prev.len += buf.len;
+            buf = null;
+        } else flush();
+    };
 
     for (const u of units) {
         if (u.heading) {
-            if (u.heading <= FORCE_BREAK_LEVEL && buf && buf.len >= TINY_CHARS) flush();
+            if (articleHeading && u.heading <= articleHeading) flushArticleEnd();
+            else if (u.heading <= FORCE_BREAK_LEVEL && buf && buf.len >= TINY_CHARS) flush();
             continue;
         }
         if (u.p === null || !u.text) continue;
         if (buf && (buf.len >= MIN_CHARS || (buf.len + u.text.length > MAX_CHARS && buf.len >= TINY_CHARS))) flush();
-        if (!buf) buf = { section: u.section, pStart: u.p, pEnd: u.p, parts: [], len: 0 };
+        if (!buf) buf = { path: u.path, pStart: u.p, pEnd: u.p, parts: [], len: 0 };
         buf.parts.push(u.text);
         buf.pEnd = u.p;
         buf.len += u.text.length;
     }
-    flush();
+    if (articleHeading) flushArticleEnd();
+    else flush();
 
-    // 末尾过短的块并入前一块
-    if (chunks.length > 1 && chunks.at(-1).len < TINY_CHARS) {
+    // 末尾过短的块并入前一块（按文章分篇时已在上面处理）
+    if (!articleHeading && chunks.length > 1 && chunks.at(-1).len < TINY_CHARS) {
         const last = chunks.pop();
         const prev = chunks.at(-1);
         prev.parts.push(...last.parts);
@@ -167,12 +207,14 @@ function listDocFiles(groupId) {
         }
     };
     walk(dir);
+    // 整册为单篇文章（如 refs/hdzg/01）时，group 目录本身就是文章
+    if (!files.length && fs.existsSync(path.join(dir, 'index.html'))) files.push(path.join(dir, 'index.html'));
     return files.sort();
 }
 
-export function buildChunks({ only } = {}) {
+export function buildChunks({ only, groupList = groups } = {}) {
     const docs = [];
-    for (const g of groups) {
+    for (const g of groupList) {
         if (!matchOnly(only, g.id) && !String(only || '').split(',').some((o) => o.startsWith(`${g.id}/`))) continue;
         for (const file of listDocFiles(g.id)) {
             const doc = path.relative(path.join(ROOT, 'build'), path.dirname(file)).split(path.sep).join('/');
@@ -181,8 +223,15 @@ export function buildChunks({ only } = {}) {
             const md = root.querySelector('article .theme-doc-markdown');
             if (!md) continue;
             const title = clean(md.querySelector('header h1')?.text || root.querySelector('title')?.text || doc);
-            const chunks = chunkUnits(extractUnits(md)).map((c, i) => {
+            const chunks = chunkUnits(splitLongUnits(extractUnits(md)), g.articleHeading).map((c, i) => {
                 const text = c.parts.join('\n');
+                // 整册单文件的书（如慧灯之光）以 articleHeading 级标题为文章名，其下的标题为章节
+                const level = g.articleHeading;
+                const article = (level && c.path.find(([l]) => l === level)?.[1]) || title;
+                const section = c.path
+                    .filter(([l]) => !level || l > level)
+                    .map(([, t]) => t)
+                    .join(' › ');
                 return {
                     id: `${doc}#${String(i).padStart(3, '0')}`,
                     cat: g.cat,
@@ -190,12 +239,13 @@ export function buildChunks({ only } = {}) {
                     doc,
                     url: `/${doc}`,
                     title,
-                    section: c.section,
+                    article,
+                    section,
                     pStart: c.pStart,
                     pEnd: c.pEnd,
                     text,
                     // 只用于生成向量：册名、篇名、章节作为上下文前缀；去掉藏文，避免偈颂段落以中等分数混入无关结果
-                    embedText: `${g.label}《${title}》${c.section ? ` ${c.section}` : ''}\n${stripTibetan(text)}`,
+                    embedText: `${g.label}${article.startsWith('《') ? ` ${article}` : `《${article}》`}${section ? ` ${section}` : ''}\n${stripTibetan(text)}`,
                 };
             });
             const hash = createHash('sha1')
