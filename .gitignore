@@ -1,5 +1,6 @@
 # Dependencies
 /node_modules
+/workers/rag-api/node_modules
 
 # Production
 /build
@@ -31,3 +32,8 @@ yarn-error.log*
 
 # Antigravity Skills
 .agents/
+
+# RAG 生成物与 Worker 依赖
+/rag/out/
+/workers/*/node_modules
+/workers/*/.wrangler

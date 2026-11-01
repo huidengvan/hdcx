@@ -1,0 +1,14 @@
+{
+  "categories": [
+    {
+      "id": "books",
+      "label": "课程法本",
+      "groups": [
+        { "id": "books/b1", "label": "第一册" },
+        { "id": "books/b2", "label": "第二册" },
+        { "id": "books/b3", "label": "第三册" },
+        { "id": "books/b4", "label": "第四册" }
+      ]
+    }
+  ]
+}

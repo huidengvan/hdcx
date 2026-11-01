@@ -14,7 +14,11 @@
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
-    "write-heading-ids": "docusaurus write-heading-ids"
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "rag:setup": "node rag/scripts/setup-index.mjs",
+    "rag:chunks": "node rag/scripts/build-chunks.mjs",
+    "rag:index": "node rag/scripts/index.mjs",
+    "rag:deploy": "pnpm --dir workers/rag-api --ignore-workspace exec wrangler deploy"
   },
   "dependencies": {
     "@docusaurus/core": "^3.10.2",
@@ -48,6 +52,7 @@
   "packageManager": "pnpm@11.15.1",
   "devDependencies": {
     "@docusaurus/types": "^3.10.2",
-    "cross-env": "^10.1.0"
+    "cross-env": "^10.1.0",
+    "node-html-parser": "^9.0.6"
   }
 }

@@ -17,10 +17,20 @@ const HOT_KEYWORDS = [
  * @param {{
  *   initialValue: string,
  *   onSearch: (value: string) => void,
- *   loading?: boolean
+ *   loading?: boolean,
+ *   placeholder?: string,
+ *   hotKeywords?: string[],
+ *   hotLabel?: string
  * }} props
  */
-export default function SearchBar({ initialValue = '', onSearch, loading = false }) {
+export default function SearchBar({
+    initialValue = '',
+    onSearch,
+    loading = false,
+    placeholder = '输入法语关键词，多个词空格隔开（按 / 键快速聚焦）...',
+    hotKeywords = HOT_KEYWORDS,
+    hotLabel = '常用检索：',
+}) {
     const [inputValue, setInputValue] = useState(initialValue);
     const inputRef = useRef(null);
 
@@ -94,8 +104,8 @@ export default function SearchBar({ initialValue = '', onSearch, loading = false
                         className={styles.searchInput}
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
-                        placeholder="输入法语关键词，多个词空格隔开（按 / 键快速聚焦）..."
-                        aria-label="搜索法语关键词"
+                        placeholder={placeholder}
+                        aria-label="搜索"
                         autoComplete="off"
                     />
 
@@ -129,9 +139,9 @@ export default function SearchBar({ initialValue = '', onSearch, loading = false
 
             {/* 热门关键词快捷标签 */}
             <div className={styles.hotKeywordsArea}>
-                <span className={styles.hotKeywordsLabel}>常用检索：</span>
+                <span className={styles.hotKeywordsLabel}>{hotLabel}</span>
                 <div className={styles.hotKeywordsList}>
-                    {HOT_KEYWORDS.map((tag) => (
+                    {hotKeywords.map((tag) => (
                         <button
                             key={tag}
                             type="button"

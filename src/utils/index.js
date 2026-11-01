@@ -138,6 +138,44 @@ export const highlightParagraph = (targetNode, duration = 2500) => {
     }, duration);
 };
 
+let activeRangeNodes = [];
+let activeRangeTimer = null;
+
+// 高亮 p(start+1) ~ p(end)，与 locateParagraph 对 p(start) 的高亮配合，用于 AI 搜索结果的多段命中
+export const highlightParagraphRange = (start, end, duration = 2500, retryCount = 0) => {
+    if (typeof document === 'undefined' || !(end > start)) return;
+    const startNode = getTargetNode(`p${start}`);
+    if (!startNode) {
+        if (retryCount < 8) setTimeout(() => highlightParagraphRange(start, end, duration, retryCount + 1), 100);
+        return;
+    }
+    // 位于需确认的密法折叠内容中时不提前高亮
+    const details = startNode.closest('details');
+    if (details && getSecretDharmaWarning(details) && !userConfirmedDetails.has(details)) return;
+
+    if (activeRangeTimer) clearTimeout(activeRangeTimer);
+    activeRangeNodes.forEach((n) => {
+        n.style.backgroundColor = '';
+        n.style.boxShadow = '';
+    });
+    activeRangeNodes = [];
+    for (let i = start + 1; i <= end; i++) {
+        const node = getTargetNode(`p${i}`);
+        if (!node) continue;
+        node.style.boxShadow = 'inset 3px 0 0 #2e8555';
+        node.style.backgroundColor = 'rgba(46, 133, 85, 0.2)';
+        node.style.transition = 'background-color 0.5s ease, box-shadow 0.5s ease';
+        activeRangeNodes.push(node);
+    }
+    activeRangeTimer = setTimeout(() => {
+        activeRangeNodes.forEach((n) => {
+            n.style.backgroundColor = '';
+            n.style.boxShadow = '';
+        });
+        activeRangeNodes = [];
+    }, duration);
+};
+
 export const scrollToTarget = (targetNode, scrollBlock) => {
     if (!targetNode) return;
     const block = scrollBlock || sessionStorage.getItem('scrollBlock') || 'center';

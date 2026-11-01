@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useLocation } from '@docusaurus/router';
 import DocRoot from '@theme-original/DocRoot';
-import { locateParagraph, highlightParagraph } from '@site/src/utils';
+import { locateParagraph, highlightParagraph, highlightParagraphRange } from '@site/src/utils';
 import useLocalStorageState from 'use-local-storage-state';
 import ReaderToolbar from '../../components/ReaderToolbar';
 import LineJump, { findLine, highlightLine, LINE_PAGE_GAP } from '../../components/LineJump';
@@ -299,7 +299,12 @@ export default function DocRootWrapper(props) {
     if (hash) {
       locateParagraph(hash);
     }
-  }, [location.hash, location.pathname]);
+    // AI 搜索结果带 ?hl=起-止，首段由 locateParagraph 高亮，其余段落一并高亮
+    const range = new URLSearchParams(location.search).get('hl')?.match(/^(\d+)-(\d+)$/);
+    if (range) {
+      highlightParagraphRange(Number(range[1]), Number(range[2]));
+    }
+  }, [location.hash, location.pathname, location.search]);
 
   useEffect(() => {
     const handleHashChange = () => {

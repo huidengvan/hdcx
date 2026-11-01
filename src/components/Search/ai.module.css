@@ -1,0 +1,315 @@
+/* ═══════════════════════════════════════════════════════════════════
+   AI 语义搜索样式（模式切换、范围筛选、命中段落）
+   卡片、状态页等通用样式复用 search.module.css
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── 模式切换 ─────────────────────────────────────────────────── */
+.modeSwitch {
+    display: inline-flex;
+    padding: 4px;
+    margin-bottom: 1.25rem;
+    background: var(--ifm-color-emphasis-200);
+    border-radius: 9999px;
+}
+
+.modeBtn {
+    padding: 0.4rem 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ifm-color-emphasis-700);
+    background: transparent;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.modeBtn:hover {
+    color: var(--ifm-color-primary);
+}
+
+.modeBtnActive {
+    color: #ffffff !important;
+    background: var(--ifm-color-primary);
+    box-shadow: 0 2px 8px rgba(46, 133, 85, 0.25);
+}
+
+[data-theme='dark'] .modeSwitch {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* ─── 范围筛选 ─────────────────────────────────────────────────── */
+.filterBar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    margin: -1.5rem 0 2rem;
+}
+
+.filterGroup {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.filterChip,
+.filterCategory {
+    font-size: 0.82rem;
+    padding: 0.25rem 0.7rem;
+    background: var(--ifm-card-background-color, #ffffff);
+    color: var(--ifm-color-emphasis-700);
+    border: 1px solid var(--ifm-color-emphasis-300);
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+
+.filterCategory {
+    font-weight: 600;
+    border-style: dashed;
+}
+
+.filterChip:hover,
+.filterCategory:hover {
+    color: var(--ifm-color-primary);
+    border-color: var(--ifm-color-primary);
+}
+
+.filterChipActive {
+    color: #ffffff !important;
+    background: var(--ifm-color-primary) !important;
+    border-color: var(--ifm-color-primary) !important;
+    border-style: solid;
+}
+
+[data-theme='dark'] .filterChip,
+[data-theme='dark'] .filterCategory {
+    background: #1e1e2f;
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--ifm-color-emphasis-600);
+}
+
+/* ─── 相关度 ───────────────────────────────────────────────────── */
+.relevance {
+    display: inline-flex;
+    gap: 3px;
+    align-items: center;
+}
+
+.relevanceDot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ifm-color-emphasis-300);
+}
+
+.relevanceDotOn {
+    background: var(--ifm-color-primary);
+}
+
+/* ─── 结果卡片头部：序号 + 册 / 篇名 ──────────────────────────────── */
+.cardHead {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+[data-theme='dark'] .cardHead {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.resultIndex {
+    flex-shrink: 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--ifm-color-primary);
+    opacity: 0.75;
+}
+
+.crumb {
+    flex: 1;
+    min-width: 0;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+.crumbGroup {
+    color: var(--ifm-color-emphasis-600);
+}
+
+.crumbSep {
+    margin: 0 0.4rem;
+    color: var(--ifm-color-emphasis-400);
+}
+
+.crumbTitle {
+    font-weight: 600;
+    color: var(--ifm-heading-color);
+}
+
+.crumbTitle:hover {
+    color: var(--ifm-color-primary);
+    text-decoration: none;
+}
+
+.cardMeta {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.hitCount {
+    font-size: 0.8rem;
+    color: var(--ifm-color-emphasis-600);
+}
+
+/* ─── 命中段落 ─────────────────────────────────────────────────── */
+.hitList {
+    display: flex;
+    flex-direction: column;
+}
+
+.hitBlock {
+    padding: 0.85rem 0 0.6rem;
+}
+
+.hitBlock + .hitBlock {
+    border-top: 1px dashed var(--ifm-color-emphasis-200);
+}
+
+[data-theme='dark'] .hitBlock + .hitBlock {
+    border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.hitSection {
+    margin-bottom: 0.25rem;
+    font-size: 0.8rem;
+    color: var(--ifm-color-emphasis-600);
+}
+
+.hitText {
+    font-size: 0.98rem;
+    line-height: 1.85;
+}
+
+.hitPara {
+    margin: 0 0 0.5rem;
+}
+
+.hitPara:last-child {
+    margin-bottom: 0;
+}
+
+/* 含关键词的句子：浅米色底，与正文颜色一致 */
+.sentenceMark {
+    padding: 0.1em 0;
+    color: inherit;
+    background: rgba(233, 200, 120, 0.35);
+    border-radius: 2px;
+}
+
+[data-theme='dark'] .sentenceMark {
+    background: rgba(233, 200, 120, 0.2);
+}
+
+.ellipsis {
+    color: var(--ifm-color-emphasis-500);
+}
+
+/* ─── 命中操作：展开 / 复制引用 / 跳转原文 ──────────────────────────── */
+.hitActions {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.hitActionsRight {
+    display: inline-flex;
+    justify-self: end;
+    align-items: center;
+    gap: 1rem;
+}
+
+.actionBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.2rem;
+    font-size: 0.85rem;
+    color: var(--ifm-color-emphasis-600);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.actionBtn:hover {
+    color: var(--ifm-color-primary);
+}
+
+.chevron {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.chevronUp {
+    transform: rotate(180deg);
+}
+
+.jumpBtn {
+    padding: 0.3rem 0.95rem;
+    font-size: 0.85rem;
+    color: var(--ifm-color-primary-darker);
+    background: rgba(46, 133, 85, 0.08);
+    border: 1px solid rgba(46, 133, 85, 0.25);
+    border-radius: 9999px;
+    transition: all 0.15s ease;
+}
+
+.jumpBtn:hover {
+    color: #ffffff;
+    background: var(--ifm-color-primary);
+    border-color: var(--ifm-color-primary);
+    text-decoration: none;
+}
+
+[data-theme='dark'] .jumpBtn {
+    color: var(--ifm-color-primary-light);
+    background: rgba(37, 194, 160, 0.1);
+    border-color: rgba(37, 194, 160, 0.3);
+}
+
+@media (max-width: 768px) {
+    .filterBar {
+        margin-top: -1rem;
+    }
+
+    .aiCard {
+        padding: 1rem 0.85rem;
+    }
+
+    .cardHead {
+        flex-wrap: wrap;
+        gap: 0.25rem 0.6rem;
+    }
+
+    .crumb {
+        font-size: 1.02rem;
+    }
+}
+
+/* 窄屏复制引用只留图标，保证展开按钮仍能居中 */
+@media (max-width: 520px) {
+    .copyLabel {
+        display: none;
+    }
+}
