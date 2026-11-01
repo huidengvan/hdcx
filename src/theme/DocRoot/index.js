@@ -4,6 +4,7 @@ import DocRoot from '@theme-original/DocRoot';
 import { locateParagraph, highlightParagraph } from '@site/src/utils';
 import useLocalStorageState from 'use-local-storage-state';
 import ReaderToolbar from '../../components/ReaderToolbar';
+import LineJump, { findLine, highlightLine, LINE_PAGE_GAP } from '../../components/LineJump';
 
 export default function DocRootWrapper(props) {
   const location = useLocation();
@@ -213,8 +214,18 @@ export default function DocRootWrapper(props) {
     } else if (event.key === 'ArrowDown') {
       sessionStorage.setItem('scrollBlock', 'start');
     } else if (event.key === 'ArrowLeft') {
-      // 往上翻一页：从上一页对应位置定位并高亮翻页后位于顶部的段落
+      // 往上翻一页：把当前顶部的那一行移到视口底部并高亮，标出与下一页的衔接处
       event.preventDefault();
+      const content = document.querySelector('article .markdown');
+      const navBottom = Math.max(0, document.querySelector('.navbar')?.getBoundingClientRect().bottom || 0);
+      const topLine = content && findLine(content, navBottom + 2, window.innerHeight * 0.4);
+      if (topLine) {
+        highlightLine(content, topLine);
+        window.scrollBy({ top: topLine.top + topLine.height + LINE_PAGE_GAP - window.innerHeight, behavior: 'smooth' });
+        return;
+      }
+
+      // 回退：找不到正文行时按段落翻页
       const targetP = getPrevPageParagraph();
       const scrollDist = targetP ? targetP.getBoundingClientRect().top - 75 : (100 - window.innerHeight);
       const actualScroll = Math.abs(scrollDist) > 30 ? scrollDist : (100 - window.innerHeight);
@@ -236,8 +247,17 @@ export default function DocRootWrapper(props) {
         }
       }, 280);
     } else if (event.key === 'ArrowRight') {
-      // 往下翻一页：从当前页底部的段落开始定位到翻页后的顶部，并给予视觉高亮提示
+      // 往下翻一页：把视口底部的那一行移到顶部并高亮，标出与上一页的衔接处
       event.preventDefault();
+      const content = document.querySelector('article .markdown');
+      const bottomLine = content && findLine(content, window.innerHeight - 2, window.innerHeight * 0.6);
+      if (bottomLine) {
+        highlightLine(content, bottomLine);
+        window.scrollBy({ top: bottomLine.top - LINE_PAGE_GAP, behavior: 'smooth' });
+        return;
+      }
+
+      // 回退：找不到正文行时按段落翻页
       const targetP = getBottomParagraph();
       const scrollDist = targetP ? targetP.getBoundingClientRect().top - 75 : (window.innerHeight - 100);
       const actualScroll = scrollDist > 40 ? scrollDist : (window.innerHeight - 100);
@@ -298,6 +318,7 @@ export default function DocRootWrapper(props) {
         onToggleWidescreen={handleWidescreen}
         isWidescreen={isWidescreen}
       />
+      <LineJump />
       <DocRoot {...props} />
     </>
   );
