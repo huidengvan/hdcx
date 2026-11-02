@@ -347,21 +347,29 @@ export const parseTime = (timeString) => {
 };
 
 
-export const parseSubtitles = (data, src) => {
-    if (!data) return;
+export const parseSubtitles = (data) => {
+    if (!data) return [];
 
     const subtitlesArray = [];
-    const subtitleLines = data.trim()?.split(new RegExp('\r?\n\r?\n'));
+    const subtitleLines = data.trim().split(/\r?\n\r?\n/);
 
     subtitleLines.forEach((line) => {
-        const parts = line.trim()?.split(new RegExp('\r?\n'));
-        const index = parts[0];
+        const parts = line.trim().split(/\r?\n/);
         const time = parts[1]?.split(' --> ');
-        const text = parts.slice(2).join('\n');
-        const timeStart = time[0];
-        const timeEnd = time[1];
+        // 跳过缺少时间行的残缺字幕块，避免单个坏块导致整份字幕解析失败
+        if (!time || time.length < 2) return;
+        const timeStart = time[0].trim();
+        const timeEnd = time[1].trim();
 
-        subtitlesArray.push({ index, startTime: timeStart, endTime: timeEnd, text });
+        subtitlesArray.push({
+            index: parts[0],
+            startTime: timeStart,
+            endTime: timeEnd,
+            // 预先换算成秒，播放时匹配当前字幕无需反复解析时间字符串
+            startSec: parseTime(timeStart),
+            endSec: parseTime(timeEnd),
+            text: parts.slice(2).join('\n'),
+        });
     });
 
     return subtitlesArray;

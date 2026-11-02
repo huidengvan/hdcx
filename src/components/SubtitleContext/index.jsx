@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React, { memo, useEffect, useState, useRef, useMemo } from 'react';
 import styles from './index.module.css';
 import useLocalStorageState from 'use-local-storage-state';
 import BrowserOnly from '@docusaurus/BrowserOnly';
@@ -9,6 +9,53 @@ import toast from 'react-hot-toast';
 
 // 四册课程视频的字幕在本站 static/docs/srts/b1~b4，文件名与视频相同
 const SRT_BOOKS = { 慧灯禅修课第一册: 'b1', 慧灯禅修课第二册: 'b2', 慧灯禅修课第三册: 'b3', 慧灯禅修课第四册: 'b4' };
+
+// decodeURI 遇到残缺的 % 编码会抛错，失败时原样返回
+const safeDecode = (str) => {
+    try {
+        return decodeURI(str || '');
+    } catch (e) {
+        return str || '';
+    }
+};
+
+// 查找 time 所在的字幕：先查当前句与下一句（顺序播放时 O(1)），未命中再二分查找（拖动进度时）
+const findSubtitleIndex = (subs, time, hint) => {
+    const hit = (i) => i >= 0 && i < subs.length && time >= subs[i].startSec && time <= subs[i].endSec;
+    if (hit(hint)) return hint;
+    if (hit(hint + 1)) return hint + 1;
+
+    let lo = 0;
+    let hi = subs.length - 1;
+    while (lo <= hi) {
+        const mid = (lo + hi) >> 1;
+        if (time < subs[mid].startSec) hi = mid - 1;
+        else if (time > subs[mid].endSec) lo = mid + 1;
+        else return mid;
+    }
+    return -1;
+};
+
+// 单行字幕：memo 后切换当前句时只有新旧两行重渲染；点击由列表统一代理
+const SubtitleItem = memo(function SubtitleItem({ sub, index, isActive, showTimeLine }) {
+    return (
+        <li
+            id={`subtitle-${index}`}
+            data-index={index}
+            className={`${styles.transcriptItem} ${isActive ? styles.activeItem : ''}`}
+            title="点击跳转到该句播放"
+        >
+            {showTimeLine && (
+                <span className={styles.timeBadge} data-copy="true" title="点击复制此时间点链接">
+                    {sub.startTime?.split(',')[0]}
+                </span>
+            )}
+            <p className={`${styles.transcriptText} ${isActive ? styles.activeText : ''}`}>
+                {sub.text}
+            </p>
+        </li>
+    );
+});
 
 const VideoPlayer = ({ src, current, setCurrent }) => {
     const baseUrl = typeof window !== 'undefined' && location.hash.includes('http')
@@ -21,24 +68,30 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
     const [subtitles, setSubtitles] = useState([]);
     const [isSubLoading, setIsSubLoading] = useState(false);
     const [currentSubtitleIndex, setCurrentSubtitleIndex] = useState(-1);
+    const currentIndexRef = useRef(-1);
     const videoRef = useVideo();
     const listRef = useRef(null);
+    const fetchIdRef = useRef(0);
     const srtBase = useBaseUrl('/docs/srts/');
 
-    let endTime = useMemo(() => parseTime(src?.split(',')[1]), [src]);
+    // 片段结束时间（src 形如 "地址,结束时间"）；用 ref 保存，元数据加载后可按视频时长修正且不会被重渲染重置
+    const endTimeRef = useRef();
+    useEffect(() => {
+        endTimeRef.current = parseTime(src?.split(',')[1]);
+    }, [src]);
     const isMp4 = useMemo(() => /\.(mp4|webm)/i.test(videoSrc), [videoSrc]);
 
     const [playInfo, setPlayInfo] = useLocalStorageState('playInfo', {
         defaultValue: {
-            paused: true,
             showTimeLine: true,
             subAlignCenter: true,
-            currentTime: 0,
-            title: '',
-            current: 0,
-            playbackRate: 1,
         }
     });
+
+    const selectSubtitle = (index) => {
+        currentIndexRef.current = index;
+        setCurrentSubtitleIndex(index);
+    };
 
     // PC 端默认使用宽屏 UI
     const isFullWidth = true;
@@ -47,7 +100,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
 
     // 格式化展示的视频标题
     const displayTitle = useMemo(() => {
-        const raw = videoSrc ? decodeURI(videoSrc.slice(videoSrc.lastIndexOf('/') + 1)) : '';
+        const raw = videoSrc ? safeDecode(videoSrc.slice(videoSrc.lastIndexOf('/') + 1)) : '';
         return raw.split('?')[0].split('#')[0].replace(/\.(mp4|webm|mp3|m4a)/i, '');
     }, [videoSrc]);
 
@@ -62,14 +115,12 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             }
         }
 
-        setPlayInfo(prev => ({
-            ...prev,
-            title: src?.slice(src?.lastIndexOf('/') + 1) || ''
-        }));
-
+        // 切换媒体后作废尚未返回的旧字幕请求，并清空当前句
+        fetchIdRef.current++;
         setSubtitles([]);
-        const isHdcx = typeof window !== 'undefined' && 
-            (decodeURI(location.hash || '').includes('慧灯禅修课') || decodeURI(videoSrc || '').includes('慧灯禅修课') || decodeURI(src || '').includes('慧灯禅修课'));
+        selectSubtitle(-1);
+        const isHdcx = typeof window !== 'undefined' &&
+            [location.hash, videoSrc, src].some(s => safeDecode(s).includes('慧灯禅修课'));
 
         if (isHdcx) {
             setIsSubLoading(true);
@@ -83,17 +134,18 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
         if (!video) return;
 
         const handleTimeUpdate = ({ target: { currentTime } }) => {
-            const subIndex = subtitles?.findIndex(
-                sub => currentTime >= parseTime(sub?.startTime) && currentTime <= parseTime(sub?.endTime)
-            );
-
+            const endTime = endTimeRef.current;
             if (endTime && currentTime >= endTime) {
                 video?.removeEventListener('timeupdate', handleTimeUpdate);
                 if (setCurrent) setCurrent(prev => prev + 1);
-            } else if (subIndex !== -1 && subIndex !== currentSubtitleIndex) {
-                setCurrentSubtitleIndex(subIndex);
+                return;
+            }
 
-                if (playInfo.subAlignCenter && subtitles && subtitles.length - subIndex > 2) {
+            const subIndex = findSubtitleIndex(subtitles, currentTime, currentIndexRef.current);
+            if (subIndex !== -1 && subIndex !== currentIndexRef.current) {
+                selectSubtitle(subIndex);
+
+                if (playInfo.subAlignCenter && subtitles.length - subIndex > 2) {
                     scrollSubtitleToView(subIndex);
                 }
             }
@@ -104,7 +156,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
         return () => {
             video.removeEventListener('timeupdate', handleTimeUpdate);
         };
-    }, [subtitles, currentSubtitleIndex, playInfo?.subAlignCenter, endTime, setCurrent]);
+    }, [subtitles, playInfo?.subAlignCenter, setCurrent]);
 
     const handleVideoEnd = () => {
         if (videoSrc !== 'blank' && setCurrent) {
@@ -129,26 +181,22 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
         });
     };
 
-    const handleSubtitleFetch = async (suburl, duration) => {
+    const handleSubtitleFetch = async (suburl) => {
+        // 只采用最新一次请求的结果，防止快速切换时旧视频的字幕晚到并覆盖
+        const fetchId = ++fetchIdRef.current;
         setIsSubLoading(true);
+        let subtitlesArray = [];
         try {
             const subText = await fetchText(suburl);
             if (subText && subText.trim()) {
-                const subtitlesArray = parseSubtitles(subText, duration, src);
-                if (subtitlesArray && subtitlesArray.length > 0) {
-                    setSubtitles(subtitlesArray);
-                } else {
-                    setSubtitles([]);
-                }
-            } else {
-                setSubtitles([]);
+                subtitlesArray = parseSubtitles(subText);
             }
         } catch (e) {
             console.error('获取字幕失败', e);
-            setSubtitles([]);
-        } finally {
-            setIsSubLoading(false);
         }
+        if (fetchId !== fetchIdRef.current) return;
+        setSubtitles(subtitlesArray);
+        setIsSubLoading(false);
     };
 
     const handleLoadedMetadata = (event) => {
@@ -157,38 +205,46 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
             videoRef?.current?.pause();
         }
 
-        const [, series, title] = decodeURI(videoSrc || '').match(/([^/]+)\/([^/]+?)\.mp4/) || [];
+        const [, series, title] = safeDecode(videoSrc).match(/([^/]+)\/([^/]+?)\.mp4/) || [];
         if (SRT_BOOKS[series]) {
-            handleSubtitleFetch(`${srtBase}${SRT_BOOKS[series]}/${encodeURIComponent(title)}.srt`, videoDuration);
+            handleSubtitleFetch(`${srtBase}${SRT_BOOKS[series]}/${encodeURIComponent(title)}.srt`);
         } else {
             setIsSubLoading(false);
             setSubtitles([]);
         }
 
-        if (videoDuration - endTime <= 1) {
-            endTime = undefined;
+        // 片段结束时间与视频结尾相差不到 1 秒时忽略，交给 ended 事件切换下一个
+        if (videoDuration - endTimeRef.current <= 1) {
+            endTimeRef.current = undefined;
         }
     };
 
     // 点击时间戳复制链接
-    const handleCopyTimestamp = async (startTime, e) => {
-        e.stopPropagation();
+    const handleCopyTimestamp = async (sub) => {
         const base = window.location.href.split('#t=')[0];
-        const timeSec = parseTime(startTime);
-        const link = `${base}#t=${timeSec}`;
+        const link = `${base}#t=${sub.startSec}`;
         try {
             await navigator.clipboard.writeText(link);
-            toast.success(`已复制定位时间: ${startTime?.split(',')[0]}`);
+            toast.success(`已复制定位时间: ${sub.startTime?.split(',')[0]}`);
         } catch (err) {
             toast.error('复制失败，请手动复制');
         }
     };
 
-    // 点击字幕行跳转时间
-    const handleSubtitleClick = (startTime, index) => {
-        if (!videoRef.current) return;
-        videoRef.current.currentTime = parseTime(startTime);
-        setCurrentSubtitleIndex(index);
+    // 字幕列表点击代理：点时间戳复制链接，点其余位置跳转到该句
+    const handleListClick = (e) => {
+        const item = e.target.closest('li[data-index]');
+        if (!item) return;
+        const index = Number(item.dataset.index);
+        const sub = subtitles[index];
+        if (!sub) return;
+
+        if (e.target.closest('[data-copy]')) {
+            handleCopyTimestamp(sub);
+        } else if (videoRef.current) {
+            videoRef.current.currentTime = sub.startSec;
+            selectSubtitle(index);
+        }
     };
 
     return (
@@ -209,8 +265,6 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                                 onLoadedMetadata={handleLoadedMetadata}
                                 onEnded={handleVideoEnd}
                                 autoPlay={current !== 0}
-                                onPause={() => setPlayInfo(prev => ({ ...prev, paused: true }))}
-                                onPlay={() => setPlayInfo(prev => ({ ...prev, paused: false }))}
                                 poster={/\/v\/[45]jx/.test(videoSrc) ? 'https://box.hdcxb.net/d/其他资料/f/up/untitled.png' : ''}
                             />
                         </div>
@@ -229,8 +283,6 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                                 onLoadedMetadata={handleLoadedMetadata}
                                 onEnded={handleVideoEnd}
                                 autoPlay={current !== 0}
-                                onPause={() => setPlayInfo(prev => ({ ...prev, paused: true }))}
-                                onPlay={() => setPlayInfo(prev => ({ ...prev, paused: false }))}
                             />
                         </div>
                     )}
@@ -281,7 +333,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                         </div>
 
                         {/* 字幕行滚动列表 */}
-                        <ul ref={listRef} className={styles.transcriptList}>
+                        <ul ref={listRef} className={styles.transcriptList} onClick={handleListClick}>
                             {isSubLoading ? (
                                 <div className={styles.skeletonContainer}>
                                     {[1, 2, 3, 4, 5, 6, 7].map((i) => (
@@ -303,31 +355,15 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                                     ))}
                                 </div>
                             ) : (
-                                subtitles.map((sub, index) => {
-                                    const isActive = index === currentSubtitleIndex;
-                                    return (
-                                        <li
-                                            key={index}
-                                            id={`subtitle-${index}`}
-                                            className={`${styles.transcriptItem} ${isActive ? styles.activeItem : ''}`}
-                                            onClick={() => handleSubtitleClick(sub.startTime, index)}
-                                            title="点击跳转到该句播放"
-                                        >
-                                            {playInfo?.showTimeLine && (
-                                                <span
-                                                    className={styles.timeBadge}
-                                                    onClick={(e) => handleCopyTimestamp(sub.startTime, e)}
-                                                    title="点击复制此时间点链接"
-                                                >
-                                                    {sub.startTime?.split(',')[0]}
-                                                </span>
-                                            )}
-                                            <p className={`${styles.transcriptText} ${isActive ? styles.activeText : ''}`}>
-                                                {sub.text}
-                                            </p>
-                                        </li>
-                                    );
-                                })
+                                subtitles.map((sub, index) => (
+                                    <SubtitleItem
+                                        key={index}
+                                        sub={sub}
+                                        index={index}
+                                        isActive={index === currentSubtitleIndex}
+                                        showTimeLine={!!playInfo?.showTimeLine}
+                                    />
+                                ))
                             )}
                         </ul>
                     </div>
