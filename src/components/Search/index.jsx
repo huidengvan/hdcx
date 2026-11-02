@@ -7,6 +7,7 @@ import AiFilter from './AiFilter';
 import AiResultList from './AiResultList';
 import { searchRequest } from './api';
 import { ragSearch, ragCatIds } from './ragApi';
+import { toApiCats, fromUrlCats } from './filters';
 import styles from './search.module.css';
 import aiStyles from './ai.module.css';
 
@@ -15,13 +16,13 @@ const MODES = {
         label: '关键词搜索',
         icon: '🔍',
         title: '关键词搜索',
-        subtitle: '按字面检索禅修课视频字幕、《慧灯之光》与参考资料，点击跳转至视频时间点或原文段落',
+        subtitle: '按字面检索慧灯禅修课视频字幕与法本、《慧灯之光》与参考资料，点击跳转至视频时间点或原文段落',
     },
     ai: {
         label: 'AI 搜索',
         icon: '✨',
         title: 'AI 法本搜索',
-        subtitle: '按语义检索禅修课视频字幕、课程法本、《慧灯之光》与参考资料，可直接提问，点击跳转至原文段落或视频时间点',
+        subtitle: '按语义检索慧灯禅修课视频字幕与法本、《慧灯之光》与参考资料，可直接提问，点击跳转至原文段落或视频时间点',
         placeholder: '直接输入问题，如“皈依的目的是什么”（按 / 键快速聚焦）...',
         // 语义搜索擅长完整问句，示例均已实测能命中对应文章
         hotLabel: '可以这样问：',
@@ -29,7 +30,7 @@ const MODES = {
     },
 };
 
-// 两种模式共用分类筛选（URL 参数 c），各自只保留本模式有的分类
+// 两种模式共用分类筛选（URL 参数 c，筛选项见 filters.js），各自只保留本模式有的分类
 const catsFor = (searchMode, list) => list.filter((c) => (searchMode === 'ai' ? ragCatIds : validCats).has(c));
 
 /**
@@ -98,9 +99,10 @@ function SearchPageContent() {
         setError('');
 
         try {
+            const apiCats = toApiCats(searchCats);
             const data = searchMode === 'ai'
-                ? await ragSearch(cleanKw, searchCats, controller.signal)
-                : await searchRequest(cleanKw, page, searchCats, controller.signal);
+                ? await ragSearch(cleanKw, apiCats, controller.signal)
+                : await searchRequest(cleanKw, page, apiCats, controller.signal);
             if (controller.signal.aborted) return;
             setResult(data);
         } catch (err) {
@@ -123,7 +125,7 @@ function SearchPageContent() {
         const urlPage = parseInt(params.get('page') || params.get('p') || '1', 10);
         const validPage = isNaN(urlPage) || urlPage < 1 ? 1 : urlPage;
         const urlMode = params.get('mode') === 'ai' ? 'ai' : 'subtitle';
-        const urlCats = catsFor(urlMode, (params.get('c') || '').split(','));
+        const urlCats = catsFor(urlMode, fromUrlCats((params.get('c') || '').split(',')));
 
         setKeywords(urlKw);
         setCurrentPage(validPage);
@@ -274,7 +276,7 @@ export default function SearchPage() {
     return (
         <Layout
             title="搜索 - 慧灯禅修课"
-            description="按关键词检索慧灯禅修课视频字幕、《慧灯之光》与参考资料，支持 AI 语义搜索，跳转至视频时间点或原文段落"
+            description="按关键词检索慧灯禅修课视频字幕与法本、《慧灯之光》与参考资料，支持 AI 语义搜索，跳转至视频时间点或原文段落"
         >
             <main className={styles.searchPageWrapper}>
                 <BrowserOnly fallback={

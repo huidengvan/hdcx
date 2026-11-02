@@ -2,11 +2,16 @@
  * AI 语义搜索 API 服务（Cloudflare Worker：workers/rag-api）
  */
 import ragConfig from '@site/rag/categories.json';
+import { COURSE } from './filters';
 
 const RAG_API_URL = 'https://ragapi.hdcxb.net';
 
-export const ragCategories = ragConfig.categories;
-export const ragCatIds = new Set(ragCategories.map((c) => c.id));
+// 筛选项：视频字幕与课程法本合为「慧灯禅修课」，其余为 categories.json 的分类
+export const ragFilters = [
+    COURSE,
+    ...ragConfig.categories.filter((c) => !COURSE.cats.includes(c.id)).map(({ id, label }) => ({ id, label, cats: [id] })),
+];
+export const ragCatIds = new Set(ragFilters.map((c) => c.id));
 
 /**
  * @typedef {Object} RagHit

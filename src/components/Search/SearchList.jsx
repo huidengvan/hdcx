@@ -5,23 +5,25 @@ import Pagination from './Pagination';
 import Skeleton from './Skeleton';
 import styles from './search.module.css';
 import aiStyles from './ai.module.css';
+import { COURSE } from './filters';
 
-// 关键词搜索的分类，与 workers/fayu-api 导入的 docs.cat 一致
+// 关键词搜索的筛选项，cats 为 workers/fayu-api 导入的 docs.cat
 const CATS = [
-    { id: 'video', label: '禅修课视频' },
-    { id: 'hdzg', label: '慧灯之光' },
-    { id: 'misc', label: '其他参考' },
-    { id: 'refs', label: '参考资料' },
+    COURSE,
+    { id: 'hdzg', label: '慧灯之光', cats: ['hdzg'] },
+    { id: 'misc', label: '其他参考', cats: ['misc'] },
+    { id: 'refs', label: '参考资料', cats: ['refs'] },
 ];
 
 export const validCats = new Set(CATS.map((c) => c.id));
 
 /**
- * 按分类筛选（多选），显示各分类匹配的篇数；未选任何分类表示全部，没有匹配的分类不显示
+ * 按分类筛选（多选），显示各筛选项匹配的篇数；未选任何分类表示全部，没有匹配的分类不显示
  * @param {{ facets: Record<string, number>, selected: string[], onChange: (cats: string[]) => void }} props
  */
 function CategoryFilter({ facets, selected, onChange }) {
     const total = Object.values(facets).reduce((n, c) => n + c, 0);
+    const counts = Object.fromEntries(CATS.map(({ id, cats }) => [id, cats.reduce((n, c) => n + (facets[c] || 0), 0)]));
     const toggle = (id) => onChange(selected.includes(id) ? selected.filter((c) => c !== id) : [...selected, id]);
     return (
         <div className={aiStyles.filterBar}>
@@ -33,7 +35,7 @@ function CategoryFilter({ facets, selected, onChange }) {
                 >
                     全部 {total}
                 </button>
-                {CATS.filter(({ id }) => facets[id] || selected.includes(id)).map(({ id, label }) => (
+                {CATS.filter(({ id }) => counts[id] || selected.includes(id)).map(({ id, label }) => (
                     <button
                         key={id}
                         type="button"
@@ -41,7 +43,7 @@ function CategoryFilter({ facets, selected, onChange }) {
                         onClick={() => toggle(id)}
                         aria-pressed={selected.includes(id)}
                     >
-                        {label} {facets[id] || 0}
+                        {label} {counts[id]}
                     </button>
                 ))}
             </div>
@@ -130,7 +132,7 @@ export default function SearchList({
                         <div className={styles.introIcon}>📚</div>
                         <h4 className={styles.introTitle}>分类筛选</h4>
                         <p className={styles.introText}>
-                            涵盖慧灯禅修课第一～四册视频字幕、《慧灯之光》1～12 册、其他参考与参考资料，可按分类筛选。
+                            涵盖慧灯禅修课第一～四册视频字幕与法本、《慧灯之光》1～12 册、其他参考与参考资料，可按分类筛选。
                         </p>
                     </div>
                 </div>

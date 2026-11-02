@@ -1,5 +1,5 @@
 /**
- * 关键词搜索 API 服务（Cloudflare Worker：workers/fayu-api）：禅修课视频字幕 + refs 下的文章
+ * 关键词搜索 API 服务（Cloudflare Worker：workers/fayu-api）：禅修课视频字幕 + 课程法本 + refs 下的文章
  */
 
 const DEFAULT_API_URL = 'https://fayuapi.hdcxb.net';
@@ -88,7 +88,7 @@ const toArticleItem = (r) => ({
  * 执行关键词搜索请求
  * @param {string} keywords - 空格分隔多个词，须在同一视频 / 同一篇文章中都出现
  * @param {number} page
- * @param {string[]} [cats] - 分类筛选：video / hdzg / misc / refs，空数组表示全部
+ * @param {string[]} [cats] - 分类筛选：video / books / hdzg / misc / refs，空数组表示全部
  * @param {AbortSignal} [signal]
  * @returns {Promise<SearchResult>}
  */

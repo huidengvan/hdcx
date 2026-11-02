@@ -87,7 +87,7 @@ pnpm rag:update
 
 ## 关键词搜索
 
-`/search` 页的「关键词搜索」按字面检索四册禅修课视频字幕（`static/docs/srts/b1~b4`）与 `refs` 下的文章（《慧灯之光》、其他参考、参考资料，不含传承传记与喇荣课诵），接口为 `workers/fayu-api`（Cloudflare Worker + D1 数据库 `fayu`）。**修改字幕或 refs 文章后须重新导入数据库**（文章取自构建产物）：
+`/search` 页的「关键词搜索」按字面检索四册禅修课视频字幕（`static/docs/srts/b1~b4`）、课程法本（`books/b1~b4`）与 `refs` 下的文章（《慧灯之光》、其他参考、参考资料，不含传承传记与喇荣课诵），视频字幕与课程法本合为「慧灯禅修课」一个筛选项（AI 搜索同样）。接口为 `workers/fayu-api`（Cloudflare Worker + D1 数据库 `fayu`）。**修改字幕、课程法本或 refs 文章后须重新导入数据库**（文章取自构建产物）：
 
 ```bash
 pnpm build

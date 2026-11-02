@@ -1,5 +1,5 @@
 import React from 'react';
-import { ragCategories } from './ragApi';
+import { ragFilters } from './ragApi';
 import styles from './ai.module.css';
 
 /**
@@ -21,7 +21,7 @@ export default function AiFilter({ selected, onChange }) {
                 >
                     全部
                 </button>
-                {ragCategories.map(({ id, label }) => (
+                {ragFilters.map(({ id, label }) => (
                     <button
                         key={id}
                         type="button"

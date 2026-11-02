@@ -5,11 +5,14 @@
 | 分类 | `c` | 来源 |
 | :--- | :--- | :--- |
 | 课程视频 | `video` | `static/docs/srts/b1~b4` 的字幕（目录与册名取自 `rag/categories.json` 中 `type: "srt"` 的分类） |
+| 课程法本 | `books` | `books/b1~b4`（取自 `rag/categories.json` 中 `books` 分类，与 AI 搜索一致） |
 | 慧灯之光 | `hdzg` | `refs/hdzg/01~12`，每册按二级标题拆成文章 |
 | 其他参考 | `misc` | `refs/misc` |
 | 参考资料 | `refs` | `refs` 下其余目录；**不含**传承传记（`refs/cczj`）与喇荣课诵（`refs/lrksj.md`） |
 
-文章取自构建产物 `build/refs` 的 HTML（与 AI 搜索共用 `rag/scripts/build-chunks.mjs` 的段落抽取），段落号与线上 `#pN` 锚点一致；目录与密法折叠内容同样跳过。
+前端把 `video` 与 `books` 合为「慧灯禅修课」一个筛选项（`src/components/Search/filters.js`，AI 搜索同样），请求时展开为 `c=video,books`。
+
+文章取自构建产物 `build/books`、`build/refs` 的 HTML（与 AI 搜索共用 `rag/scripts/build-chunks.mjs` 的段落抽取），段落号与线上 `#pN` 锚点一致；目录与密法折叠内容同样跳过。
 
 由原独立仓库 `fayu_search`（Preact 前端 + `fayu-worker` 子模块 + SQL 生成脚本）重构迁入；前端已并入本站 `src/components/Search`。
 

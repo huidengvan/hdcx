@@ -1,8 +1,8 @@
 /**
  * 关键词搜索数据导入 D1，生成 out/import.sql（建表 + 清空旧数据 + 写入）后用 wrangler 执行
  *   课程视频：rag/categories.json 中 type 为 srt 的分类（static/docs/srts/b1~b4）
- *   文章：build/refs 下的静态页面（段落号与线上锚点一致，须先 pnpm build）；《慧灯之光》每册按二级标题拆成文章
- *        跳过传承传记、喇荣课诵；与 AI 搜索相同，跳过目录与密法折叠内容
+ *   文章：build/books/b1~b4（课程法本，与 AI 搜索相同）与 build/refs 下的静态页面（段落号与线上锚点一致，须先 pnpm build）；
+ *        《慧灯之光》每册按二级标题拆成文章；跳过传承传记、喇荣课诵；与 AI 搜索相同，跳过目录与密法折叠内容
  *
  * 用法（仓库根目录）：
  *   pnpm fayu:import            导入远程 D1
@@ -99,10 +99,12 @@ function splitLong(text) {
 /** 文章：每个带锚点的段落为一个单位，marks 为段落号；conts 标记拆开的长段（与下一单位同属一段） */
 export function loadArticles() {
     const hdzg = new Map(groups.filter((g) => g.cat === 'hdzg').map((g) => [g.id, g]));
+    const books = groups.filter((g) => g.cat === 'books');
     const docs = [];
-    for (const file of listDocFiles('refs')) {
+    for (const file of [...books.flatMap((g) => listDocFiles(g.id)), ...listDocFiles('refs')]) {
         const doc = path.relative(path.join(ROOT, 'build'), path.dirname(file)).split(path.sep).join('/');
         if (SKIP.some((s) => under(doc, s))) continue;
+        const book = books.find((g) => under(doc, g.id));
         const isHdzg = under(doc, 'refs/hdzg');
         if (isHdzg && !hdzg.has(doc)) continue;
 
@@ -114,7 +116,9 @@ export function loadArticles() {
         const title = clean(md.querySelector('header h1')?.text || root.querySelector('title')?.text || doc);
 
         const top = doc.split('/').slice(0, 2).join('/');
-        const base = isHdzg
+        const base = book
+            ? { cat: 'books', grp: book.id, grpLabel: book.label }
+            : isHdzg
             ? { cat: 'hdzg', grp: doc, grpLabel: hdzg.get(doc).label }
             : top === 'refs/misc'
               ? { cat: 'misc', grp: top, grpLabel: '其他参考' }
@@ -207,7 +211,7 @@ function wrangler(args) {
 
 function main() {
     const args = parseArgs();
-    if (!fs.existsSync(path.join(ROOT, 'build', 'refs'))) throw new Error('找不到 build/refs，请先执行 pnpm build');
+    if (!['books', 'refs'].every((d) => fs.existsSync(path.join(ROOT, 'build', d)))) throw new Error('找不到 build/books 或 build/refs，请先执行 pnpm build');
     const docs = [...loadVideos(), ...loadArticles()];
     const { sql, version, blockCount } = buildSql(docs);
     fs.mkdirSync(path.dirname(OUT_FILE), { recursive: true });

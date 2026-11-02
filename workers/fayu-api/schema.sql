@@ -1,4 +1,4 @@
--- 关键词搜索（D1 数据库 fayu）：课程视频字幕 + refs 下的文章
+-- 关键词搜索（D1 数据库 fayu）：课程视频字幕 + 课程法本 + refs 下的文章
 -- 每个视频 / 每篇文章一行元数据（docs）；字幕条或段落按顺序打包成块，每块原文与规范化文本各不超过约 90KB（D1 单条 SQL 100KB）
 -- 同一块拆成两张表：block_norms 只存规范化文本（去空白标点、繁转简，规则见 src/normalize.js），检索时 SQL 全表扫描、按出现次数计数；
 -- block_texts 存原文，只按主键取当前页要显示的块。这样每次搜索扫描的行数约为原文与规范化文本同表时的一半
@@ -7,8 +7,8 @@
 
 CREATE TABLE IF NOT EXISTS docs (
     id INTEGER PRIMARY KEY,          -- 导入时按分类、目录顺序编号（每次导入重新编号）
-    cat TEXT NOT NULL,               -- 分类：video 课程视频 / hdzg 慧灯之光 / misc 其他参考 / refs 参考资料
-    grp TEXT NOT NULL,               -- 分组：视频为 b1~b4，文章为所在目录，如 refs/qxgs、refs/hdzg/01
+    cat TEXT NOT NULL,               -- 分类：video 课程视频 / books 课程法本 / hdzg 慧灯之光 / misc 其他参考 / refs 参考资料
+    grp TEXT NOT NULL,               -- 分组：视频为 b1~b4，文章为所在目录，如 books/b1、refs/qxgs、refs/hdzg/01
     grp_label TEXT NOT NULL,         -- 分组名：第一册、前行广释、慧灯之光一……
     title TEXT NOT NULL,             -- 视频文件名 / 文章名（慧灯之光为册内的二级标题）
     series TEXT,                     -- 视频：播放器目录，路径 /video#{series}/{title}.mp4

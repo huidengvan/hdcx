@@ -196,7 +196,7 @@ function chunkUnits(units, articleHeading) {
     return chunks;
 }
 
-export // Docusaurus 构建元数据（.docusaurus/docusaurus-plugin-content-docs/*/site-*.json）：源文件 → 页面路径
+// Docusaurus 构建元数据（.docusaurus/docusaurus-plugin-content-docs/*/site-*.json）：源文件 → 页面路径
 let docMeta;
 function loadDocMeta() {
     if (docMeta) return docMeta;
@@ -223,7 +223,7 @@ function listSrcDocs(src) {
         .sort((a, b) => a.source.localeCompare(b.source));
 }
 
-function listDocFiles(groupId) {
+export function listDocFiles(groupId) {
     const dir = path.join(ROOT, 'build', groupId);
     if (!fs.existsSync(dir)) throw new Error(`找不到 ${dir}，请先执行 pnpm build`);
     const files = [];

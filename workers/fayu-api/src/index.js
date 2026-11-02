@@ -1,8 +1,9 @@
 /**
- * 关键词搜索 API（D1 数据库 fayu，表结构见 schema.sql）：课程视频字幕 + refs 下的文章
+ * 关键词搜索 API（D1 数据库 fayu，表结构见 schema.sql）：课程视频字幕 + 课程法本 + refs 下的文章
  * GET /search?q=菩提心 慈悲心&page=1&size=10&c=video,hdzg
  *   q：关键词，空格分隔为多个词（须在同一视频 / 同一篇文章中都出现）
- *   c：分类筛选，video 课程视频 / hdzg 慧灯之光 / misc 其他参考 / refs 参考资料，不传为全部
+ *   c：分类筛选，video 课程视频 / books 课程法本 / hdzg 慧灯之光 / misc 其他参考 / refs 参考资料，不传为全部
+ *      （前端把 video + books 合为「慧灯禅修课」一个筛选项）
  *   返回 { terms, total（文档数）, matches（关键词出现次数）, facets（各分类文档数，不受 c 影响）, results }
  * GET /meta：数据版本与各分类文档数
  * GET /search/:keyword/:page：旧接口，只搜视频，返回旧格式（subtitles 为 JSON 字符串），供未更新的前端使用
@@ -18,7 +19,7 @@ const MAX_TERMS = 6;
 const MAX_PAGE_SIZE = 20;
 const LEGACY_PAGE_SIZE = 5;
 const META_TTL_MS = 60_000;
-const CATS = ['video', 'hdzg', 'misc', 'refs'];
+const CATS = ['video', 'books', 'hdzg', 'misc', 'refs'];
 
 const CORS = {
     'Access-Control-Allow-Origin': '*',
