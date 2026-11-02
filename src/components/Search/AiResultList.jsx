@@ -250,7 +250,7 @@ export default function AiResultList({ keywords, result, loading, error, onRetry
                 <div className={styles.errorCard}>
                     <div className={styles.stateIcon}>⚠️</div>
                     <h3 className={styles.stateTitle}>AI 搜索暂不可用</h3>
-                    <p className={styles.stateDesc}>{error}，也可切换到字幕搜索。</p>
+                    <p className={styles.stateDesc}>{error}，也可切换到关键词搜索。</p>
                     <button type="button" onClick={onRetry} className={styles.retryBtn}>
                         重试一下
                     </button>
@@ -297,7 +297,7 @@ export default function AiResultList({ keywords, result, loading, error, onRetry
                         <ul>
                             <li>换一种问法，或把问题说得更具体些</li>
                             <li>放宽筛选范围，选择「全部」</li>
-                            <li>查找某个原词出现的位置，可切换到字幕搜索</li>
+                            <li>查找某个原词出现的位置，可切换到关键词搜索</li>
                         </ul>
                     </div>
                     <div className={styles.quickTags}>

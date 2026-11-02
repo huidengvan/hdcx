@@ -22,7 +22,7 @@ const SECRET_KEYWORDS = ['密法', '灌顶', '密宗', '请勿阅读', '警告']
 export const CHUNK_VERSION = 1;
 
 // 去掉控制字符与零宽字符；源文件软换行在中文之间产生的空白直接去掉，其余空白折叠为一个空格
-const clean = (s) =>
+export const clean = (s) =>
     s
         .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f​﻿]/g, '')
         .replace(/\s+/g, ' ')
@@ -55,7 +55,7 @@ function isTocDetails(details) {
 }
 
 // 按文档顺序遍历正文，产出以 <p id="pN"> 为锚点的段落单元
-function extractUnits(markdownEl) {
+export function extractUnits(markdownEl) {
     const units = [];
     const sections = []; // [level, text]
     let current = null;
@@ -196,7 +196,7 @@ function chunkUnits(units, articleHeading) {
     return chunks;
 }
 
-function listDocFiles(groupId) {
+export function listDocFiles(groupId) {
     const dir = path.join(ROOT, 'build', groupId);
     if (!fs.existsSync(dir)) throw new Error(`找不到 ${dir}，请先执行 pnpm build`);
     const files = [];

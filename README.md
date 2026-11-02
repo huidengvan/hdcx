@@ -85,11 +85,12 @@ pnpm rag:update
 
 需要 Cloudflare 与 Qdrant 凭据（`.env.local`）；没有权限的协作者提交后告知维护者即可。完整说明见 [rag/README.md](rag/README.md) 第 0 节。
 
-## 字幕搜索
+## 关键词搜索
 
-`/search` 页的「字幕搜索」按关键词字面检索四册课程视频字幕（`static/docs/srts/b1~b4`），接口为 `workers/fayu-api`（Cloudflare Worker + D1 数据库 `fayu`）。**修改字幕后须重新导入数据库**：
+`/search` 页的「关键词搜索」按字面检索四册课程视频字幕（`static/docs/srts/b1~b4`）与 `refs` 下的文章（《慧灯之光》、其他参考、参考资料，不含传承传记与喇荣课诵），接口为 `workers/fayu-api`（Cloudflare Worker + D1 数据库 `fayu`）。**修改字幕或 refs 文章后须重新导入数据库**（文章取自构建产物）：
 
 ```bash
+pnpm build
 pnpm fayu:import
 ```
 

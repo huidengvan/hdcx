@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Layout from '@theme/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import SearchBar from './SearchBar';
-import SearchList, { validBooks } from './SearchList';
+import SearchList, { validCats } from './SearchList';
 import AiFilter from './AiFilter';
 import AiResultList from './AiResultList';
 import { searchRequest } from './api';
@@ -12,10 +12,10 @@ import aiStyles from './ai.module.css';
 
 const MODES = {
     subtitle: {
-        label: '字幕搜索',
+        label: '关键词搜索',
         icon: '🔍',
-        title: '法语字幕搜索',
-        subtitle: '检索慧灯禅修课视频字幕，点击时间跳转至相应视频时间',
+        title: '关键词搜索',
+        subtitle: '按字面检索课程视频字幕、《慧灯之光》与参考资料，点击跳转至视频时间点或原文段落',
     },
     ai: {
         label: 'AI 搜索',
@@ -37,7 +37,7 @@ const validGroups = new Set(ragCategories.flatMap((c) => c.groups.map((g) => g.i
 function SearchPageContent() {
     const [mode, setMode] = useState('subtitle');
     const [groups, setGroups] = useState([]);
-    const [books, setBooks] = useState([]);
+    const [cats, setCats] = useState([]);
     const [keywords, setKeywords] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [result, setResult] = useState(null);
@@ -48,7 +48,7 @@ function SearchPageContent() {
     /**
      * 更新浏览器地址栏 URL（无刷新同步）
      */
-    const updateUrl = useCallback((kw, page, nextMode, nextGroups, nextBooks) => {
+    const updateUrl = useCallback((kw, page, nextMode, nextGroups, nextCats) => {
         if (typeof window === 'undefined') return;
         const url = new URL(window.location.href);
 
@@ -75,8 +75,8 @@ function SearchPageContent() {
         if (nextMode === 'ai' && nextGroups.length) url.searchParams.set('g', nextGroups.join(','));
         else url.searchParams.delete('g');
 
-        if (nextMode !== 'ai' && nextBooks.length) url.searchParams.set('b', nextBooks.join(','));
-        else url.searchParams.delete('b');
+        if (nextMode !== 'ai' && nextCats.length) url.searchParams.set('c', nextCats.join(','));
+        else url.searchParams.delete('c');
 
         window.history.pushState({ q: kw, page }, '', url.toString());
     }, []);
@@ -84,7 +84,7 @@ function SearchPageContent() {
     /**
      * 执行数据请求
      */
-    const doSearch = useCallback(async (kw, page = 1, searchMode = 'subtitle', searchGroups = [], searchBooks = []) => {
+    const doSearch = useCallback(async (kw, page = 1, searchMode = 'subtitle', searchGroups = [], searchCats = []) => {
         abortRef.current?.abort();
         const cleanKw = (kw || '').trim();
         if (!cleanKw) {
@@ -102,7 +102,7 @@ function SearchPageContent() {
         try {
             const data = searchMode === 'ai'
                 ? await ragSearch(cleanKw, searchGroups, controller.signal)
-                : await searchRequest(cleanKw, page, searchBooks, controller.signal);
+                : await searchRequest(cleanKw, page, searchCats, controller.signal);
             if (controller.signal.aborted) return;
             setResult(data);
         } catch (err) {
@@ -126,17 +126,17 @@ function SearchPageContent() {
         const validPage = isNaN(urlPage) || urlPage < 1 ? 1 : urlPage;
         const urlMode = params.get('mode') === 'ai' ? 'ai' : 'subtitle';
         const urlGroups = (params.get('g') || '').split(',').filter((g) => validGroups.has(g));
-        const urlBooks = (params.get('b') || '').split(',').filter((b) => validBooks.has(b));
+        const urlCats = (params.get('c') || '').split(',').filter((c) => validCats.has(c));
 
         setKeywords(urlKw);
         setCurrentPage(validPage);
         setMode(urlMode);
         setGroups(urlGroups);
-        setBooks(urlBooks);
+        setCats(urlCats);
         setResult(null);
 
         if (urlKw) {
-            doSearch(urlKw, validPage, urlMode, urlGroups, urlBooks);
+            doSearch(urlKw, validPage, urlMode, urlGroups, urlCats);
         } else {
             setError('');
         }
@@ -162,20 +162,20 @@ function SearchPageContent() {
         const trimmed = newKw.trim();
         setKeywords(trimmed);
         setCurrentPage(1);
-        updateUrl(trimmed, 1, mode, groups, books);
-        doSearch(trimmed, 1, mode, groups, books);
+        updateUrl(trimmed, 1, mode, groups, cats);
+        doSearch(trimmed, 1, mode, groups, cats);
     };
 
     /**
-     * 切换字幕搜索 / AI 搜索，保留关键词并重新搜索
+     * 切换关键词搜索 / AI 搜索，保留关键词并重新搜索
      */
     const handleModeChange = (nextMode) => {
         if (nextMode === mode) return;
         setMode(nextMode);
         setResult(null);
         setCurrentPage(1);
-        updateUrl(keywords, 1, nextMode, groups, books);
-        doSearch(keywords, 1, nextMode, groups, books);
+        updateUrl(keywords, 1, nextMode, groups, cats);
+        doSearch(keywords, 1, nextMode, groups, cats);
     };
 
     /**
@@ -183,18 +183,18 @@ function SearchPageContent() {
      */
     const handleGroupsChange = (nextGroups) => {
         setGroups(nextGroups);
-        updateUrl(keywords, 1, mode, nextGroups, books);
-        doSearch(keywords, 1, mode, nextGroups, books);
+        updateUrl(keywords, 1, mode, nextGroups, cats);
+        doSearch(keywords, 1, mode, nextGroups, cats);
     };
 
     /**
-     * 字幕搜索按册筛选，回到第一页
+     * 关键词搜索按分类筛选，回到第一页
      */
-    const handleBooksChange = (nextBooks) => {
-        setBooks(nextBooks);
+    const handleCatsChange = (nextCats) => {
+        setCats(nextCats);
         setCurrentPage(1);
-        updateUrl(keywords, 1, mode, groups, nextBooks);
-        doSearch(keywords, 1, mode, groups, nextBooks);
+        updateUrl(keywords, 1, mode, groups, nextCats);
+        doSearch(keywords, 1, mode, groups, nextCats);
     };
 
     /**
@@ -202,15 +202,15 @@ function SearchPageContent() {
      */
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
-        updateUrl(keywords, newPage, mode, groups, books);
-        doSearch(keywords, newPage, mode, groups, books);
+        updateUrl(keywords, newPage, mode, groups, cats);
+        doSearch(keywords, newPage, mode, groups, cats);
     };
 
     /**
      * 错误重试
      */
     const handleRetry = () => {
-        doSearch(keywords, currentPage, mode, groups, books);
+        doSearch(keywords, currentPage, mode, groups, cats);
     };
 
     const modeInfo = MODES[mode];
@@ -266,8 +266,8 @@ function SearchPageContent() {
                     result={result}
                     loading={loading}
                     error={error}
-                    books={books}
-                    onBooksChange={handleBooksChange}
+                    cats={cats}
+                    onCatsChange={handleCatsChange}
                     onPageChange={handlePageChange}
                     onRetry={handleRetry}
                     onSelectKeyword={handleSearchSubmit}
@@ -285,7 +285,7 @@ export default function SearchPage() {
     return (
         <Layout
             title="搜索 - 慧灯禅修课"
-            description="检索慧灯禅修课视频字幕与课程法本，支持 AI 语义搜索，秒级跳转至音视频或原文段落"
+            description="按关键词检索慧灯禅修课视频字幕、《慧灯之光》与参考资料，支持 AI 语义搜索，跳转至视频时间点或原文段落"
         >
             <main className={styles.searchPageWrapper}>
                 <BrowserOnly fallback={

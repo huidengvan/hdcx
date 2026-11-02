@@ -1,5 +1,5 @@
 /**
- * 字幕搜索 API 服务（Cloudflare Worker：workers/fayu-api）
+ * 关键词搜索 API 服务（Cloudflare Worker：workers/fayu-api）：课程视频字幕 + refs 下的文章
  */
 
 const DEFAULT_API_URL = 'https://fayuapi.hdcxb.net';
@@ -19,44 +19,87 @@ const MAX_QUERY_CHARS = 50;
  */
 
 /**
- * @typedef {Object} SearchItem
- * @property {number} count - 匹配处数
+ * 视频结果（SearchCard 展示）
+ * @typedef {Object} VideoItem
+ * @property {'video'} type
+ * @property {number} count - 关键词出现次数
  * @property {string} subtitles - JSON stringified Subtitle[]
  * @property {string} title
  * @property {string} series
- * @property {string} book - b1 ~ b4
+ * @property {string} groupLabel - 第一册 ~ 第四册
+ */
+
+/**
+ * 文章结果（ArticleCard 展示）
+ * @typedef {Object} ArticleItem
+ * @property {'article'} type
+ * @property {number} count - 关键词出现次数
+ * @property {string} title
+ * @property {string} url - 页面路径，段落锚点为 #p{段落号}
+ * @property {string} groupLabel - 前行广释、慧灯之光一……
+ * @property {{ p: number, text: string, hl?: number[][], head?: boolean, tail?: boolean, gap?: boolean }[]} hits - 命中段落，长段为片段，head / tail 表示前后有省略
  */
 
 /**
  * @typedef {Object} SearchResult
  * @property {string[]} terms - 接口规范化后的关键词（去空格、繁转简）
- * @property {number} total - 匹配的视频数
- * @property {number} matches - 匹配处数
+ * @property {number} total - 匹配的文档数
+ * @property {number} matches - 关键词出现次数
  * @property {number} pageSize
  * @property {number} page
- * @property {Record<string, number>} facets - 各册匹配的视频数（不受册筛选影响）
- * @property {SearchItem[]} data
+ * @property {Record<string, number>} facets - 各分类匹配的文档数（不受分类筛选影响）
+ * @property {(VideoItem | ArticleItem)[]} data
  * @property {boolean} [tooLong]
  */
 
 const emptyResult = (extra) => ({ terms: [], total: 0, matches: 0, pageSize: 10, page: 1, facets: {}, data: [], ...extra });
 
+// 每组为命中行 ± 上下文：命中行加底色、上下文行淡色，组间加分隔（与 AI 搜索的视频结果一致）
+const toVideoItem = (r) => ({
+    type: 'video',
+    groupLabel: r.groupLabel,
+    series: r.series,
+    title: r.title,
+    count: r.count,
+    subtitles: JSON.stringify(
+        (r.groups || []).flatMap((lines, gi) =>
+            lines.map((l, li) => ({
+                lineId: l.n,
+                startTime: l.t,
+                text: l.text,
+                ...(l.hl ? { hl: l.hl } : {}),
+                ...(l.hit ? { hit: true } : { ctx: true }),
+                ...(gi > 0 && li === 0 ? { gap: true } : {}),
+            })),
+        ),
+    ),
+});
+
+const toArticleItem = (r) => ({
+    type: 'article',
+    groupLabel: r.groupLabel,
+    title: r.title,
+    url: r.url,
+    count: r.count,
+    hits: (r.groups || []).flatMap((lines, gi) => lines.map((l, li) => (gi > 0 && li === 0 ? { ...l, gap: true } : l))),
+});
+
 /**
- * 执行字幕搜索请求
- * @param {string} keywords - 空格分隔多个词，须在同一段话内同时出现
+ * 执行关键词搜索请求
+ * @param {string} keywords - 空格分隔多个词，须在同一视频 / 同一篇文章中都出现
  * @param {number} page
- * @param {string[]} [books] - 册筛选，如 ['b1', 'b3']，空数组表示全部
+ * @param {string[]} [cats] - 分类筛选：video / hdzg / misc / refs，空数组表示全部
  * @param {AbortSignal} [signal]
  * @returns {Promise<SearchResult>}
  */
-export async function searchRequest(keywords, page = 1, books = [], signal) {
+export async function searchRequest(keywords, page = 1, cats = [], signal) {
     const q = (keywords || '').trim().replace(/\s+/g, ' ');
     if (!q) return emptyResult();
     // 超出接口上限的长句不再请求，交给界面提示拆词或改用 AI 搜索
     if (q.length > MAX_QUERY_CHARS) return emptyResult({ tooLong: true });
 
     const params = new URLSearchParams({ q, page: String(page) });
-    if (books.length) params.set('b', books.join(','));
+    if (cats.length) params.set('c', cats.join(','));
     const response = await fetch(`${DEFAULT_API_URL}/search?${params}`, { signal });
     const result = await response.json().catch(() => null);
     if (!response.ok || !result) {
@@ -68,25 +111,7 @@ export async function searchRequest(keywords, page = 1, books = [], signal) {
     return {
         ...emptyResult(),
         ...result,
-        // 每组为命中行 ± 上下文：命中行加底色、上下文行淡色，组间加分隔（与 AI 搜索的视频结果一致）
-        data: results.map((r) => ({
-            book: r.book,
-            series: r.series,
-            title: r.title,
-            count: r.count,
-            subtitles: JSON.stringify(
-                (r.groups || []).flatMap((lines, gi) =>
-                    lines.map((l, li) => ({
-                        lineId: l.n,
-                        startTime: l.t,
-                        text: l.text,
-                        ...(l.hl ? { hl: l.hl } : {}),
-                        ...(l.hit ? { hit: true } : { ctx: true }),
-                        ...(gi > 0 && li === 0 ? { gap: true } : {}),
-                    })),
-                ),
-            ),
-        })),
+        data: results.map((r) => (r.type === 'article' ? toArticleItem(r) : toVideoItem(r))),
     };
 }
 

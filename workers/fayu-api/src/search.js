@@ -1,16 +1,15 @@
 /**
- * 字幕关键词匹配（纯函数，Worker 与本地脚本共用）
+ * 关键词匹配（纯函数，Worker 与本地脚本共用）
  *
- * 字幕按「块」存储：一个视频中连续的若干条字幕，规范化文本（normalize.js）拼成一整串 norm，
- * 在整串上查找，因此词间空格、标点、繁简不影响匹配，被切在相邻两条字幕里的一句话也能搜到。
- * 多个关键词：全部出现在 near 个字以内算一处匹配（约等于同一段话），不要求挤在同一条字幕里。
+ * 字幕条 / 段落按「块」存储：一个文档中连续的若干条，规范化文本（normalize.js）拼成一整串 norm，
+ * 在整串上查找，因此词间空格、标点、繁简不影响匹配；视频中被切在相邻两条字幕里的一句话也能搜到
+ * （文章段落之间有换行分隔，短语不跨段）。
  */
 import { normalizeWithMap } from './normalize.js';
 
 /**
- * @typedef {{ first: number, norm: string, lineStart: Int32Array, starts: number[], texts: string[] }} Block
- * first：块内第一条字幕在视频中的序号（从 0 起）；lineStart[i]：第 i 条在 norm 中的起点，末尾多一项为 norm 长度
- * starts：各条开始时间（毫秒）
+ * @typedef {{ norm: string, lineStart: Int32Array, texts: string[] }} Block
+ * lineStart[i]：第 i 条在 norm 中的起点，末尾多一项为 norm 长度
  */
 
 /** 各条规范化长度 → 起点前缀和 */
@@ -20,7 +19,7 @@ export function lineStarts(lens) {
     return starts;
 }
 
-// norm 中位置 pos 所在的字幕（块内下标，跳过规范化后为空的字幕）
+// norm 中位置 pos 所在的条（块内下标，跳过规范化后为空的条）
 function lineOf(b, pos) {
     let lo = 0;
     let hi = b.texts.length - 1;
@@ -39,14 +38,8 @@ function occurrences(norm, term) {
     return list;
 }
 
-/**
- * 一处匹配 = 若干个出现位置 [起, 止)
- * 单个词：每次出现即一处；多个词：滑动窗口找覆盖全部词且跨度 ≤ near 的最短区间，互不重叠
- * @returns {[number, number][][]}
- */
-function findMatches(occ, terms, near) {
-    if (terms.length === 1) return occ[0].map((s) => [[s, s + terms[0].length]]);
-
+// 多个词：滑动窗口找覆盖全部词且跨度 ≤ near 的最短区间，互不重叠
+function nearMatches(occ, terms, near) {
     const events = occ.flatMap((list, t) => list.map((s) => ({ s, e: s + terms[t].length, t }))).sort((a, b) => a.s - b.s);
     const count = new Array(terms.length).fill(0);
     const matches = [];
@@ -73,16 +66,20 @@ function findMatches(occ, terms, near) {
 }
 
 /**
- * 在一段规范化文本中匹配
+ * 块内要展示的匹配：一处匹配 = 若干个出现位置 [起, 止)
+ * 单个词为每次出现；多个词优先取在 near 字以内同时出现的位置，块内没有时退为各词各自的出现位置
  * @returns {{ occ: number[][], matches: [number, number][][] }}
  */
 export function matchText(norm, terms, near) {
     const occ = terms.map((t) => occurrences(norm, t));
-    if (occ.some((o) => !o.length)) return { occ, matches: [] };
-    return { occ, matches: findMatches(occ, terms, near) };
+    const single = () =>
+        occ.flatMap((list, t) => list.map((s) => [[s, s + terms[t].length]])).sort((a, b) => a[0][0] - b[0][0]);
+    if (terms.length === 1) return { occ, matches: single() };
+    const close = occ.every((o) => o.length) ? nearMatches(occ, terms, near) : [];
+    return { occ, matches: close.length ? close : single() };
 }
 
-// 字幕行内的高亮区间（原文下标），含所有关键词在该行的出现（跨行的词各行各标一段）
+// 某条内的高亮区间（原文下标），含所有关键词在该条的出现（跨条的词各条各标一段）
 function lineHighlights(b, i, occ, terms) {
     const ls = b.lineStart[i];
     const le = b.lineStart[i + 1];
@@ -97,7 +94,8 @@ function lineHighlights(b, i, occ, terms) {
     });
     if (!local.length) return [];
     const { from, to } = normalizeWithMap(b.texts[i]);
-    const ranges = local.map(([x, y]) => [from[x], to[y - 1]]).sort((p, q) => p[0] - q[0]);
+    const ranges = local.filter(([x]) => x < from.length).map(([x, y]) => [from[x], to[Math.min(y, from.length) - 1]]).sort((p, q) => p[0] - q[0]);
+    if (!ranges.length) return [];
     const merged = [ranges[0]];
     for (const [x, y] of ranges.slice(1)) {
         const last = merged.at(-1);
@@ -108,10 +106,9 @@ function lineHighlights(b, i, occ, terms) {
 }
 
 /**
- * 各处匹配 → 命中行 ± context 行，重叠或相邻的合并为一组；最多输出 budget 行
- * 行字段：n 序号（从 1 起）、t 开始秒数、text、hit 命中行、hl 高亮区间
+ * 各处匹配 → 命中条 ± context 条，重叠或相邻的合并为一组；最多输出 budget 条
  * @param {Block} b
- * @returns {{ n: number, t: number, text: string, hit?: true, hl?: number[][] }[][]}
+ * @returns {{ i: number, hit?: true, hl?: number[][] }[][]} i 为块内下标
  */
 export function renderGroups(b, { occ, matches }, terms, context, budget) {
     const groups = [];
@@ -136,15 +133,26 @@ export function renderGroups(b, { occ, matches }, terms, context, budget) {
         const lines = [];
         for (let i = g.from; i <= g.to && used < budget; i++, used++) {
             const hl = lineHighlights(b, i, occ, terms);
-            lines.push({
-                n: b.first + i + 1,
-                t: Math.floor(b.starts[i] / 1000),
-                text: b.texts[i],
-                ...(g.hit.has(i) ? { hit: true } : {}),
-                ...(hl.length ? { hl } : {}),
-            });
+            lines.push({ i, ...(g.hit.has(i) ? { hit: true } : {}), ...(hl.length ? { hl } : {}) });
         }
         out.push(lines);
     }
     return out;
+}
+
+/**
+ * 长段落截取以第一处高亮为中心的约 max 字，高亮区间随之平移；head / tail 表示前后被截断
+ */
+export function snippet(text, hl = [], max) {
+    if (text.length <= max) return { text, ...(hl.length ? { hl } : {}) };
+    const first = hl[0]?.[0] ?? 0;
+    const to = Math.min(text.length, Math.max(0, first - Math.floor(max / 4)) + max);
+    const from = Math.max(0, to - max);
+    const ranges = hl.filter(([a, b]) => b > from && a < to).map(([a, b]) => [Math.max(a, from) - from, Math.min(b, to) - from]);
+    return {
+        text: text.slice(from, to),
+        ...(ranges.length ? { hl: ranges } : {}),
+        ...(from > 0 ? { head: true } : {}),
+        ...(to < text.length ? { tail: true } : {}),
+    };
 }

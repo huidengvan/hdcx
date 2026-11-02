@@ -1,25 +1,28 @@
 import React from 'react';
 import SearchCard from './SearchCard';
+import ArticleCard from './ArticleCard';
 import Pagination from './Pagination';
 import Skeleton from './Skeleton';
-import { ragCategories } from './ragApi';
 import styles from './search.module.css';
 import aiStyles from './ai.module.css';
 
-// 视频所在的册：rag/categories.json 中 type 为 srt 的分类，book 为字幕目录名（b1~b4）
-const BOOKS = ragCategories
-    .filter((c) => c.type === 'srt')
-    .flatMap((c) => c.groups.map((g) => ({ book: g.dir.split('/').pop(), label: g.label })));
+// 关键词搜索的分类，与 workers/fayu-api 导入的 docs.cat 一致
+const CATS = [
+    { id: 'video', label: '课程视频' },
+    { id: 'hdzg', label: '慧灯之光' },
+    { id: 'misc', label: '其他参考' },
+    { id: 'refs', label: '参考资料' },
+];
 
-export const validBooks = new Set(BOOKS.map((b) => b.book));
+export const validCats = new Set(CATS.map((c) => c.id));
 
 /**
- * 按册筛选（多选），显示各册匹配的视频数；未选任何册表示全部，没有匹配的册不显示
- * @param {{ facets: Record<string, number>, selected: string[], onChange: (books: string[]) => void }} props
+ * 按分类筛选（多选），显示各分类匹配的篇数；未选任何分类表示全部，没有匹配的分类不显示
+ * @param {{ facets: Record<string, number>, selected: string[], onChange: (cats: string[]) => void }} props
  */
-function BookFilter({ facets, selected, onChange }) {
+function CategoryFilter({ facets, selected, onChange }) {
     const total = Object.values(facets).reduce((n, c) => n + c, 0);
-    const toggle = (book) => onChange(selected.includes(book) ? selected.filter((b) => b !== book) : [...selected, book]);
+    const toggle = (id) => onChange(selected.includes(id) ? selected.filter((c) => c !== id) : [...selected, id]);
     return (
         <div className={aiStyles.filterBar}>
             <div className={aiStyles.filterGroup}>
@@ -30,15 +33,15 @@ function BookFilter({ facets, selected, onChange }) {
                 >
                     全部 {total}
                 </button>
-                {BOOKS.filter(({ book }) => facets[book] || selected.includes(book)).map(({ book, label }) => (
+                {CATS.filter(({ id }) => facets[id] || selected.includes(id)).map(({ id, label }) => (
                     <button
-                        key={book}
+                        key={id}
                         type="button"
-                        className={`${aiStyles.filterChip} ${selected.includes(book) ? aiStyles.filterChipActive : ''}`}
-                        onClick={() => toggle(book)}
-                        aria-pressed={selected.includes(book)}
+                        className={`${aiStyles.filterChip} ${selected.includes(id) ? aiStyles.filterChipActive : ''}`}
+                        onClick={() => toggle(id)}
+                        aria-pressed={selected.includes(id)}
                     >
-                        {label} {facets[book] || 0}
+                        {label} {facets[id] || 0}
                     </button>
                 ))}
             </div>
@@ -53,8 +56,8 @@ function BookFilter({ facets, selected, onChange }) {
  *   result?: import('./api').SearchResult,
  *   loading: boolean,
  *   error?: string,
- *   books: string[],
- *   onBooksChange: (books: string[]) => void,
+ *   cats: string[],
+ *   onCatsChange: (cats: string[]) => void,
  *   onPageChange: (p: number) => void,
  *   onRetry: () => void,
  *   onSelectKeyword: (kw: string) => void,
@@ -66,8 +69,8 @@ export default function SearchList({
     result,
     loading,
     error,
-    books,
-    onBooksChange,
+    cats,
+    onCatsChange,
     onPageChange,
     onRetry,
     onSelectKeyword,
@@ -79,7 +82,7 @@ export default function SearchList({
             <div className={styles.resultsArea}>
                 <div className={styles.loadingHint}>
                     <span className={styles.spinnerIcon}></span>
-                    <span>正在检索法语字幕...</span>
+                    <span>正在检索...</span>
                 </div>
                 <Skeleton />
             </div>
@@ -109,9 +112,9 @@ export default function SearchList({
                 <div className={styles.introGrid}>
                     <div className={styles.introCard}>
                         <div className={styles.introIcon}>🎯</div>
-                        <h4 className={styles.introTitle}>秒级定位</h4>
+                        <h4 className={styles.introTitle}>精确定位</h4>
                         <p className={styles.introText}>
-                            点击搜索结果中的字幕时间标签，可立即跳转到对应视频的精确时间点开始播放。
+                            点击视频字幕可跳转到对应时间点播放，点击文章段落可跳转到原文并高亮该段。
                         </p>
                     </div>
 
@@ -119,15 +122,15 @@ export default function SearchList({
                         <div className={styles.introIcon}>⚡</div>
                         <h4 className={styles.introTitle}>多词检索</h4>
                         <p className={styles.introText}>
-                            输入多个词语并用空格分隔（如 <code>菩提心 慈悲心</code>），查找在同一段话中同时出现的位置；繁体、空格不影响匹配。
+                            输入多个词语并用空格分隔（如 <code>菩提心 慈悲心</code>），查找都包含这些词的视频与文章，优先显示同时出现之处；繁体、空格不影响匹配。
                         </p>
                     </div>
 
                     <div className={styles.introCard}>
                         <div className={styles.introIcon}>📚</div>
-                        <h4 className={styles.introTitle}>全卷覆盖</h4>
+                        <h4 className={styles.introTitle}>分类筛选</h4>
                         <p className={styles.introText}>
-                            全面覆盖慧灯禅修课第一册至第四册等高清视频开示与原文字幕内容。
+                            涵盖慧灯禅修课第一～四册视频字幕、《慧灯之光》1～12 册、其他参考与参考资料，可按分类筛选。
                         </p>
                     </div>
                 </div>
@@ -135,7 +138,7 @@ export default function SearchList({
         );
     }
 
-    // 关键词过长：字幕搜索按字面匹配，长句应提炼为关键词或改用 AI 搜索
+    // 关键词过长：关键词搜索按字面匹配，长句应提炼为关键词或改用 AI 搜索
     if (result?.tooLong) {
         return (
             <div className={styles.stateContainer}>
@@ -143,7 +146,7 @@ export default function SearchList({
                     <div className={styles.stateIcon}>✂️</div>
                     <h3 className={styles.stateTitle}>关键词太长了</h3>
                     <div className={styles.emptyTips}>
-                        <p>字幕搜索按字面匹配，最多 50 字：</p>
+                        <p>关键词搜索按字面匹配，最多 50 字：</p>
                         <ul>
                             <li>请提炼为几个关键词，用空格分隔（如 <code>人身难得 暇满</code>）</li>
                             <li>想用一句话提问，可以改用 AI 搜索，按意思查找相关的字幕和法本</li>
@@ -157,9 +160,9 @@ export default function SearchList({
         );
     }
 
-    // 各册都有匹配时才显示筛选；选了册但该册无结果时仍显示，便于切回
+    // 有匹配时才显示筛选；选了分类但该分类无结果时仍显示，便于切回
     const facets = result?.facets || {};
-    const filter = Object.keys(facets).length > 0 && <BookFilter facets={facets} selected={books} onChange={onBooksChange} />;
+    const filter = Object.keys(facets).length > 0 && <CategoryFilter facets={facets} selected={cats} onChange={onCatsChange} />;
 
     // 无搜索结果
     if (!result || result.total === 0 || !result.data || result.data.length === 0) {
@@ -169,7 +172,7 @@ export default function SearchList({
             <div className={styles.stateContainer}>
                 <div className={styles.emptyCard}>
                     <div className={styles.stateIcon}>🍃</div>
-                    <h3 className={styles.stateTitle}>未找到与 “{keywords}” 相关的视频字幕</h3>
+                    <h3 className={styles.stateTitle}>未找到包含 “{keywords}” 的内容</h3>
                     <div className={styles.emptyTips}>
                         <p>建议尝试：</p>
                         <ul>
@@ -204,7 +207,7 @@ export default function SearchList({
             {/* 统计横幅 */}
             <div className={styles.resultsMetaBar}>
                 <div className={styles.resultsCount}>
-                    共找到 <strong className={styles.highlightNumber}>{result.total}</strong> 个相关视频
+                    共找到 <strong className={styles.highlightNumber}>{result.total}</strong> 个视频 / 文章
                     <span className={styles.resultsSubCount}>
                         （共 <strong>{result.matches}</strong> 处匹配）
                     </span>
@@ -216,17 +219,22 @@ export default function SearchList({
 
             {/* 结果列表 */}
             <div className={styles.cardList}>
-                {result.data.map((item, index) => (
-                    <SearchCard
-                        key={`${item.series}-${item.title}-${index}`}
-                        title={item.title}
-                        series={item.series}
-                        count={item.count}
-                        subtitles={item.subtitles}
-                        searchKeyword={result.terms?.join(' ') || keywords}
-                        index={(result.page - 1) * result.pageSize + index}
-                    />
-                ))}
+                {result.data.map((item, i) => {
+                    const index = (result.page - 1) * result.pageSize + i;
+                    return item.type === 'article' ? (
+                        <ArticleCard key={`${item.url}-${item.title}`} item={item} index={index} />
+                    ) : (
+                        <SearchCard
+                            key={`${item.series}-${item.title}`}
+                            title={item.title}
+                            series={item.series}
+                            count={item.count}
+                            subtitles={item.subtitles}
+                            searchKeyword={result.terms?.join(' ') || keywords}
+                            index={index}
+                        />
+                    );
+                })}
             </div>
 
             {/* 分页控制 */}
