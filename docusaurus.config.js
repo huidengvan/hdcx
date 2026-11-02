@@ -95,15 +95,6 @@ const config = {
                 rehypePlugins: [paraAnchor],
             },
         ],
-        [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'wenda',
-                path: 'wenda',
-                routeBasePath: 'q&a',
-                sidebarPath: require.resolve('./sidebars.js'),
-            },
-        ],
     ],
     themes: [],
     themeConfig:
