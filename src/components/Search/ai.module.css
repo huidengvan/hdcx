@@ -219,24 +219,6 @@
     background: rgba(233, 200, 120, 0.2);
 }
 
-/* 跨分类重复内容：亦见于 */
-.alsoIn {
-    margin-top: 0.35rem;
-    font-size: 0.8rem;
-    color: var(--ifm-color-emphasis-600);
-}
-
-.alsoIn a {
-    color: var(--ifm-color-emphasis-700);
-    text-decoration: underline;
-    text-decoration-color: var(--ifm-color-emphasis-300);
-    text-underline-offset: 2px;
-}
-
-.alsoIn a:hover {
-    color: var(--ifm-color-primary);
-}
-
 .ellipsis {
     color: var(--ifm-color-emphasis-500);
 }
