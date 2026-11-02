@@ -14,6 +14,7 @@ export const categories = JSON.parse(fs.readFileSync(path.join(RAG_DIR, 'categor
 
 // 展平为 group 列表，附带所属分类
 // articleHeading：整册单文件的书以该级标题为文章名（如慧灯之光为 2）；type 为 srt 的分类是视频字幕
+// src：按源目录收录（网址 slug 与目录名不一致时，如 refs/qxbwl → /refs/bwl），由 Docusaurus 构建元数据对应到页面
 export const groups = categories.flatMap((cat) =>
     cat.groups.map((g) => ({ ...g, cat: cat.id, catLabel: cat.label, type: cat.type, articleHeading: cat.articleHeading })),
 );

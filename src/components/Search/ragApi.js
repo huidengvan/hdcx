@@ -6,6 +6,7 @@ import ragConfig from '@site/rag/categories.json';
 const RAG_API_URL = 'https://ragapi.hdcxb.net';
 
 export const ragCategories = ragConfig.categories;
+export const ragCatIds = new Set(ragCategories.map((c) => c.id));
 
 /**
  * @typedef {Object} RagHit
@@ -31,13 +32,13 @@ export const ragCategories = ragConfig.categories;
 /**
  * 执行 AI 语义搜索
  * @param {string} q
- * @param {string[]} groups - 册筛选，空数组表示全部
+ * @param {string[]} cats - 分类筛选（rag/categories.json 的分类 id），空数组表示全部
  * @param {AbortSignal} [signal]
  * @returns {Promise<{ q: string, tookMs: number, results: RagDoc[] }>}
  */
-export async function ragSearch(q, groups = [], signal) {
+export async function ragSearch(q, cats = [], signal) {
     const params = new URLSearchParams({ q });
-    if (groups.length) params.set('g', groups.join(','));
+    if (cats.length) params.set('c', cats.join(','));
 
     const response = await fetch(`${RAG_API_URL}/search?${params}`, { signal });
     const data = await response.json().catch(() => null);

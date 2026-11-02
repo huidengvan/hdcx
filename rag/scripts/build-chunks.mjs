@@ -196,7 +196,34 @@ function chunkUnits(units, articleHeading) {
     return chunks;
 }
 
-export function listDocFiles(groupId) {
+export // Docusaurus 构建元数据（.docusaurus/docusaurus-plugin-content-docs/*/site-*.json）：源文件 → 页面路径
+let docMeta;
+function loadDocMeta() {
+    if (docMeta) return docMeta;
+    const base = path.join(ROOT, '.docusaurus', 'docusaurus-plugin-content-docs');
+    if (!fs.existsSync(base)) throw new Error('找不到 .docusaurus 构建元数据，请先执行 pnpm build');
+    docMeta = [];
+    for (const plugin of fs.readdirSync(base)) {
+        const dir = path.join(base, plugin);
+        if (!fs.statSync(dir).isDirectory()) continue;
+        for (const f of fs.readdirSync(dir).filter((f) => f.startsWith('site-') && f.endsWith('.json'))) {
+            const { source, permalink } = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+            if (source && permalink) docMeta.push({ source: source.replace(/^@site\//, ''), doc: permalink.replace(/^\/|\/$/g, '') });
+        }
+    }
+    return docMeta;
+}
+
+// 按源目录收录的 group：返回 [{ file, doc, source }]，doc 为页面路径（即线上网址）
+function listSrcDocs(src) {
+    return loadDocMeta()
+        .filter((m) => m.source.startsWith(`${src}/`))
+        .map((m) => ({ ...m, file: path.join(ROOT, 'build', m.doc, 'index.html') }))
+        .filter((m) => fs.existsSync(m.file))
+        .sort((a, b) => a.source.localeCompare(b.source));
+}
+
+function listDocFiles(groupId) {
     const dir = path.join(ROOT, 'build', groupId);
     if (!fs.existsSync(dir)) throw new Error(`找不到 ${dir}，请先执行 pnpm build`);
     const files = [];
@@ -222,9 +249,13 @@ export function buildChunks({ only, groupList = groups } = {}) {
             docs.push(...buildSrtDocs(g, (doc) => matchOnly(only, doc)));
             continue;
         }
-        for (const file of listDocFiles(g.id)) {
-            const doc = path.relative(path.join(ROOT, 'build'), path.dirname(file)).split(path.sep).join('/');
-            if (!matchOnly(only, doc)) continue;
+        // 按源目录收录的 group 页面路径不在 group id 下，--only 指定 group 时整组收录
+        const wholeGroup = matchOnly(only, g.id);
+        const entries = g.src
+            ? listSrcDocs(g.src)
+            : listDocFiles(g.id).map((file) => ({ file, doc: path.relative(path.join(ROOT, 'build'), path.dirname(file)).split(path.sep).join('/') }));
+        for (const { file, doc, source } of entries) {
+            if (!wholeGroup && !matchOnly(only, doc)) continue;
             const root = parse(fs.readFileSync(file, 'utf8'));
             const md = root.querySelector('article .theme-doc-markdown');
             if (!md) continue;
@@ -257,7 +288,7 @@ export function buildChunks({ only, groupList = groups } = {}) {
             const hash = createHash('sha1')
                 .update(JSON.stringify({ v: CHUNK_VERSION, chunks: chunks.map(({ embedText, text, pStart, pEnd, section }) => [embedText, text, pStart, pEnd, section]) }))
                 .digest('hex');
-            docs.push({ doc, group: g.id, title, hash, chunks });
+            docs.push({ doc, group: g.id, title, hash, chunks, ...(source ? { source } : {}) });
         }
     }
     return docs;

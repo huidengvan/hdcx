@@ -23,17 +23,27 @@ async function qdrant(env, path, body) {
 const toMatch = (p) => ({ id: p.payload.cid, score: p.score ?? 0, metadata: p.payload });
 
 /**
+ * 一次请求执行多组检索，合并去重（同一点取最高分），按分数降序
  * @param {number[]} vector
- * @param {{ key: string, values: string[] } | undefined} filter 按 payload 字段（group / cat）匹配任一值
+ * @param {{ limit: number, filter?: { key: string, values: string[] }[] }[]} searches filter 各条件同时满足，每个条件匹配字段（group / cat）任一值
  */
-export async function queryPoints(env, vector, limit, filter) {
-    const result = await qdrant(env, '/points/query', {
-        query: vector,
-        limit,
-        with_payload: true,
-        ...(filter ? { filter: { must: [{ key: filter.key, match: { any: filter.values } }] } } : {}),
+export async function queryPoints(env, vector, searches) {
+    const result = await qdrant(env, '/points/query/batch', {
+        searches: searches.map(({ limit, filter }) => ({
+            query: vector,
+            limit,
+            with_payload: true,
+            ...(filter?.length ? { filter: { must: filter.map((f) => ({ key: f.key, match: { any: f.values } })) } } : {}),
+        })),
     });
-    return result.points.map(toMatch);
+    const merged = new Map();
+    for (const { points } of result) {
+        for (const p of points) {
+            const m = toMatch(p);
+            if (!merged.has(m.id) || merged.get(m.id).score < m.score) merged.set(m.id, m);
+        }
+    }
+    return [...merged.values()].sort((a, b) => b.score - a.score);
 }
 
 export async function getPoints(env, cids) {

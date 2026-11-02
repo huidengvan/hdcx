@@ -74,7 +74,7 @@ npm run check
 
 ## AI 语义搜索（RAG）
 
-`/search` 页的「AI 搜索」检索 `rag/categories.json` 中列出的内容（目前为课程法本第一～四册、《慧灯之光》1~12 册、四册课程视频字幕 `static/docs/srts`），法本结果按段落号跳转原文，视频结果跳到对应时间播放。
+`/search` 页的「AI 搜索」检索 `rag/categories.json` 中列出的内容（目前为课程法本第一～四册、《慧灯之光》1~12 册、`refs/` 下 9 部参考资料、四册禅修课视频字幕 `static/docs/srts`），法本结果按段落号跳转原文，视频结果跳到对应时间播放。
 
 **修改这些法本或字幕后必须更新索引**，否则搜索结果会跳错位置：
 
@@ -87,7 +87,7 @@ pnpm rag:update
 
 ## 关键词搜索
 
-`/search` 页的「关键词搜索」按字面检索四册课程视频字幕（`static/docs/srts/b1~b4`）与 `refs` 下的文章（《慧灯之光》、其他参考、参考资料，不含传承传记与喇荣课诵），接口为 `workers/fayu-api`（Cloudflare Worker + D1 数据库 `fayu`）。**修改字幕或 refs 文章后须重新导入数据库**（文章取自构建产物）：
+`/search` 页的「关键词搜索」按字面检索四册禅修课视频字幕（`static/docs/srts/b1~b4`）与 `refs` 下的文章（《慧灯之光》、其他参考、参考资料，不含传承传记与喇荣课诵），接口为 `workers/fayu-api`（Cloudflare Worker + D1 数据库 `fayu`）。**修改字幕或 refs 文章后须重新导入数据库**（文章取自构建产物）：
 
 ```bash
 pnpm build

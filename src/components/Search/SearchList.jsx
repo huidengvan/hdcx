@@ -8,7 +8,7 @@ import aiStyles from './ai.module.css';
 
 // 关键词搜索的分类，与 workers/fayu-api 导入的 docs.cat 一致
 const CATS = [
-    { id: 'video', label: '课程视频' },
+    { id: 'video', label: '禅修课视频' },
     { id: 'hdzg', label: '慧灯之光' },
     { id: 'misc', label: '其他参考' },
     { id: 'refs', label: '参考资料' },

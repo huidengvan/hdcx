@@ -1,5 +1,5 @@
 /**
- * 关键词搜索 API 服务（Cloudflare Worker：workers/fayu-api）：课程视频字幕 + refs 下的文章
+ * 关键词搜索 API 服务（Cloudflare Worker：workers/fayu-api）：禅修课视频字幕 + refs 下的文章
  */
 
 const DEFAULT_API_URL = 'https://fayuapi.hdcxb.net';

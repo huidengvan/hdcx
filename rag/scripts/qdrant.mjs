@@ -53,17 +53,22 @@ export async function qFetch(q, apiPath, { method = 'GET', body, allow404 = fals
 
 const col = (q) => `/collections/${q.collection}`;
 
-// 创建 collection（1024 维余弦 + int8 标量量化，正文 payload 存磁盘）与过滤字段索引，可重复执行
+// 创建 collection 与过滤字段索引，可重复执行：1024 维余弦；原始向量与正文 payload 存磁盘，内存只放 int8 量化副本
+// （免费集群 1 GB 内存与其他项目共用，原始向量常驻内存时约 4 KB / 个）
 export async function ensureCollection(q) {
     const existing = await qFetch(q, col(q), { allow404: true });
     if (existing) {
-        const size = existing.config.params.vectors.size;
+        const { size, on_disk } = existing.config.params.vectors;
         if (size !== DIMENSIONS) throw new Error(`collection ${q.collection} 维度为 ${size}，期望 ${DIMENSIONS}`);
+        if (!on_disk) {
+            await qFetch(q, col(q), { method: 'PATCH', body: { vectors: { '': { on_disk: true } } } });
+            console.log(`collection ${q.collection} 原始向量已改为存磁盘`);
+        }
     } else {
         await qFetch(q, col(q), {
             method: 'PUT',
             body: {
-                vectors: { size: DIMENSIONS, distance: 'Cosine' },
+                vectors: { size: DIMENSIONS, distance: 'Cosine', on_disk: true },
                 quantization_config: { scalar: { type: 'int8', always_ram: true } },
                 on_disk_payload: true,
             },

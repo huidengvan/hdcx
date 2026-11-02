@@ -1,6 +1,17 @@
 {
   "categories": [
     {
+      "id": "video",
+      "label": "禅修课视频",
+      "type": "srt",
+      "groups": [
+        { "id": "video/b1", "label": "第一册", "dir": "static/docs/srts/b1", "series": "慧灯禅修课第一册" },
+        { "id": "video/b2", "label": "第二册", "dir": "static/docs/srts/b2", "series": "慧灯禅修课第二册" },
+        { "id": "video/b3", "label": "第三册", "dir": "static/docs/srts/b3", "series": "慧灯禅修课第三册" },
+        { "id": "video/b4", "label": "第四册", "dir": "static/docs/srts/b4", "series": "慧灯禅修课第四册" }
+      ]
+    },
+    {
       "id": "books",
       "label": "课程法本",
       "groups": [
@@ -30,14 +41,19 @@
       ]
     },
     {
-      "id": "video",
-      "label": "课程视频",
-      "type": "srt",
+      "id": "refs",
+      "label": "参考资料",
+      "dedupeGroups": true,
       "groups": [
-        { "id": "video/b1", "label": "第一册", "dir": "static/docs/srts/b1", "series": "慧灯禅修课第一册" },
-        { "id": "video/b2", "label": "第二册", "dir": "static/docs/srts/b2", "series": "慧灯禅修课第二册" },
-        { "id": "video/b3", "label": "第三册", "dir": "static/docs/srts/b3", "series": "慧灯禅修课第三册" },
-        { "id": "video/b4", "label": "第四册", "dir": "static/docs/srts/b4", "series": "慧灯禅修课第四册" }
+        { "id": "refs/qxgs", "label": "前行广释", "src": "refs/qxgs" },
+        { "id": "refs/qxbwl", "label": "前行备忘录", "src": "refs/qxbwl" },
+        { "id": "refs/xmfw", "label": "前行文库", "src": "refs/xmfw" },
+        { "id": "refs/fsdgj", "label": "佛说稻秆经", "src": "refs/fsdgj" },
+        { "id": "refs/dymxxxx", "label": "大圆满心性休息", "src": "refs/dymxxxx" },
+        { "id": "refs/llbzl", "label": "量理宝藏论", "src": "refs/llbzl" },
+        { "id": "refs/sllclp", "label": "释量论·成量品", "src": "refs/sllclp" },
+        { "id": "refs/ptdcdgl", "label": "菩提道次第广论", "src": "refs/ptdcdgl" },
+        { "id": "refs/rxl", "label": "入行论", "src": "refs/rxl" }
       ]
     }
   ]

@@ -168,6 +168,35 @@ function groupResults(scored, q, env) {
     });
 }
 
+// 问题向量：Workers AI 失败（当日额度用完、服务异常）时改用硅基流动的同一模型
+async function embedQuery(q, env) {
+    try {
+        const embedding = await env.AI.run(EMBED_MODEL, { text: [q] });
+        return { vector: (embedding.data || embedding.response)[0] };
+    } catch (err) {
+        if (!env.EMBED_API_KEY) throw err;
+        console.error('Workers AI embedding failed, fallback to EMBED_API_URL', err);
+        const res = await fetch(env.EMBED_API_URL, {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${env.EMBED_API_KEY}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ model: 'BAAI/bge-m3', input: [q], encoding_format: 'float' }),
+        });
+        if (!res.ok) throw new Error(`EMBED_API_URL → ${res.status} ${await res.text()}`);
+        return { vector: (await res.json()).data[0].embedding, embedder: 'fallback' };
+    }
+}
+
+// 检索计划：范围只涉及一个分类时取前 TOP_K；跨分类时取全局前 TOP_K_MIXED，另每个分类各取前 CAT_K
+function searchPlan(groups, cats, env) {
+    const scopeCats = groups.length ? [...new Set(groups.map((g) => groupInfo.get(g).cat))] : cats.length ? cats : [...catIds];
+    const base = groups.length ? [{ key: 'group', values: groups }] : cats.length ? [{ key: 'cat', values: cats }] : [];
+    if (scopeCats.length < 2) return [{ limit: Number(env.TOP_K), filter: base }];
+    return [
+        { limit: Number(env.TOP_K_MIXED), filter: base },
+        ...scopeCats.map((cat) => ({ limit: Number(env.CAT_K), filter: [...base, { key: 'cat', values: [cat] }] })),
+    ];
+}
+
 async function search(url, env) {
     const q = (url.searchParams.get('q') || '').replace(/\s+/g, ' ').trim();
     if (!q) return [400, { error: '缺少查询内容' }];
@@ -175,12 +204,10 @@ async function search(url, env) {
 
     const groups = parseList(url.searchParams.get('g')).filter((g) => groupInfo.has(g));
     const cats = parseList(url.searchParams.get('c')).filter((c) => catIds.has(c));
-    const filter = groups.length ? { key: 'group', values: groups } : cats.length ? { key: 'cat', values: cats } : undefined;
 
     const started = Date.now();
-    const embedding = await env.AI.run(EMBED_MODEL, { text: [q] });
-    const vector = (embedding.data || embedding.response)[0];
-    const found = await queryPoints(env, vector, Number(env.TOP_K), filter);
+    const { vector, embedder } = await embedQuery(q, env);
+    const found = await queryPoints(env, vector, searchPlan(groups, cats, env));
     if (!found.length) return [200, { q, tookMs: Date.now() - started, ranker: 'none', results: [] }];
     // 先去重再重排：重复内容不占重排名额，也省 Neurons
     const inScope = (group) => (groups.length ? groups.includes(group) : cats.length ? cats.includes(groupInfo.get(group)?.cat) : true);
@@ -196,7 +223,7 @@ async function search(url, env) {
         scored = denseScore(matches, q, env);
     }
 
-    return [200, { q, tookMs: Date.now() - started, ranker, results: groupResults(scored, q, env) }];
+    return [200, { q, tookMs: Date.now() - started, ranker, ...(embedder ? { embedder } : {}), results: groupResults(scored, q, env) }];
 }
 
 export default {
@@ -223,7 +250,9 @@ export default {
 
         try {
             const [status, data] = await search(url, env);
-            const res = json(data, status, { 'Cache-Control': `public, max-age=${env.CACHE_TTL}` });
+            // 回退结果（未重排或用了备用向量服务）只短暂缓存，额度恢复后尽快用回正常结果
+            const degraded = data.ranker === 'dense' || data.embedder;
+            const res = json(data, status, { 'Cache-Control': `public, max-age=${degraded ? 300 : env.CACHE_TTL}` });
             if (status === 200) ctx.waitUntil(cache.put(cacheKey, res.clone()));
             return new Response(res.body, { status, headers: { ...Object.fromEntries(res.headers), ...cors } });
         } catch (err) {

@@ -5,32 +5,37 @@
  * 有写入或删除时，自动把 workers/rag-api/wrangler.toml 的 INDEX_VERSION 加 1（使接口结果缓存失效），之后需部署接口；
  * 一般直接用 pnpm rag:update（索引 + 部署）。
  *
- * 用法：node rag/scripts/index.mjs [--only books/b4] [--dry-run] [--full] [--force]
+ * 用法：node rag/scripts/index.mjs [--only books/b4] [--dry-run] [--full] [--force] [--embed cf|sf|both] [--budget 8000]
  *   --force：跳过“构建产物比源文件旧”的检查
+ *   --embed：生成向量的服务，默认 cf（Workers AI）；sf 为硅基流动；both 两边同时跑，批量入库时分摊额度
+ *   --budget：本次最多使用的 Workers AI Neurons；用完或当日额度耗尽时停止，已写入的文章会保存，再次运行同一命令即可继续
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { buildChunks, printStats } from './build-chunks.mjs';
 import { annotateDuplicates } from './dedupe.mjs';
-import { ROOT, EMBED_MODEL, MANIFEST_PATH, loadEnv, cfFetch, parseArgs, matchOnly, readJson, writeJson } from './lib.mjs';
+import { createEmbedders, embedDoc, QuotaExhausted } from './embed.mjs';
+import { ROOT, EMBED_MODEL, MANIFEST_PATH, parseArgs, matchOnly, readJson, writeJson } from './lib.mjs';
 import { loadQdrant, ensureCollection, upsertPoints, deletePoints, getVectors } from './qdrant.mjs';
-
-const EMBED_BATCH = 20;
 
 const WRANGLER_TOML = path.join(ROOT, 'workers/rag-api/wrangler.toml');
 
-const { only, 'dry-run': dryRun, full, force } = parseArgs();
-// 重复标注需要全部分类一起计算，再按 --only 取本次范围
+const { only, 'dry-run': dryRun, full, force, embed: embedWith = 'cf', budget = 0 } = parseArgs();
+// 重复标注需要全部分类一起计算，再按 --only 取本次范围（按源目录收录的 group，页面路径不在 group id 下）
 const allDocs = buildChunks({});
 const dupStat = annotateDuplicates(allDocs);
-const docs = allDocs.filter((d) => matchOnly(only, d.doc));
+const inRange = (doc, group) => matchOnly(only, doc) || (group && matchOnly(only, group));
+const docs = allDocs.filter((d) => inRange(d.doc, d.group));
 printStats(docs);
-console.log(`跨分类重复：${dupStat.dupChunks} 块标为重复，${dupStat.alsoInChunks} 块带「亦见于」`);
+console.log(`重复内容：${dupStat.dupChunks} 块标为重复，${dupStat.alsoInChunks} 块带「亦见于」`);
 
 // 源文件比构建产物新，说明忘了 pnpm build：段落编号可能已变，用旧 HTML 建索引会导致跳转错位
 const stale = docs.filter((d) => {
     const html = path.join(ROOT, 'build', d.doc, 'index.html');
-    const src = ['.md', '.mdx'].map((ext) => path.join(ROOT, d.doc + ext)).find((p) => fs.existsSync(p));
+    if (!fs.existsSync(html)) return false;
+    const src = d.source
+        ? path.join(ROOT, d.source)
+        : ['.md', '.mdx'].map((ext) => path.join(ROOT, d.doc + ext)).find((p) => fs.existsSync(p));
     return src && fs.statSync(src).mtimeMs > fs.statSync(html).mtimeMs;
 });
 if (stale.length && !force) {
@@ -45,7 +50,7 @@ const changed = docs.filter((d) => full || manifest.docs[d.doc]?.hash !== d.hash
 const metaOnly = docs.filter((d) => !changed.includes(d) && manifest.docs[d.doc]?.metaHash !== d.metaHash);
 const present = new Set(docs.map((d) => d.doc));
 // 本次范围内已不存在的文章
-const removed = Object.keys(manifest.docs).filter((doc) => matchOnly(only, doc) && !present.has(doc));
+const removed = Object.keys(manifest.docs).filter((doc) => inRange(doc, manifest.docs[doc].group) && !present.has(doc));
 
 console.log(
     `需更新 ${changed.length} 篇（${changed.reduce((n, d) => n + d.chunks.length, 0)} 块），` +
@@ -53,16 +58,9 @@ console.log(
 );
 if (dryRun || (!changed.length && !metaOnly.length && !removed.length)) process.exit(0);
 
-const env = loadEnv();
+const embedders = changed.length ? createEmbedders(embedWith, Number(budget)) : [];
 const q = loadQdrant();
 await ensureCollection(q);
-
-async function embed(texts) {
-    const result = await cfFetch(env, `/ai/run/${EMBED_MODEL}`, { method: 'POST', body: { text: texts } });
-    const vectors = result.data || result.response;
-    if (vectors?.length !== texts.length) throw new Error('向量数量与输入不符');
-    return vectors;
-}
 
 const deleteIds = (ids) => deletePoints(q, ids);
 
@@ -76,20 +74,46 @@ for (const doc of removed) {
     console.log(`已删除 ${doc}`);
 }
 
-for (const d of changed) {
-    const vectors = [];
-    for (let i = 0; i < d.chunks.length; i += EMBED_BATCH) {
-        vectors.push(...(await embed(d.chunks.slice(i, i + EMBED_BATCH).map((c) => c.embedText))));
+// 各服务从同一队列取文章，整篇生成完才写入；预算不足或额度耗尽的服务停下，文章留给其他服务或下次运行
+const queue = [...changed];
+async function work(p) {
+    while (queue.length) {
+        const d = queue.shift();
+        const texts = d.chunks.map((c) => c.embedText);
+        if (!p.canAfford(texts.reduce((n, t) => n + t.length, 0))) {
+            queue.unshift(d);
+            console.log(`${p.name} 已到预算，停止`);
+            return;
+        }
+        let vectors;
+        try {
+            vectors = await embedDoc(p, texts);
+        } catch (err) {
+            queue.unshift(d);
+            if (err instanceof QuotaExhausted) {
+                console.log(`${p.name} 当日额度已用完，停止`);
+                return;
+            }
+            throw err;
+        }
+
+        const newIds = new Set(d.chunks.map((c) => c.id));
+        const stale = (manifest.docs[d.doc]?.ids || []).filter((id) => !newIds.has(id));
+        if (stale.length) await deleteIds(stale);
+
+        await upsert(d, vectors);
+        manifest.docs[d.doc] = { group: d.group, hash: d.hash, metaHash: d.metaHash, ids: [...newIds] };
+        writeJson(MANIFEST_PATH, manifest);
+        console.log(`[${p.name}] 已写入 ${d.doc}《${d.title}》${d.chunks.length} 块，剩 ${queue.length} 篇`);
     }
-
-    const newIds = new Set(d.chunks.map((c) => c.id));
-    const stale = (manifest.docs[d.doc]?.ids || []).filter((id) => !newIds.has(id));
-    if (stale.length) await deleteIds(stale);
-
-    await upsert(d, vectors);
-    manifest.docs[d.doc] = { hash: d.hash, metaHash: d.metaHash, ids: [...newIds] };
-    writeJson(MANIFEST_PATH, manifest);
-    console.log(`已写入 ${d.doc}《${d.title}》${d.chunks.length} 块`);
+}
+const results = await Promise.allSettled(embedders.map(work));
+console.log(embedders.map((p) => p.summary()).join('；'));
+const failed = results.find((r) => r.status === 'rejected');
+if (failed) throw failed.reason;
+if (queue.length) {
+    const rest = queue.reduce((n, d) => n + d.chunks.length, 0);
+    console.log(`还有 ${queue.length} 篇（${rest} 块）未生成向量，额度恢复后（北京时间 8 点后）再运行同一命令即可继续。`);
 }
 
 for (const d of metaOnly) {
