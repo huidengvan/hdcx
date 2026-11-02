@@ -8,7 +8,7 @@
     "start": "docusaurus start",
     "dev": "cross-env NODE_OPTIONS=--max-old-space-size=8192 docusaurus start  --config dev.config.js --host 0.0.0.0 --no-open",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=6144 docusaurus build",
-    "check": "npx docusaurus-mdx-checker",
+    "check": "node scripts/check-mdx.mjs",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -58,6 +58,7 @@
   "devDependencies": {
     "@docusaurus/types": "^3.10.2",
     "cross-env": "^10.1.0",
+    "docusaurus-mdx-checker": "3.0.0",
     "node-html-parser": "^9.0.6"
   }
 }
