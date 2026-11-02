@@ -41,6 +41,11 @@
       ]
     },
     {
+      "id": "misc",
+      "label": "其他参考",
+      "groups": [{ "id": "refs/misc", "label": "其他参考", "src": "refs/misc" }]
+    },
+    {
       "id": "refs",
       "label": "参考资料",
       "dedupeGroups": true,
