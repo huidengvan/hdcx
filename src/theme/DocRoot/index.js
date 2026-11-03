@@ -204,12 +204,8 @@ export default function DocRootWrapper(props) {
       return;
     }
 
-    const key = event.key.toLowerCase();
-
-    if ((event.altKey || event.metaKey) && key === 't') {
-      event.preventDefault();
-      handleWidescreen();
-    } else if (event.key === 'ArrowUp') {
+    // T 宽屏、L 段落号、+ / - / 0 字号等阅读快捷键由 ReaderToolbar 处理
+    if (event.key === 'ArrowUp') {
       sessionStorage.setItem('scrollBlock', 'end');
     } else if (event.key === 'ArrowDown') {
       sessionStorage.setItem('scrollBlock', 'start');
@@ -279,7 +275,7 @@ export default function DocRootWrapper(props) {
         }
       }, 280);
     }
-  }, [handleWidescreen, getVisibleParagraph, getBottomParagraph, getPrevPageParagraph]);
+  }, [getVisibleParagraph, getBottomParagraph, getPrevPageParagraph]);
 
   useEffect(() => {
     const articleTitle = decodeURI(location.hash?.slice(1));

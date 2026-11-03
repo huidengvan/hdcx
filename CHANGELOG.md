@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - 音频伴读字幕同步（`AudioCompanion/subtitleSync.js`）：播放时读取音频同目录、同名的 `.srt` 字幕（`scripts/align_srt.py` 生成），在正文中给正在朗读的句子加下划线（CSS Custom Highlight API，不改动正文 DOM），并可自动翻页跟读；有字幕时文章内音频卡片进度条右侧、悬浮播放面板主控区右侧出现「自动翻页」开关（偏好存 `localStorage`），手动滚动页面后 5 秒内暂不翻页；点击下划线的句子可暂停 / 继续播放，桌面端悬停该句显示手形（`mousemove` 按帧节流、比对缓存的文档坐标矩形，换句或排版变化时才重算）
+- 阅读侧边栏（`ReaderToolbar`）快捷键：`T` 切换宽屏、`L` 切换段落号显隐、`+` / `-` 放大 / 缩小字号、`0` 恢复默认字号；输入框内及带 Ctrl / Cmd 的组合键（如浏览器缩放 `Ctrl + +`）不触发
+
+### Changed
+- 宽屏快捷键由 `Alt + T` 改为 `T`（`Alt + T` 仍可用），处理逻辑从 `DocRoot` 移入 `ReaderToolbar`
 
 ## [2026-10-30]
 

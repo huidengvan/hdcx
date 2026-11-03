@@ -264,6 +264,35 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
         }
     };
 
+    // 阅读快捷键（不分大小写）：T 宽屏、L 段落号、+ / - 调整字号、0 恢复默认字号
+    const shortcutsRef = useRef(null);
+    shortcutsRef.current = {
+        t: handleWidescreenClick,
+        l: toggleAnchors,
+        '+': () => handleFontSize(FONT_STEP),
+        '=': () => handleFontSize(FONT_STEP), // 不按 Shift 时的加号键
+        '-': () => handleFontSize(-FONT_STEP),
+        '0': handleResetFont,
+    };
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            // Ctrl / Cmd 组合键留给浏览器（如 Ctrl + 加减号缩放页面、Ctrl + T 新建标签页）
+            if (e.ctrlKey || e.metaKey) return;
+            const activeEl = document.activeElement;
+            if (activeEl && (['INPUT', 'TEXTAREA', 'SELECT'].includes(activeEl.tagName) || activeEl.isContentEditable)) return;
+            const key = e.key.toLowerCase();
+            const action = shortcutsRef.current[key];
+            if (!action) return;
+            e.preventDefault();
+            // 宽屏、段落号是开关，按住不放时只切换一次
+            if (e.repeat && (key === 't' || key === 'l')) return;
+            action();
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
     // 检查宽屏状态
     const widescreenActive = isWidescreen !== undefined
         ? isWidescreen
@@ -389,7 +418,7 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
                                 className={styles.fontStepBtn}
                                 onClick={() => handleFontSize(-FONT_STEP)}
                                 disabled={fontSize <= FONT_MIN}
-                                title="缩小字号 (-2px)"
+                                title="缩小字号 (-)"
                                 aria-label="缩小字号"
                             >
                                 A-
@@ -397,7 +426,7 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
                             <button
                                 className={styles.fontResetBtn}
                                 onClick={handleResetFont}
-                                title="恢复默认 16px"
+                                title="恢复默认 16px (0)"
                                 aria-label="恢复默认字号"
                             >
                                 默认
@@ -406,7 +435,7 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
                                 className={styles.fontStepBtn}
                                 onClick={() => handleFontSize(FONT_STEP)}
                                 disabled={fontSize >= FONT_MAX}
-                                title="放大字号 (+2px)"
+                                title="放大字号 (+)"
                                 aria-label="放大字号"
                             >
                                 A+
@@ -416,7 +445,7 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
 
                     <div className={styles.divider} />
 
-                    {/* 3. 视图开关（宽屏 Alt+T + 段落号显隐） */}
+                    {/* 3. 视图开关（宽屏 T + 段落号显隐 L） */}
                     <div className={styles.section}>
                         <span className={styles.label}>视图</span>
                         <div className={styles.toggleGrid}>
@@ -424,7 +453,7 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
                             <button
                                 className={`${styles.toggleCard} ${widescreenActive ? styles.toggleCardActive : ''}`}
                                 onClick={handleWidescreenClick}
-                                title="宽屏阅读 (Alt + T)"
+                                title="宽屏阅读 (T)"
                                 aria-pressed={widescreenActive}
                             >
                                 <svg className={styles.toggleIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -437,7 +466,7 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
                             <button
                                 className={`${styles.toggleCard} ${anchorsVisible ? styles.toggleCardActive : ''}`}
                                 onClick={toggleAnchors}
-                                title={anchorsVisible ? '点击隐藏段落号' : '点击显示段落号'}
+                                title={anchorsVisible ? '点击隐藏段落号 (L)' : '点击显示段落号 (L)'}
                                 aria-pressed={anchorsVisible}
                             >
                                 <svg className={styles.toggleIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
