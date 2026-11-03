@@ -23,7 +23,7 @@
   subtitles/asr/<音频名>.json            识别结果缓存，改了对齐逻辑重跑时不再识别
   subtitles/asr/<音频名>.srt             识别原文字幕（对照用）
   subtitles/srt/<md名>/<音频名>.srt      文稿文字 + 对齐时间
-  subtitles/srt/<md名>/<音频名>.report.txt  匹配率、挪位的句子、低匹配字幕条、出入较大处（--homophones 另列同音异字）
+  subtitles/srt/<md名>/report/<音频名>.report.txt 匹配率、挪位的句子、低匹配字幕条、出入较大处（--homophones 另列同音异字）
 """
 
 import argparse, bisect, json, re, subprocess, time
@@ -48,9 +48,12 @@ STRIP_TAIL = "，。、；：…—"
 MAX_LINE = 20      # 一条字幕最多字数，超过按停顿最长处拆
 MIN_LINE = 6       # 字数少于此、或显示短于 MIN_DUR 毫秒，且与下一条间隔很近时合并
 MIN_DUR = 1200
+READ_MS = 120      # 补足一闪而过的字幕时，每字所需显示时长
+MIN_SHOW, MAX_SHOW = 1000, 2500
 MERGE_MAX = 16     # 合并后最多字数
 LOW_MATCH = 0.5    # 锚点比例低于此的字幕条进报告
 CHAR_MS = 250      # 没有识别字可参照时，每字的估计时长
+LONG_CUE = 8000    # 超过此时长且远超字数所需的字幕条收短
 DIFF_REPORT = 8    # 文稿连续这么多字对不上、或录音里连续 DIFF_HEARD 字文稿里没有的地方进报告
 DIFF_HEARD = 30
 MOVE_MIN = 8       # 挪位：至少这么多字的句子才考虑
@@ -60,7 +63,7 @@ MOVE_GAIN = 25
 # 片段开头的「问：」「答：」与段尾的「（生西法师）」不朗读
 LABEL = re.compile(r"^(?:问|答)[：:]")
 ATTRIB = re.compile(r"（[^（）]{1,8}(?:法师|堪布|上师|仁波切|喇嘛)）")
-SKIP_LINE = re.compile(r"^(?:本稿为内部学习所用|import\s|\[\^[^\]]*\]:)")
+SKIP_LINE = re.compile(r"^(?:本稿为内部学习所用|import\s|\[\^[^\]]*\]:|(?:[-*+]\s+)?\[[^\]]*\]\([^)]*\)\s*$)")
 
 HEADING = re.compile(r"^(#{1,6})\s+(.*)$", re.M)
 AUDIO_TAG = re.compile(r"<SectionAudio\b(.*?)/>", re.S)
@@ -88,9 +91,10 @@ def sections(md_path):
         name = unquote(src.group(1).rsplit("/", 1)[-1])
         above = [h for h in heads if h[0] < m.start()]
         level, title = (above[-1][1], above[-1][2]) if above else (0, name)
+        # 正文到下一段音频所属的标题为止，中间的同级小标题（如科判）仍算本段
         end = tags[n + 1].start() if n + 1 < len(tags) else len(md)
-        below = [h[0] for h in heads if m.end() < h[0] < end and h[1] <= level]
-        out.append((name, title, clean(md[m.end():below[0] if below else end])))
+        owner = [h[0] for h in heads if m.end() < h[0] < end]
+        out.append((name, title, clean(md[m.end():owner[-1] if owner and n + 1 < len(tags) else end])))
     return out
 
 
@@ -531,7 +535,64 @@ def build_cues(text, ref, times, hit):
         c["end"] = max(times[c["ks"][-1]][1], c["start"] + 200)
         c["match"] = sum(hit[k] for k in c["ks"]) / len(c["ks"])
         c["text"] = c["text"].rstrip(STRIP_TAIL) or c["text"]
+        # 显示时长远超字数所需：录音里那段多是整理时删掉的发挥。收到正常语速的长度，
+        # 放在本条锚点字所在处；没有锚点就贴着下一条（删掉的多是这句之前的铺垫）
+        need = max(MIN_DUR, len(c["ks"]) * CHAR_MS * 2)
+        if c["end"] - c["start"] > max(LONG_CUE, need * 2):
+            got = [times[k] for k in c["ks"] if hit[k]]
+            if got:
+                mid = (got[0][0] + got[-1][1]) // 2
+                lo = max(c["start"], min(mid - need // 2, c["end"] - need))
+                c["start"], c["end"] = lo, lo + need
+            else:
+                c["start"] = c["end"] - need
     merged.sort(key=lambda c: c["start"])
+
+    # 录音里没说、整理时补上的话（如补全的偈颂）只剩一闪：连续几条这样的字幕先用前后的空隙，
+    # 不够再从前后邻条借时间（邻条至少留下原时长的六成、不少于 MIN_SHOW），按所需时长比例分给这几条
+    def need(c):
+        return min(max(len(c["text"]) * READ_MS, MIN_SHOW), MAX_SHOW)
+
+    def flash(c):
+        return c["end"] - c["start"] < need(c) * 0.6
+
+    def spare(c):
+        d = c["end"] - c["start"]
+        return max(d - max(MIN_SHOW, d * 0.6), 0)
+
+    n = 0
+    while n < len(merged):
+        if not flash(merged[n]):
+            n += 1
+            continue
+        m = n
+        while m + 1 < len(merged) and flash(merged[m + 1]):
+            m += 1
+        run, prv = merged[n:m + 1], merged[n - 1] if n else None
+        nxt = merged[m + 1] if m + 1 < len(merged) else None
+        lo, hi = run[0]["start"], max(c["end"] for c in run)
+        if nxt:
+            hi = max(hi, nxt["start"])
+        if prv:
+            lo = min(lo, prv["end"])
+        want = sum(need(c) for c in run) - (hi - lo)
+        if want > 0:
+            after = spare(nxt) if nxt else 0
+            before = spare(prv) if prv else 0
+            x = min(after, max(want / 2, want - before))
+            y = min(before, want - x)
+            hi, lo = hi + x, lo - y
+            if nxt:
+                nxt["start"] = int(hi)
+            if prv:
+                prv["end"] = int(lo)
+        scale = min((hi - lo) / sum(need(c) for c in run), 1)
+        t = lo
+        for c in run:
+            c["start"], t = int(t), t + need(c) * scale
+            c["end"] = int(t)
+        n = m + 1
+
     # 结束时间稍作延长，但不压到下一条
     for a, b in zip(merged, merged[1:]):
         a["end"] = max(min(a["end"] + 300, b["start"]), a["start"] + 200)
@@ -622,7 +683,8 @@ def process(title, text, audio_path, out_dir, asr_dir, device, homophones=False)
             k = j
         else:
             k += 1
-    (out_dir / f"{stem}.report.txt").write_text("\n".join(rep) + "\n", "utf-8")
+    (out_dir / "report").mkdir(exist_ok=True)
+    (out_dir / "report" / f"{stem}.report.txt").write_text("\n".join(rep) + "\n", "utf-8")
     return {"hit": n_hit / n_ref, "cues": len(cues), "low": len(low), "moves": len(moves), "diffs": len(diffs)}
 
 
