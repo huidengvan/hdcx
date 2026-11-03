@@ -11,6 +11,7 @@
 .playControlBtn,
 .deckPlayBtn,
 .closeDeckBtn,
+.followBtn,
 .floatingOrb {
   -webkit-tap-highlight-color: transparent;
   outline: none;
@@ -23,7 +24,8 @@
 .locateBtn:focus:not(:focus-visible),
 .playControlBtn:focus:not(:focus-visible),
 .deckPlayBtn:focus:not(:focus-visible),
-.closeDeckBtn:focus:not(:focus-visible) {
+.closeDeckBtn:focus:not(:focus-visible),
+.followBtn:focus:not(:focus-visible) {
   outline: none;
 }
 
@@ -33,7 +35,8 @@
 .ratePill:active,
 .muteBtn:active,
 .locateBtn:active,
-.closeDeckBtn:active {
+.closeDeckBtn:active,
+.followBtn:active {
   transform: scale(0.92);
   opacity: 0.8;
 }
@@ -89,6 +92,10 @@
   .closeDeckBtn:hover {
     background: rgba(125, 125, 125, 0.15);
     color: var(--ifm-font-color-base);
+  }
+  .followBtn:hover {
+    color: var(--ifm-color-primary);
+    border-color: rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.4);
   }
 }
 
@@ -303,9 +310,72 @@
   padding-top: 6px;
   border-top: 1px solid var(--ifm-color-emphasis-200, rgba(0, 0, 0, 0.05));
   display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: fadeIn 0.22s ease-out;
+}
+
+.inlineScrubberMain {
+  flex: 1;
+  min-width: 0;
+  display: flex;
   flex-direction: column;
   gap: 3px;
-  animation: fadeIn 0.22s ease-out;
+}
+
+/* ─── 自动翻页按钮（有字幕时出现：卡片进度条右侧 / 悬浮面板主控区右侧） ─── */
+.followBtn {
+  position: relative;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  min-height: 34px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(125, 125, 125, 0.14);
+  background: rgba(125, 125, 125, 0.06);
+  color: var(--ifm-color-emphasis-600);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+/* 扩展触控热区至 44pt，满足 iOS 规范 */
+.followBtn::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  left: -5px;
+  right: -5px;
+}
+
+.followBtn.followOn {
+  background: rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.12);
+  border-color: rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.45);
+  color: var(--ifm-color-primary);
+}
+
+[data-theme='dark'] .followBtn {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='dark'] .followBtn.followOn {
+  background: rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.2);
+  border-color: rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.55);
+}
+
+/* 悬浮面板里贴在主控区最右侧，不挤动居中的三个主按钮 */
+.deckFollowBtn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
 }
 
 [data-theme='dark'] .inlineScrubberContainer {
@@ -614,6 +684,7 @@
 
 /* 核心主控制区 (比例均衡协调) */
 .deckMainControls {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;

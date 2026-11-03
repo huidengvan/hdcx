@@ -38,3 +38,6 @@ yarn-error.log*
 /workers/*/node_modules
 /workers/*/.wrangler
 /workers/*/out/
+
+# 音频对齐字幕的识别缓存与 SRT（scripts/align_srt.py）
+/subtitles/

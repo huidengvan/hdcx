@@ -1,8 +1,30 @@
-import React, { createContext, useContext, useState, useRef, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useHistory } from '@docusaurus/router';
 import toast from 'react-hot-toast';
+import {
+    loadSubtitles,
+    findCueIndex,
+    alignSection,
+    showCueHighlight,
+    clearCueHighlight,
+    followRange,
+    documentRects,
+    hitRects,
+} from './subtitleSync';
 
 const AudioContext = createContext(null);
+
+const AUTO_FOLLOW_KEY = 'audio-auto-follow';
+// 用户自己滚动页面后，这段时间内不自动翻页，免得和手指抢
+const USER_SCROLL_GRACE = 5000;
+const SCROLL_KEYS = new Set(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ']);
+const CUE_HOVER_CLASS = 'audio-cue-hover';
+
+// 点在正文上、且不是链接、按钮、音频卡片等自身可点的元素，才当作点句子
+const isArticleText = (el) => Boolean(
+    el?.closest?.('.markdown')
+    && !el.closest('a, button, input, textarea, select, summary, [data-audio-section]')
+);
 
 export const AudioProvider = ({ children }) => {
     const history = useHistory();
@@ -30,6 +52,21 @@ export const AudioProvider = ({ children }) => {
 
     // 页面内所有注册的段落节点引用表 { [id]: HTMLElement }
     const registeredElementsRef = useRef(new Map());
+
+    // 字幕同步：当前音频的字幕条、是否自动翻页、正文对齐结果
+    const [subtitleCues, setSubtitleCues] = useState(null);
+    const [autoFollow, setAutoFollow] = useState(true);
+    // 当前音频的卡片挂载/卸载（如跨页返回）时递增，触发重新对齐正文
+    const [sectionTick, setSectionTick] = useState(0);
+    const currentTrackIdRef = useRef(null);
+    const alignmentRef = useRef(null);
+    const lastCueIndexRef = useRef(-1);
+    const forceFollowRef = useRef(false);
+    const lastUserScrollRef = useRef(0);
+    // 当前句的 Range 及其文档坐标矩形缓存（换句、排版变化时置空，用时再算）
+    const activeRangeRef = useRef(null);
+    const cueRectsRef = useRef(null);
+    const toggleCurrentRef = useRef(() => {});
 
     // 执行聚焦到播放器出现位置并播放光环动画
     const triggerFocusAnimation = useCallback((element, id) => {
@@ -64,6 +101,9 @@ export const AudioProvider = ({ children }) => {
             }
         } else {
             registeredElementsRef.current.delete(id);
+        }
+        if (id === currentTrackIdRef.current) {
+            setSectionTick((t) => t + 1);
         }
     }, [triggerFocusAnimation]);
 
@@ -176,6 +216,160 @@ export const AudioProvider = ({ children }) => {
             return next;
         });
     }, []);
+
+    // 切换自动翻页；打开时立即翻到当前句
+    const toggleAutoFollow = useCallback(() => {
+        setAutoFollow((prev) => {
+            const next = !prev;
+            forceFollowRef.current = next;
+            try {
+                localStorage.setItem(AUTO_FOLLOW_KEY, next ? '1' : '0');
+            } catch (e) {}
+            return next;
+        });
+    }, []);
+
+    useEffect(() => {
+        try {
+            const saved = localStorage.getItem(AUTO_FOLLOW_KEY);
+            if (saved !== null) setAutoFollow(saved === '1');
+        } catch (e) {}
+    }, []);
+
+    // 切换音频时取同目录同名的 .srt 字幕，没有则不显示自动翻页
+    const trackSrc = currentTrack?.src;
+    useEffect(() => {
+        currentTrackIdRef.current = currentTrack?.id ?? null;
+    }, [currentTrack?.id]);
+
+    useEffect(() => {
+        setSubtitleCues(null);
+        if (!trackSrc) return undefined;
+        let cancelled = false;
+        loadSubtitles(trackSrc).then((cues) => {
+            if (!cancelled) setSubtitleCues(cues);
+        });
+        return () => {
+            cancelled = true;
+        };
+    }, [trackSrc]);
+
+    const activeCueIndex = useMemo(() => findCueIndex(subtitleCues, currentTime), [subtitleCues, currentTime]);
+
+    // 正在播的句子在正文中加下划线，开了自动翻页时跟着翻页
+    useEffect(() => {
+        const el = currentTrack ? registeredElementsRef.current.get(currentTrack.id) : null;
+        cueRectsRef.current = null;
+        if (!subtitleCues || !el?.isConnected || activeCueIndex < 0) {
+            activeRangeRef.current = null;
+            clearCueHighlight();
+            return;
+        }
+
+        let alignment = alignmentRef.current;
+        if (!alignment || alignment.cues !== subtitleCues || alignment.cardEl !== el || !alignment.isConnected()) {
+            alignment = alignmentRef.current = alignSection(el, subtitleCues);
+        }
+        const range = alignment.rangeAt(activeCueIndex);
+        activeRangeRef.current = range;
+        if (!range) {
+            clearCueHighlight();
+            return;
+        }
+        showCueHighlight(range);
+
+        const cueChanged = lastCueIndexRef.current !== activeCueIndex;
+        lastCueIndexRef.current = activeCueIndex;
+        const userScrolledRecently = Date.now() - lastUserScrollRef.current < USER_SCROLL_GRACE;
+        if (autoFollow && (forceFollowRef.current || (cueChanged && !userScrolledRecently))) {
+            forceFollowRef.current = false;
+            followRange(range);
+        }
+    }, [subtitleCues, activeCueIndex, currentTrack, sectionTick, autoFollow]);
+
+    useEffect(() => () => clearCueHighlight(), []);
+
+    useEffect(() => {
+        toggleCurrentRef.current = () => togglePlay(currentTrack);
+    }, [togglePlay, currentTrack]);
+
+    // 点下划线的句子：播放中暂停，暂停时继续播
+    // 桌面端鼠标移到这句上显示手形：mousemove 每帧最多判断一次，只比对缓存的文档坐标，不触发排版
+    useEffect(() => {
+        if (!subtitleCues) return undefined;
+        const root = document.documentElement;
+
+        const onClick = (e) => {
+            const range = activeRangeRef.current;
+            if (!range || e.button !== 0 || !isArticleText(e.target)) return;
+            if (!window.getSelection()?.isCollapsed) return; // 拖选文字时不算
+            if (hitRects(documentRects(range), e.pageX, e.pageY)) toggleCurrentRef.current();
+        };
+        document.addEventListener('click', onClick);
+
+        if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+            return () => document.removeEventListener('click', onClick);
+        }
+
+        let frame = 0;
+        let hovering = false;
+        let last = null;
+        const setHover = (on) => {
+            if (on === hovering) return;
+            hovering = on;
+            root.classList.toggle(CUE_HOVER_CLASS, on);
+        };
+        const checkHover = () => {
+            frame = 0;
+            const range = activeRangeRef.current;
+            if (!range || !isArticleText(last.target)) {
+                setHover(false);
+                return;
+            }
+            if (!cueRectsRef.current) cueRectsRef.current = documentRects(range);
+            setHover(hitRects(cueRectsRef.current, last.pageX, last.pageY));
+        };
+        const onMove = (e) => {
+            last = e;
+            if (!frame) frame = requestAnimationFrame(checkHover);
+        };
+        // 窗口尺寸、字号、图片加载、折叠展开等都会改变排版，此时矩形缓存作废
+        const invalidate = () => {
+            cueRectsRef.current = null;
+        };
+        const resizeObserver = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(invalidate) : null;
+        resizeObserver?.observe(document.body);
+        window.addEventListener('resize', invalidate);
+        document.addEventListener('mousemove', onMove, { passive: true });
+
+        return () => {
+            document.removeEventListener('click', onClick);
+            document.removeEventListener('mousemove', onMove);
+            window.removeEventListener('resize', invalidate);
+            resizeObserver?.disconnect();
+            if (frame) cancelAnimationFrame(frame);
+            root.classList.remove(CUE_HOVER_CLASS);
+        };
+    }, [subtitleCues]);
+
+    // 记录用户手动滚动的时间
+    useEffect(() => {
+        if (!subtitleCues || !autoFollow) return undefined;
+        const markUserScroll = () => {
+            lastUserScrollRef.current = Date.now();
+        };
+        const onKeyDown = (e) => {
+            if (SCROLL_KEYS.has(e.key)) markUserScroll();
+        };
+        window.addEventListener('wheel', markUserScroll, { passive: true });
+        window.addEventListener('touchmove', markUserScroll, { passive: true });
+        window.addEventListener('keydown', onKeyDown);
+        return () => {
+            window.removeEventListener('wheel', markUserScroll);
+            window.removeEventListener('touchmove', markUserScroll);
+            window.removeEventListener('keydown', onKeyDown);
+        };
+    }, [subtitleCues, autoFollow]);
 
     // 平滑滚动定位回当前正在播放的文章段落并高亮聚焦
     const scrollToActiveSection = useCallback(() => {
@@ -332,6 +526,9 @@ export const AudioProvider = ({ children }) => {
         registerSection,
         scrollToActiveSection,
         focusedSectionId,
+        hasSubtitles: Boolean(subtitleCues),
+        autoFollow,
+        toggleAutoFollow,
     };
 
     return (
@@ -369,6 +566,9 @@ export const useAudioCompanion = () => {
             registerSection: () => {},
             scrollToActiveSection: () => {},
             focusedSectionId: null,
+            hasSubtitles: false,
+            autoFollow: false,
+            toggleAutoFollow: () => {},
         };
     }
     return context;

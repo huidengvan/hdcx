@@ -1290,4 +1290,16 @@ article h6,
 
 }
 
-
+
+/* ─── 音频伴读：正在朗读的句子加下划线（subtitleSync.js 用 CSS Custom Highlight API 标出） ─── */
+::highlight(audio-subtitle) {
+  text-decoration: underline;
+  text-decoration-color: var(--ifm-color-primary, #2e8555);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.25em;
+}
+
+/* 鼠标移到正在朗读的句子上显示手形，点击可暂停 / 继续（AudioContext 只在进出这句时切换类名） */
+html.audio-cue-hover .markdown {
+  cursor: pointer;
+}

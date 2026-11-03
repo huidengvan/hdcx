@@ -93,6 +93,18 @@ export const LocateIcon = ({ size = 18, fill = 'none', stroke = 'currentColor' }
   </svg>
 );
 
+// 📄 自动翻页图标（几行正文 + 向下箭头）
+export const AutoPageIcon = ({ size = 18 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="3" y1="5" x2="14" y2="5" />
+    <line x1="3" y1="10" x2="14" y2="10" />
+    <line x1="3" y1="15" x2="10" y2="15" />
+    <line x1="3" y1="20" x2="8" y2="20" />
+    <line x1="18.5" y1="6" x2="18.5" y2="19" />
+    <polyline points="15 15.5 18.5 19 22 15.5" />
+  </svg>
+);
+
 
 // 音频跳动均衡器动画
 export const Equalizer = ({ isPlaying = false }) => (

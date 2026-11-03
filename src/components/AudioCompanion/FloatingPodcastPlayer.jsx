@@ -11,6 +11,7 @@ import {
   CloseIcon,
   Equalizer,
   LocateIcon,
+  AutoPageIcon,
   formatTime,
 } from './Icons';
 import styles from './audioCompanion.module.css';
@@ -40,6 +41,9 @@ export default function FloatingPodcastPlayer() {
     changePlaybackRate,
     toggleMute,
     scrollToActiveSection,
+    hasSubtitles,
+    autoFollow,
+    toggleAutoFollow,
   } = useAudioCompanion();
 
   const deckRef = useRef(null);
@@ -222,6 +226,20 @@ export default function FloatingPodcastPlayer() {
             >
               <Forward10Icon size={24} />
             </button>
+
+            {/* 有字幕时才有自动翻页：正文跟随朗读的句子翻页 */}
+            {hasSubtitles && (
+              <button
+                type="button"
+                className={`${styles.followBtn} ${styles.deckFollowBtn} ${autoFollow ? styles.followOn : ''}`}
+                onClick={toggleAutoFollow}
+                title={autoFollow ? '自动翻页：已开启' : '自动翻页：已关闭'}
+                aria-label="自动翻页"
+                aria-pressed={autoFollow}
+              >
+                <AutoPageIcon size={18} />
+              </button>
+            )}
           </div>
         </div>
       )}

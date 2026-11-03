@@ -7,6 +7,7 @@ import {
   Forward10Icon,
   VolumeIcon,
   MuteIcon,
+  AutoPageIcon,
   formatTime,
 } from './Icons';
 import styles from './audioCompanion.module.css';
@@ -41,6 +42,9 @@ export default function SectionAudio({
     seek,
     registerSection,
     focusedSectionId,
+    hasSubtitles,
+    autoFollow,
+    toggleAutoFollow,
   } = useAudioCompanion();
 
   // 循环切换倍速
@@ -85,6 +89,7 @@ export default function SectionAudio({
     <div
       ref={cardRef}
       id={`audio-section-${trackId}`}
+      data-audio-section=""
       className={`${styles.sectionCard} ${isCurrent ? styles.active : ''} ${isFocused ? styles.cardFocused : ''}`}
     >
       <div className={styles.cardMainRow}>
@@ -163,25 +168,39 @@ export default function SectionAudio({
         )}
       </div>
 
-      {/* 激活状态下展开的内联简洁进度条 */}
+      {/* 激活状态下展开的内联简洁进度条；有字幕时右侧放自动翻页按钮 */}
       {isCurrent && (
         <div className={styles.inlineScrubberContainer}>
-          <input
-            type="range"
-            className={styles.rangeInput}
-            min={0}
-            max={currentDuration || 100}
-            step={0.5}
-            value={currentTime}
-            onChange={(e) => seek(parseFloat(e.target.value))}
-            style={{
-              background: `linear-gradient(to right, var(--ifm-color-primary) ${progressPercent}%, rgba(125, 125, 125, 0.2) ${progressPercent}%)`,
-            }}
-          />
-          <div className={styles.timeRow}>
-            <span>{formatTime(currentTime)}</span>
-            <span>{formatTime(currentDuration)}</span>
+          <div className={styles.inlineScrubberMain}>
+            <input
+              type="range"
+              className={styles.rangeInput}
+              min={0}
+              max={currentDuration || 100}
+              step={0.5}
+              value={currentTime}
+              onChange={(e) => seek(parseFloat(e.target.value))}
+              style={{
+                background: `linear-gradient(to right, var(--ifm-color-primary) ${progressPercent}%, rgba(125, 125, 125, 0.2) ${progressPercent}%)`,
+              }}
+            />
+            <div className={styles.timeRow}>
+              <span>{formatTime(currentTime)}</span>
+              <span>{formatTime(currentDuration)}</span>
+            </div>
           </div>
+          {hasSubtitles && (
+            <button
+              type="button"
+              className={`${styles.followBtn} ${autoFollow ? styles.followOn : ''}`}
+              onClick={toggleAutoFollow}
+              title={autoFollow ? '自动翻页：已开启' : '自动翻页：已关闭'}
+              aria-label="自动翻页"
+              aria-pressed={autoFollow}
+            >
+              <AutoPageIcon size={17} />
+            </button>
+          )}
         </div>
       )}
     </div>
