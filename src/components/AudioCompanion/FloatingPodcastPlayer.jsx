@@ -112,8 +112,8 @@ export default function FloatingPodcastPlayer() {
                   e.stopPropagation();
                   scrollToActiveSection();
                 }}
-                title="定位到正文播放位置并聚焦播放器"
-                aria-label="定位到正文播放位置并聚焦播放器"
+                title="定位到正文开始位置"
+                aria-label="定位到正文开始位置"
               >
                 <LocateIcon size={17} />
               </button>
@@ -233,7 +233,7 @@ export default function FloatingPodcastPlayer() {
                 type="button"
                 className={`${styles.followBtn} ${styles.deckFollowBtn} ${autoFollow ? styles.followOn : ''}`}
                 onClick={toggleAutoFollow}
-                title={autoFollow ? '自动翻页：已开启' : '自动翻页：已关闭'}
+                title={autoFollow ? '跟随音频翻页：已开启' : '跟随音频翻页：已关闭'}
                 aria-label="自动翻页"
                 aria-pressed={autoFollow}
               >

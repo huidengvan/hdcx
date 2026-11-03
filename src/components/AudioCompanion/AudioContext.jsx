@@ -225,6 +225,12 @@ export const AudioProvider = ({ children }) => {
             try {
                 localStorage.setItem(AUTO_FOLLOW_KEY, next ? '1' : '0');
             } catch (e) {}
+            try {
+                toast.success(next ? '跟随音频翻页：已开启' : '跟随音频翻页：已关闭', {
+                    id: 'audio-follow',
+                    duration: 1800,
+                });
+            } catch (e) {}
             return next;
         });
     }, []);

@@ -93,15 +93,14 @@ export const LocateIcon = ({ size = 18, fill = 'none', stroke = 'currentColor' }
   </svg>
 );
 
-// 📄 自动翻页图标（几行正文 + 向下箭头）
+// 📖 自动翻页图标（翻开的书 + 从右往左翻过去的弧形箭头）
 export const AutoPageIcon = ({ size = 18 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="3" y1="5" x2="14" y2="5" />
-    <line x1="3" y1="10" x2="14" y2="10" />
-    <line x1="3" y1="15" x2="10" y2="15" />
-    <line x1="3" y1="20" x2="8" y2="20" />
-    <line x1="18.5" y1="6" x2="18.5" y2="19" />
-    <polyline points="15 15.5 18.5 19 22 15.5" />
+    <path d="M12 12c-1.5-1.3-3.5-2-6-2H3v9h3c2.5 0 4.5.7 6 2" />
+    <path d="M12 12c1.5-1.3 3.5-2 6-2h3v9h-3c-2.5 0-4.5.7-6 2" />
+    <line x1="12" y1="12" x2="12" y2="21" />
+    <path d="M16 6a4 4 0 0 0-8 0" />
+    <polyline points="5.5 4 8 6.5 10.5 4" />
   </svg>
 );
 

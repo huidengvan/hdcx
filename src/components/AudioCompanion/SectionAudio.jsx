@@ -194,7 +194,7 @@ export default function SectionAudio({
               type="button"
               className={`${styles.followBtn} ${autoFollow ? styles.followOn : ''}`}
               onClick={toggleAutoFollow}
-              title={autoFollow ? '自动翻页：已开启' : '自动翻页：已关闭'}
+              title={autoFollow ? '跟随音频翻页：已开启' : '跟随音频翻页：已关闭'}
               aria-label="自动翻页"
               aria-pressed={autoFollow}
             >
