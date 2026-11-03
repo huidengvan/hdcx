@@ -1022,6 +1022,28 @@ html[data-theme='light'][data-reader-theme='white'] .footer {
   height: auto;
 }
 
+/* ─── 段落号：固定约 2.5 字宽，隐藏时保留占位，切换时不触发全文重排 ─── */
+/* 宽度按正文字号计算（2.5em ÷ 缩放比），字号按位数缩小以装进固定宽度；四位数及以上由 para-anchor.js 标记 data-d */
+article p > a[href^="#p"] {
+  --pn-scale: 0.75;
+  display: inline-block;
+  width: calc(2.5em / var(--pn-scale));
+  font-size: calc(var(--pn-scale) * 1em);
+  white-space: nowrap;
+}
+
+article p > a[href^="#p"][data-d='4'] {
+  --pn-scale: 0.62;
+}
+
+article p > a[href^="#p"][data-d='5'] {
+  --pn-scale: 0.52;
+}
+
+html[data-reader-anchors='hidden'] article p > a[href^="#p"] {
+  visibility: hidden;
+}
+
 /* ─── 阅读器字体切换 (Font Family Switching) ───────────────── */
 html[data-reader-font='lxgw'] article,
 html[data-reader-font='lxgw'] article p,
@@ -1182,8 +1204,9 @@ article h6,
     break-inside: avoid;
   }
 
-  /* 当用户未勾选保留行号时，打印 PDF 自动隐藏段落行号锚点 */
-  body.hide-print-anchors article p > a[href^="#p"] {
+  /* 当用户未勾选保留行号或屏幕上已隐藏段落号时，打印 PDF 自动隐藏段落行号锚点（打印时不留空白占位） */
+  body.hide-print-anchors article p > a[href^="#p"],
+  html[data-reader-anchors='hidden'] article p > a[href^="#p"] {
     display: none !important;
   }
 

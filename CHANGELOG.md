@@ -12,6 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - 宽屏快捷键由 `Alt + T` 改为 `T`（`Alt + T` 仍可用），处理逻辑从 `DocRoot` 移入 `ReaderToolbar`
+- 段落号隐藏由动态插入 `display: none` 样式改为切换 `<html data-reader-anchors>` 属性、配合 `custom.css` 中的 `visibility: hidden`：保留占位，长文（如约 8700 段的 `refs/cczj/lhsds.md`）切换时不再全文重排、阅读位置不跳动；打印时仍按 `display: none` 移除，不留空白
+- 段落号改为固定约 2.5 字宽（`inline-block`，宽度按正文字号计算，随 A+ / A- 等比缩放）：显示时正文起点对齐，隐藏后每段统一首行缩进约 2.5 字；段落号字号为正文的 0.75，四位数段落号由 `para-anchor.js` 加 `data-d` 标记后缩小到 0.62（五位数 0.52）以装进固定宽度。只增加属性，段落编号与文字不变，无需重建搜索索引
 
 ## [2026-10-30]
 

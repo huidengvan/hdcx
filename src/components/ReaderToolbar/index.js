@@ -132,22 +132,6 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
         if (article) article.style.fontSize = `${size}px`;
     }, []);
 
-    // 应用段落锚点显隐
-    const applyAnchors = useCallback((visible) => {
-        const styleId = 'reader-anchor-hide-style';
-        let el = document.getElementById(styleId);
-        if (!visible) {
-            if (!el) {
-                el = document.createElement('style');
-                el.id = styleId;
-                document.head.appendChild(el);
-            }
-            el.textContent = 'article p > a[href^="#p"] { display: none !important; }';
-        } else {
-            el?.remove();
-        }
-    }, []);
-
     // 初始化/更新时应用设置
     useEffect(() => {
         applyTheme(safeThemeIndex);
@@ -177,9 +161,10 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
         applyFontSize(fontSize);
     }, [fontSize, applyFontSize]);
 
+    // 段落号显隐：只切换根节点属性，由 custom.css 用 visibility 隐藏并保留占位，长文切换时不触发全文重排
     useEffect(() => {
-        applyAnchors(anchorsVisible);
-    }, [anchorsVisible, applyAnchors]);
+        document.documentElement.setAttribute('data-reader-anchors', anchorsVisible ? 'visible' : 'hidden');
+    }, [anchorsVisible]);
 
     // 点击外部区域自动收起面板，提升阅读体验（同时监听 pointerdown 提升移动端触摸关闭响应）
     useEffect(() => {

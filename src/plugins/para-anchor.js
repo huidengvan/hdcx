@@ -8,10 +8,12 @@ export default function paraAnchor() {
             if (node.tagName === 'p') {
                 // 保留段落原有属性，仅设置 id
                 node.properties = { ...node.properties, id: `p${line}` };
+                // 四位数及以上的段落号标记位数（data-d），custom.css 据此缩小字号以装进固定宽度；1~3 位用默认字号，不加标记
+                const digits = String(line).length;
                 const alink = {
                     type: 'element',
                     tagName: 'a',
-                    properties: { href: `#p${line}` },
+                    properties: digits >= 4 ? { href: `#p${line}`, dataD: digits } : { href: `#p${line}` },
                     children: [{ type: 'text', value: `[p${line}] `}],
                 }
                 node.children = [alink, ...node.children]
