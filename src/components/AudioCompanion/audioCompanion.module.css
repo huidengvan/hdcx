@@ -258,6 +258,17 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  white-space: nowrap;
+}
+
+.cardSubtitle > span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardSubtitle > span + span {
+  flex-shrink: 0;
 }
 
 .durationBadge {
@@ -875,20 +886,21 @@
     flex-wrap: nowrap;
   }
 
-  /* 保持标题与 4 个控制按钮处于同一行右侧，不换行 */
+  /* 标题至少留 160px，放不下时 4 个控制按钮整组换到下一行靠右，不挤压标题 */
   .sectionCard.active .cardMainRow {
-    flex-wrap: nowrap;
-    gap: 10px;
+    flex-wrap: wrap;
+    gap: 6px 10px;
   }
 
   .sectionCard.active .metaInfo {
-    flex: 1;
+    flex: 1 1 160px;
     min-width: 0;
   }
 
   .sectionCard.active .cardActions {
     flex-shrink: 0;
     gap: 4px;
+    margin-left: auto;
     border-top: none;
     padding-top: 0;
     margin-top: 0;
