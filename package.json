@@ -23,7 +23,10 @@
     "fayu:install": "pnpm --dir workers/fayu-api --ignore-workspace install",
     "fayu:import": "node workers/fayu-api/scripts/import.mjs",
     "fayu:dev": "pnpm --dir workers/fayu-api --ignore-workspace exec wrangler dev",
-    "fayu:deploy": "pnpm --dir workers/fayu-api --ignore-workspace exec wrangler deploy"
+    "fayu:deploy": "pnpm --dir workers/fayu-api --ignore-workspace exec wrangler deploy",
+    "media:install": "pnpm --dir workers/media-proxy --ignore-workspace install",
+    "media:dev": "pnpm --dir workers/media-proxy --ignore-workspace exec wrangler dev",
+    "media:deploy": "pnpm --dir workers/media-proxy --ignore-workspace exec wrangler deploy"
   },
   "dependencies": {
     "@docusaurus/core": "^3.10.2",

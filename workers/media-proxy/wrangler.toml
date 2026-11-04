@@ -1,0 +1,23 @@
+name = "hdcx-media-proxy"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+# workers.dev 在中国大陆基本打不开，只走自定义域名
+workers_dev = false
+routes = [{ pattern = "media.hdcxb.net", custom_domain = true }]
+
+[vars]
+# 上游节点和允许访问的存储桶，访问 /hdcx/<路径> 等同于 ORIGIN/hdcx/<路径>，其他路径一律 404
+ORIGIN = "https://s3.ap-northeast-1.wasabisys.com"
+BUCKET = "hdcx"
+# 分片大小（MiB）。修改后已有分片全部失效；越大首字节越慢、占用内存越多
+CHUNK_MB = "4"
+# 一次响应最多经手几片。未命中时每片 2 次 Cache API 调用，Free 计划每请求上限 50 次，Paid 可调大
+MAX_CHUNKS = "20"
+# 分片缓存时长（秒）。键含 ETag，文件覆盖后不会读到旧分片，可以设得很长
+CHUNK_TTL = "2592000"
+# 元数据缓存时长（秒），也就是同名文件覆盖后最多多久生效
+META_TTL = "3600"
+# 404/403 的缓存时长（秒），上传新文件后最多多久能访问到
+MISSING_TTL = "60"
+# 浏览器缓存时长（秒）
+CLIENT_TTL = "86400"
