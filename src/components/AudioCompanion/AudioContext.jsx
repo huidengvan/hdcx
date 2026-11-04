@@ -11,6 +11,7 @@ import {
     documentRects,
     hitRects,
 } from './subtitleSync';
+import { sourceQueue } from './mediaSources';
 
 const AudioContext = createContext(null);
 
@@ -19,6 +20,8 @@ const AUTO_FOLLOW_KEY = 'audio-auto-follow';
 const USER_SCROLL_GRACE = 5000;
 const SCROLL_KEYS = new Set(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ']);
 const CUE_HOVER_CLASS = 'audio-cue-hover';
+// 线路卡住时不一定报错，播放中这么久还没缓冲好就换下一条
+const SOURCE_TIMEOUT = 10000;
 
 // 点在正文上、且不是链接、按钮、音频卡片等自身可点的元素，才当作点句子
 const isArticleText = (el) => Boolean(
@@ -49,6 +52,14 @@ export const AudioProvider = ({ children }) => {
 
     // 真实全局唯一的 audio DOM 引用
     const audioRef = useRef(null);
+
+    // 下载线路：还没试过的线路、正在用的线路、换线后要恢复到的进度、本次访问最后能播的线路
+    const sourceQueueRef = useRef([]);
+    const activeLineRef = useRef(null);
+    const resumeTimeRef = useRef(null);
+    const preferredLineRef = useRef(null);
+    const sourceTimerRef = useRef(null);
+    const watchSourceRef = useRef(() => {});
 
     // 页面内所有注册的段落节点引用表 { [id]: HTMLElement }
     const registeredElementsRef = useRef(new Map());
@@ -107,6 +118,57 @@ export const AudioProvider = ({ children }) => {
         }
     }, [triggerFocusAnimation]);
 
+    // 载入队列里的下一条线路，队列已空时返回 false
+    const loadNextSource = useCallback((resumeAt, autoplay) => {
+        const audio = audioRef.current;
+        const next = sourceQueueRef.current.shift();
+        if (!audio || !next) return false;
+
+        // 换 src 会把倍速重置为默认值
+        const rate = audio.playbackRate;
+        activeLineRef.current = next.line;
+        resumeTimeRef.current = resumeAt || null;
+        setIsLoading(true);
+        audio.src = next.url;
+        audio.playbackRate = rate;
+        if (autoplay) {
+            audio.play().catch(() => {
+                setIsLoading(false);
+            });
+        }
+        watchSourceRef.current();
+        return true;
+    }, []);
+
+    // 当前线路失败，换下一条并接着原来的进度播放
+    const switchSource = useCallback(() => {
+        const audio = audioRef.current;
+        if (!audio) return false;
+        return loadNextSource(resumeTimeRef.current ?? audio.currentTime, !audio.paused);
+    }, [loadNextSource]);
+
+    useEffect(() => {
+        watchSourceRef.current = () => {
+            clearTimeout(sourceTimerRef.current);
+            sourceTimerRef.current = setTimeout(() => {
+                const audio = audioRef.current;
+                if (audio && !audio.paused && audio.readyState < audio.HAVE_FUTURE_DATA) switchSource();
+            }, SOURCE_TIMEOUT);
+        };
+    }, [switchSource]);
+
+    // 继续播放；所有线路都失败过时，重新走一遍
+    const resumeTrack = useCallback((track) => {
+        const audio = audioRef.current;
+        if (!audio) return;
+        if (audio.error) {
+            sourceQueueRef.current = sourceQueue(track.src, preferredLineRef.current);
+            loadNextSource(resumeTimeRef.current ?? audio.currentTime, true);
+            return;
+        }
+        audio.play().catch(() => {});
+    }, [loadNextSource]);
+
     // 播放/切歌逻辑（单例保证绝对互斥）
     const playTrack = useCallback((track) => {
         const audio = audioRef.current;
@@ -114,7 +176,7 @@ export const AudioProvider = ({ children }) => {
 
         if (currentTrack?.id === track.id) {
             // 同一个音频：恢复播放
-            audio.play().catch(() => {});
+            resumeTrack(track);
             return;
         }
 
@@ -126,15 +188,11 @@ export const AudioProvider = ({ children }) => {
         };
 
         setCurrentTrack(trackWithPage);
-        setIsLoading(true);
-        audio.src = trackWithPage.src;
         audio.playbackRate = playbackRate;
         audio.muted = isMuted;
-        audio.currentTime = 0;
-        audio.play().catch(() => {
-            setIsLoading(false);
-        });
-    }, [currentTrack?.id, playbackRate, isMuted]);
+        sourceQueueRef.current = sourceQueue(trackWithPage.src, preferredLineRef.current);
+        loadNextSource(0, true);
+    }, [currentTrack?.id, playbackRate, isMuted, loadNextSource, resumeTrack]);
 
     const pauseTrack = useCallback(() => {
         const audio = audioRef.current;
@@ -146,6 +204,9 @@ export const AudioProvider = ({ children }) => {
     // 关闭播放器并完全关闭悬浮组件
     const closeCompanion = useCallback(() => {
         const audio = audioRef.current;
+        clearTimeout(sourceTimerRef.current);
+        sourceQueueRef.current = [];
+        resumeTimeRef.current = null;
         if (audio) {
             audio.pause();
             audio.removeAttribute('src');
@@ -171,12 +232,12 @@ export const AudioProvider = ({ children }) => {
             if (isPlaying) {
                 pauseTrack();
             } else {
-                audioRef.current?.play().catch(() => {});
+                resumeTrack(track);
             }
         } else {
             playTrack(track);
         }
-    }, [currentTrack?.id, isPlaying, pauseTrack, playTrack]);
+    }, [currentTrack?.id, isPlaying, pauseTrack, playTrack, resumeTrack]);
 
 
     // 跳转指定进度
@@ -421,12 +482,13 @@ export const AudioProvider = ({ children }) => {
         }, 120);
     }, [currentTrack, history, triggerFocusAnimation]);
 
-    // 组件卸载时清理聚焦动画定时器
+    // 组件卸载时清理聚焦动画和线路超时定时器
     useEffect(() => {
         return () => {
             if (focusTimerRef.current) {
                 clearTimeout(focusTimerRef.current);
             }
+            clearTimeout(sourceTimerRef.current);
         };
     }, []);
 
@@ -437,18 +499,33 @@ export const AudioProvider = ({ children }) => {
 
         const onPlay = () => setIsPlaying(true);
         const onPause = () => setIsPlaying(false);
-        const onWaiting = () => setIsLoading(true);
-        const onPlaying = () => setIsLoading(false);
-        const onTimeUpdate = () => setCurrentTime(audio.currentTime);
+        const onWaiting = () => {
+            setIsLoading(true);
+            watchSourceRef.current();
+        };
+        const onPlaying = () => {
+            setIsLoading(false);
+            clearTimeout(sourceTimerRef.current);
+            if (activeLineRef.current) preferredLineRef.current = activeLineRef.current;
+        };
+        const onTimeUpdate = () => {
+            // 换线路时进度先归零，等元数据到了再恢复，这期间不更新，免得进度条和字幕跳回开头
+            if (resumeTimeRef.current === null) setCurrentTime(audio.currentTime);
+        };
         const onLoadedMetadata = () => {
             setDuration(audio.duration || 0);
             setIsLoading(false);
+            if (resumeTimeRef.current !== null) {
+                audio.currentTime = resumeTimeRef.current;
+                resumeTimeRef.current = null;
+            }
         };
         const onEnded = () => {
             setIsPlaying(false);
             setCurrentTime(0);
         };
         const onError = () => {
+            if (audio.error?.code !== MediaError.MEDIA_ERR_ABORTED && switchSource()) return;
             setIsLoading(false);
             setIsPlaying(false);
         };
@@ -472,7 +549,7 @@ export const AudioProvider = ({ children }) => {
             audio.removeEventListener('ended', onEnded);
             audio.removeEventListener('error', onError);
         };
-    }, []);
+    }, [switchSource]);
 
     // 视口监听：利用 IntersectionObserver 监听当前活跃段落是否滚出屏幕
     useEffect(() => {

@@ -3,6 +3,8 @@
  * 字幕条按文字在正文里定位成 Range，用 CSS Custom Highlight API 加下划线，不改动 React 管理的 DOM。
  */
 
+import { mediaSources } from './mediaSources';
+
 const HIGHLIGHT_NAME = 'audio-subtitle';
 
 // 音频卡片之后、到下一个音频卡片或级别不低于其所在标题的下一个标题为止，是这段音频的正文（与 align_srt.py 取法一致）
@@ -34,16 +36,25 @@ export function parseSrt(text) {
 
 const subtitleCache = new Map();
 
+// 依次走各条线路；404 说明确实没有字幕，不用再试，其他失败才换线路
+async function fetchSrt(src) {
+  for (const { url } of mediaSources(src)) {
+    try {
+      const res = await fetch(srtUrlFor(url));
+      if (res.ok) return await res.text();
+      if (res.status === 404) return '';
+    } catch (e) {}
+  }
+  return '';
+}
+
 // 取字幕；没有字幕（404、跨域失败、内容不是 SRT）时返回 null，结果按音频地址缓存
 export function loadSubtitles(src) {
   if (!subtitleCache.has(src)) {
-    subtitleCache.set(src, fetch(srtUrlFor(src))
-      .then((res) => (res.ok ? res.text() : ''))
-      .then((text) => {
-        const cues = parseSrt(text);
-        return cues.length ? cues : null;
-      })
-      .catch(() => null));
+    subtitleCache.set(src, fetchSrt(src).then((text) => {
+      const cues = parseSrt(text);
+      return cues.length ? cues : null;
+    }));
   }
   return subtitleCache.get(src);
 }
