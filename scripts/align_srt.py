@@ -63,7 +63,8 @@ MOVE_GAIN = 25
 # 片段开头的「问：」「答：」与段尾的「（生西法师）」不朗读
 LABEL = re.compile(r"^(?:问|答)[：:]")
 ATTRIB = re.compile(r"（[^（）]{1,8}(?:法师|堪布|上师|仁波切|喇嘛)）")
-SKIP_LINE = re.compile(r"^(?:本稿为内部学习所用|import\s|\[\^[^\]]*\]:|(?:[-*+]\s+)?\[[^\]]*\]\([^)]*\)\s*$)")
+SKIP_LINE = re.compile(r"^(?:本稿为内部学习所用|import\s|\[\^[^\]]*\]:|\[\d+\]|(?:[-*+]\s+)?\[[^\]]*\]\([^)]*\)\s*$)")
+FOOTNOTE_RULE = re.compile(r"^-{10,}$")  # 段尾脚注区的分隔线，其后都不朗读
 
 HEADING = re.compile(r"^(#{1,6})\s+(.*)$", re.M)
 AUDIO_TAG = re.compile(r"<SectionAudio\b(.*?)/>", re.S)
@@ -103,11 +104,13 @@ def clean(body):
     lines = []
     for line in body.splitlines():
         line = line.strip()
+        if FOOTNOTE_RULE.match(line):
+            break
         if not line or SKIP_LINE.match(line):
             continue
         line = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", line)
         line = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", line)
-        line = re.sub(r"\[\^[^\]]*\]|<[^>]+>", "", line)
+        line = re.sub(r"\[\d+\]|\[\^[^\]]*\]|<[^>]+>", "", line)
         line = re.sub(r"^(?:#{1,6}\s+|>\s*|[-*+]\s+)", "", line)
         line = line.replace("**", "").replace("__", "")
         line = LABEL.sub("", ATTRIB.sub("", line)).strip()
