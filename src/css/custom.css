@@ -1322,6 +1322,11 @@ article h6,
   text-underline-offset: 0.25em;
 }
 
+/* Safari 不认 ::highlight 里的 text-underline-offset，下划线的位置取自文字本身的样式，所以在正文上也设一份（可继承，只影响下划线） */
+.markdown {
+  text-underline-offset: 0.25em;
+}
+
 /* 鼠标移到正在朗读的句子上显示手形，点击可暂停 / 继续（AudioContext 只在进出这句时切换类名） */
 html.audio-cue-hover .markdown {
   cursor: pointer;
