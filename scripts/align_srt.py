@@ -42,6 +42,7 @@ ASR_DIR = ROOT / "subtitles" / "asr"
 SRT_DIR = ROOT / "subtitles" / "srt"
 
 SR = 16000
+XPU_MEM_GB = 6     # PyTorch 在核显上最多占用的内存
 CLAUSE_PUNCT = "，。！？；：、…"
 CLOSE_PUNCT = "”’」』）》"
 STRIP_TAIL = "，。、；：…—"
@@ -67,6 +68,7 @@ SKIP_LINE = re.compile(r"^(?:本稿为内部学习所用|import\s|\[\^[^\]]*\]:|
 FOOTNOTE_RULE = re.compile(r"^-{10,}$")  # 段尾脚注区的分隔线，其后都不朗读
 
 HEADING = re.compile(r"^(#{1,6})\s+(.*)$", re.M)
+LESSON_HEAD = re.compile(r"\d+节?课")
 AUDIO_TAG = re.compile(r"<SectionAudio\b(.*?)/>", re.S)
 TOKEN_RUN = re.compile(r"[0-9０-９A-Za-zＡ-Ｚａ-ｚ\u3400-\u9fff\uf900-\ufaff]+")
 DIGITS = re.compile(r"[0-9０-９]+|.", re.S)
@@ -92,10 +94,13 @@ def sections(md_path):
         name = unquote(src.group(1).rsplit("/", 1)[-1])
         above = [h for h in heads if h[0] < m.start()]
         level, title = (above[-1][1], above[-1][2]) if above else (0, name)
-        # 正文到下一段音频所属的标题为止，中间的同级小标题（如科判）仍算本段
+        # 正文到下一段音频所属的标题为止（紧贴音频卡片的标题才算），中间的同级小标题（如科判）仍算本段
         end = tags[n + 1].start() if n + 1 < len(tags) else len(md)
         owner = [h[0] for h in heads if m.end() < h[0] < end]
-        out.append((name, title, clean(md[m.end():owner[-1] if owner and n + 1 < len(tags) else end])))
+        stop = owner[-1] if owner and n + 1 < len(tags) and not md[owner[-1]:end].partition("\n")[2].strip() else end
+        # 没有音频的课或答疑（如只有文稿）不算本段
+        other = [h[0] for h in heads if m.end() < h[0] < stop and LESSON_HEAD.search(h[2])]
+        out.append((name, title, clean(md[m.end():other[0] if other else stop])))
     return out
 
 
@@ -211,6 +216,9 @@ def asr(audio_path, cache, device):
         if device == "auto":
             device = "xpu" if hasattr(torch, "xpu") and torch.xpu.is_available() else "cpu"
         name = torch.xpu.get_device_name(0) if device.startswith("xpu") else "CPU"
+        if device.startswith("xpu"):  # 核显与系统共用内存，限制 PyTorch 占用
+            torch.xpu.set_per_process_memory_fraction(
+                min(XPU_MEM_GB * 2**30 / torch.xpu.get_device_properties(0).total_memory, 1))
         print(f"识别设备：{device}（{name}）", flush=True)
         _model = AutoModel(model="paraformer-zh", vad_model="fsmn-vad", device=device,
                            disable_update=True, disable_pbar=True)
