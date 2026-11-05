@@ -3356,6 +3356,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 前行广释第134课辅导
 
+<SectionAudio
+  id="qxgs-134"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/前行辅导-智诚堪布/前行第06册114-136/大圆满前行_第134课_2017年11月05日.m4a"
+  title="前行广释第134课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
+
 - [前行辅导-智诚堪布音频文件列表](/refs/qxgs/fudao/qxgsfd-audio-files)
 
 诸法等性本基法界中，自现圆满三身游舞力，
