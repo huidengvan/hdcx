@@ -7,7 +7,7 @@ import { mediaSources } from './mediaSources';
 
 const HIGHLIGHT_NAME = 'audio-subtitle';
 
-// 音频卡片之后、到下一个音频卡片或级别不低于其所在标题的下一个标题为止，是这段音频的正文（与 align_srt.py 取法一致）
+// 音频卡片之后、到下一个音频卡片为止，是这段音频的正文：录音可能跨过同级标题，字幕文字都在这个范围内（align_srt.py 取的是其中朗读的部分）
 const SKIP_SELECTOR = 'a[data-footnote-ref], [data-footnotes], .hash-link, script, style, button, svg';
 
 // 录音与文稿顺序不同的句子会被 align_srt.py 挪位；匹配处离游标超过这么多未用字时，视为挪位句，不移动游标
@@ -94,11 +94,6 @@ function normalize(text) {
 // 音频卡片对应的正文：规范化后的字符串，及每个字所在的文本节点和偏移
 function collectSection(cardEl) {
   const root = cardEl.closest('.markdown') || cardEl.parentElement;
-  let level = 0;
-  for (const h of root.querySelectorAll('h1, h2, h3, h4, h5, h6')) {
-    if (!(cardEl.compareDocumentPosition(h) & Node.DOCUMENT_POSITION_PRECEDING)) break;
-    level = Number(h.tagName[1]);
-  }
 
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, {
     acceptNode: (node) => (
@@ -116,8 +111,6 @@ function collectSection(cardEl) {
   for (let node = walker.nextNode(); node; node = walker.nextNode()) {
     if (node.nodeType === 1) {
       if (node.hasAttribute('data-audio-section')) break;
-      const h = /^H([1-6])$/.exec(node.tagName);
-      if (h && Number(h[1]) <= level) break;
       continue;
     }
     const value = node.nodeValue;
