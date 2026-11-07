@@ -1,0 +1,1693 @@
+{
+  "version": "f00841689957",
+  "docs": {
+    "b1/01 三个差别(2014)": {
+      "id": 1,
+      "hash": "eff5320fb380cec81e67d35c7dca748e4aaf77cf"
+    },
+    "b1/02-1 三殊胜（上）": {
+      "id": 2,
+      "hash": "438f3a9d92973c042801c9697198501ea2b32966"
+    },
+    "b1/02-2 三殊胜（中）": {
+      "id": 3,
+      "hash": "e7e7a69cc1f7c1ea9aa9f45eda1a3ee038c4b097"
+    },
+    "b1/02-3 三殊胜（下）": {
+      "id": 4,
+      "hash": "b61163acb24352212e74ff5c6985ca6d25be699e"
+    },
+    "b1/03 生存的方式和生存的意义": {
+      "id": 5,
+      "hash": "ec49ea319b8ac2cd9a979f1814811efcd54038a5"
+    },
+    "b1/04 佛教徒的生活模式": {
+      "id": 6,
+      "hash": "2ebdfe5d5887a4338632e1372a009ce8289042a7"
+    },
+    "b1/05-1 如何做标准的居士1": {
+      "id": 7,
+      "hash": "85bd08a1b0777342a934360e2a6bf56ee3840a55"
+    },
+    "b1/05-2 如何做标准的居士2": {
+      "id": 8,
+      "hash": "0a6dbfb0f058ac94ce299663860b60f6e7be6558"
+    },
+    "b1/06 浅谈因果关系": {
+      "id": 9,
+      "hash": "d6c113677057b4d4588eaea908a0528d23bbe5c4"
+    },
+    "b1/06-1 浅谈因果关系1": {
+      "id": 10,
+      "hash": "42c85e0057b1fefa29fde89cecb11e54397a6dd9"
+    },
+    "b1/06-2 浅谈因果关系2": {
+      "id": 11,
+      "hash": "0e439e41e612ece0b92b4a8d320a0303e977ace3"
+    },
+    "b1/07-1 佛法融入生活：行为转为道用1": {
+      "id": 12,
+      "hash": "8fbf709048160836d876da88783cb6b0612d2a18"
+    },
+    "b1/07-2 佛法融入生活：行为转为道用2": {
+      "id": 13,
+      "hash": "4500e78d57117cbed346e624739cab38cbca7690"
+    },
+    "b1/08 佛教的定义": {
+      "id": 14,
+      "hash": "e613a7de595e69860a628c3dcd463365e3f3567b"
+    },
+    "b1/09 解脱的原理": {
+      "id": 15,
+      "hash": "6dd17e284b8bc7653d9961921334341fb5cc1cab"
+    },
+    "b1/10-1 麦彭仁波切对初学者的教诲1": {
+      "id": 16,
+      "hash": "650c1f9785dab09e88d5b4cc7e1fd272a7d0d253"
+    },
+    "b1/10-2 麦彭仁波切对初学者的教诲2": {
+      "id": 17,
+      "hash": "bcc7ca252bf394f8f2bcad46b0c03e42dd1d8b4b"
+    },
+    "b1/10.  第六课  《浅谈因果关系》": {
+      "id": 18,
+      "hash": "efe4323927fb38717a212e444ecc8e8eea3a50d5"
+    },
+    "b2/01 莲花生大师修法": {
+      "id": 19,
+      "hash": "e0a28098dfd39d536f7d53e1fb8c361ce0abffe7"
+    },
+    "b2/02 2015马来西亚系列讲座 我们为什么不幸福": {
+      "id": 20,
+      "hash": "258eb09de786b19ae5810f70493ef1d02e728989"
+    },
+    "b2/03-1 佛法融入生活：如何面对痛苦1": {
+      "id": 21,
+      "hash": "09629d67ebd1378b0cee84c572a56f8817808456"
+    },
+    "b2/03-2 佛法融入生活：如何面对痛苦2": {
+      "id": 22,
+      "hash": "b6e313a0cbe2b1ba48c73c96155a99a39c9d50b5"
+    },
+    "b2/03-3 佛法融入生活：如何面对痛苦3": {
+      "id": 23,
+      "hash": "f374e42384deab9dfab4ca62385b2622a8189f8b"
+    },
+    "b2/03-4 佛法融入生活：如何面对幸福": {
+      "id": 24,
+      "hash": "3f1a1d93d53c117387c4183e6798d875ac2bfff0"
+    },
+    "b2/04-1 戒杀放生的意义（一）": {
+      "id": 25,
+      "hash": "7f4c0f2006d8097f112256ccf6d15da092c8b91c"
+    },
+    "b2/04-2 戒杀放生的意义（二）": {
+      "id": 26,
+      "hash": "4a41f3cbadfacc202a2215de2d91a313e5a40959"
+    },
+    "b2/05-1素食的意义01": {
+      "id": 27,
+      "hash": "e680ce9915a12f9423766399ad0f637a05dc2227"
+    },
+    "b2/05-2素食的意义02": {
+      "id": 28,
+      "hash": "92282f337b16a0f9425992e3bbab605cc57f15e2"
+    },
+    "b2/09-1 病苦转为道用01": {
+      "id": 29,
+      "hash": "4dfdea7c03f23299707c561d7789be9eea8e85e6"
+    },
+    "b2/09-2 病苦转为道用02": {
+      "id": 30,
+      "hash": "0094093af752e829e9c0cd388f6a87b9e0bf25fa"
+    },
+    "b2/10-1 开示四谛（上）": {
+      "id": 31,
+      "hash": "23d9b75991844a018fa7acb653fce1f7572a49f0"
+    },
+    "b2/10-1 开示四谛（一）": {
+      "id": 32,
+      "hash": "501fb91a8bc417d74351e9a1dc10c5aef2f961dd"
+    },
+    "b2/10-2 开示四谛（二）": {
+      "id": 33,
+      "hash": "715a63c343ff097a0c56db94e60920102266f676"
+    },
+    "b2/10-2 开示四谛（下）": {
+      "id": 34,
+      "hash": "03b106cddb3af4d2ed7017f68f431f8f288041ed"
+    },
+    "b2/11 二谛-开启中观门扉之钥匙": {
+      "id": 35,
+      "hash": "9e548e6add81cf1a572e8e3726017a3c192a56c3"
+    },
+    "b2/13 佛教的世界观(2010)": {
+      "id": 36,
+      "hash": "68b3354f5c2ba853b4681d46ae89a5359ca29445"
+    },
+    "b2/16 语加持的修法": {
+      "id": 37,
+      "hash": "c6ef9a8872ee56ac962cb30b4ab65a93cf23e0af"
+    },
+    "b2/19 佛教的物种起源": {
+      "id": 38,
+      "hash": "fc5de02e2a9c9cd08cf7c9e50b8a7f9ce0824e47"
+    },
+    "b2/梦幻世界": {
+      "id": 39,
+      "hash": "4b4c076b5d4ccb8f444e6d96b587f5bfac2b61b8"
+    },
+    "b2/上师对慧灯禅修的特别叮嘱": {
+      "id": 40,
+      "hash": "a4dd87e128b375564ea1c008be5d93ea730c92d2"
+    },
+    "b3/00 慧灯禅修课 介绍慧灯禅修": {
+      "id": 41,
+      "hash": "b3b27bbed24a199173a91615807ba231a294cfa1"
+    },
+    "b3/01 慧灯禅修课1 入坐与出坐": {
+      "id": 42,
+      "hash": "9ec43c409d9124ee4b74bed01e66726dbf868841"
+    },
+    "b3/02-1 慧灯禅修课2 人身难得1": {
+      "id": 43,
+      "hash": "d653d0bad29b95ed6c5c1ebdfbc73d32950af6db"
+    },
+    "b3/02-2 慧灯禅修课3 人身难得2": {
+      "id": 44,
+      "hash": "7b833a8fe07da2c3d74413939ce7225d8731fdea"
+    },
+    "b3/02-3 慧灯禅修课4 人身难得3": {
+      "id": 45,
+      "hash": "5cc0ec9ca5d7d1da052aa72dba5cf53c58db2367"
+    },
+    "b3/02-4 慧灯禅修课5 人身难得4": {
+      "id": 46,
+      "hash": "c80a4bc89fd34557c8e55c01eef9e0b302a659ab"
+    },
+    "b3/03-1 慧灯禅修课6 寿命无常1": {
+      "id": 47,
+      "hash": "ecdf705679144523a2383e7ea8a8dd13e2e80dd7"
+    },
+    "b3/03-2 慧灯禅修课7 寿命无常2": {
+      "id": 48,
+      "hash": "81009e18c5ae83a40529c84bec5ce7bc69f33b56"
+    },
+    "b3/03-3 慧灯禅修课8 寿命无常3": {
+      "id": 49,
+      "hash": "42ecd44707554de06eb4470d3f26251ca66cc56a"
+    },
+    "b3/04-1 慧灯禅修课9 轮回痛苦1": {
+      "id": 50,
+      "hash": "f63b969204e8885c957c0cd46dc2f1cf56befee7"
+    },
+    "b3/04-2 慧灯禅修课10 轮回痛苦2": {
+      "id": 51,
+      "hash": "8e474c6cd06f711f7a10a6b97119d0e04b9f5e2e"
+    },
+    "b3/04-3 慧灯禅修课11 轮回痛苦3": {
+      "id": 52,
+      "hash": "bb748c5fd7650df80d7eaea198f24fcf649920f7"
+    },
+    "b3/04-4 慧灯禅修课12 轮回痛苦4": {
+      "id": 53,
+      "hash": "f27c19fd0b09796a54ce38da4f146d5f2e3ee879"
+    },
+    "b3/05-1 慧灯禅修课13 因果不虚1": {
+      "id": 54,
+      "hash": "1d0fbe1aad7ad9756758daa3f8e2c722fe335d87"
+    },
+    "b3/05-2 慧灯禅修课14 因果不虚2": {
+      "id": 55,
+      "hash": "22195a8ebaa60bbd74d51275e87b02190a875b37"
+    },
+    "b3/05-3 慧灯禅修课15 因果不虚3": {
+      "id": 56,
+      "hash": "9147fd9a2ae08926969573383079ab731ac223e0"
+    },
+    "b3/05-4 慧灯禅修课16 因果不虚4": {
+      "id": 57,
+      "hash": "ce2667cb3723a7947257de5f30cd88e9d79c4ddf"
+    },
+    "b3/05-5 慧灯禅修课17 因果不虚5": {
+      "id": 58,
+      "hash": "4c6a15ab30df0ea3b9cd4c33852200bcbb69a7a7"
+    },
+    "b3/05-6 慧灯禅修课18 因果不虚6": {
+      "id": 59,
+      "hash": "c50361cd3cd6749f92a182609a796cd2a087e78c"
+    },
+    "b3/06-1 慧灯禅修课19 解脱利益": {
+      "id": 60,
+      "hash": "193b56e7fe583fc5f640f056fa61258e81ad51a6"
+    },
+    "b3/06-2 慧灯禅修课20 依止上师": {
+      "id": 61,
+      "hash": "a6143e896c178da7e82ed82a2a9a3b7d38e30bbc"
+    },
+    "b4/01-1 慧灯禅修课21 加行的修法-皈依1": {
+      "id": 62,
+      "hash": "a9537cec9d56dda124a296140f1c3dfde2119576"
+    },
+    "b4/01-2 慧灯禅修课22 加行的修法-皈依2": {
+      "id": 63,
+      "hash": "373ee3d6630f08abbef891e43473517b8061f44e"
+    },
+    "b4/01-3 慧灯禅修课23 加行的修法-皈依3": {
+      "id": 64,
+      "hash": "c56ed58f163388df28f6efdaee0f128ef49d6f60"
+    },
+    "b4/02-1 慧灯禅修课24 加行的修法-菩提心1": {
+      "id": 65,
+      "hash": "383fa863280212286d016d05fde3fe3f55b41730"
+    },
+    "b4/02-2 慧灯禅修课25 加行的修法-菩提心2": {
+      "id": 66,
+      "hash": "3a7f684869c333c5bf7411272095c530bbf07e9d"
+    },
+    "b4/02-3 慧灯禅修课26 加行的修法-菩提心3": {
+      "id": 67,
+      "hash": "be6455a43fb1395dbf10936cebec1ac39dae640e"
+    },
+    "b4/02-4 慧灯禅修课27 加行的修法-菩提心4": {
+      "id": 68,
+      "hash": "e7a1990ee365bcaa2116bd404d34b9408ba516de"
+    },
+    "b4/03-1 慧灯禅修课28 加行的修法-金刚萨埵1": {
+      "id": 69,
+      "hash": "680ccf01f5b4f751efedd5af372ba10c74d3eb2f"
+    },
+    "b4/03-2 慧灯禅修课29 加行的修法-金刚萨埵2": {
+      "id": 70,
+      "hash": "fe7376775a2e1cf99e855be40a71c8f459e6d577"
+    },
+    "b4/03-3 慧灯禅修课30 加行的修法-金刚萨埵3": {
+      "id": 71,
+      "hash": "ad0d7760ab7d1a306370a5f8efa3029c46d49b35"
+    },
+    "b4/04-1 慧灯禅修课31 加行的修法-曼荼罗1": {
+      "id": 72,
+      "hash": "b7de854e0897d778987472698c7e246754af8740"
+    },
+    "b4/04-2 慧灯禅修课32 加行的修法-曼荼罗2": {
+      "id": 73,
+      "hash": "56bc3ad94984e99d75414df279b64ff497b8cc65"
+    },
+    "b4/05-1 慧灯禅修课33 加行的修法-上师瑜伽1": {
+      "id": 74,
+      "hash": "3a83f210b7e125b4b6c3f672a72c6dd34cd262b9"
+    },
+    "b4/05-2 慧灯禅修课34 加行的修法-上师瑜伽2": {
+      "id": 75,
+      "hash": "b9b3e0fbb08d2d008a1aad39c98cacdb47423d39"
+    },
+    "b4/05-3 慧灯禅修课35 加行的修法-上师瑜伽3": {
+      "id": 76,
+      "hash": "b68cdcffe28167103d14ab2aad33c429f3cdb649"
+    },
+    "/books/b1/1-01#01三个差别": {
+      "id": 77,
+      "hash": "dbfcfff9e8f01997dd3fb7b74f2279d83be210af"
+    },
+    "/books/b1/1-02#02三殊胜--行善修心的究竟方法": {
+      "id": 78,
+      "hash": "84e1cae71f43e96b9c70c8286dfc5b9cb553fac6"
+    },
+    "/books/b1/1-03#03生存的方式和生存的意义": {
+      "id": 79,
+      "hash": "894c25b59fee246268593599562346d5ec19f6f7"
+    },
+    "/books/b1/1-04#04佛教徒的生活模式": {
+      "id": 80,
+      "hash": "300fa3aa8476995ff7b52b597226400f3c13a397"
+    },
+    "/books/b1/1-05#05如何做一个标准居士": {
+      "id": 81,
+      "hash": "4d091aef1360eaf38b8804ee39c65b1bee44ad33"
+    },
+    "/books/b1/1-06#06浅谈因果关系": {
+      "id": 82,
+      "hash": "937631a71b75720cf2f6c82422d2523d4fd9a559"
+    },
+    "/books/b1/1-07#07佛法融入生活": {
+      "id": 83,
+      "hash": "4042d20eefe5cfbb7b1e86f77a01e895b2f4a14f"
+    },
+    "/books/b1/1-08#08佛教的定义": {
+      "id": 84,
+      "hash": "86fc12646cb131ff17297913013cf559339fa538"
+    },
+    "/books/b1/1-09#09解脱的原理": {
+      "id": 85,
+      "hash": "391e22c40dbd8a6c50e99b9e968ec9de6c460887"
+    },
+    "/books/b1/1-10#10对初学者的教诲": {
+      "id": 86,
+      "hash": "feb00c4f8d13d1cffcc9722815463a10d42ea91d"
+    },
+    "/books/b2/2-01#01为什么现代人越来越没有幸福感": {
+      "id": 87,
+      "hash": "360f43248f9d077af75f252831df46be2a28d6b6"
+    },
+    "/books/b2/2-02#02如何面对痛苦和幸福": {
+      "id": 88,
+      "hash": "0d2edd1e5cec2e7842809a736d25dcfa458cd6c5"
+    },
+    "/books/b2/2-03#03戒杀放生的功德": {
+      "id": 89,
+      "hash": "e7a74d0268704d2bb6d717cc09823836ca065338"
+    },
+    "/books/b2/2-04#04素食的意义": {
+      "id": 90,
+      "hash": "0ce734eea674d06578321e097ebf66a07e6a54fe"
+    },
+    "/books/b2/2-05#05关于放生": {
+      "id": 91,
+      "hash": "414e35e5abb46a6a99fda74a08bf901c697136b6"
+    },
+    "/books/b2/2-06#06世界和平共处的诀窍--平等生存": {
+      "id": 92,
+      "hash": "617fb95cb8e90e285bba0bbf7102832b5d01e264"
+    },
+    "/books/b2/2-07#07受戒行善的殊胜日": {
+      "id": 93,
+      "hash": "487fc3ca914425f4fc76be9ca0c67cbc7b8ea2d6"
+    },
+    "/books/b2/2-08#08如何将病苦转为道用": {
+      "id": 94,
+      "hash": "180c27a95af95e52a5009508a690a647e84e46df"
+    },
+    "/books/b2/2-09#09四谛--脱离生死的出路": {
+      "id": 95,
+      "hash": "39e455395a71f24654b3bf11c9384d7d8ec1683e"
+    },
+    "/books/b2/2-10#10二谛--开启中观门扉之钥匙": {
+      "id": 96,
+      "hash": "84d9950a1380338d4645ccc510da50184b5eed0d"
+    },
+    "/books/b2/2-11#11十二缘起支--生命轮回的次序": {
+      "id": 97,
+      "hash": "fe2e00409187f09bc5956d1369286243ae82f2ad"
+    },
+    "/books/b2/2-12#12梦幻世界": {
+      "id": 98,
+      "hash": "3c4b23566cfc9b103b79c1162f8929de5a0fb4dd"
+    },
+    "/books/b2/2-13#13佛教的物种起源说": {
+      "id": 99,
+      "hash": "ee13fed61541daf548fa769550f93845294e07d2"
+    },
+    "/books/b2/2-14#14佛教的世界观": {
+      "id": 100,
+      "hash": "7048f526208c4eb23f1df61bbfe9f15bc6630e78"
+    },
+    "/books/b2/2-15#15语加持的修法": {
+      "id": 101,
+      "hash": "bfe7d294ca6de861899933bbe986b39a90db3215"
+    },
+    "/books/b2/2-16#16金刚七句之上师瑜伽": {
+      "id": 102,
+      "hash": "10287136b55b9cc66cea440281ac97f2c9dc15e6"
+    },
+    "/books/b3/3-01#01入坐与出坐": {
+      "id": 103,
+      "hash": "17f29ff84e896c04df033a20390a6e0ecf3f5fb7"
+    },
+    "/books/b3/3-02#02人身难得": {
+      "id": 104,
+      "hash": "344a62166010ade0bacbc52ae89d98aa5122d3fe"
+    },
+    "/books/b3/3-03#03寿命无常": {
+      "id": 105,
+      "hash": "c5ebbdc266912f3978f6574b0290bcd4123f22f0"
+    },
+    "/books/b3/3-04#04轮回过患": {
+      "id": 106,
+      "hash": "f038003d1e7484406d266b6c45f4b336b0a201f4"
+    },
+    "/books/b3/3-05#05因果不虚": {
+      "id": 107,
+      "hash": "0eb5c33cb95242ac8e1dc55a4524fdd12fd7c71c"
+    },
+    "/books/b3/3-06#06解脱利益与依止上师": {
+      "id": 108,
+      "hash": "7b54517750d3e2f04610f79048befbf025e35112"
+    },
+    "/books/b3/3-07#07如何学密": {
+      "id": 109,
+      "hash": "d9dd3d15371976669d449f73818b1227562e74cb"
+    },
+    "/books/b3/3-08#08金刚上师与灌顶": {
+      "id": 110,
+      "hash": "7e51430e89b2e165d1cb74a9deca31e47906f5a1"
+    },
+    "/books/b3/3-09#09前行念诵仪轨•开显解脱道": {
+      "id": 111,
+      "hash": "6bc0a56ee4a18570f3dae8a6b9ac5644b5ce06e5"
+    },
+    "/books/b4/4-01#01皈依": {
+      "id": 112,
+      "hash": "ab6f74de9680868f6ec83eac4d1bfef87d30a5fb"
+    },
+    "/books/b4/4-02#02菩提心的修法": {
+      "id": 113,
+      "hash": "8f4fe2753da0008d73fd5416be01efd37683fe3f"
+    },
+    "/books/b4/4-03#03金刚萨埵修法--清净罪障之殊胜道": {
+      "id": 114,
+      "hash": "bc2d0ef9df2a56f2b3cdbaedcd0410ce86aee57c"
+    },
+    "/books/b4/4-04#04曼茶罗修法--积累资粮之殊胜方便": {
+      "id": 115,
+      "hash": "08fd27592cb6116f2a280fa38aeaddb852d14753"
+    },
+    "/books/b4/4-05#05上师瑜伽": {
+      "id": 116,
+      "hash": "c5fd365218182b412c7e89f91cc09b83970f0d1d"
+    },
+    "/refs/dymxxxx/dymxxxx-dcs#大圆满心性休息大车疏": {
+      "id": 117,
+      "hash": "d0ebd6c1d63d4174076d0fc0e88798be4884a44a"
+    },
+    "/refs/dymxxxx/dymxxxx-gs1#大圆满心性休息广释1": {
+      "id": 118,
+      "hash": "bbb091c9c225be34159e4fe6ad9a441cfadd5425"
+    },
+    "/refs/dymxxxx/dymxxxx-gs2#大圆满心性休息广释2": {
+      "id": 119,
+      "hash": "5184468737ee71b4b9eb6ac5b8782c56a1de1120"
+    },
+    "/refs/dymxxxx/dymxxxx-gs3#大圆满心性休息广释3": {
+      "id": 120,
+      "hash": "c511da368f72e01c5fb97bdd4277000640a5750e"
+    },
+    "/refs/dymxxxx/dymxxxx#大圆满心性休息颂(前八品)": {
+      "id": 121,
+      "hash": "6e5b21d27f68a7f8adb45b2f5d05f40e19fef6b4"
+    },
+    "/refs/dymxxxx/fudao/fd-01#大圆满心性休息广释-辅导01": {
+      "id": 122,
+      "hash": "c87be933917470c8a67b560b35724bb9058b94c6"
+    },
+    "/refs/dymxxxx/fudao/fd-02#大圆满心性休息广释-辅导02": {
+      "id": 123,
+      "hash": "88dd7a643361d142671e180d6bedf6bbc847f30d"
+    },
+    "/refs/dymxxxx/fudao/fd-03#大圆满心性休息广释-辅导03": {
+      "id": 124,
+      "hash": "8af183671d84bd938e066b156058442102c1357f"
+    },
+    "/refs/dymxxxx/fudao/fd-04#大圆满心性休息广释-辅导04": {
+      "id": 125,
+      "hash": "39300fbaf02aed136991e170361cb2839bab7035"
+    },
+    "/refs/dymxxxx/fudao/fd-05#大圆满心性休息广释-辅导05": {
+      "id": 126,
+      "hash": "0c12e5eed75762bb2eae18cabcf2e62cbbfe7eaa"
+    },
+    "/refs/dymxxxx/fudao/fd-06#大圆满心性休息广释-辅导06": {
+      "id": 127,
+      "hash": "da9738ccf499ef491d349002ea0ff7236cb2647d"
+    },
+    "/refs/dymxxxx/fudao/fd-07#大圆满心性休息广释-辅导07": {
+      "id": 128,
+      "hash": "2c97462e697a26fd9ae7815b72bbacdff76d72c8"
+    },
+    "/refs/dymxxxx/fudao/fd-08#大圆满心性休息广释-辅导08": {
+      "id": 129,
+      "hash": "b2a6ee95bcc45fc400121ac53e252c2827fa3b6c"
+    },
+    "/refs/dymxxxx/fudao/fd-09#大圆满心性休息广释-辅导09": {
+      "id": 130,
+      "hash": "73fac411214679b73c603eb480f40176f1f9e30b"
+    },
+    "/refs/dymxxxx/fudao/fd-10#大圆满心性休息广释-辅导10": {
+      "id": 131,
+      "hash": "4d169a218566d7e4d9fa8f785aa88fe49ef9741c"
+    },
+    "/refs/dymxxxx/fudao/fd-11#大圆满心性休息广释-辅导11": {
+      "id": 132,
+      "hash": "a3f0f8815c8e30d181692ae905fa8d4b7b07008b"
+    },
+    "/refs/fsdgj/fsdgj-qzb#佛说稻秆经笺注版": {
+      "id": 133,
+      "hash": "79de615c19bfc03d4782f7f26877711fce9cf5a1"
+    },
+    "/refs/fsdgj/fsdgj01#佛说稻杆经视频01": {
+      "id": 134,
+      "hash": "d1c21d7546c3b66da155939b8ca1a48c2159d97f"
+    },
+    "/refs/fsdgj/fsdgj02#佛说稻杆经视频02": {
+      "id": 135,
+      "hash": "d760feb9c15713376d094cbd6203bd403f7ff095"
+    },
+    "/refs/fsdgj/fsdgj03#佛说稻杆经视频03": {
+      "id": 136,
+      "hash": "f7fd22c78f6199fcc727edf40dae317d265893ff"
+    },
+    "/refs/fsdgj/fsdgj04#佛说稻杆经视频04": {
+      "id": 137,
+      "hash": "fdf19076cc72b5c372da1e4d42fcb4e36c631e09"
+    },
+    "/refs/fsdgj/fsdgj05#佛说稻杆经视频05": {
+      "id": 138,
+      "hash": "f8c44c7e2b34859e3e6e0f84db0b3cb345ecc536"
+    },
+    "/refs/fsdgj/fsdgj06#佛说稻杆经视频06": {
+      "id": 139,
+      "hash": "ebda346a0c5ed1802b5f29919c36249eda3492c6"
+    },
+    "/refs/fsdgj/fsdgj07#佛说稻杆经视频07": {
+      "id": 140,
+      "hash": "32178033b4413c29317f6ab103c04e72d12fc58c"
+    },
+    "/refs/fsdgj/fsdgj08#佛说稻杆经视频08": {
+      "id": 141,
+      "hash": "6a576c5eea5115076a1a9caef080c29c9d5ddda4"
+    },
+    "/refs/fsdgj/fsdgj09#佛说稻杆经视频09": {
+      "id": 142,
+      "hash": "94a1c185c25a98eeb6e1defd56f1185b365cc51b"
+    },
+    "/refs/fsdgj/fsdgj10#佛说稻杆经视频10": {
+      "id": 143,
+      "hash": "544f580dc0d3b3219d65d3e510d7fc8d8679d0da"
+    },
+    "/refs/fsdgj/fsdgj11#佛说稻杆经视频11": {
+      "id": 144,
+      "hash": "19c355c4f924f5f988ce8ad59c7661ff87f21e12"
+    },
+    "/refs/fsdgj/fsdgj12#佛说稻杆经视频12": {
+      "id": 145,
+      "hash": "249a44e78945ed1e106e532752e6cc70c624d6b7"
+    },
+    "/refs/fsdgj/fsdgj13#佛说稻杆经视频13": {
+      "id": 146,
+      "hash": "3af439a4c821b7aab6fb2903c938bc590f2375f0"
+    },
+    "/refs/fsdgj/fsdgj14#佛说稻杆经视频14": {
+      "id": 147,
+      "hash": "d98f75e06d7a1043e1429976dc443ed38cd6058e"
+    },
+    "/refs/fsdgj/fsdgj15#佛说稻杆经视频15": {
+      "id": 148,
+      "hash": "aff6f08b21495006f0f823a6b70ea08a74f274c1"
+    },
+    "/refs/hdjt/fjxlx#佛教心理学": {
+      "id": 149,
+      "hash": "d9bdbec8e55a74ce0557ae1e9009fb0723b74c2d"
+    },
+    "/refs/hdjt/fjxlx/xpsxl#《入菩萨行论》简要版": {
+      "id": 150,
+      "hash": "8f291b71b6bb84aca789e23f5d3b3c273c6c1e3b"
+    },
+    "/refs/hdzg/01#三个差别": {
+      "id": 151,
+      "hash": "6bad4baf8263a3373ccaf3e6b349985fe49c25ac"
+    },
+    "/refs/hdzg/01#三殊胜------行善修心的究竟方法": {
+      "id": 152,
+      "hash": "a368fa268bf220ea12ae88a55612b93d8b00b838"
+    },
+    "/refs/hdzg/01#浅谈因果关系": {
+      "id": 153,
+      "hash": "84580b12e6bd483674051f099ab7cc578eda84e8"
+    },
+    "/refs/hdzg/01#素食的意义": {
+      "id": 154,
+      "hash": "ccd6b45fb46e12f900d14a6e41cdb17d13f9bec5"
+    },
+    "/refs/hdzg/01#关于放生": {
+      "id": 155,
+      "hash": "7ff8cf51db243714fbd0448eda224239367b1f1e"
+    },
+    "/refs/hdzg/01#四谛------脱离生死的出路": {
+      "id": 156,
+      "hash": "084746146c03f1436596a1db22c310fc7286e5b3"
+    },
+    "/refs/hdzg/01#十二缘起支--生命轮回的次序": {
+      "id": 157,
+      "hash": "cbd75e16aa80727a3efc99b1b016acf1dcc9b97f"
+    },
+    "/refs/hdzg/01#菩提心略修法": {
+      "id": 158,
+      "hash": "c888fee7ba98c33ebd9518dc941f4ed8f50cfd46"
+    },
+    "/refs/hdzg/01#菩萨的见修行果": {
+      "id": 159,
+      "hash": "86e9d623ea900c71231bfdd828958d9d11075e7b"
+    },
+    "/refs/hdzg/01#怎样抉择外境是心的现象？": {
+      "id": 160,
+      "hash": "c6aee1afe2e967bf257ad92bc67afaa604f7e110"
+    },
+    "/refs/hdzg/01#二谛------开启中观门扉之钥匙": {
+      "id": 161,
+      "hash": "f3fd327bde268bebc96ac4a6cdabba6203a5874f"
+    },
+    "/refs/hdzg/01#中观的基本观点": {
+      "id": 162,
+      "hash": "e311c1436d5693607ddcd456b25fc22e2d167488"
+    },
+    "/refs/hdzg/01#无我的修法": {
+      "id": 163,
+      "hash": "8dbeb3c0397a16477a72c63d52a16d481f96c48a"
+    },
+    "/refs/hdzg/01#浅谈“如来藏”": {
+      "id": 164,
+      "hash": "11af7f58d189e0bd5d4aa787a9b02d269b47a117"
+    },
+    "/refs/hdzg/01#显宗与密宗之异同": {
+      "id": 165,
+      "hash": "acdd155af39809230a5bbd56d45be0839bb7fbb3"
+    },
+    "/refs/hdzg/01#金刚上师与灌顶": {
+      "id": 166,
+      "hash": "02b912a1744cd82de97ced77de9d589ff74c7b73"
+    },
+    "/refs/hdzg/01#如何学密": {
+      "id": 167,
+      "hash": "a4794c57eb2d2f4a6eb86f35a327fe12ccbccaea"
+    },
+    "/refs/hdzg/01#密乘十四条根本戒": {
+      "id": 168,
+      "hash": "44eef3c939461417c50e98703e3a18deb559a870"
+    },
+    "/refs/hdzg/02#加行的修法--入坐与出坐": {
+      "id": 169,
+      "hash": "993d7b22604c3cb98826f1228a71e45af5a22c76"
+    },
+    "/refs/hdzg/02#加行的修法--人身难得": {
+      "id": 170,
+      "hash": "25fa153bf61340eddece5282d456e4915f230e59"
+    },
+    "/refs/hdzg/02#加行的修法--寿命无常": {
+      "id": 171,
+      "hash": "190cf3078a0d8ee8047679077cd0328a95fab77f"
+    },
+    "/refs/hdzg/02#加行的修法--轮回过患": {
+      "id": 172,
+      "hash": "80ac3624c2563a5ee3732b3f97a82f65456bfb44"
+    },
+    "/refs/hdzg/02#加行的修法--因果不虚": {
+      "id": 173,
+      "hash": "90cbbc9254791842b3dc3f54181a56d3c848b805"
+    },
+    "/refs/hdzg/02#加行的修法--解脱利益与依止上师": {
+      "id": 174,
+      "hash": "69a9b2623316f3ee599a8ed5051ba646d6694fec"
+    },
+    "/refs/hdzg/02#加行的修法--皈依": {
+      "id": 175,
+      "hash": "20503a17d9c6fbce5906dfa02a72645eb453167e"
+    },
+    "/refs/hdzg/02#加行的修法--菩提心的修法": {
+      "id": 176,
+      "hash": "eea8fc4f83101ccc91c680ef85f836ea96db0019"
+    },
+    "/refs/hdzg/02#加行的修法--金刚萨埵修法--清净罪障之殊胜道": {
+      "id": 177,
+      "hash": "0e667dba05ab86373a9b1a4794660ebfcb779796"
+    },
+    "/refs/hdzg/02#加行的修法--曼茶罗修法--积累资粮之殊胜方便": {
+      "id": 178,
+      "hash": "5fc53d73f55ad2a39d3cea8e4d077dc0da3f163e"
+    },
+    "/refs/hdzg/02#萨迦派三十七堆曼茶罗修法": {
+      "id": 179,
+      "hash": "3ce9715184d8d8b9283e4cac2263daa8414ea85b"
+    },
+    "/refs/hdzg/02#加行的修法--上师瑜伽": {
+      "id": 180,
+      "hash": "aa9a286c4e84c5b402c6894e2a41f9054f10a64c"
+    },
+    "/refs/hdzg/02#前行念诵仪轨•开显解脱道": {
+      "id": 181,
+      "hash": "3a1b29239fd062203aa03b359f055dde90a08f49"
+    },
+    "/refs/hdzg/02#大圆满龙钦心髓内加行修法": {
+      "id": 182,
+      "hash": "fad785c55dcb6d9c8a3b9c774ee0db5f7c38ac70"
+    },
+    "/refs/hdzg/03#居士五戒": {
+      "id": 183,
+      "hash": "fd21a47216de4cfc820b4abeb24a9dc88ad24af2"
+    },
+    "/refs/hdzg/03#戒杀放生的功德": {
+      "id": 184,
+      "hash": "fb508c618d3ef3a4f3f675f1351b1e85831e8b0f"
+    },
+    "/refs/hdzg/03#如何自受菩萨戒": {
+      "id": 185,
+      "hash": "4bc1ded22033fa27865c8f566198136284f38ae9"
+    },
+    "/refs/hdzg/03#自他平等的修法": {
+      "id": 186,
+      "hash": "16e4e54ba5dbeb866c25cabc7108bcf25db88196"
+    },
+    "/refs/hdzg/03#自他相换的修法": {
+      "id": 187,
+      "hash": "61c57494698050e4aeba249eeeb4cc363655a6f6"
+    },
+    "/refs/hdzg/03#自轻他重的修法": {
+      "id": 188,
+      "hash": "0569cf0d01c3087135166b0f2142d4c04d31a652"
+    },
+    "/refs/hdzg/03#世界和平共处的诀窍------平等生存": {
+      "id": 189,
+      "hash": "56b9fdc1a0c7954e8348e6da6878b53fc483839e"
+    },
+    "/refs/hdzg/03#佛教的物种起源说": {
+      "id": 190,
+      "hash": "b48fa81821d6cecdf782152756ee1982b070be03"
+    },
+    "/refs/hdzg/03#佛教的世界观": {
+      "id": 191,
+      "hash": "5514f1d94a9afbe52fbbbcf1b971d552966322dd"
+    },
+    "/refs/hdzg/03#阿弥陀佛的修法": {
+      "id": 192,
+      "hash": "a670e1abb09254422ad4719f733f9eab8c69cd81"
+    },
+    "/refs/hdzg/03#附录：壹受戒行善的殊胜日": {
+      "id": 193,
+      "hash": "c0b3013281d59d34935b728c4688d23273cf9bbf"
+    },
+    "/refs/hdzg/03#附录：贰法王如意宝的遗言": {
+      "id": 194,
+      "hash": "54a17ff424b84f8ad8097421a4cfe6d4ef046e0b"
+    },
+    "/refs/hdzg/03#犯失密乘戒的界线与忏悔清净的方法": {
+      "id": 195,
+      "hash": "0fa3e4f8671ac1a80c95bb695214deaa5e53996e"
+    },
+    "/refs/hdzg/04#佛教的定义": {
+      "id": 196,
+      "hash": "fe63933aec16831b76a9156c1925ef40c101d62a"
+    },
+    "/refs/hdzg/04#生存的方式和生存的意义": {
+      "id": 197,
+      "hash": "038f2e14b26de0d1f0712c42b84c189775673ebe"
+    },
+    "/refs/hdzg/04#如何做一个标准居士": {
+      "id": 198,
+      "hash": "f443563d032767d4a4f34f2d47a7087d1df3b70c"
+    },
+    "/refs/hdzg/04#如何将病苦转为道用": {
+      "id": 199,
+      "hash": "b29c08ead595c7bfcb0fa70efa9c638062781849"
+    },
+    "/refs/hdzg/04#《三主要道论》详解": {
+      "id": 200,
+      "hash": "1eaa4182f92aeb8f1299a8af5b3b88d76d5ce9ec"
+    },
+    "/refs/hdzg/04#四法印的见解与修法": {
+      "id": 201,
+      "hash": "841f41249a8c7c12639dc0e5b5e1830cec2fe6bd"
+    },
+    "/refs/hdzg/04#四法印的见解与修法（五）": {
+      "id": 202,
+      "hash": "9c3277ab882e1ca4ab251a8241438e6d87b8457f"
+    },
+    "/refs/hdzg/04#四法印的见解与修法（六）": {
+      "id": 203,
+      "hash": "15f37404a84b2c652a3d109f17a8f0c4bf96a9ab"
+    },
+    "/refs/hdzg/04#四法印的见解与修法（七）": {
+      "id": 204,
+      "hash": "2b75332c89695c4814b7e44a98b6aff0429b8bba"
+    },
+    "/refs/hdzg/05#《修心八颂》详解": {
+      "id": 205,
+      "hash": "abf151f58a3d6230d262d96379a635870feae875"
+    },
+    "/refs/hdzg/05#饶益有情九观察": {
+      "id": 206,
+      "hash": "9fc753c04b5d700f09e0eeaaaa69bb7241d464b0"
+    },
+    "/refs/hdzg/05#《般若波罗密多心经》详解": {
+      "id": 207,
+      "hash": "0807239c26c605bcc60bc1cafe1c3b8349e25749"
+    },
+    "/refs/hdzg/05#藏传佛教简介": {
+      "id": 208,
+      "hash": "ab8b766251dfef5bb46b801c02bde7e9929c3166"
+    },
+    "/refs/hdzg/05#显密异同": {
+      "id": 209,
+      "hash": "1f77b15060b4cb3e84544709494bba1c4dbbf7c7"
+    },
+    "/refs/hdzg/05#黑蛇总义": {
+      "id": 210,
+      "hash": "56672c7f23a8f4762574a4d6e08121cc0e449a7b"
+    },
+    "/refs/hdzg/05#金刚萨埵修法": {
+      "id": 211,
+      "hash": "83b82cdfb4d06e9fac8da50e1bdf3a7c8546ac53"
+    },
+    "/refs/hdzg/06#佛教徒的生活模式": {
+      "id": 212,
+      "hash": "8a91f24d1e8e11537a360caa42a24caf719232ba"
+    },
+    "/refs/hdzg/06#略说八关斋戒": {
+      "id": 213,
+      "hash": "720ce359331ce604c27144a79a72cbd9143afc5f"
+    },
+    "/refs/hdzg/06#修心七要": {
+      "id": 214,
+      "hash": "7bf95b34a46862c8213f6c9e2ae1b75687de1db5"
+    },
+    "/refs/hdzg/06#《修心七要》略释": {
+      "id": 215,
+      "hash": "418ebe6b26182f2135071a990d884d01a140facb"
+    },
+    "/refs/hdzg/06#金刚乘的名词解释": {
+      "id": 216,
+      "hash": "9906a3c1c427ec22644d2bc89e292465ec701a89"
+    },
+    "/refs/hdzg/06#中阴愿词": {
+      "id": 217,
+      "hash": "1e40bb51eac17aa077ccbbeb71a96c55b854e776"
+    },
+    "/refs/hdzg/07#四依法": {
+      "id": 218,
+      "hash": "4efdc0f5f609e9d3b0c85d717dbff9571d8e8248"
+    },
+    "/refs/hdzg/07#对初学者的教诲": {
+      "id": 219,
+      "hash": "a79d2b189a90750b4eea586857c0eadd40cbf3e4"
+    },
+    "/refs/hdzg/07#菩萨戒浅释": {
+      "id": 220,
+      "hash": "6f1872ef147430f0d1376773474c72bb15ff8832"
+    },
+    "/refs/hdzg/07#佛法融入生活": {
+      "id": 221,
+      "hash": "2f2b2923b1022203c8c7de9ca7aca844a311a560"
+    },
+    "/refs/hdzg/07#《华严经》净行品第十一（节选）": {
+      "id": 222,
+      "hash": "9bd2f0a365c52db24a3b73a860d77e631ecbebdc"
+    },
+    "/refs/hdzg/07#寂止的修法": {
+      "id": 223,
+      "hash": "54520309b9bd6f1a55aaf7473192c90ea3cef5e7"
+    },
+    "/refs/hdzg/07#梦幻世界": {
+      "id": 224,
+      "hash": "abf0298c95d67f174dee4d504321461b574684fe"
+    },
+    "/refs/hdzg/08#为什么现代人越来越没有幸福感": {
+      "id": 225,
+      "hash": "2eb7a4ccd374090ca22bc5767a7e3624440e68c9"
+    },
+    "/refs/hdzg/08#如何面对痛苦和幸福": {
+      "id": 226,
+      "hash": "780d7e55a2b7acb1bdb6703c59c3f262f3cea216"
+    },
+    "/refs/hdzg/08#离四贪浅释": {
+      "id": 227,
+      "hash": "9d5ab72f0fcd978bcaca1b8a3888dec18ffe9e8a"
+    },
+    "/refs/hdzg/08#饶益有情戒": {
+      "id": 228,
+      "hash": "f0fd80e99272e4a818eb8c055f6c15cca0d5cb42"
+    },
+    "/refs/hdzg/08#幻化故事的启发": {
+      "id": 229,
+      "hash": "94f04004e45d74c7c601beacf679bd72d6703cda"
+    },
+    "/refs/hdzg/08#两种佛性": {
+      "id": 230,
+      "hash": "0447fab1f6cd2168a24379926a9be9adba84aa42"
+    },
+    "/refs/hdzg/08#《赞法界颂》略释": {
+      "id": 231,
+      "hash": "0d433b2535d49c4a8fa5541b192ba8a54a669630"
+    },
+    "/refs/hdzg/08#如何接受灌顶": {
+      "id": 232,
+      "hash": "ccb440ff778ed63a8b3da636a003919b528880ad"
+    },
+    "/refs/hdzg/08#上师瑜伽（速赐加持）的修法": {
+      "id": 233,
+      "hash": "b444ea9a831fa2453d6fc8612114bf4de94d63d3"
+    },
+    "/refs/hdzg/08#观心的诀窍": {
+      "id": 234,
+      "hash": "2a65d90d1c1ae69aa0b22bd95907732e170b3fc4"
+    },
+    "/refs/hdzg/09#藏传佛教的幸福学": {
+      "id": 235,
+      "hash": "f92480360ebedefff0ae48b833e7bd87643094a4"
+    },
+    "/refs/hdzg/09#佛教哲学的现代意义": {
+      "id": 236,
+      "hash": "4fc35885c6477318822efd72744dbf23e3a3afcf"
+    },
+    "/refs/hdzg/09#痛苦，其实只是纸老虎": {
+      "id": 237,
+      "hash": "bf3bc23960815d835b719636185694030b8999ef"
+    },
+    "/refs/hdzg/09#现代人的精神装备": {
+      "id": 238,
+      "hash": "037e9865bfd026760ab07bf0fec1790923ee6ec5"
+    },
+    "/refs/hdzg/09#佛教与商业·企业文化必备的六种准则": {
+      "id": 239,
+      "hash": "2893daf17466f8a8ee5a08c0b9a7164bd5f6686b"
+    },
+    "/refs/hdzg/09#了义与不了义": {
+      "id": 240,
+      "hash": "74468c254411f836744a6cab47689f4e9e17aaa3"
+    },
+    "/refs/hdzg/09#解脱的原理": {
+      "id": 241,
+      "hash": "45b33f98b29486ebf57c719550f7f46d6a970283"
+    },
+    "/refs/hdzg/09#禅修要诀": {
+      "id": 242,
+      "hash": "87442a40fac0db93a861d578b12dff47ff325b89"
+    },
+    "/refs/hdzg/09#调心的过程": {
+      "id": 243,
+      "hash": "ac95d716c7736769517cc092f4cf8a58820f9346"
+    },
+    "/refs/hdzg/09#《缘起赞》颂词": {
+      "id": 244,
+      "hash": "18a02141b3e75b2350883f79335336c29da2aa13"
+    },
+    "/refs/hdzg/09#《缘起赞》略释": {
+      "id": 245,
+      "hash": "64add1ef640ab2da69e53e049eb096836d935112"
+    },
+    "/refs/hdzg/10#你可以更幸福": {
+      "id": 246,
+      "hash": "ee42a4850058aa48c6f10e5e984b8b0ca6c90581"
+    },
+    "/refs/hdzg/10#因果学说与现代文明社会": {
+      "id": 247,
+      "hash": "3a014d15d370f36a03a303795cd02e6e88c5c586"
+    },
+    "/refs/hdzg/10#禅修与现代生活": {
+      "id": 248,
+      "hash": "8c7cbf138cfced5a55658ab2fe06af97414c56b7"
+    },
+    "/refs/hdzg/10#如何面对贪心": {
+      "id": 249,
+      "hash": "36d0628ae0cd17aefcd06e365c86b10a6732493a"
+    },
+    "/refs/hdzg/10#如何面对嗔恨心": {
+      "id": 250,
+      "hash": "e48a9bfab33814c8d5370b1e3863a775c6d43ae9"
+    },
+    "/refs/hdzg/10#如何面对无明": {
+      "id": 251,
+      "hash": "0e311819a84a7ed1a9e85ff2c81e1a57cde4d69f"
+    },
+    "/refs/hdzg/10#生命的真相": {
+      "id": 252,
+      "hash": "b45e90dd75fc1caf8b5dd488411e168ddbd9a018"
+    },
+    "/refs/hdzg/10#正确认识死亡": {
+      "id": 253,
+      "hash": "93047560d3cef7769f25a624e69b5cd18a147e6b"
+    },
+    "/refs/hdzg/10#如何面对死亡": {
+      "id": 254,
+      "hash": "736c40a8e2db7196dcb6241727c7858e9597d46e"
+    },
+    "/refs/hdzg/10#如何面对投生": {
+      "id": 255,
+      "hash": "fd164dca8c2f471a4b19d932827e052954c83e28"
+    },
+    "/refs/hdzg/10#四圣谛": {
+      "id": 256,
+      "hash": "7c6278fc7b0e43c02fc96ec70734ff1cf4742c18"
+    },
+    "/refs/hdzg/10#语加持的修法": {
+      "id": 257,
+      "hash": "51f7f9a3a991bf59a156c6f9e222fe221716eb0e"
+    },
+    "/refs/hdzg/10#金刚七句之上师瑜伽": {
+      "id": 258,
+      "hash": "f91698db328e6be2b363003f82ef557dae1e5912"
+    },
+    "/refs/hdzg/11#01 十大遗憾": {
+      "id": 259,
+      "hash": "82b2c280f8f886e88705cd95716ded290b36ad34"
+    },
+    "/refs/hdzg/11#02 十大必须": {
+      "id": 260,
+      "hash": "2f18757542c81223924b5bbf945b4301875ce475"
+    },
+    "/refs/hdzg/11#03 十项依止": {
+      "id": 261,
+      "hash": "85adbe01bd82aefb38611f88e5de54a81cfa8751"
+    },
+    "/refs/hdzg/11#04 十项远离": {
+      "id": 262,
+      "hash": "6bdf7c4d7b8d2de5ba412e955be7dbca74fe00f7"
+    },
+    "/refs/hdzg/11#05 十一项不拒绝": {
+      "id": 263,
+      "hash": "8bbe7cc6d38e3e38ea75d5090c09a3c2aeba83c5"
+    },
+    "/refs/hdzg/11#06 十项所知": {
+      "id": 264,
+      "hash": "219c5c6b93681d334537a78acc4c8d8e619b610d"
+    },
+    "/refs/hdzg/11#07 十项实修": {
+      "id": 265,
+      "hash": "6044172d9c9da8de599d85742c3e5764586080eb"
+    },
+    "/refs/hdzg/11#08 十项精勤": {
+      "id": 266,
+      "hash": "cda03a414df84204cf0f46170e5730b77173ed1f"
+    },
+    "/refs/hdzg/11#09 十项鞭策": {
+      "id": 267,
+      "hash": "31944fbc98b62f0afbe6c50b8aa4a98b82181e07"
+    },
+    "/refs/hdzg/11#10 十项沦落": {
+      "id": 268,
+      "hash": "d579bad576abacec606ea6e47930e50e2fb53db3"
+    },
+    "/refs/hdzg/11#11 十项相似误区": {
+      "id": 269,
+      "hash": "b2f876dc4acdf9c208397579d1a05c9031c1192b"
+    },
+    "/refs/hdzg/11#12 十项正确无误": {
+      "id": 270,
+      "hash": "f3ae31325f2adba6293fb2b1165eea31907de94d"
+    },
+    "/refs/hdzg/11#13 十四项无意义": {
+      "id": 271,
+      "hash": "942b7684c7c1f48abffce6755af32a80b4ad4868"
+    },
+    "/refs/hdzg/11#14 十八项修行人的耻辱": {
+      "id": 272,
+      "hash": "5c935ccfbf3560384f278ad163bcc6200963db03"
+    },
+    "/refs/hdzg/12#15 人生十二项必不可少": {
+      "id": 273,
+      "hash": "daab75b2f8d83969b7689cf3ec8643efadff201a"
+    },
+    "/refs/hdzg/12#16 十一种圣贤的标志": {
+      "id": 274,
+      "hash": "5cb7ca14eb6f3511f991915df31b3507ffb400cd"
+    },
+    "/refs/hdzg/12#17 人生十项无济于事": {
+      "id": 275,
+      "hash": "bf4b7fd714cb7f1ee2e3329b71995bf50d3d5442"
+    },
+    "/refs/hdzg/12#18 十项自讨苦吃": {
+      "id": 276,
+      "hash": "4a9443abc35c8f50af218291dae1c48e2b2d09de"
+    },
+    "/refs/hdzg/12#19 十项自给自恩": {
+      "id": 277,
+      "hash": "3f28bc9295cef4fec52f667f5cb0d351d4cf7ed3"
+    },
+    "/refs/hdzg/12#20 十项正确的法": {
+      "id": 278,
+      "hash": "5ce783aa5aebc72a40c426214743ce245fbd2117"
+    },
+    "/refs/hdzg/12#21 修行人的十项迷乱": {
+      "id": 279,
+      "hash": "a20f14035980d705e1e9c331b4b85356f8ad3255"
+    },
+    "/refs/hdzg/12#22 十项需要之法": {
+      "id": 280,
+      "hash": "5e1682b8d18e9090824e0b0edd848900cf9c83e9"
+    },
+    "/refs/hdzg/12#23 十项不需要": {
+      "id": 281,
+      "hash": "58e4511c3e08941cdab24984794f9c7acff9f5b9"
+    },
+    "/refs/hdzg/12#24 十项殊胜": {
+      "id": 282,
+      "hash": "4093faddd027be0ed82bda1a6b3b542d7e0a71c7"
+    },
+    "/refs/hdzg/12#25 十项如何皆好": {
+      "id": 283,
+      "hash": "b3bee592f44d71cc44315420a5e89ef7272e0034"
+    },
+    "/refs/hdzg/12#26 佛法的十种功德": {
+      "id": 284,
+      "hash": "359913e2091b372f4654a190cec5af2f08793a88"
+    },
+    "/refs/hdzg/12#27 十项唯名之法": {
+      "id": 285,
+      "hash": "164bd57d739bb1063bce15c527ee2eeb1741a645"
+    },
+    "/refs/hdzg/12#28 十项大乐任运自在": {
+      "id": 286,
+      "hash": "341bbb9a46aa01ee6a718ef33170aa2253a66f31"
+    },
+    "/refs/hdzg/12#尾义": {
+      "id": 287,
+      "hash": "fc3a33fcc79574b79290f276d07d43048fe22755"
+    },
+    "/refs/llbzl/llbzl-01#第01品观境（01~09）": {
+      "id": 288,
+      "hash": "9378dac1ec705762a341fb872ec144ad5bca8444"
+    },
+    "/refs/llbzl/llbzl-02#第02品观识（10~13）": {
+      "id": 289,
+      "hash": "b8b83b545bdea66b4bdfef65b949cab7e55d0d85"
+    },
+    "/refs/llbzl/llbzl-03#第03品观总别（14~17）": {
+      "id": 290,
+      "hash": "e53f0f6042e8bc1245e5d405b87825c3c932fecf"
+    },
+    "/refs/llbzl/llbzl-04#第04品观建立遣余（18~25）": {
+      "id": 291,
+      "hash": "9b904c10e1a8ea6a957935dfaec57d269a8d1761"
+    },
+    "/refs/llbzl/llbzl-05#第05品观所诠能诠（26~29）": {
+      "id": 292,
+      "hash": "b38c7a40a77bffe8b45f0ac4bbff1f5f9898cdc2"
+    },
+    "/refs/llbzl/llbzl-06#第06品观相属（30~38）": {
+      "id": 293,
+      "hash": "7a3093083a49fd80727e0900b400b8efcace791f"
+    },
+    "/refs/llbzl/llbzl-07#第07品观相违（39~42）": {
+      "id": 294,
+      "hash": "dc93ae70aa0232724402ded7c1854ee5a22d94f7"
+    },
+    "/refs/llbzl/llbzl-08#第08品观法相（43~53）": {
+      "id": 295,
+      "hash": "909f5495fe92d71af409434c5a7c86a5307d2523"
+    },
+    "/refs/llbzl/llbzl-09#第09品观现量（54~60）": {
+      "id": 296,
+      "hash": "28da981cffdddb3079fde7bb4b2dab2f1d5194fe"
+    },
+    "/refs/llbzl/llbzl-10#第10品观自利比量（61~78）": {
+      "id": 297,
+      "hash": "8458a13d46e715638244d42a565d29d986a047e2"
+    },
+    "/refs/llbzl/llbzl-11#第11品观他利比量（79~84）": {
+      "id": 298,
+      "hash": "4c3ee88c5c27cf998a05c613bb416f66536ad17d"
+    },
+    "/refs/llbzl/llbzl-qa#思考题及答案": {
+      "id": 299,
+      "hash": "7e14a1fab6317aa8a7559080d52950fac0cfe76e"
+    },
+    "/refs/llbzl/llbzls#量理宝藏论释": {
+      "id": 300,
+      "hash": "ecbd643ac87296003eeb76b5b248a750ab18d57e"
+    },
+    "/refs/misc/bxl#宝性论--菩提品": {
+      "id": 301,
+      "hash": "f5f41ae6428b629fae6cec70c1d54a5933ce3dad"
+    },
+    "/refs/misc/byj#百业经": {
+      "id": 302,
+      "hash": "7620b3c56382ee2eebb62a91c0aab42ebd423e3b"
+    },
+    "/refs/misc/fjkxl#佛教科学论": {
+      "id": 303,
+      "hash": "b9012328aa5c14a4bffca6890a092a46c2d631df"
+    },
+    "/refs/misc/fzxfd#《佛子行》辅导": {
+      "id": 304,
+      "hash": "d367d2c4f0451be2deb61a865997f5c59c92cf98"
+    },
+    "/refs/misc/fzxjj#《佛子行》讲解": {
+      "id": 305,
+      "hash": "f1092e9b0baf6e613e01b57bea7c19b783641326"
+    },
+    "/refs/misc/jyhj#解义慧剑": {
+      "id": 306,
+      "hash": "1c36d0767d058c46d5ad91f6496e8b1c9937a872"
+    },
+    "/refs/misc/qjqdw-fudao#《七句祈祷文释·白莲花》辅导": {
+      "id": 307,
+      "hash": "ab28abcc723370d83348e13e5aa4ad87fe1b9051"
+    },
+    "/refs/misc/qjqdw#《七句祈祷文释·白莲花》": {
+      "id": 308,
+      "hash": "2eeab7d7b25d69417bd79df50293e52e9f279677"
+    },
+    "/refs/misc/qsjsl#前世今生论": {
+      "id": 309,
+      "hash": "9a1acaa6d8d87d540858ae4e2ac274878622dd5d"
+    },
+    "/refs/misc/rthjj#佛为阿难说人处胎会讲记": {
+      "id": 310,
+      "hash": "0aa1fc47b864939dbac8d0070fe4cd557364fb0a"
+    },
+    "/refs/misc/snsbj#随念三宝经讲记": {
+      "id": 311,
+      "hash": "ad088d55937ef65e92675322b8665915a5cec530"
+    },
+    "/refs/misc/ttwsx#谈谈闻思修": {
+      "id": 312,
+      "hash": "0355f392acfe6e38873d81ba82bdbc9bd17e57c9"
+    },
+    "/refs/misc/xyjjj#贤愚经讲记": {
+      "id": 313,
+      "hash": "9a5cef4321003e11cda6ddb3d418f0fb4433098a"
+    },
+    "/refs/misc/ygmjl#因果明镜论": {
+      "id": 314,
+      "hash": "963e95c4ac260cd1229676c5dc7f0686a56b3cc0"
+    },
+    "/refs/misc/ysxxdzdhgs#一生修行的重点和归宿": {
+      "id": 315,
+      "hash": "28cef6d6a368bc98329d85f942a0fca675ab67c6"
+    },
+    "/refs/misc/zfncj01#正法念处经讲记1": {
+      "id": 316,
+      "hash": "a60f63dbe3dcc26f858a6e5d8de1fdb9f77d1554"
+    },
+    "/refs/misc/zfncj02#正法念处经讲记2": {
+      "id": 317,
+      "hash": "741f69d2657b637b271a324b33aa768ef432afb2"
+    },
+    "/refs/misc/zfncj03#正法念处经讲记3": {
+      "id": 318,
+      "hash": "e5fa84c46bc4dd361562b3394447622aeb43aeab"
+    },
+    "/refs/misc/zfncj04#正法念处经讲记4": {
+      "id": 319,
+      "hash": "6e07837696cb9d52ead585c83763dc386f9c1e66"
+    },
+    "/refs/misc/zfncj05#正法念处经讲记5": {
+      "id": 320,
+      "hash": "63a9168a322d0e062060ff88accb37e623246271"
+    },
+    "/refs/misc/zyxzmd#忠言心之明点·忏悔要义颂": {
+      "id": 321,
+      "hash": "9c2898178261999285367b120950e115fc81216c"
+    },
+    "/refs/ptdcdgl/1#菩提道次第广论讲记 (一)": {
+      "id": 322,
+      "hash": "858cbd1e5b70c2feb17c02c1ed33ebc82aeb117f"
+    },
+    "/refs/ptdcdgl/2#《菩提道次第广论讲记》 (二)": {
+      "id": 323,
+      "hash": "0bf80e529bb76ecc201489bba62579bbd0b18469"
+    },
+    "/refs/ptdcdgl/3#菩提道次第广论讲记 (三)": {
+      "id": 324,
+      "hash": "3bcdb204e5ed07e48730ee200e8b4f026806f486"
+    },
+    "/refs/ptdcdgl/4#菩提道次第广论讲记 (四)": {
+      "id": 325,
+      "hash": "bf860a9ce655ffe249d898fb20d4d716f320e4a6"
+    },
+    "/refs/ptdcdgl/5#5（第134~159课）": {
+      "id": 326,
+      "hash": "661d3eea615011a9209ea84161554b39b51c4798"
+    },
+    "/refs/ptdcdgl/6#6（第160~183课）": {
+      "id": 327,
+      "hash": "5b57b1f503e9b68f0462a89e66b8f1eac2a00c66"
+    },
+    "/refs/ptdcdgl/7#7（第184~213课）": {
+      "id": 328,
+      "hash": "f093b22e9ee2ddaa774444d8b9ed015f491947ca"
+    },
+    "/refs/ptdcdgl#菩提道次第广论": {
+      "id": 329,
+      "hash": "1c26d5ecc1e645b4690cd4738b1ffb4d5dce8482"
+    },
+    "/refs/qxbwl#前行备忘录": {
+      "id": 330,
+      "hash": "2f294acd53a41e932ea269757d46c80b31eff155"
+    },
+    "/refs/qxbwl/qxxl4-01xm#前行备忘录-暇满": {
+      "id": 331,
+      "hash": "f582ba131b645b0b3a1949628465bbdf50c07bb4"
+    },
+    "/refs/qxbwl/qxxl4-02wc#前行备忘录--无常实修引导": {
+      "id": 332,
+      "hash": "69b9fd5609cfaf628235086e5c5f642d64547dd1"
+    },
+    "/refs/qxbwl/qxxl4-03lh#前行备忘录--轮回": {
+      "id": 333,
+      "hash": "19b4e50f793147c6676d52202f8897eb671bd2e7"
+    },
+    "/refs/qxbwl/qxxl4-04yg#前行备忘录-因果": {
+      "id": 334,
+      "hash": "790de4ab708915414bfcffa00243480a39c066ee"
+    },
+    "/refs/qxgs/dymqx-fcgs#大圆满前行引导文": {
+      "id": 335,
+      "hash": "d31120936f2cc930fab61587e5997d6d9ff7f699"
+    },
+    "/refs/qxgs/fudao/qxgsfd-01yw#01引文(01-02)": {
+      "id": 336,
+      "hash": "597af6bd00f7c3b3d4d5da1524e62e0426238f46"
+    },
+    "/refs/qxgs/fudao/qxgsfd-02wffs#02闻法方式(03-13)": {
+      "id": 337,
+      "hash": "644cdc023bc5eccf87bde59209f575b6957c639e"
+    },
+    "/refs/qxgs/fudao/qxgsfd-03xm#03暇满难得(14-27)": {
+      "id": 338,
+      "hash": "eb08feaa442364f66f0766654816fda76ed398bb"
+    },
+    "/refs/qxgs/fudao/qxgsfd-04wc#04寿命无常(28-39)": {
+      "id": 339,
+      "hash": "1e7d8cffe779643c01da6ece4398d56259a5858a"
+    },
+    "/refs/qxgs/fudao/qxgsfd-05lh#05轮回痛苦(40-58)": {
+      "id": 340,
+      "hash": "d86f6cd0a65e8c9e808e8ae4bb0d24a2297937aa"
+    },
+    "/refs/qxgs/fudao/qxgsfd-06yg#06因果不虚(59-72)": {
+      "id": 341,
+      "hash": "a6b1b42f5d0d9322c8ad402b1a9def0efdbdac9a"
+    },
+    "/refs/qxgs/fudao/qxgsfd-07jtly#07解脱利益依止上师(73-83)": {
+      "id": 342,
+      "hash": "e2a2c53809569eefc72f2a03d034c26ec57b3e4d"
+    },
+    "/refs/qxgs/fudao/qxgsfd-08gy#08皈依(84-90)": {
+      "id": 343,
+      "hash": "07a6945fb350a87e77173b0fdc0ddb350d1cbaa0"
+    },
+    "/refs/qxgs/fudao/qxgsfd-09ptx#09发殊胜菩提心(91-113)": {
+      "id": 344,
+      "hash": "f89517c7d7a47167bdc6053ba20f1b5b4409dd92"
+    },
+    "/refs/qxgs/fudao/qxgsfd-10jgsd#10念修金刚萨埵(114-118)": {
+      "id": 345,
+      "hash": "5dee70530ddc3a9f3de26821f13af6778d4d0ec5"
+    },
+    "/refs/qxgs/fudao/qxgsfd-11jlzl#11积累资粮(119-125)": {
+      "id": 346,
+      "hash": "ab265075113e0cf858dbe6ce80e2e3964857705e"
+    },
+    "/refs/qxgs/fudao/qxgsfd-12ssyj#12上师瑜伽(126-137)": {
+      "id": 347,
+      "hash": "2c677fefabbe481d411229e02280873028d73385"
+    },
+    "/refs/qxgs/fudao/qxgsfd-13wsf#13往生法(138-142)": {
+      "id": 348,
+      "hash": "bf9b0dac340af2443c765ad2ccf9511cedd998fc"
+    },
+    "/refs/qxgs/fudao/qxgsfd-14jw#14结文(143-144)": {
+      "id": 349,
+      "hash": "7e0e5f201cdba7f6a87c1141069bb71b45642979"
+    },
+    "/refs/qxgs/fudao/qxgsfd-audio-files#前行辅导-智诚堪布音频文件列表": {
+      "id": 350,
+      "hash": "99eb8347929449a507910e34182b3d7c5ff4c09f"
+    },
+    "/refs/qxgs/qxgs-01yw#01引文(1-2)": {
+      "id": 351,
+      "hash": "e45e8f880e48c828c9c855c04fe4916b0276768e"
+    },
+    "/refs/qxgs/qxgs-02wffs#02闻法方式(3-13)": {
+      "id": 352,
+      "hash": "10860a48fd11077b8cd72c903dffe0df92a0ebe2"
+    },
+    "/refs/qxgs/qxgs-03xm#03暇满难得(14-27)": {
+      "id": 353,
+      "hash": "fd425275dc9c0d57662f57223bd0a36d6b25226e"
+    },
+    "/refs/qxgs/qxgs-04wc#04寿命无常(28-39)": {
+      "id": 354,
+      "hash": "99480bc994b72c5abf37e992058f3b9841261311"
+    },
+    "/refs/qxgs/qxgs-05lh#05轮回痛苦(40-58)": {
+      "id": 355,
+      "hash": "0a0b33b5f57e487978da87ba6ed41c1761170d1a"
+    },
+    "/refs/qxgs/qxgs-06yg#06因果不虚(59-72)": {
+      "id": 356,
+      "hash": "5fc77cc06f36b885f8da3bc04ba0a0a1576c8ce1"
+    },
+    "/refs/qxgs/qxgs-07jtly#07解脱利益依止上师(73-83)": {
+      "id": 357,
+      "hash": "6e5ad99d4e3bc8fb39ba9c83cd209cd8fc2a5ac8"
+    },
+    "/refs/qxgs/qxgs-08gy#08皈依(84-90)": {
+      "id": 358,
+      "hash": "8839f16f4d287b571175113a57a0c469172c3ef4"
+    },
+    "/refs/qxgs/qxgs-09ptx#09发殊胜菩提心(91-113)": {
+      "id": 359,
+      "hash": "ea5544b3addae393fb80a0a65746e77d72074824"
+    },
+    "/refs/qxgs/qxgs-10jgsd#10念修金刚萨埵(114-118)": {
+      "id": 360,
+      "hash": "6ab2921b8d97c66031f82c53c5b81096898cc610"
+    },
+    "/refs/qxgs/qxgs-11jlzl#11积累资粮(119-125)": {
+      "id": 361,
+      "hash": "3bef72d63e53cdcc091f985e0e9a34bb346c93b2"
+    },
+    "/refs/qxgs/qxgs-12ssyj#12上师瑜伽(126-137)": {
+      "id": 362,
+      "hash": "e8b112e59433c071fce05fb0803d603596951215"
+    },
+    "/refs/qxgs/qxgs-13wsf#13往生法(138-142)": {
+      "id": 363,
+      "hash": "e3ef6103155799ad014a129887f8cba342251a1c"
+    },
+    "/refs/qxgs/qxgs-14jw#14结文(143-144)": {
+      "id": 364,
+      "hash": "56d87fad15715183780b46acd383dfbb4c9da9b0"
+    },
+    "/refs/rxl/01#第一品菩提心利益(7-14)": {
+      "id": 365,
+      "hash": "e971e7132156f8c783c3654582217724eab3e1c7"
+    },
+    "/refs/rxl/02#第二品忏悔罪业(15-28)": {
+      "id": 366,
+      "hash": "dc2f47bd341bd190374ca26f31bc8ad45a4a9ed3"
+    },
+    "/refs/rxl/03#第三品受持菩提心(29-35)": {
+      "id": 367,
+      "hash": "35d69767e4556a1069e6500a1ad4855f8201e1e9"
+    },
+    "/refs/rxl/04#第四品不放逸(36-46)": {
+      "id": 368,
+      "hash": "d0303d41e5908acc45b555c3bd82e886a0a4cb1d"
+    },
+    "/refs/rxl/05#第五品正知正念(47-69)": {
+      "id": 369,
+      "hash": "04e1a6235461e1aa3dd1f239429067cc5cad6635"
+    },
+    "/refs/rxl/06#第六品安忍(70-94)": {
+      "id": 370,
+      "hash": "3d18170b23af8dc326d1321b7498ba63009687d3"
+    },
+    "/refs/rxl/07#第七品精进(95-110)": {
+      "id": 371,
+      "hash": "e0bfb6dba1c549b473c2d348de04cc598cb143c3"
+    },
+    "/refs/rxl/08#第八品静虑(111-152)": {
+      "id": 372,
+      "hash": "17e765a0ea6ca94e3f832041e0f2a742a155f412"
+    },
+    "/refs/rxl/09#第九品智慧(153-190)": {
+      "id": 373,
+      "hash": "cdd3bff17371d601c2a445ff62da06fb48561473"
+    },
+    "/refs/rxl/0#引文(1-6)": {
+      "id": 374,
+      "hash": "2d21d7439478b5867478ab1395d1e9e99f2e6240"
+    },
+    "/refs/rxl/10#第十品回向(191-201)": {
+      "id": 375,
+      "hash": "f8fc504cbce75090fd43d13666eac29576833c22"
+    },
+    "/refs/rxl/fudao/rxl-fd01#入行论辅导第1品(1-14)": {
+      "id": 376,
+      "hash": "430b563593302c0e59cd77420468fc9775ddf8ea"
+    },
+    "/refs/rxl/fudao/rxl-fd02#入行论辅导第2品(15-28)": {
+      "id": 377,
+      "hash": "6411f760cd4dffe719e61ca05381ad9c618f4726"
+    },
+    "/refs/rxl/fudao/rxl-fd03#入行论辅导第3品(29-35)": {
+      "id": 378,
+      "hash": "765969901df415ec3dc628ade9a3266921550775"
+    },
+    "/refs/rxl/fudao/rxl-fd04#入行论辅导第3品(36-46)": {
+      "id": 379,
+      "hash": "944d02635c0f2045989c986dd521823c7768c5a7"
+    },
+    "/refs/rxl/fudao/rxl-fd05#入行论辅导第5品(47-69)": {
+      "id": 380,
+      "hash": "f5821ee8cb06e53c68a66bf275c3226182fa5398"
+    },
+    "/refs/rxl/fudao/rxl-fd06#入行论辅导第6品(70-94)": {
+      "id": 381,
+      "hash": "2142e6bd368c70a7926bb6d72df935d8bad67b48"
+    },
+    "/refs/rxl/fudao/rxl-fd07#入行论辅导第7品(95-110)": {
+      "id": 382,
+      "hash": "f156b7f45c9cdf36abf2416b54e9ce9b56c7b112"
+    },
+    "/refs/rxl/fudao/rxl-fd08#入行论辅导第8品(111-152)": {
+      "id": 383,
+      "hash": "9b81fc1a0808e57f2eb6cfece2a688dda4c2dc02"
+    },
+    "/refs/rxl/fudao/rxl-fd09#入行论辅导第9品(153-190)": {
+      "id": 384,
+      "hash": "cbe63a44ba0fed2c1bc4415721350a227cb6fa44"
+    },
+    "/refs/rxl/fudao/rxl-fd10#入行论辅导第10品(191-201)": {
+      "id": 385,
+      "hash": "9c46417f265df04cb11bf24f6418216caff11fb6"
+    },
+    "/refs/rxl#寂天菩萨顶礼偈": {
+      "id": 386,
+      "hash": "b556017708fa76a32d7591c1051ebb66cd685641"
+    },
+    "/refs/rxl/rxl-en#英文版讲记": {
+      "id": 387,
+      "hash": "d1e4fc38acd7c31bb71a96f7ef57fb5847a7cb3d"
+    },
+    "/refs/rxl/skt#思考题及参考答案": {
+      "id": 388,
+      "hash": "bbc29d0d7e56e832da3b290f2c776108496bb5fb"
+    },
+    "/refs/rxl/ssh#入菩萨行论•善说海": {
+      "id": 389,
+      "hash": "cb492893790314ad814198357f4c9b7650fdc809"
+    },
+    "/refs/rxl/zhuanji#传记": {
+      "id": 390,
+      "hash": "14a38410d0112b807568cdcdba30db005125094e"
+    },
+    "/refs/sllclp/clpfd01-10#释量论·成量品广释-法师辅导01-10": {
+      "id": 391,
+      "hash": "2b06f66b483d7f87a91f4ed428d0e3bb5f952862"
+    },
+    "/refs/sllclp/clpfd11-20#释量论·成量品广释-法师辅导11-20": {
+      "id": 392,
+      "hash": "21843ae11b0103eac5fb1e01f6bf8b79d057a110"
+    },
+    "/refs/sllclp/clpfd21-30#释量论·成量品广释-法师辅导21-30": {
+      "id": 393,
+      "hash": "394af6f2f842242317c5242949656d7ad3265ece"
+    },
+    "/refs/sllclp/clpfd31-43#释量论·成量品广释-法师辅导31-43": {
+      "id": 394,
+      "hash": "12b9dee79d68eb088030307e0df1bc903a595300"
+    },
+    "/refs/sllclp#释量论·成量品广释": {
+      "id": 395,
+      "hash": "e6e8787d42df893496d4262f96e0317cfb76bc6b"
+    },
+    "/refs/xmfw/s1-zsz#系列一.祖师传--晋美朗巴传、如来心印传": {
+      "id": 396,
+      "hash": "73e15778d217cd07fac3767abf1dad53c20c4b8a"
+    },
+    "/refs/xmfw/s2/s2-sxyd1-xmnd#系列二.大圆满龙钦宁体前行实修引导讲记一· 暇满难得": {
+      "id": 397,
+      "hash": "ef351c6424051126813ff288d109e96171232e50"
+    },
+    "/refs/xmfw/s2/s2-sxyd2-smwc#系列二.大圆满龙钦宁体前行实修引导讲记二·寿命无常": {
+      "id": 398,
+      "hash": "fda145090321e3f4db89f4c2d631ed00907cd120"
+    },
+    "/refs/xmfw/s2/s2-sxyd3-lhgh#系列二.大圆满龙钦宁提前行实修引导讲记三.轮回过患": {
+      "id": 399,
+      "hash": "8f2a07f0cd44976cfb1c03e9464b4ce52f6a5118"
+    },
+    "/refs/xmfw/s2/s2-sxyd4-ygbx#系列二.大圆满龙钦宁提前行实修引导讲记四.业果不虚": {
+      "id": 400,
+      "hash": "9baf38cab9f00ac1ae396b788a1f1216bdb1d162"
+    },
+    "/refs/xmfw/s2/s2-sxyd5-jtly#系列二.大圆满龙钦宁提前行实修引导讲记三.业果不虚": {
+      "id": 401,
+      "hash": "abb4762db8a661b0b3ff19ec101af48c9a453a20"
+    },
+    "/refs/xmfw/s2/s2-sxyd6-yzszs#实修引导·依止善知识": {
+      "id": 402,
+      "hash": "cf4064e00e02a7a5429f480b02d429bc89bbcd31"
+    },
+    "/refs/xmfw/s2/s2-sxyd7-gy#实修引导念住·归依": {
+      "id": 403,
+      "hash": "724d2a796dc0d1202318689560ed4957f19676b5"
+    },
+    "/refs/xmfw/s3/s3-ydw1-twgl#系列三.大圆满龙钦宁体前行引导文.普贤上师言教讲记一-听闻轨理": {
+      "id": 404,
+      "hash": "1436b34d953c31ccbd197782de03c16332af2646"
+    },
+    "/refs/xmfw/s3/s3-ydw2-xmnd#系列三.大圆满龙钦宁体前行引导文.普贤上师言教讲记二-暇满难得": {
+      "id": 405,
+      "hash": "21d4c1a6e8117e201eda8570ae56242739f1dd99"
+    },
+    "/refs/xmfw/s3/s3-ydw3-smwc#系列三·大圆满龙钦宁体前行引导文.普贤上师言教讲记三-寿命无常": {
+      "id": 406,
+      "hash": "cea48672d89804816ea4e235a62582917e75f739"
+    },
+    "/refs/xmfw/s3/s3-ydw4-lhgh#系列三.大圆满龙钦宁体前行引导文.普贤上师言教讲记四-轮回过患": {
+      "id": 407,
+      "hash": "785d336633dbc4b41d020d2a8795879bed7dcddd"
+    },
+    "/refs/xmfw/s3/s3-ydw5-ygbx#系列三.大圆满龙钦宁体前行引导文.普贤上师言教讲记五-业果不虚": {
+      "id": 408,
+      "hash": "3d723e5b663370e8bd6d05d47ba7d004a3117bd1"
+    },
+    "/refs/xmfw/s3/s3-ydw6-jtly#系列三.大圆满龙钦宁体前行引导文.普贤上师言教讲记六-解脱利益": {
+      "id": 409,
+      "hash": "8387a5b493bd29e1db90007ad8a6a6ef2ca100e9"
+    },
+    "/refs/xmfw/s3/s3-ydw7-yzszs#前行引导文·依止善知识": {
+      "id": 410,
+      "hash": "638f44b1ca4b1dc01d917fb0ccf12daf39534615"
+    },
+    "/refs/xmfw/s4/s4-zsxs1-fhqz#系列四.祖师心髓1-法海奇珍": {
+      "id": 411,
+      "hash": "4f02e189d8f255932ff470c0decf240be1824c85"
+    },
+    "/refs/xmfw/s4/s4-zsxs10-qxbwl-ygbx#系列四.祖师心髓10-前行备忘录.业果不虚": {
+      "id": 412,
+      "hash": "6201bf029a6578fd96fff34eb0ebcf97e1180e41"
+    },
+    "/refs/xmfw/s4/s4-zsxs11-qxbwl-jtly#前行备忘录.解脱利益": {
+      "id": 413,
+      "hash": "8feeab187da9fb6281b936a568c85da1f242029e"
+    },
+    "/refs/xmfw/s4/s4-zsxs2-qxbwl-sss#系列四.祖师心髓2-前行备忘录.三殊胜实修引导": {
+      "id": 414,
+      "hash": "751217d8f6fb7d3342f60878e318518eb2a648a1"
+    },
+    "/refs/xmfw/s4/s4-zsxs3-qxbwl-wfgl#系列四.祖师心髓3-前行备忘录.闻法行为": {
+      "id": 415,
+      "hash": "f5b0e6b3fc1744622b457dcd8d874b85e91cd8a7"
+    },
+    "/refs/xmfw/s4/s4-zsxs4-4yf#系列四.祖师心髓4-四依法讲记": {
+      "id": 416,
+      "hash": "4e571b4f528028283eb7dff87e2f9bb490750af0"
+    },
+    "/refs/xmfw/s4/s4-zsxs5-qxbwl-xmnd#系列四.祖师心髓5-前行备忘录.暇满难得": {
+      "id": 417,
+      "hash": "3fde3166c571a0caf128f2d8b4af0a63aa0d66af"
+    },
+    "/refs/xmfw/s4/s4-zsxs6-brsshx#系列四.祖师心髓6-般若摄颂回向大义": {
+      "id": 418,
+      "hash": "c6fb628f84dfdc506688493ea1e1c0c269d93899"
+    },
+    "/refs/xmfw/s4/s4-zsxs7-wcyj#系列四.祖师心髓7-无常要诀讲记": {
+      "id": 419,
+      "hash": "e48682c4cb9a80d5d01084491f70b505a755019d"
+    },
+    "/refs/xmfw/s4/s4-zsxs8-qxbwl-smwc#系列四.祖师心髓8-前行备忘录.寿命无常": {
+      "id": 420,
+      "hash": "2c91939719e227e140fec8d236644ff8ed0e2792"
+    },
+    "/refs/xmfw/s4/s4-zsxs9-qxbwl-lhgh#系列四.祖师心髓9-前行备忘录.轮回过患": {
+      "id": 421,
+      "hash": "25ce1b0a782240e5e3e487367405952783734646"
+    },
+    "/refs/xmfw/ygns#仪轨念诵": {
+      "id": 422,
+      "hash": "7087b3e645163584d20397e9eb918d159fc7403f"
+    }
+  }
+}

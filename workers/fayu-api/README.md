@@ -29,6 +29,8 @@ pnpm fayu:dev              # 本地运行 Worker（默认 http://127.0.0.1:8787�
 pnpm fayu:deploy           # 部署 Worker
 ```
 
+`fayu:import`、`fayu:deploy` 从仓库根目录的 `.env.local` 读取 `CLOUDFLARE_ACCOUNT_ID`、`CLOUDFLARE_API_TOKEN`，无需 `wrangler login`；token 须有 Account 级的 D1 Edit 和 Workers Scripts Edit 权限。
+
 导入后数据版本（内容哈希）随之改变，Worker 一分钟内发现新版本，结果缓存自动失效，**无需重新部署**。
 只有改了 Worker 代码、`src/normalize.js` 或 `src/t2s.js` 才需要部署；改了后两者还须重新导入（库里存的规范化文本要与查询的规范化规则一致）。
 表结构变化时先导入再部署：Worker 依赖的新表要先存在，`block_norms.cat` 保留也是为了导入后、部署前旧版 Worker 仍可用。
