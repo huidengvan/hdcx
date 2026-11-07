@@ -26,7 +26,7 @@
   subtitles/srt/<md名>/report/<音频名>.report.txt 匹配率、挪位的句子、低匹配字幕条、出入较大处（--homophones 另列同音异字）
 """
 
-import argparse, bisect, json, re, subprocess, time
+import argparse, bisect, json, os, re, subprocess, time
 from difflib import SequenceMatcher
 from pathlib import Path
 from urllib.parse import unquote
@@ -51,6 +51,10 @@ MIN_LINE = 6       # 字数少于此、或显示短于 MIN_DUR 毫秒，且与�
 MIN_DUR = 1200
 READ_MS = 120      # 补足一闪而过的字幕时，每字所需显示时长
 MIN_SHOW, MAX_SHOW = 1000, 2500
+CHUNK_S = 1800     # 分块识别，每块秒数
+JOIN_GAP = 2000    # 几段音频共用正文时，拼接处留的间隔（毫秒）
+UNREAD = 0.3       # --drop-unread：锚点比例低于此的整行视为没有朗读
+UNREAD_FIND = 6    # 至少这么多字的行才到整段录音里复查，太短容易碰巧相似
 MERGE_MAX = 16     # 合并后最多字数
 LOW_MATCH = 0.5    # 锚点比例低于此的字幕条进报告
 CHAR_MS = 250      # 没有识别字可参照时，每字的估计时长
@@ -66,6 +70,9 @@ LABEL = re.compile(r"^(?:问|答)[：:]")
 ATTRIB = re.compile(r"（[^（）]{1,8}(?:法师|堪布|上师|仁波切|喇嘛)）")
 SKIP_LINE = re.compile(r"^(?:本稿为内部学习所用|import\s|\[\^[^\]]*\]:|\[\d+\]|(?:[-*+]\s+)?\[[^\]]*\]\([^)]*\)\s*$)")
 FOOTNOTE_RULE = re.compile(r"^-{10,}$")  # 段尾脚注区的分隔线，其后都不朗读
+FOOTNOTE_REF = re.compile(r"\[\\\[[^\]]*\\\]\]\([^)]*\)")  # 网页转来的脚注标记 [\[1\]](http://...)
+FOOTNOTE_BODY = re.compile(r"^\[\\\[[^\]]*\\\]\]\([^)]*_ftnref[^)]*\)")  # 同上，指回正文的是脚注内容
+ANSWER_HEAD = re.compile(r"^第.{1,3}品\s*思考题答案$")  # 文末附的思考题答案，不朗读
 
 HEADING = re.compile(r"^(#{1,6})\s+(.*)$", re.M)
 LESSON_HEAD = re.compile(r"\d+节?课")
@@ -81,8 +88,9 @@ jieba.setLogLevel(60)
 
 # ---------- 文稿 ----------
 
-def sections(md_path):
-    """md 中每个 SectionAudio 对应的 (音频文件名, 标题, 正文)。"""
+def sections(md_path, stop_at_heading=False):
+    """md 中每个 SectionAudio 对应的 (音频文件名, 标题, 正文)。
+    stop_at_heading：正文到下一个同级或更高级标题为止，其后没有音频的章节不算本段。"""
     md = md_path.read_text("utf-8")
     heads = [(m.start(), len(m.group(1)), m.group(2).strip()) for m in HEADING.finditer(md)]
     tags = list(AUDIO_TAG.finditer(md))
@@ -98,9 +106,24 @@ def sections(md_path):
         end = tags[n + 1].start() if n + 1 < len(tags) else len(md)
         owner = [h[0] for h in heads if m.end() < h[0] < end]
         stop = owner[-1] if owner and n + 1 < len(tags) and not md[owner[-1]:end].partition("\n")[2].strip() else end
+        if stop_at_heading:
+            stop = next((h[0] for h in heads if m.end() < h[0] < stop and h[1] <= level), stop)
         # 没有音频的课或答疑（如只有文稿）不算本段
-        other = [h[0] for h in heads if m.end() < h[0] < stop and LESSON_HEAD.search(h[2])]
+        other = [h[0] for h in heads if m.end() < h[0] < stop and LESSON_HEAD.search(h[2]) and not stop_at_heading]
         out.append((name, title, clean(md[m.end():other[0] if other else stop])))
+    return out
+
+
+def audio_groups(secs):
+    """几段音频共用一份正文（卡片连着放、正文跟在最后一张后面）时归成一组：[([音频文件名], 标题, 正文)]。"""
+    out, names = [], []
+    for name, title, text in secs:
+        names.append(name)
+        if text.strip():
+            out.append((names, title, text))
+            names = []
+    if names:
+        print(f"跳过（没有正文）{'、'.join(names)}")
     return out
 
 
@@ -109,10 +132,11 @@ def clean(body):
     lines = []
     for line in body.splitlines():
         line = line.strip()
-        if FOOTNOTE_RULE.match(line):
+        if FOOTNOTE_RULE.match(line) or ANSWER_HEAD.match(line):
             break
-        if not line or SKIP_LINE.match(line):
+        if not line or SKIP_LINE.match(line) or FOOTNOTE_BODY.match(line):
             continue
+        line = FOOTNOTE_REF.sub("", line)
         line = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", line)
         line = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", line)
         line = re.sub(r"\[\d+\]|\[\^[^\]]*\]|<[^>]+>", "", line)
@@ -197,14 +221,38 @@ def hyp_units(hyp):
 
 # ---------- 识别 ----------
 
-def load_audio(path):
-    pcm = subprocess.run(
-        ["ffmpeg", "-v", "error", "-i", str(path), "-ac", "1", "-ar", str(SR), "-f", "s16le", "-"],
-        capture_output=True, check=True).stdout
-    return np.frombuffer(pcm, np.int16).astype(np.float32) / 32768
+def audio_chunks(path):
+    """流式解码，每次给 CHUNK_S 秒，长音频不必整个放进内存。"""
+    p = subprocess.Popen(["ffmpeg", "-v", "error", "-i", str(path), "-ac", "1", "-ar", str(SR), "-f", "s16le", "-"],
+                         stdout=subprocess.PIPE)
+    while pcm := p.stdout.read(CHUNK_S * SR * 2):
+        yield np.frombuffer(pcm, np.int16).astype(np.float32) / 32768
+    if p.wait():
+        raise RuntimeError(f"ffmpeg 解码失败：{path}")
+
+
+def limit_cpu(percent):
+    """Windows 上用 Job Object 硬性限制本进程及子进程（ffmpeg）的总 CPU 占用，并调低优先级。"""
+    import ctypes
+    from ctypes import wintypes
+    k32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    k32.CreateJobObjectW.restype = wintypes.HANDLE
+    k32.GetCurrentProcess.restype = wintypes.HANDLE
+    k32.SetInformationJobObject.argtypes = [wintypes.HANDLE, ctypes.c_int, ctypes.c_void_p, wintypes.DWORD]
+    k32.AssignProcessToJobObject.argtypes = [wintypes.HANDLE, wintypes.HANDLE]
+    k32.SetPriorityClass.argtypes = [wintypes.HANDLE, wintypes.DWORD]
+    job = k32.CreateJobObjectW(None, None)
+    info = (wintypes.DWORD * 2)(0x1 | 0x4, int(percent * 100))  # ENABLE | HARD_CAP，单位万分之一
+    me = k32.GetCurrentProcess()
+    if not (job and k32.SetInformationJobObject(job, 15, info, ctypes.sizeof(info))
+            and k32.AssignProcessToJobObject(job, me)):
+        raise ctypes.WinError(ctypes.get_last_error())
+    k32.SetPriorityClass(me, 0x4000)  # BELOW_NORMAL_PRIORITY_CLASS
+    return job
 
 
 _model = None
+_threads = None  # 识别线程数，None 用 funasr 默认
 
 def asr(audio_path, cache, device):
     if cache.exists():
@@ -220,17 +268,22 @@ def asr(audio_path, cache, device):
             torch.xpu.set_per_process_memory_fraction(
                 min(XPU_MEM_GB * 2**30 / torch.xpu.get_device_properties(0).total_memory, 1))
         print(f"识别设备：{device}（{name}）", flush=True)
+        extra = {"ncpu": _threads} if _threads else {}
         _model = AutoModel(model="paraformer-zh", vad_model="fsmn-vad", device=device,
-                           disable_update=True, disable_pbar=True)
-    audio = load_audio(audio_path)
-    t0 = time.time()
-    res = _model.generate(input=audio, batch_size_s=300)[0]
+                           disable_update=True, disable_pbar=True, **extra)
+        if _threads:
+            torch.set_num_threads(_threads)
+    t0, base, data = time.time(), 0, []
+    for audio in audio_chunks(audio_path):
+        res = _model.generate(input=audio, batch_size_s=300)[0]
+        tokens = res["text"].split() if " " in res["text"] else list(res["text"])
+        stamps = res.get("timestamp", [])
+        if len(tokens) != len(stamps):
+            raise ValueError(f"识别字数 {len(tokens)} 与时间戳数 {len(stamps)} 不一致")
+        data += [[t, s + base, e + base] for t, (s, e) in zip(tokens, stamps)]
+        base += len(audio) * 1000 // SR
     cost = time.time() - t0
-    print(f"识别 {len(audio) / SR / 60:.1f} 分钟音频用时 {cost:.1f}s（{len(audio) / SR / cost:.0f} 倍速）", flush=True)
-    tokens = res["text"].split() if " " in res["text"] else list(res["text"])
-    if len(tokens) != len(res["timestamp"]):
-        raise ValueError(f"识别字数 {len(tokens)} 与时间戳数 {len(res['timestamp'])} 不一致")
-    data = [[t, s, e] for t, (s, e) in zip(tokens, res["timestamp"])]
+    print(f"识别 {base / 60000:.1f} 分钟音频用时 {cost:.1f}s（{base / 1000 / cost:.0f} 倍速）", flush=True)
     cache.parent.mkdir(parents=True, exist_ok=True)
     cache.write_text(json.dumps(data, ensure_ascii=False), "utf-8")
     return data
@@ -415,6 +468,25 @@ def find_moves(text, ref, hyp, times, link):
         moves.append((ks, h0, h1))
         taken.update(range(h0, h1))
     return moves
+
+
+def split_unread(text, ref, link, hyp):
+    """按文稿逐字朗读的音频（如有声书）：整行对不上的是没读的内容（藏文音译、图注等），
+    从文稿里拿掉，免得占用前后的时间。没读的行多时，读了的行也可能被挤得对不上，
+    所以再到整段录音里找一遍，找得到的留下。返回 (留下的文稿, 拿掉的行)。"""
+    table = {}
+    hyp_codes = codes([u[0] for u in hyp], table)
+    pos = [p for p, _ in ref]
+    keep, drop, start = [], [], 0
+    for line in text.split("\n"):
+        i, j = bisect.bisect_left(pos, start), bisect.bisect_left(pos, start + len(line))
+        start += len(line) + 1
+        if line.startswith("藏音") or j > i and sum(link[k] is not None for k in range(i, j)) / (j - i) < UNREAD and not (
+                j - i >= UNREAD_FIND and fuzz.partial_ratio(codes([p for _, p in ref[i:j]], table), hyp_codes) >= MOVE_SCORE):
+            drop.append(line)
+        else:
+            keep.append(line)
+    return "\n".join(keep), drop
 
 
 def align_all(text, ref, hyp):
@@ -639,24 +711,42 @@ def asr_cues(hyp):
     return [{"text": "".join(t for t, _, _ in c), "start": c[0][1], "end": c[-1][2]} for c in cues]
 
 
-def process(title, text, audio_path, out_dir, asr_dir, device, homophones=False):
-    stem = audio_path.stem
-    hyp = asr(audio_path, asr_dir / f"{stem}.json", device)
+def process(title, text, audio_paths, out_dir, asr_dir, device, homophones=False, drop_unread=False):
+    """audio_paths 多于一个时，这几段音频共用 text：识别结果首尾相接一起对齐，字幕再按时间分回各段。"""
+    stem = audio_paths[0].stem
+    parts, offsets, hyp = [], [], []
+    for path in audio_paths:
+        part = asr(path, asr_dir / f"{path.stem}.json", device)
+        base = hyp[-1][2] + JOIN_GAP if hyp else 0
+        parts.append(part)
+        offsets.append(base)
+        hyp += [[t, s + base, e + base] for t, s, e in part]
     ref = ref_units(text)
     units = hyp_units(hyp)
     times, link, diffs, moves = align_all(text, ref, units)
+    dropped = []
+    if drop_unread:
+        text, dropped = split_unread(text, ref, link, units)
+        if dropped:
+            ref = ref_units(text)
+            times, link, diffs, moves = align_all(text, ref, units)
     hit = [j is not None for j in link]
     cues = build_cues(text, ref, times, hit)
 
     out_dir.mkdir(parents=True, exist_ok=True)
-    write_srt(out_dir / f"{stem}.srt", cues)
-    write_srt(asr_dir / f"{stem}.srt", asr_cues(hyp))
+    for n, (path, part, base) in enumerate(zip(audio_paths, parts, offsets)):
+        nxt = offsets[n + 1] if n + 1 < len(offsets) else float("inf")
+        last = part[-1][2] if part else 0
+        piece = [{**c, "start": min(c["start"] - base, last), "end": max(min(c["end"] - base, last + 1000), 0)}
+                 for c in cues if (base <= c["start"] or n == 0) and c["start"] < nxt]
+        write_srt(out_dir / f"{path.stem}.srt", piece)
+        write_srt(asr_dir / f"{path.stem}.srt", asr_cues(part))
 
     n_ref, n_hit = len(ref), sum(hit)
     low = [c for c in cues if c["match"] < LOW_MATCH]
     rep = [
         f"# {title}",
-        f"音频 {audio_path.name}",
+        f"音频 {'、'.join(p.name for p in audio_paths)}",
         f"文稿读音 {n_ref} 字，识别 {len(units)} 字；锚点 {n_hit} 字（{n_hit / n_ref:.1%}），"
         f"其余按锚点间识别字摊开或贴近锚点",
         f"字幕 {len(cues)} 条，锚点比例 < {LOW_MATCH:.0%} 的 {len(low)} 条，按录音位置挪动的句子 {len(moves)} 句",
@@ -664,6 +754,7 @@ def process(title, text, audio_path, out_dir, asr_dir, device, homophones=False)
         "## 录音顺序与文稿不同、已按录音位置放置的句子",
     ]
     rep += [f"{ts(t)}  {s}" for t, s in moves]
+    rep += ["", f"## 没有朗读、不出字幕的文稿（{len(dropped)} 行）"] + dropped
     rep += ["", "## 低匹配字幕条（时间可能不准，建议抽查）"]
     rep += [f"{ts(c['start'])}  {c['match']:.0%}  {c['text']}" for c in low]
     rep += ["", f"## 文稿与录音出入较大处（文稿连续 ≥{DIFF_REPORT} 字对不上，或录音连续 ≥{DIFF_HEARD} 字文稿里没有）"]
@@ -708,18 +799,32 @@ def main():
     ap.add_argument("--asr-dir", type=Path, default=ASR_DIR, help="识别结果缓存目录，默认 subtitles/asr")
     ap.add_argument("--homophones", action="store_true", help="报告里列出同音异字（查文稿错字用）")
     ap.add_argument("--device", default="auto", help="auto（有 Intel 核显用 xpu，否则 cpu）、xpu、cpu")
+    ap.add_argument("--stop-at-heading", action="store_true", help="正文到下一个同级标题为止（其后的章节没有音频时用）")
+    ap.add_argument("--drop-unread", action="store_true", help="音频逐字朗读文稿时用：整行对不上的不出字幕")
+    ap.add_argument("--cpu-limit", type=float, help="CPU 总占用上限（百分比，仅 Windows），线程数随之收紧")
     args = ap.parse_args()
 
-    todo = [s for s in sections(args.md) if not args.only or args.only in s[0]]
+    if args.cpu_limit:
+        global _threads, _job
+        _job = limit_cpu(args.cpu_limit)
+        _threads = max(1, int(os.cpu_count() * args.cpu_limit / 100))
+        for var in ("OMP_NUM_THREADS", "MKL_NUM_THREADS"):
+            os.environ[var] = str(_threads)
+        print(f"CPU 上限 {args.cpu_limit:g}%，{_threads} 线程", flush=True)
+
+    todo = [g for g in audio_groups(sections(args.md, args.stop_at_heading))
+            if not args.only or any(args.only in n for n in g[0])]
     if not todo:
         ap.error("没有匹配的段落")
-    for name, title, text in todo:
-        audio = args.audio_dir / name
-        if not audio.exists():
-            print(f"跳过（没有音频）{name}")
+    for names, title, text in todo:
+        audios = [args.audio_dir / n for n in names]
+        missing = [a.name for a in audios if not a.exists()]
+        if missing:
+            print(f"跳过（没有音频）{'、'.join(missing)}")
             continue
-        r = process(title, text, audio, args.out or SRT_DIR / args.md.stem, args.asr_dir, args.device, args.homophones)
-        print(f"{name}: 锚点 {r['hit']:.1%}  字幕 {r['cues']} 条  低匹配 {r['low']}  "
+        r = process(title, text, audios, args.out or SRT_DIR / args.md.stem, args.asr_dir, args.device, args.homophones,
+                    args.drop_unread)
+        print(f"{'、'.join(names)}: 锚点 {r['hit']:.1%}  字幕 {r['cues']} 条  低匹配 {r['low']}  "
               f"挪位 {r['moves']} 句  出入较大 {r['diffs']} 处", flush=True)
 
 
