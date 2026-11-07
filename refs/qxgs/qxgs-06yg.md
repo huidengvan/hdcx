@@ -1472,7 +1472,7 @@ import TOCInline from '@theme/TOCInline';
 
 - [前行第068节课(仅供参考).ppt](https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/007-大圆满前行广释/前行法师辅导（仅供参考）ppt/前行第068节课(仅供参考).ppt)
 
-- [法师辅导](/refs/qxgs/fudao/qxgsfd-06yg#前行广释第68课辅导资料)
+- [法师辅导](/refs/qxgs/fudao/qxgsfd-06yg#前行广释第068课辅导)
 
 思考题
 
