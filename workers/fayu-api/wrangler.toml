@@ -21,6 +21,8 @@ SNIPPET_CHARS = "160"
 # 每个文档最多取回几个命中块用于展示（每块约 90KB，限制数据量与 Worker CPU）
 MAX_BLOCKS_PER_DOC = "2"
 PAGE_SIZE = "10"
+# 排名结果缓存（D1 表 rank_cache）最多保留的行数，每行最大约 10KB
+RANK_CACHE_ROWS = "5000"
 # 边缘结果缓存（缓存键含数据版本，重新导入后自动失效）与浏览器缓存时长（秒）
 CACHE_TTL = "86400"
 CLIENT_CACHE_TTL = "600"

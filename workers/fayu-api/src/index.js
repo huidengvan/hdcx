@@ -8,8 +8,8 @@
  * GET /meta：数据版本与各分类文档数
  * GET /search/:keyword/:page：旧接口，只搜视频，返回旧格式（subtitles 为 JSON 字符串），供未更新的前端使用
  *
- * 检索分两步：① SQL 用 instr / replace 在规范化文本上统计各文档每个词的出现次数，排序分页
- * ② 只取回当前页文档的前几个命中块，在 JS 中定位命中行、取上下文、计算高亮区间
+ * 检索分两步：① SQL 用 instr / replace 在 doc_norms 上统计各文档每个词的出现次数并排序，结果存入 rank_cache，
+ *   翻页、切换筛选、其他节点的相同查询都不再扫描 ② 只取回当前页文档的前几个命中块，在 JS 中定位命中行、取上下文、计算高亮区间
  */
 import { parseTerms } from './normalize.js';
 import { lineStarts, matchText, renderGroups, snippet } from './search.js';
@@ -41,29 +41,52 @@ async function getMeta(env) {
 }
 
 const placeholders = (n, from) => Array.from({ length: n }, (_, i) => `?${from + i}`).join(', ');
+const anyTermSql = (terms) => terms.map((_, i) => `instr(norm, ?${i + 1}) > 0`).join(' OR ');
+
+// 写入排名缓存并只保留最新的若干行，防止大量不同的查询撑大数据库；失败不影响搜索
+const saveRanking = (env, key, ranked) =>
+    env.DB.batch([
+        env.DB.prepare('INSERT OR REPLACE INTO rank_cache (key, value) VALUES (?1, ?2)').bind(key, JSON.stringify(ranked)),
+        env.DB.prepare('DELETE FROM rank_cache WHERE rowid <= (SELECT MAX(rowid) FROM rank_cache) - ?1').bind(Number(env.RANK_CACHE_ROWS)),
+    ]).catch(console.error);
+
+/**
+ * 关键词命中的全部文档 [id, cat, 出现次数]，已排序。结果与页码、分类筛选无关，存入 D1 供各节点共享：
+ * 命中读 1 行，未命中才扫描 doc_norms 全表（约 420 行）
+ */
+async function rankDocs(env, ctx, terms, version) {
+    const key = `${version}:${[...terms].sort().join('|')}`;
+    const cached = await env.DB.prepare('SELECT value FROM rank_cache WHERE key = ?1').bind(key).first('value');
+    if (cached) return JSON.parse(cached);
+
+    // 各文档每个词的出现次数；须每个词都出现
+    const sums = terms.map((_, i) => `SUM((length(norm) - length(replace(norm, ?${i + 1}, ''))) / length(?${i + 1})) AS c${i}`);
+    const { results: rows } = await env.DB.prepare(`SELECT doc_id AS id, cat, ${sums.join(', ')} FROM doc_norms WHERE ${anyTermSql(terms)} GROUP BY doc_id`)
+        .bind(...terms)
+        .all();
+
+    const ranked = [];
+    for (const r of rows) {
+        const counts = terms.map((_, i) => r[`c${i}`]);
+        if (!counts.some((c) => !c)) ranked.push([r.id, r.cat, counts.reduce((a, b) => a + b, 0)]);
+    }
+    // 出现次数多的在前，相同时按导入顺序（视频按册，文章按目录）
+    ranked.sort((a, b) => b[2] - a[2] || a[0] - b[0]);
+    ctx.waitUntil(saveRanking(env, key, ranked));
+    return ranked;
+}
 
 /**
  * @param {{ terms: string[], cats: string[], page: number, pageSize: number }} query
  */
-async function search(env, { terms, cats, page, pageSize }) {
-    const anyTerm = terms.map((_, i) => `instr(norm, ?${i + 1}) > 0`).join(' OR ');
-
-    // ① 各文档每个词的出现次数（扫描 block_norms 全表）；须每个词都出现
-    const sums = terms.map((_, i) => `SUM((length(norm) - length(replace(norm, ?${i + 1}, ''))) / length(?${i + 1})) AS c${i}`);
-    const { results: rows } = await env.DB.prepare(`SELECT doc_id AS id, cat, ${sums.join(', ')} FROM block_norms WHERE ${anyTerm} GROUP BY doc_id`)
-        .bind(...terms)
-        .all();
-
+async function search(env, ctx, { terms, cats, page, pageSize }, version) {
+    // ① 排名（读缓存或扫描）
     const facets = {};
     const ranked = [];
-    for (const r of rows) {
-        const counts = terms.map((_, i) => r[`c${i}`]);
-        if (counts.some((c) => !c)) continue;
-        facets[r.cat] = (facets[r.cat] || 0) + 1;
-        if (!cats.length || cats.includes(r.cat)) ranked.push({ id: r.id, count: counts.reduce((a, b) => a + b, 0) });
+    for (const [id, cat, count] of await rankDocs(env, ctx, terms, version)) {
+        facets[cat] = (facets[cat] || 0) + 1;
+        if (!cats.length || cats.includes(cat)) ranked.push({ id, count });
     }
-    // 出现次数多的在前，相同时按导入顺序（视频按册，文章按目录）
-    ranked.sort((a, b) => b.count - a.count || a.id - b.id);
     const pageItems = ranked.slice((page - 1) * pageSize, page * pageSize);
 
     // ② 当前页文档的元数据与前 MAX_BLOCKS_PER_DOC 个命中块（一次往返）
@@ -76,7 +99,7 @@ async function search(env, { terms, cats, page, pageSize }) {
             env.DB.prepare(
                 `SELECT h.doc_id, h.norm, h.norm_lens, t.first_unit, t.marks, t.texts FROM (
                     SELECT doc_id, seq, norm, norm_lens, ROW_NUMBER() OVER (PARTITION BY doc_id ORDER BY seq) AS rn
-                    FROM block_norms WHERE doc_id IN (${idList}) AND (${anyTerm})
+                    FROM block_norms WHERE doc_id IN (${idList}) AND (${anyTermSql(terms)})
                 ) h JOIN block_texts t ON t.doc_id = h.doc_id AND t.seq = h.seq
                 WHERE h.rn <= ${Number(env.MAX_BLOCKS_PER_DOC)} ORDER BY h.doc_id, h.seq`,
             ).bind(...terms, ...ids),
@@ -142,7 +165,7 @@ async function cachedSearch(env, ctx, query, page, pageSize) {
     if (cached) return { data: await cached.json(), hit: true };
 
     const started = Date.now();
-    const data = { q: query.q, terms: query.terms, page, pageSize, ...(await search(env, { ...query, page, pageSize })) };
+    const data = { q: query.q, terms: query.terms, page, pageSize, ...(await search(env, ctx, { ...query, page, pageSize }, meta.version)) };
     data.tookMs = Date.now() - started;
     const res = new Response(JSON.stringify(data), { headers: { 'Content-Type': 'application/json', 'Cache-Control': `public, max-age=${env.CACHE_TTL}` } });
     ctx.waitUntil(caches.default.put(cacheKey, res));

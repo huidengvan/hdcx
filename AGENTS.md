@@ -10,4 +10,4 @@
   - 本地已有开发服务器热更新（HMR），代码修改后直接响应交付即可。
   - **统一验证时机**：用户要求**“提交代码 / commit”**时，只执行 `pnpm check`（MDX 编译检查）；本地生产 Build 太耗性能，提交前不跑，仅在用户特别指定进行全局构建验证时才执行。
 - **AI 搜索索引同步**：修改了 `rag/categories.json` 所列目录下的法本或字幕（目前为 `books/b1~b4`、`refs/hdzg/01~12`、`refs/` 下除 `cczj`、`hdjt`、`lrksj.md` 外的参考资料、`static/docs/srts/b1~b4`）后，交付时须提醒用户执行 `pnpm build` → `pnpm rag:update`（段落号或字幕时间变化会导致搜索跳转错位），详见 `rag/README.md` 第 0 节。
-- **关键词搜索数据同步**：修改了 `static/docs/srts/b1~b4` 下的字幕、`books/b1~b4` 下的法本或 `refs` 下的文章后，还须提醒用户执行 `pnpm build` → `pnpm fayu:import`（重新导入关键词搜索的 D1 数据库，文章段落取自构建产物）；改了 `workers/fayu-api/src/normalize.js` 或 `t2s.js` 的规范化规则，须先重新导入再部署 Worker，详见 `workers/fayu-api/README.md`。
+- **关键词搜索数据同步**：修改了 `static/docs/srts/b1~b4` 下的字幕、`books/b1~b4` 下的法本或 `refs` 下的文章后，还须提醒用户执行 `pnpm build` → `pnpm fayu:import`（增量导入关键词搜索的 D1 数据库，文章段落取自构建产物），并提交更新后的 `workers/fayu-api/manifest.json`；改了 `workers/fayu-api/src/normalize.js` 或 `t2s.js` 的规范化规则，须先重新导入再部署 Worker，详见 `workers/fayu-api/README.md`。
