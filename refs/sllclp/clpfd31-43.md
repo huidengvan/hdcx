@@ -21,6 +21,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## **《释量论·成量品广释》第31课笔录**
 
+<SectionAudio
+  id="clpfd-31"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/《释量论·成量品广释》-智诚堪布辅导/《释量论·成量品广释》第31课.mp3"
+  title="成量品广释第31课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
+
 成量品 31 1-15分钟
 
 诸法等性本基法界中，自现圆满三身游舞力
@@ -405,6 +412,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## **《释量论·成量品广释》第32课笔录**
 
+<SectionAudio
+  id="clpfd-32"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/《释量论·成量品广释》-智诚堪布辅导/《释量论·成量品广释》第32课.mp3"
+  title="成量品广释第32课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
+
 **
 
 诸法等性本基法界中，自现圆满三身游舞力
@@ -765,6 +779,13 @@ import TOCInline from '@theme/TOCInline';
 哲波措利卓瓦卓瓦效 愿度有海诸有情
 
 ## **《释量论·成量品广释》第33课笔录**
+
+<SectionAudio
+  id="clpfd-33"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/《释量论·成量品广释》-智诚堪布辅导/《释量论·成量品广释》第33课.mp3"
+  title="成量品广释第33课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
 
 **
 
@@ -1132,6 +1153,13 @@ import TOCInline from '@theme/TOCInline';
 
 
 ## **《释量论·成量品广释》第34课笔录**
+
+<SectionAudio
+  id="clpfd-34"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/《释量论·成量品广释》-智诚堪布辅导/《释量论·成量品广释》第34课.mp3"
+  title="成量品广释第34课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
 
 诸法等性本基法界中，自现圆满三身游舞力
 
@@ -1605,6 +1633,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## **《释量论·成量品广释》第35课笔录**
 
+<SectionAudio
+  id="clpfd-35"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/《释量论·成量品广释》-智诚堪布辅导/《释量论·成量品广释》第35课.mp3"
+  title="成量品广释第35课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
+
 诸法等性本基法界中，自现圆满三身游舞力
 
 离障本来怙主龙钦巴，祈请无垢光尊常护我
@@ -2009,6 +2044,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## **《释量论·成量品广释》第36课笔录**
 
+<SectionAudio
+  id="clpfd-36"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/《释量论·成量品广释》-智诚堪布辅导/《释量论·成量品广释》第36课.mp3"
+  title="成量品广释第36课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
+
 诸法等性本基法界中，自现圆满三身游舞力
 
 离障本来怙主龙钦巴 祈请无垢光尊常护我
@@ -2330,6 +2372,13 @@ import TOCInline from '@theme/TOCInline';
 哲波措利卓瓦卓瓦效 愿度有海诸有情     
 
 ## 《释量论·成量品广释》第37课笔录
+
+<SectionAudio
+  id="clpfd-37"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/《释量论·成量品广释》-智诚堪布辅导/《释量论·成量品广释》第37课.mp3"
+  title="成量品广释第37课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
 
 诸法等性本基法界中，自现圆满三身游舞力
 
@@ -2673,6 +2722,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## **《释量论·成量品广释》第38课笔录**
 
+<SectionAudio
+  id="clpfd-38"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/《释量论·成量品广释》-智诚堪布辅导/《释量论·成量品广释》第38课.mp3"
+  title="成量品广释第38课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
+
 诸法等性本基法界中，自现圆满三身游舞力
 
 离障本来怙主龙钦巴，祈请无垢光尊常护我
@@ -3009,6 +3065,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## **《释量论·成量品广释》第39课笔录**
 
+<SectionAudio
+  id="clpfd-39"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/《释量论·成量品广释》-智诚堪布辅导/《释量论·成量品广释》第39课.mp3"
+  title="成量品广释第39课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
+
 **
 
 诸法等性本基法界中，自现圆满三身游舞力
@@ -3334,6 +3397,13 @@ import TOCInline from '@theme/TOCInline';
 今天我们就学到这儿，讲到这个地方
 
 ## **《释量论·成量品广释》第40课笔录**
+
+<SectionAudio
+  id="clpfd-40"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/《释量论·成量品广释》-智诚堪布辅导/《释量论·成量品广释》第40课.mp3"
+  title="成量品广释第40课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
 
 诸法等性本基法界中，自现圆满三身游舞力
 
@@ -3727,6 +3797,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## **《释量论·成量品广释》第41课笔录**
 
+<SectionAudio
+  id="clpfd-41"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/《释量论·成量品广释》-智诚堪布辅导/《释量论·成量品广释》第41课.mp3"
+  title="成量品广释第41课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
+
 诸法等性本基法界中，自现圆满三身游舞力
 
 离障本来怙主龙钦巴，祈请无垢光尊常护我
@@ -4081,6 +4158,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 成量品 第42课 1-15分钟
 
+<SectionAudio
+  id="clpfd-42"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/《释量论·成量品广释》-智诚堪布辅导/《释量论·成量品广释》第42课.mp3"
+  title="成量品广释第42课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
+
 诸法本基等性法界中
 
 自现三身圆满游舞力
@@ -4416,6 +4500,13 @@ import TOCInline from '@theme/TOCInline';
 哲波措利卓瓦卓瓦效 愿度有海诸有情
 
 ## **《释量论·成量品广释》第43课笔录**
+
+<SectionAudio
+  id="clpfd-43"
+  src="https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/《释量论·成量品广释》-智诚堪布辅导/《释量论·成量品广释》第43课.mp3"
+  title="成量品广释第43课-辅导"
+  subtitle="智诚堪布 • 辅导音频"
+/>
 
 诸法等性本基法界中，自现圆满三身游舞力
 

@@ -12,6 +12,13 @@ import TOCInline from '@theme/TOCInline';
 <TOCInline toc={toc} maxHeadingLevel='6' />
 </details>
 
+<SectionAudio
+  id="dymqx-01"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/大圆满前行引导文/《大圆满前行引导文》01 - 闻法方式.mp3"
+  title="闻法方式"
+  subtitle="有声书 • 大圆满前行引导文"
+/>
+
 
 
 敬礼一切三根本！（译礼）
@@ -205,6 +212,13 @@ import TOCInline from '@theme/TOCInline';
 如《毗奈耶经》中说：“不敬勿说法，无病而覆头，持伞杖兵器，缠头者勿说。”又如《本生传》中说：“坐于极下地，当具温顺仪，以喜眼视师，如饮语甘露，当专心闻法……”依照此中所说，务必断除一切不恭不敬的威仪。
 
 ## 2 甲二（所讲之法）分三：一、共同外前行；二、不共内加行；三、往生法
+
+<SectionAudio
+  id="dymqx-02"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/大圆满前行引导文/《大圆满前行引导文》02 - 暇满难得.mp3"
+  title="暇满难得"
+  subtitle="有声书 • 大圆满前行引导文"
+/>
 
 ## 共同外前行
 
@@ -428,6 +442,13 @@ import TOCInline from '@theme/TOCInline';
 
 ### 二、寿命无常
 
+<SectionAudio
+  id="dymqx-03"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/大圆满前行引导文/《大圆满前行引导文》03 - 寿命无常.mp3"
+  title="寿命无常"
+  subtitle="有声书 • 大圆满前行引导文"
+/>
+
 现见三有无常幻化相，舍弃今世琐事如唾涎，
 
 苦行修习追随先辈迹，无等上师足下我敬礼。
@@ -642,6 +663,13 @@ import TOCInline from '@theme/TOCInline';
 寿命无常之引导终
 
 ### 三、轮回过患
+
+<SectionAudio
+  id="dymqx-04"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/大圆满前行引导文/《大圆满前行引导文》04 - 轮回过患(上).mp3"
+  title="轮回过患（上）"
+  subtitle="有声书 • 大圆满前行引导文"
+/>
 
 了达轮回诸事无实义，唯以大悲利益诸有情，
 
@@ -947,6 +975,13 @@ import TOCInline from '@theme/TOCInline';
 
 ###### 2.1.3.2.4.2 己二（八支分苦）分八：一、生苦；二、老苦；三、病苦；四、死苦；五、怨憎会苦；六、爱别离苦；七、求不得苦；八、不欲临苦
 
+<SectionAudio
+  id="dymqx-05"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/大圆满前行引导文/《大圆满前行引导文》05 - 轮回过患(下).mp3"
+  title="轮回过患（下）"
+  subtitle="有声书 • 大圆满前行引导文"
+/>
+
 2.1.3.2.4.2.1 庚一、生苦：
 
 南赡部洲的人们大多数是胎生的，中阴寻香 的神识进入父母的精血中间，逐步形成凝酪、膜疱、血肉、坚肉和支节……体验住胎的痛苦。
@@ -1116,6 +1151,13 @@ import TOCInline from '@theme/TOCInline';
 轮回过患之引导终
 
 ### 四、因果不虚
+
+<SectionAudio
+  id="dymqx-06"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/大圆满前行引导文/《大圆满前行引导文》06 - 因果不虚.mp3"
+  title="因果不虚"
+  subtitle="有声书 • 大圆满前行引导文"
+/>
 
 取舍善恶因果依教行，行为依照九乘次第上，
 
@@ -1521,6 +1563,13 @@ import TOCInline from '@theme/TOCInline';
 
 ### 五、解脱利益
 
+<SectionAudio
+  id="dymqx-07"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/大圆满前行引导文/《大圆满前行引导文》07 - 解脱利益, 依止上师.mp3"
+  title="解脱利益、依止上师"
+  subtitle="有声书 • 大圆满前行引导文"
+/>
+
 多成就者智者所摄受，依照上师言教而修行，
 
 解脱胜道无误示于众，无等上师足下我敬礼。
@@ -1915,6 +1964,13 @@ import TOCInline from '@theme/TOCInline';
 
 ## 不共内加行
 
+<SectionAudio
+  id="dymqx-08"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/大圆满前行引导文/《大圆满前行引导文》08 - 皈依.mp3"
+  title="皈依"
+  subtitle="有声书 • 大圆满前行引导文"
+/>
+
 以外皈依顶戴三宝尊，以内皈依成就三根本，
 
 以密皈依现前三身者，无等上师足下我敬礼。
@@ -2140,6 +2196,13 @@ import TOCInline from '@theme/TOCInline';
 一切圣道之基石——皈依之引导终
 
 ### 二、发殊胜菩提心
+
+<SectionAudio
+  id="dymqx-09"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/大圆满前行引导文/《大圆满前行引导文》09 - 发殊胜菩提心(上).mp3"
+  title="发殊胜菩提心（上）"
+  subtitle="有声书 • 大圆满前行引导文"
+/>
 
 以大智慧现前胜涅槃，以大悲心住于轮回中，
 
@@ -2412,6 +2475,13 @@ import TOCInline from '@theme/TOCInline';
 所以，我们务必要根除珍爱自己、嗔恨他众的贪嗔恶心，平等地对待自己与他众。
 
 ###### 2.2.2.3.1.2 己二、修自他相换菩提心
+
+<SectionAudio
+  id="dymqx-10"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/大圆满前行引导文/《大圆满前行引导文》10 - 发殊胜菩提心(下).mp3"
+  title="发殊胜菩提心（下）"
+  subtitle="有声书 • 大圆满前行引导文"
+/>
 
 修自他相换菩提心的方法：亲眼目睹遭受病痛、饥渴等痛苦的众生，或者在自己面前观想一位正在遭受痛苦逼迫的众生，当自己向外呼气的时候，观想自己的安乐、善妙、身体、受用以及善根等犹如脱下衣服给他穿上一样完全施给他，当向内吸气的时候，再观想他所有的一切痛苦一并吸入体内由自己来承担，由此他已经离苦得乐。这种施受法，要从一个众生到一切众生之间次第来观修。
 
@@ -2889,6 +2959,13 @@ import TOCInline from '@theme/TOCInline';
 
 ### 三、念修金刚萨埵
 
+<SectionAudio
+  id="dymqx-11"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/大圆满前行引导文/《大圆满前行引导文》11 - 念修金刚萨埵.mp3"
+  title="念修金刚萨埵"
+  subtitle="有声书 • 大圆满前行引导文"
+/>
+
 离二障垢然示净除障，究竟胜道然现修学相，
 
 超有寂边然显三有中，无等上师足下我敬礼。
@@ -3118,6 +3195,13 @@ import TOCInline from '@theme/TOCInline';
 净除业障法——观修上师金刚萨埵之引导终
 
 ### 四、积累资粮
+
+<SectionAudio
+  id="dymqx-12"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/大圆满前行引导文/《大圆满前行引导文》12 - 积累资粮.mp3"
+  title="积累资粮"
+  subtitle="有声书 • 大圆满前行引导文"
+/>
 
 虽知世俗然积二资粮，虽证胜义无修然入定，
 
@@ -3516,6 +3600,13 @@ import TOCInline from '@theme/TOCInline';
 积累资粮——供曼茶罗与古萨里之引导终
 
 ### 五、上师瑜伽
+
+<SectionAudio
+  id="dymqx-13"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/大圆满前行引导文/《大圆满前行引导文》13 - 上师瑜伽.mp3"
+  title="上师瑜伽"
+  subtitle="有声书 • 大圆满前行引导文"
+/>
 
 首先依止胜师如教行，中间百般苦行而实修，
 
@@ -4112,6 +4203,13 @@ import TOCInline from '@theme/TOCInline';
 不共加行圆满矣！！！
 
 ## 往生法
+
+<SectionAudio
+  id="dymqx-14"
+  src="https://box.hdcxb.net/d/其他资料/a/sound/大圆满前行引导文/《大圆满前行引导文》14 - 往生法, 结文.mp3"
+  title="往生法、结文"
+  subtitle="有声书 • 大圆满前行引导文"
+/>
 
 尤为悲悯愚昧之众生，尤为摄受罪孽深重者，
 
