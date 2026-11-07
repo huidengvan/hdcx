@@ -10,9 +10,6 @@ const HIGHLIGHT_NAME = 'audio-subtitle';
 // 音频卡片之后、到下一个音频卡片为止，是这段音频的正文：录音可能跨过同级标题，字幕文字都在这个范围内（align_srt.py 取的是其中朗读的部分）
 const SKIP_SELECTOR = 'a[data-footnote-ref], [data-footnotes], .hash-link, script, style, button, svg';
 
-// 录音与文稿顺序不同的句子会被 align_srt.py 挪位；匹配处离游标超过这么多未用字时，视为挪位句，不移动游标
-const JUMP_LIMIT = 50;
-
 export function srtUrlFor(src) {
   const m = /^([^?#]*?)(\.[^./?#]*)?([?#].*)?$/.exec(src);
   return `${m[1]}.srt${m[3] || ''}`;
@@ -126,43 +123,67 @@ function collectSection(cardEl) {
   return { norm, textNodes, nodeIndex, offsets };
 }
 
-// 每条字幕在正文中的 [起, 止)，找不到为 null
-function locateCues(cues, norm) {
-  const used = new Uint8Array(norm.length);
-  const findFree = (s, from) => {
-    for (let p = norm.indexOf(s, from); p >= 0; p = norm.indexOf(s, p + 1)) {
-      if (!used[p]) return p;
-    }
-    return -1;
-  };
-  // 字幕偶有与正文对不上的字时，按首尾各几个字定位
-  const findLoose = (s, from) => {
-    if (s.length < 8) return null;
-    const head = s.slice(0, 4);
-    const tail = s.slice(-4);
-    const p = findFree(head, from);
-    if (p < 0) return null;
-    const q = norm.indexOf(tail, p + head.length);
-    return q >= 0 && q + tail.length - p <= s.length * 1.5 ? [p, q + tail.length] : null;
-  };
-  const freeBetween = (a, b) => {
-    let n = 0;
-    for (let i = a; i < b && n <= JUMP_LIMIT; i++) n += used[i] ? 0 : 1;
-    return n;
-  };
+function occurrences(norm, s) {
+  const found = [];
+  for (let p = norm.indexOf(s); p >= 0; p = norm.indexOf(s, p + 1)) found.push(p);
+  return found;
+}
 
-  let cursor = 0;
-  return cues.map(({ text }) => {
-    const s = normalize(text);
-    if (!s) return null;
-    let p = findFree(s, cursor);
-    if (p < 0) p = findFree(s, 0);
-    const loc = p >= 0 ? [p, p + s.length] : (findLoose(s, cursor) || findLoose(s, 0));
-    if (!loc) return null;
-    used.fill(1, loc[0], loc[1]);
-    if (loc[0] >= cursor && freeBetween(cursor, loc[0]) <= JUMP_LIMIT) cursor = loc[1];
-    return loc;
+// 字幕偶有与正文对不上的字时，在 [from, to) 内按首尾各几个字定位
+function findLoose(norm, s, from, to) {
+  if (s.length < 8) return null;
+  const head = s.slice(0, 4);
+  const tail = s.slice(-4);
+  const p = norm.indexOf(head, from);
+  if (p < 0) return null;
+  const q = norm.indexOf(tail, p + head.length);
+  const end = q + tail.length;
+  return q >= 0 && end <= to && end - p <= s.length * 1.5 ? [p, end] : null;
+}
+
+// 每条字幕在正文中的 [起, 止)，找不到为 null。
+// 字幕按时间走，下划线在正文里只能往后：相同的句子可能出现多次，所以不逐条就近找，而是在所有出现位置里
+// 取能串起最多字幕、前后不重叠的一条链，同样长时取靠前的。串不进去的字幕只在前后两条之间找，不会跳到别处
+function locateCues(cues, norm) {
+  const texts = cues.map(({ text }) => normalize(text));
+  const tailEnd = []; // tailEnd[k]：长度 k+1 的链最靠前的结束位置
+  const tail = [];
+  texts.forEach((s, i) => {
+    if (!s) return;
+    const found = occurrences(norm, s);
+    for (let n = found.length - 1; n >= 0; n--) { // 从后往前，同一条字幕的几处不会互相接上
+      const p = found[n];
+      const end = p + s.length;
+      let lo = 0;
+      let hi = tailEnd.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (tailEnd[mid] <= p) lo = mid + 1;
+        else hi = mid;
+      }
+      if (lo === tailEnd.length || end < tailEnd[lo]) {
+        tailEnd[lo] = end;
+        tail[lo] = { i, p, end, prev: lo ? tail[lo - 1] : null };
+      }
+    }
   });
+
+  const locs = new Array(cues.length).fill(null);
+  for (let node = tail[tail.length - 1]; node; node = node.prev) locs[node.i] = [node.p, node.end];
+
+  const limits = new Array(cues.length);
+  let next = norm.length;
+  for (let i = cues.length - 1; i >= 0; i--) {
+    limits[i] = next;
+    if (locs[i]) next = locs[i][0];
+  }
+  let from = 0;
+  locs.forEach((loc, i) => {
+    const found = loc || findLoose(norm, texts[i], from, limits[i]);
+    locs[i] = found;
+    if (found) from = found[1];
+  });
+  return locs;
 }
 
 /** 把字幕对到音频卡片下的正文；rangeAt(i) 取第 i 条（找不到时退回前面最近一条能定位的） */
