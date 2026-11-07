@@ -356,6 +356,36 @@ export const AudioProvider = ({ children }) => {
 
     useEffect(() => () => clearCueHighlight(), []);
 
+    // 播放中、字幕跟着翻页、本页有这张卡片时，保持屏幕常亮
+    const keepAwake = Boolean(
+        isPlaying && subtitleCues && autoFollow
+        && registeredElementsRef.current.get(currentTrack?.id)?.isConnected
+    );
+    useEffect(() => {
+        if (!keepAwake || typeof navigator === 'undefined' || !navigator.wakeLock) return undefined;
+        let lock = null;
+        let released = false;
+        const request = async () => {
+            if (released || document.visibilityState !== 'visible' || (lock && !lock.released)) return;
+            try {
+                const next = await navigator.wakeLock.request('screen');
+                if (released) next.release().catch(() => {});
+                else lock = next;
+            } catch {
+                // 省电模式、权限策略等原因拿不到时忽略
+            }
+        };
+        // 切到后台时浏览器会自动释放，回到前台再申请
+        const onVisibility = () => request();
+        request();
+        document.addEventListener('visibilitychange', onVisibility);
+        return () => {
+            released = true;
+            document.removeEventListener('visibilitychange', onVisibility);
+            lock?.release().catch(() => {});
+        };
+    }, [keepAwake]);
+
     useEffect(() => {
         toggleCurrentRef.current = () => togglePlay(currentTrack);
     }, [togglePlay, currentTrack]);
