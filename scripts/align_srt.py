@@ -14,6 +14,8 @@
 
 文稿取法：md 中每个 <SectionAudio src=".../xxx.m4a" />，从它往下到下一个 SectionAudio、
 或级别不低于其所在标题的下一个标题，就是这段音频的正文；音频按文件名到 --audio-dir 下找。
+同一标题下卡片连着放、正文跟在最后一张后面时，这几段音频共用正文；隔了标题还等不到正文的卡片
+是真没有文稿，跳过。
 
 环境：torch（Intel 核显装 XPU 版）funasr pypinyin rapidfuzz jieba，ffmpeg 在 PATH 中
 用法：
@@ -42,7 +44,7 @@ ASR_DIR = ROOT / "subtitles" / "asr"
 SRT_DIR = ROOT / "subtitles" / "srt"
 
 SR = 16000
-XPU_MEM_GB = 6     # PyTorch 在核显上最多占用的内存
+XPU_MEM_GB = 8     # PyTorch 在核显上最多占用的内存
 CLAUSE_PUNCT = "，。！？；：、…"
 CLOSE_PUNCT = "”’」』）》"
 STRIP_TAIL = "，。、；：…—"
@@ -70,8 +72,8 @@ LABEL = re.compile(r"^(?:问|答)[：:]")
 ATTRIB = re.compile(r"（[^（）]{1,8}(?:法师|堪布|上师|仁波切|喇嘛)）")
 SKIP_LINE = re.compile(r"^(?:本稿为内部学习所用|import\s|\[\^[^\]]*\]:|\[\d+\]|(?:[-*+]\s+)?\[[^\]]*\]\([^)]*\)\s*$)")
 FOOTNOTE_RULE = re.compile(r"^-{10,}$")  # 段尾脚注区的分隔线，其后都不朗读
-FOOTNOTE_REF = re.compile(r"\[\\\[[^\]]*\\\]\]\([^)]*\)")  # 网页转来的脚注标记 [\[1\]](http://...)
-FOOTNOTE_BODY = re.compile(r"^\[\\\[[^\]]*\\\]\]\([^)]*_ftnref[^)]*\)")  # 同上，指回正文的是脚注内容
+FOOTNOTE_REF = re.compile(r"\[\\\[[^\]]*\\\]\](?:\([^)]*\))?")  # 网页转来的脚注标记 [\[1\]](http://...)，也有不带链接的
+FOOTNOTE_BODY = re.compile(r"^\[\\\[[^\]]*\\\]\](?:\([^)]*_ftnref[^)]*\)|(?:\([^)]*\))?\s)")  # 同上，指回正文或行首标记后跟空格的是脚注内容（链接可能被截断）
 ANSWER_HEAD = re.compile(r"^第.{1,3}品\s*思考题答案$")  # 文末附的思考题答案，不朗读
 
 HEADING = re.compile(r"^(#{1,6})\s+(.*)$", re.M)
@@ -115,10 +117,15 @@ def sections(md_path, stop_at_heading=False):
 
 
 def audio_groups(secs):
-    """几段音频共用一份正文（卡片连着放、正文跟在最后一张后面）时归成一组：[([音频文件名], 标题, 正文)]。"""
-    out, names = [], []
+    """几段音频共用一份正文（同一标题下卡片连着放、正文跟在最后一张后面）时归成一组：[([音频文件名], 标题, 正文)]。
+    隔了标题还等不到正文的卡片是真没有文稿，不并进下一节。title 等于 name 表示卡片上方还没有标题。"""
+    out, names, owner = [], [], None
     for name, title, text in secs:
+        if names and title not in (owner, name):
+            print(f"跳过（没有正文）{'、'.join(names)}")
+            names = []
         names.append(name)
+        owner = title
         if text.strip():
             out.append((names, title, text))
             names = []
@@ -136,12 +143,12 @@ def clean(body):
             break
         if not line or SKIP_LINE.match(line) or FOOTNOTE_BODY.match(line):
             continue
-        line = FOOTNOTE_REF.sub("", line)
         line = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", line)
         line = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", line)
         line = re.sub(r"\[\d+\]|\[\^[^\]]*\]|<[^>]+>", "", line)
         line = re.sub(r"^(?:#{1,6}\s+|>\s*|[-*+]\s+)", "", line)
         line = line.replace("**", "").replace("__", "")
+        line = FOOTNOTE_REF.sub("", line)  # 放在去粗体之后：标记可能被拆成 **[**\[2\]**]**
         line = LABEL.sub("", ATTRIB.sub("", line)).strip()
         if line:
             lines.append(line)
