@@ -7,7 +7,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { ROOT } from './lib.mjs';
+import { ROOT, chunkId } from './lib.mjs';
 
 const MIN_CHARS = 300;
 const MAX_CHARS = 450;
@@ -87,7 +87,7 @@ export function buildSrtDocs(g, include) {
         const chunks = chunkCues(cues).map((part, i) => {
             const text = part.map((c) => c.text).join('\n');
             return {
-                id: `${doc}#${String(i).padStart(4, '0')}`,
+                id: chunkId(doc, i),
                 cat: g.cat,
                 group: g.id,
                 doc,

@@ -124,7 +124,7 @@ pnpm rag:update   # 只重建有变化的文章 / 视频 → 递增缓存版本 
             rag/scripts/dedupe.mjs（重复标注：慧灯之光 ↔ 课程法本、参考资料各书之间等）
                                                                    ▼
             rag/scripts/index.mjs：bge-m3（Workers AI / 硅基流动，embed.mjs）→ Qdrant upsert / delete
-                                   rag/manifest.json（每篇 hash + 块 id，增量依据）
+                                   rag/manifest.json（每篇 hash + 块数，增量依据）
 
 在线
   /search（AI 模式）── GET /search?q=…&g=… ──▶ Worker hdcx-rag-api
@@ -216,7 +216,7 @@ pnpm rag:update   # 只重建有变化的文章 / 视频 → 递增缓存版本 
 - 生成向量（`embed.mjs`）：`--embed cf`（默认，Workers AI，每批 20 段，按返回的实际 Neurons 计数）、`sf`（硅基流动，每批 16 段，单路串行）、`both`（两边从同一队列取文章并行）。`--budget N` 时 Workers AI 预计超出 N Neurons 的文章不再接手；当日额度耗尽也会停下。文章整篇生成完才写入，停下后再次运行同一命令继续。
 - 点 id 须为整数或 UUID：由块 id（如 `books/b1/1-01#003`）的 SHA-1 派生 UUID，原 id 存 `payload.cid`；接口用同样规则计算（`workers/rag-api/src/qdrant.js`）。
 - payload 为块的全部字段（除只用于生成向量的 `embedText`）。
-- **增量**：`rag/manifest.json` 记录每篇的 `hash`（正文切块结果）、`metaHash`（重复标注）与块 id。
+- **增量**：`rag/manifest.json` 记录每篇的 `hash`（正文切块结果）、`metaHash`（重复标注）与块数 `chunks`（块 id 由文档路径和序号算出，见 `lib.mjs` 的 `chunkId`）。
   - 正文变化 → 重新生成向量，整篇替换（先删多余旧块再写入，段落号可能整体位移）；
   - 仅标注变化 → 从 Qdrant 取回已有向量重新写入，不消耗 Workers AI；
   - 源已不存在 → 删除。
@@ -318,7 +318,7 @@ pnpm rag:update   # 只重建有变化的文章 / 视频 → 递增缓存版本 
 rag/
   README.md                 本文档
   categories.json           分类配置（索引脚本、接口、前端共用）
-  manifest.json             已索引文章 / 视频的 hash 与块 id（rag:index 自动维护，需提交）
+  manifest.json             已索引文章 / 视频的 hash 与块数（rag:index 自动维护，需提交）
   scripts/
     lib.mjs                 公共配置、Workers AI REST 调用
     embed.mjs               生成向量：Workers AI（Neurons 预算）/ 硅基流动

@@ -6,6 +6,8 @@ export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 export const RAG_DIR = path.join(ROOT, 'rag');
 export const OUT_DIR = path.join(RAG_DIR, 'out');
 export const MANIFEST_PATH = path.join(RAG_DIR, 'manifest.json');
+// 块 id：文档路径 + 从 0 起的连续序号。manifest 只记块数，靠它还原各块 id；改格式须重建向量
+export const chunkId = (doc, i) => `${doc}#${String(i).padStart(doc.startsWith('video/') ? 4 : 3, '0')}`;
 
 export const EMBED_MODEL = '@cf/baai/bge-m3';
 export const DIMENSIONS = 1024;

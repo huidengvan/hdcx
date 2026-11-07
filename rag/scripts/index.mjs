@@ -15,7 +15,7 @@ import path from 'node:path';
 import { buildChunks, printStats } from './build-chunks.mjs';
 import { annotateDuplicates } from './dedupe.mjs';
 import { createEmbedders, embedDoc, QuotaExhausted } from './embed.mjs';
-import { ROOT, EMBED_MODEL, MANIFEST_PATH, parseArgs, matchOnly, readJson, writeJson } from './lib.mjs';
+import { ROOT, EMBED_MODEL, MANIFEST_PATH, chunkId, parseArgs, matchOnly, readJson, writeJson } from './lib.mjs';
 import { loadQdrant, ensureCollection, upsertPoints, deletePoints, getVectors } from './qdrant.mjs';
 
 const WRANGLER_TOML = path.join(ROOT, 'workers/rag-api/wrangler.toml');
@@ -63,12 +63,14 @@ const q = loadQdrant();
 await ensureCollection(q);
 
 const deleteIds = (ids) => deletePoints(q, ids);
+// 文章已写入的全部块 id
+const indexedIds = (doc) => Array.from({ length: manifest.docs[doc]?.chunks ?? 0 }, (_, i) => chunkId(doc, i));
 
 // payload 不含 embedText（只用于生成向量）
 const upsert = (d, vectors) => upsertPoints(q, d.chunks.map(({ id, embedText, ...payload }, i) => ({ cid: id, vector: vectors[i], payload })));
 
 for (const doc of removed) {
-    await deleteIds(manifest.docs[doc].ids);
+    await deleteIds(indexedIds(doc));
     delete manifest.docs[doc];
     writeJson(MANIFEST_PATH, manifest);
     console.log(`已删除 ${doc}`);
@@ -97,12 +99,12 @@ async function work(p) {
             throw err;
         }
 
-        const newIds = new Set(d.chunks.map((c) => c.id));
-        const stale = (manifest.docs[d.doc]?.ids || []).filter((id) => !newIds.has(id));
+        // 序号连续，新块覆盖同序号的旧块，多出来的旧块要删
+        const stale = indexedIds(d.doc).slice(d.chunks.length);
         if (stale.length) await deleteIds(stale);
 
         await upsert(d, vectors);
-        manifest.docs[d.doc] = { group: d.group, hash: d.hash, metaHash: d.metaHash, ids: [...newIds] };
+        manifest.docs[d.doc] = { group: d.group, hash: d.hash, metaHash: d.metaHash, chunks: d.chunks.length };
         writeJson(MANIFEST_PATH, manifest);
         console.log(`[${p.name}] 已写入 ${d.doc}《${d.title}》${d.chunks.length} 块，剩 ${queue.length} 篇`);
     }

@@ -9,7 +9,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { parse } from 'node-html-parser';
-import { ROOT, OUT_DIR, DIMENSIONS, groups, parseArgs, matchOnly } from './lib.mjs';
+import { ROOT, OUT_DIR, DIMENSIONS, chunkId, groups, parseArgs, matchOnly } from './lib.mjs';
 import { buildSrtDocs } from './srt-chunks.mjs';
 
 const MIN_CHARS = 600; // 达到即可断块
@@ -270,7 +270,7 @@ export function buildChunks({ only, groupList = groups } = {}) {
                     .map(([, t]) => t)
                     .join(' › ');
                 return {
-                    id: `${doc}#${String(i).padStart(3, '0')}`,
+                    id: chunkId(doc, i),
                     cat: g.cat,
                     group: g.id,
                     doc,
