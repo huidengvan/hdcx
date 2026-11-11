@@ -1,0 +1,2 @@
+# 课程视频短地址（/video/b1/1-01）没有对应的静态文件，统一交给 /video 页面在浏览器里解析
+/video/*  /video/index.html  200

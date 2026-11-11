@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { DIR_BOOKS, listBookVideos, aliasOf } from '@site/src/components/SubtitleContext/videoAlias';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Highlight from './Highlight';
 import { formatDisplayTime, buildVideoUrl } from './api';
@@ -37,7 +38,25 @@ export default function SearchCard({ title, series, count, subtitles, searchKeyw
 
     const displayedSubtitles = expanded ? subtitleList : subtitleList.slice(0, collapsedCount);
     const remainingCount = subtitleList.length - collapsedCount;
-    const videoUrl = buildVideoUrl(series, title, null, videoBasePath);
+
+    // 向网盘查这个视频的短地址（b1/1-01）；查到之前和查不到时用完整地址
+    const [alias, setAlias] = useState(null);
+    useEffect(() => {
+        setAlias(null);
+        const book = DIR_BOOKS[series];
+        if (!book) return;
+        let cancelled = false;
+        listBookVideos(book)
+            .then((names) => {
+                if (!cancelled) setAlias(aliasOf(names, book, `${title}.mp4`));
+            })
+            .catch(() => {});
+        return () => {
+            cancelled = true;
+        };
+    }, [series, title]);
+
+    const videoUrl = buildVideoUrl(series, title, null, videoBasePath, alias);
 
     return (
         <article className={styles.searchCard}>
@@ -87,7 +106,7 @@ export default function SearchCard({ title, series, count, subtitles, searchKeyw
             {/* 字幕内容列表 */}
             <div className={styles.subtitlesContainer}>
                 {displayedSubtitles.map((sub, i) => {
-                    const subUrl = buildVideoUrl(series, title, sub.startTime, videoBasePath);
+                    const subUrl = buildVideoUrl(series, title, sub.startTime, videoBasePath, alias);
                     const displayTime = formatDisplayTime(sub.startTime);
 
                     return (

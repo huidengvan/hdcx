@@ -6,9 +6,11 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import { parseTime, parseSubtitles, fetchText } from '@site/src/utils';
 import { useVideo } from './VideoContext';
 import toast from 'react-hot-toast';
+import { BOOK_DIRS, DIR_BOOKS, listBookVideos, parseAliasPath, resolveAlias, aliasOf, lessonParts } from './videoAlias';
 
 // 四册课程视频的字幕在本站 static/docs/srts/b1~b4，文件名与视频相同
-const SRT_BOOKS = { 慧灯禅修课第一册: 'b1', 慧灯禅修课第二册: 'b2', 慧灯禅修课第三册: 'b3', 慧灯禅修课第四册: 'b4' };
+const SRT_BOOKS = DIR_BOOKS;
+const VIDEO_BASE = 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/慧灯禅修课/';
 
 // decodeURI 遇到残缺的 % 编码会抛错，失败时原样返回
 const safeDecode = (str) => {
@@ -57,13 +59,103 @@ const SubtitleItem = memo(function SubtitleItem({ sub, index, isActive, showTime
     );
 });
 
-const VideoPlayer = ({ src, current, setCurrent }) => {
+const VideoPlayer = ({ src, current, setCurrent, onNotFound }) => {
     const baseUrl = typeof window !== 'undefined' && location.hash.includes('http')
         ? ''
-        : 'https://s3.ap-northeast-1.wasabisys.com/hdcx/jmy/慧灯禅修课/';
+        : VIDEO_BASE;
 
-    const initialVideoSrc = src || (typeof window !== 'undefined' && location.hash ? `${baseUrl}${location.hash.slice(1)}` : '');
+    // 短地址 /video/b1/1-01#t=62：文件名要先向网盘查，查到之前地址为空
+    const alias = useMemo(() => (!src && typeof window !== 'undefined' ? parseAliasPath(location.pathname) : null), [src]);
+
+    const initialVideoSrc = src || (!alias && typeof window !== 'undefined' && location.hash ? `${baseUrl}${location.hash.slice(1)}` : '');
     const [videoSrc, setVideoSrc] = useState(initialVideoSrc);
+    const [isResolving, setIsResolving] = useState(!!alias);
+    const videoPageBase = useBaseUrl('/video');
+    const aliasRef = useRef(null); // 当前视频的短地址（b1/1-01），复制时间点链接用
+
+    useEffect(() => {
+        if (!alias) return;
+        let cancelled = false;
+        listBookVideos(alias.book)
+            .then((names) => {
+                if (cancelled) return;
+                const name = resolveAlias(names, alias.book, alias.id);
+                if (name) {
+                    setVideoSrc(`${VIDEO_BASE}${BOOK_DIRS[alias.book]}/${name}${location.hash}`);
+                } else if (onNotFound) {
+                    onNotFound(); // 这一册里没有这个编号，由播放页显示 404
+                } else {
+                    toast.error(`没有找到 ${alias.book}/${alias.id} 对应的视频`);
+                }
+            })
+            .catch((e) => {
+                console.error('获取视频目录失败', e);
+                if (!cancelled) toast.error('获取视频目录失败，请稍后重试');
+            })
+            .finally(() => {
+                if (!cancelled) setIsResolving(false);
+            });
+        return () => {
+            cancelled = true;
+        };
+    }, [alias]);
+
+    // 用完整地址（/video#第几册/文件名.mp4）打开时，也查出它的短地址
+    //   同时找出同一课的其他视频，供标题右侧切换
+    const [parts, setParts] = useState([]); // [{ name, alias }]
+    const [currentSeries, currentName] = useMemo(
+        () => (safeDecode(videoSrc).match(/([^/]+)\/([^/#?]+\.mp4)/) || []).slice(1),
+        [videoSrc],
+    );
+
+    useEffect(() => {
+        aliasRef.current = null;
+        const book = DIR_BOOKS[currentSeries];
+        if (!book) {
+            setParts([]);
+            return;
+        }
+        let cancelled = false;
+        listBookVideos(book)
+            .then((names) => {
+                if (cancelled) return;
+                aliasRef.current = aliasOf(names, book, currentName);
+                setParts(lessonParts(names, currentName).map((name) => ({ name, alias: aliasOf(names, book, name) })));
+            })
+            .catch(() => {});
+        return () => {
+            cancelled = true;
+        };
+    }, [currentSeries, currentName]);
+
+    // 标题下拉菜单：点菜单以外的地方或按 Esc 关闭
+    const [menuOpen, setMenuOpen] = useState(false);
+    const menuRef = useRef(null);
+    useEffect(() => {
+        if (!menuOpen) return;
+        const onPointerDown = (e) => {
+            if (!menuRef.current?.contains(e.target)) setMenuOpen(false);
+        };
+        const onKeyDown = (e) => {
+            if (e.key === 'Escape') setMenuOpen(false);
+        };
+        document.addEventListener('pointerdown', onPointerDown);
+        document.addEventListener('keydown', onKeyDown);
+        return () => {
+            document.removeEventListener('pointerdown', onPointerDown);
+            document.removeEventListener('keydown', onKeyDown);
+        };
+    }, [menuOpen]);
+
+    // 切到同一课的另一个视频：换播放地址，地址栏同步成它的地址（不刷新页面）
+    const switchPart = (part) => {
+        if (part.name === currentName) return;
+        const url = part.alias
+            ? `${videoPageBase}/${part.alias}`
+            : `${videoPageBase}#${currentSeries}/${part.name}`;
+        window.history.replaceState(window.history.state, '', url);
+        setVideoSrc(`${VIDEO_BASE}${currentSeries}/${part.name}`);
+    };
 
     const [subtitles, setSubtitles] = useState([]);
     const [isSubLoading, setIsSubLoading] = useState(false);
@@ -79,7 +171,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
     useEffect(() => {
         endTimeRef.current = parseTime(src?.split(',')[1]);
     }, [src]);
-    const isMp4 = useMemo(() => /\.(mp4|webm)/i.test(videoSrc), [videoSrc]);
+    const isMp4 = useMemo(() => isResolving || /\.(mp4|webm)/i.test(videoSrc), [videoSrc, isResolving]);
 
     const [playInfo, setPlayInfo] = useLocalStorageState('playInfo', {
         defaultValue: {
@@ -96,7 +188,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
     // PC 端默认使用宽屏 UI
     const isFullWidth = true;
     const hasSubtitles = subtitles && subtitles.length > 0;
-    const showTranscript = isSubLoading || hasSubtitles;
+    const showTranscript = isSubLoading || isResolving || hasSubtitles;
 
     // 格式化展示的视频标题
     const displayTitle = useMemo(() => {
@@ -221,7 +313,11 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
 
     // 点击时间戳复制链接
     const handleCopyTimestamp = async (sub) => {
-        const base = window.location.href.split('#t=')[0];
+        // 在 /video 页且查到了短地址时用短地址，否则沿用当前地址
+        const onVideoPage = location.pathname.startsWith(videoPageBase);
+        const base = onVideoPage && aliasRef.current
+            ? `${location.origin}${videoPageBase}/${aliasRef.current}`
+            : window.location.href.split('#t=')[0];
         const link = `${base}#t=${sub.startSec}`;
         try {
             await navigator.clipboard.writeText(link);
@@ -291,9 +387,46 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
                     <div className={`${styles.mediaMeta} ${isFullWidth ? styles.mediaMetaFull : ''}`}>
                         <div className={styles.mediaTitleWrapper}>
                             <span className={styles.mediaBadge}>{isMp4 ? '视频' : '音频'}</span>
-                            <h3 className={styles.mediaTitle} title={displayTitle}>
-                                {displayTitle || '媒体播放'}
-                            </h3>
+                            {!src && parts.length > 1 ? (
+                                // 同一课有多个视频：标题就是下拉菜单，选中即切换
+                                <div className={styles.titleMenu} ref={menuRef}>
+                                    <button
+                                        type="button"
+                                        className={styles.titleMenuButton}
+                                        title="切换本课的其他视频"
+                                        aria-haspopup="listbox"
+                                        aria-expanded={menuOpen}
+                                        onClick={() => setMenuOpen((open) => !open)}
+                                    >
+                                        <h3 className={styles.mediaTitle}>{displayTitle}</h3>
+                                        <svg className={styles.titleMenuChevron} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                                            <polyline points="6 9 12 15 18 9" />
+                                        </svg>
+                                    </button>
+                                    {menuOpen && (
+                                        <ul className={styles.titleMenuList} role="listbox">
+                                            {parts.map((part) => (
+                                                <li
+                                                    key={part.name}
+                                                    role="option"
+                                                    aria-selected={part.name === currentName}
+                                                    className={`${styles.titleMenuItem} ${part.name === currentName ? styles.titleMenuItemActive : ''}`}
+                                                    onClick={() => {
+                                                        setMenuOpen(false);
+                                                        switchPart(part);
+                                                    }}
+                                                >
+                                                    {part.name.replace(/\.(mp4|webm|mp3|m4a)$/i, '')}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
+                            ) : (
+                                <h3 className={styles.mediaTitle} title={displayTitle}>
+                                    {displayTitle || '媒体播放'}
+                                </h3>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -334,7 +467,7 @@ const VideoPlayer = ({ src, current, setCurrent }) => {
 
                         {/* 字幕行滚动列表 */}
                         <ul ref={listRef} className={styles.transcriptList} onClick={handleListClick}>
-                            {isSubLoading ? (
+                            {isSubLoading || isResolving ? (
                                 <div className={styles.skeletonContainer}>
                                     {[1, 2, 3, 4, 5, 6, 7].map((i) => (
                                         <div key={i} className={styles.skeletonItem}>

@@ -153,10 +153,11 @@ export function formatDisplayTime(time) {
  * @param {string} title
  * @param {number|string} [startTime]
  * @param {string} [baseVideoPath]
+ * @param {string|null} [alias] - 短地址（b1/1-01），有则用它代替“系列/标题.mp4”
  * @returns {string}
  */
-export function buildVideoUrl(series, title, startTime, baseVideoPath = '/video') {
-    let url = `${baseVideoPath}#${series}/${title}.mp4`;
+export function buildVideoUrl(series, title, startTime, baseVideoPath = '/video', alias = null) {
+    let url = alias ? `${baseVideoPath}/${alias}` : `${baseVideoPath}#${series}/${title}.mp4`;
     if (startTime) {
         url += `#t=${formatTimeForUrl(startTime)}`;
     }

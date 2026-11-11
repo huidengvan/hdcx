@@ -548,3 +548,137 @@
         min-height: 240px;
     }
 }
+/* ─── 独立播放页（/video）：桌面端固定铺满导航栏以下的整屏 ─────────────
+   固定定位后不占文档高度，页面本身不会出现横向或纵向滚动条，只有字幕列表自己滚动 */
+@media screen and (min-width: 901px) {
+    .videoPage {
+        position: fixed;
+        top: var(--ifm-navbar-height);
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: hidden;
+    }
+
+    .videoPage .containerFull {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100%;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .videoPage .layoutFull {
+        height: 100% !important;
+        max-height: 100% !important;
+    }
+}
+
+/* ─── 同一课有多个视频时，标题变成下拉菜单 ───────────────── */
+.titleMenu {
+    position: relative;
+    min-width: 0;
+}
+
+.titleMenuButton {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 100%;
+    margin: 0;
+    padding: 4px 8px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+.titleMenuButton:hover,
+.titleMenuButton[aria-expanded='true'] {
+    background: rgba(125, 125, 125, 0.18);
+}
+
+.titleMenuButton:focus-visible {
+    outline: 2px solid #2e8555;
+    outline-offset: 1px;
+}
+
+.titleMenuChevron {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: transform 0.15s ease;
+}
+
+.titleMenuButton[aria-expanded='true'] .titleMenuChevron {
+    transform: rotate(180deg);
+}
+
+/* 标题栏在视频下方，菜单向上弹出 */
+.titleMenuList {
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + 8px);
+    z-index: 20;
+    min-width: 100%;
+    max-width: min(480px, 90vw);
+    max-height: 50vh;
+    overflow-y: auto;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    border-radius: 12px;
+    border: 1px solid rgba(125, 125, 125, 0.25);
+    background: #ffffff;
+    color: #2d2d2d;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+}
+
+.titleMenuItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.titleMenuItem:hover {
+    background: rgba(125, 125, 125, 0.14);
+}
+
+.titleMenuItemActive,
+.titleMenuItemActive:hover {
+    background: rgba(46, 133, 85, 0.14);
+    color: #2e8555;
+    font-weight: 600;
+}
+
+[data-theme='dark'] .titleMenuList {
+    background: #1f1f26;
+    color: #e5e7eb;
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='dark'] .titleMenuItemActive,
+[data-theme='dark'] .titleMenuItemActive:hover {
+    background: rgba(34, 197, 94, 0.18);
+    color: #4ade80;
+}
+
+/* 桌面端标题栏是深色的 */
+@media screen and (min-width: 901px) {
+    .mediaMetaFull .titleMenuButton {
+        color: #f3f4f6;
+    }
+}
+
+.titleMenuButton .mediaTitle {
+    min-width: 0;
+}

@@ -44,6 +44,19 @@ const config = {
         ],
     ],
     plugins: [
+        // /video 及其下的短地址（/video/b1/1-01）都交给同一个播放页，短地址在浏览器里解析
+        function videoRoute() {
+            return {
+                name: 'video-route',
+                async contentLoaded({ actions }) {
+                    actions.addRoute({
+                        path: '/video',
+                        exact: false,
+                        component: '@site/src/components/SubtitleContext/VideoPage.jsx',
+                    });
+                },
+            };
+        },
         [
             '@docusaurus/plugin-content-docs',
             {

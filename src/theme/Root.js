@@ -9,7 +9,8 @@ const VALID_THEMES = ['white', 'warm', 'green', 'maroon'];
 
 export default function Root({ children }) {
     const location = useLocation();
-    const shouldHide = /^\/(playlist|video)\/?/.test(location.pathname);
+    // /video 页自己不渲染页脚（VideoPage.jsx），这里只处理 /playlist
+    const shouldHide = /^\/playlist\/?/.test(location.pathname);
     const matchPlaylist = /^\/playlist\/?/.test(location.pathname);
 
     useEffect(() => {
