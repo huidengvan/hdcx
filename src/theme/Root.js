@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { useLocation } from '@docusaurus/router';
-import Playlist from '@site/src/components/Playlist';
 import { Toaster } from 'react-hot-toast';
 import { VideoProvider } from '../components/SubtitleContext/VideoContext';
 import { AudioProvider, FloatingPodcastPlayer } from '../components/AudioCompanion';
+
+// 播放列表连同字幕播放器单独打包，第一次进 /playlist 时才下载，其他页面不带这部分代码
+const Playlist = lazy(() => import('@site/src/components/Playlist'));
 
 const VALID_THEMES = ['white', 'warm', 'green', 'maroon'];
 
@@ -12,6 +14,12 @@ export default function Root({ children }) {
     // /video 页自己不渲染页脚（VideoPage.jsx），这里只处理 /playlist
     const shouldHide = /^\/playlist\/?/.test(location.pathname);
     const matchPlaylist = /^\/playlist\/?/.test(location.pathname);
+
+    // 进过 /playlist 之后一直保持挂载（离开时只是隐藏），和原来一样不打断正在播放的内容
+    const [playlistLoaded, setPlaylistLoaded] = useState(false);
+    useEffect(() => {
+        if (matchPlaylist) setPlaylistLoaded(true);
+    }, [matchPlaylist]);
 
     useEffect(() => {
         setTimeout(() => {
@@ -61,9 +69,13 @@ export default function Root({ children }) {
         <VideoProvider>
             <AudioProvider>
                 {children}
-                <div style={{ display: matchPlaylist ? 'block' : 'none' }}>
-                    <Playlist />
-                </div>
+                {playlistLoaded && (
+                    <div style={{ display: matchPlaylist ? 'block' : 'none' }}>
+                        <Suspense fallback={null}>
+                            <Playlist />
+                        </Suspense>
+                    </div>
+                )}
                 <FloatingPodcastPlayer />
                 <Toaster position="top-center" containerStyle={{ zIndex: 99999 }} />
             </AudioProvider>
