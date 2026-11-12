@@ -34,4 +34,4 @@ CONTEXT_LINES = "2"
 MAX_DOCS = "10"
 CACHE_TTL = "86400"
 # 重建索引后递增，使结果缓存失效
-INDEX_VERSION = "15"
+INDEX_VERSION = "16"

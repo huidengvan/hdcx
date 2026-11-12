@@ -1,233 +1,213 @@
 {
-  "version": "f00841689957",
+  "version": "04458b96ccd6",
   "docs": {
     "b1/01 三个差别(2014)": {
       "id": 1,
-      "hash": "eff5320fb380cec81e67d35c7dca748e4aaf77cf"
+      "hash": "d0618c56f515681326574fd624595b50f12a8717"
     },
     "b1/02-1 三殊胜（上）": {
       "id": 2,
-      "hash": "438f3a9d92973c042801c9697198501ea2b32966"
+      "hash": "0c441caea6a26612d9641d2a680e60628721d46f"
     },
     "b1/02-2 三殊胜（中）": {
       "id": 3,
-      "hash": "e7e7a69cc1f7c1ea9aa9f45eda1a3ee038c4b097"
+      "hash": "7b835da41616bb6ba760dfaaadc598e24a1c54ea"
     },
     "b1/02-3 三殊胜（下）": {
       "id": 4,
-      "hash": "b61163acb24352212e74ff5c6985ca6d25be699e"
+      "hash": "fa47f4545f2559cc36e5e224f67c968cd41fc616"
     },
     "b1/03 生存的方式和生存的意义": {
       "id": 5,
-      "hash": "ec49ea319b8ac2cd9a979f1814811efcd54038a5"
+      "hash": "2fea6d7fd6f3dbb33c9d63754ce0c9dcf69bcf39"
     },
     "b1/04 佛教徒的生活模式": {
       "id": 6,
-      "hash": "2ebdfe5d5887a4338632e1372a009ce8289042a7"
+      "hash": "7ab4595fc9ee7333e112ba2686490f20dcd849f7"
     },
     "b1/05-1 如何做标准的居士1": {
       "id": 7,
-      "hash": "85bd08a1b0777342a934360e2a6bf56ee3840a55"
+      "hash": "107b8b29ef467c011009feaae5a011d8205835e8"
     },
     "b1/05-2 如何做标准的居士2": {
       "id": 8,
-      "hash": "0a6dbfb0f058ac94ce299663860b60f6e7be6558"
+      "hash": "6b4052668819e6194de6ef97ffeeb6a191733575"
     },
     "b1/06 浅谈因果关系": {
       "id": 9,
-      "hash": "d6c113677057b4d4588eaea908a0528d23bbe5c4"
-    },
-    "b1/06-1 浅谈因果关系1": {
-      "id": 10,
-      "hash": "42c85e0057b1fefa29fde89cecb11e54397a6dd9"
-    },
-    "b1/06-2 浅谈因果关系2": {
-      "id": 11,
-      "hash": "0e439e41e612ece0b92b4a8d320a0303e977ace3"
+      "hash": "48e7dd4fcab9e8bd8ef08c70c67cc866a95dc872"
     },
     "b1/07-1 佛法融入生活：行为转为道用1": {
       "id": 12,
-      "hash": "8fbf709048160836d876da88783cb6b0612d2a18"
+      "hash": "2ea872212ce366207d1d95b5884d94d37606f395"
     },
     "b1/07-2 佛法融入生活：行为转为道用2": {
       "id": 13,
-      "hash": "4500e78d57117cbed346e624739cab38cbca7690"
+      "hash": "692d0edd7e871f29b7d48faf5a9ac197cc828fa5"
     },
     "b1/08 佛教的定义": {
       "id": 14,
-      "hash": "e613a7de595e69860a628c3dcd463365e3f3567b"
+      "hash": "c081ffc2321a3d0f20f605271acd237743d40e01"
     },
     "b1/09 解脱的原理": {
       "id": 15,
-      "hash": "6dd17e284b8bc7653d9961921334341fb5cc1cab"
+      "hash": "1fba5614f86cf7763d7a24274f8c3d7d234909fc"
     },
     "b1/10-1 麦彭仁波切对初学者的教诲1": {
       "id": 16,
-      "hash": "650c1f9785dab09e88d5b4cc7e1fd272a7d0d253"
+      "hash": "757b62c16570dfb756ef95282512ed0d876361a2"
     },
     "b1/10-2 麦彭仁波切对初学者的教诲2": {
       "id": 17,
-      "hash": "bcc7ca252bf394f8f2bcad46b0c03e42dd1d8b4b"
-    },
-    "b1/10.  第六课  《浅谈因果关系》": {
-      "id": 18,
-      "hash": "efe4323927fb38717a212e444ecc8e8eea3a50d5"
+      "hash": "e7bde276bf90ff25b4668deab052121527019fd7"
     },
     "b2/01 莲花生大师修法": {
       "id": 19,
-      "hash": "e0a28098dfd39d536f7d53e1fb8c361ce0abffe7"
+      "hash": "115876c0f38eb46ecd57918582ce85c4325a1f46"
     },
     "b2/02 2015马来西亚系列讲座 我们为什么不幸福": {
       "id": 20,
-      "hash": "258eb09de786b19ae5810f70493ef1d02e728989"
+      "hash": "1d430e2c6eaff4bf29ccb48ad23136eb9e216ef7"
     },
     "b2/03-1 佛法融入生活：如何面对痛苦1": {
       "id": 21,
-      "hash": "09629d67ebd1378b0cee84c572a56f8817808456"
+      "hash": "90afc37088a939cf46e0c12859028d6066966dfc"
     },
     "b2/03-2 佛法融入生活：如何面对痛苦2": {
       "id": 22,
-      "hash": "b6e313a0cbe2b1ba48c73c96155a99a39c9d50b5"
+      "hash": "64a0c7c4b8a8b6710af2e256ed61a2be73748ae3"
     },
     "b2/03-3 佛法融入生活：如何面对痛苦3": {
       "id": 23,
-      "hash": "f374e42384deab9dfab4ca62385b2622a8189f8b"
+      "hash": "d0dda1ff1014ee4b1783c0ea5e2facf4dd999cd3"
     },
     "b2/03-4 佛法融入生活：如何面对幸福": {
       "id": 24,
-      "hash": "3f1a1d93d53c117387c4183e6798d875ac2bfff0"
+      "hash": "0c3a056dc2807ae7aa125df692354f4f567db87f"
     },
     "b2/04-1 戒杀放生的意义（一）": {
       "id": 25,
-      "hash": "7f4c0f2006d8097f112256ccf6d15da092c8b91c"
+      "hash": "c084103511efcd4b91f2b997809091696bd721b5"
     },
     "b2/04-2 戒杀放生的意义（二）": {
       "id": 26,
-      "hash": "4a41f3cbadfacc202a2215de2d91a313e5a40959"
+      "hash": "9f599f4299bd81c42600ef3044c40778627b109a"
     },
     "b2/05-1素食的意义01": {
       "id": 27,
-      "hash": "e680ce9915a12f9423766399ad0f637a05dc2227"
+      "hash": "f134d14794848a802b06d8fe1ecf803fa4347089"
     },
     "b2/05-2素食的意义02": {
       "id": 28,
-      "hash": "92282f337b16a0f9425992e3bbab605cc57f15e2"
+      "hash": "b8eb47976630ad6cf9cdc2015b0771ccd0d8ac74"
     },
     "b2/09-1 病苦转为道用01": {
       "id": 29,
-      "hash": "4dfdea7c03f23299707c561d7789be9eea8e85e6"
+      "hash": "3b4e541f7b83b57a6cb90795771306cfc4eea3da"
     },
     "b2/09-2 病苦转为道用02": {
       "id": 30,
-      "hash": "0094093af752e829e9c0cd388f6a87b9e0bf25fa"
+      "hash": "1767344561d7ea515f5f66a2e37ed1fd5867d4b7"
     },
     "b2/10-1 开示四谛（上）": {
       "id": 31,
-      "hash": "23d9b75991844a018fa7acb653fce1f7572a49f0"
-    },
-    "b2/10-1 开示四谛（一）": {
-      "id": 32,
-      "hash": "501fb91a8bc417d74351e9a1dc10c5aef2f961dd"
-    },
-    "b2/10-2 开示四谛（二）": {
-      "id": 33,
-      "hash": "715a63c343ff097a0c56db94e60920102266f676"
+      "hash": "bcd34a95a7a56e0329703be549a912c0e80c1bd1"
     },
     "b2/10-2 开示四谛（下）": {
       "id": 34,
-      "hash": "03b106cddb3af4d2ed7017f68f431f8f288041ed"
+      "hash": "1c84b63543eaa2f9af5978e16be8ee5a2d5b9e5d"
     },
     "b2/11 二谛-开启中观门扉之钥匙": {
       "id": 35,
-      "hash": "9e548e6add81cf1a572e8e3726017a3c192a56c3"
+      "hash": "5e68c13bf8d94f427cd33664dbc44fb240904a9a"
     },
     "b2/13 佛教的世界观(2010)": {
       "id": 36,
-      "hash": "68b3354f5c2ba853b4681d46ae89a5359ca29445"
+      "hash": "1e4a667c5e6db5934fbf79f396d8d170053952b4"
     },
     "b2/16 语加持的修法": {
       "id": 37,
-      "hash": "c6ef9a8872ee56ac962cb30b4ab65a93cf23e0af"
+      "hash": "4a6f783ed07870c9d4f440616a57566854c58f12"
     },
     "b2/19 佛教的物种起源": {
       "id": 38,
-      "hash": "fc5de02e2a9c9cd08cf7c9e50b8a7f9ce0824e47"
+      "hash": "7707be8b0095f4c169ef61c4d69ba7e7b9a9c236"
     },
     "b2/梦幻世界": {
       "id": 39,
-      "hash": "4b4c076b5d4ccb8f444e6d96b587f5bfac2b61b8"
+      "hash": "fdada7f84546cc7bd043fce5734f33844229aa0c"
     },
     "b2/上师对慧灯禅修的特别叮嘱": {
       "id": 40,
-      "hash": "a4dd87e128b375564ea1c008be5d93ea730c92d2"
+      "hash": "83d9114ac65ddfd7c04fa878ca8c44b783d7b210"
     },
     "b3/00 慧灯禅修课 介绍慧灯禅修": {
       "id": 41,
-      "hash": "b3b27bbed24a199173a91615807ba231a294cfa1"
+      "hash": "d007d19e73e1097e8c6cfd5152a7e9af7ec7a5d3"
     },
     "b3/01 慧灯禅修课1 入坐与出坐": {
       "id": 42,
-      "hash": "9ec43c409d9124ee4b74bed01e66726dbf868841"
+      "hash": "c7912096a3d6537e7316698c542ba66b5042c44f"
     },
     "b3/02-1 慧灯禅修课2 人身难得1": {
       "id": 43,
-      "hash": "d653d0bad29b95ed6c5c1ebdfbc73d32950af6db"
+      "hash": "4bcd7da5f49f7e984628f23cfb3940272130aeea"
     },
     "b3/02-2 慧灯禅修课3 人身难得2": {
       "id": 44,
-      "hash": "7b833a8fe07da2c3d74413939ce7225d8731fdea"
+      "hash": "77d89d36fb8fea785f637920e7f71949e4e7b2d7"
     },
     "b3/02-3 慧灯禅修课4 人身难得3": {
       "id": 45,
-      "hash": "5cc0ec9ca5d7d1da052aa72dba5cf53c58db2367"
+      "hash": "7d3638bae716e85a2403ee6e8a0397abe4f61f40"
     },
     "b3/02-4 慧灯禅修课5 人身难得4": {
       "id": 46,
-      "hash": "c80a4bc89fd34557c8e55c01eef9e0b302a659ab"
+      "hash": "b1e34382153cc7159422c7c12a541a83ca676a21"
     },
     "b3/03-1 慧灯禅修课6 寿命无常1": {
       "id": 47,
-      "hash": "ecdf705679144523a2383e7ea8a8dd13e2e80dd7"
+      "hash": "80fc399f88294d71c19a54551fb1e7c2be5ee2d1"
     },
     "b3/03-2 慧灯禅修课7 寿命无常2": {
       "id": 48,
-      "hash": "81009e18c5ae83a40529c84bec5ce7bc69f33b56"
+      "hash": "a55a6855937383869a9479f7a9d82ac54f4e0671"
     },
     "b3/03-3 慧灯禅修课8 寿命无常3": {
       "id": 49,
-      "hash": "42ecd44707554de06eb4470d3f26251ca66cc56a"
+      "hash": "8c4b043fa77561fc2076380f5800c3191edfc81d"
     },
     "b3/04-1 慧灯禅修课9 轮回痛苦1": {
       "id": 50,
-      "hash": "f63b969204e8885c957c0cd46dc2f1cf56befee7"
+      "hash": "48b7921c562d4c5c73fd132a5f92cc4914005d06"
     },
     "b3/04-2 慧灯禅修课10 轮回痛苦2": {
       "id": 51,
-      "hash": "8e474c6cd06f711f7a10a6b97119d0e04b9f5e2e"
+      "hash": "d356c1ddd9819d2a294ff16b05ce077e71e9d263"
     },
     "b3/04-3 慧灯禅修课11 轮回痛苦3": {
       "id": 52,
-      "hash": "bb748c5fd7650df80d7eaea198f24fcf649920f7"
+      "hash": "c4b4b0cb8f522dcabcbccd62a6eef682abc1156a"
     },
     "b3/04-4 慧灯禅修课12 轮回痛苦4": {
       "id": 53,
-      "hash": "f27c19fd0b09796a54ce38da4f146d5f2e3ee879"
+      "hash": "9fc335c0878ff3fcede1a1b631ce2a90e342355b"
     },
     "b3/05-1 慧灯禅修课13 因果不虚1": {
       "id": 54,
-      "hash": "1d0fbe1aad7ad9756758daa3f8e2c722fe335d87"
+      "hash": "a526cfde40a0368b5e919f7d77c4692d03e98093"
     },
     "b3/05-2 慧灯禅修课14 因果不虚2": {
       "id": 55,
-      "hash": "22195a8ebaa60bbd74d51275e87b02190a875b37"
+      "hash": "e6d885a3e822db35ee76c7e2761a164b5a84a0ea"
     },
     "b3/05-3 慧灯禅修课15 因果不虚3": {
       "id": 56,
-      "hash": "9147fd9a2ae08926969573383079ab731ac223e0"
+      "hash": "1c477cb7c615481394d30c326e004a9f7e520057"
     },
     "b3/05-4 慧灯禅修课16 因果不虚4": {
       "id": 57,
-      "hash": "ce2667cb3723a7947257de5f30cd88e9d79c4ddf"
+      "hash": "b31c2b2b4a23cb6cd90644787b2b5cb260362d2f"
     },
     "b3/05-5 慧灯禅修课17 因果不虚5": {
       "id": 58,
@@ -235,79 +215,79 @@
     },
     "b3/05-6 慧灯禅修课18 因果不虚6": {
       "id": 59,
-      "hash": "c50361cd3cd6749f92a182609a796cd2a087e78c"
+      "hash": "409a1bba3c8ff00004a6544fddb759933ea31167"
     },
     "b3/06-1 慧灯禅修课19 解脱利益": {
       "id": 60,
-      "hash": "193b56e7fe583fc5f640f056fa61258e81ad51a6"
+      "hash": "6b1a0794b61fc7eefb297301bf730d83c62f3522"
     },
     "b3/06-2 慧灯禅修课20 依止上师": {
       "id": 61,
-      "hash": "a6143e896c178da7e82ed82a2a9a3b7d38e30bbc"
+      "hash": "57733999cd2763e17e8e9583e90bbd04d616599a"
     },
     "b4/01-1 慧灯禅修课21 加行的修法-皈依1": {
       "id": 62,
-      "hash": "a9537cec9d56dda124a296140f1c3dfde2119576"
+      "hash": "91c88b0eae8977b98be7ce1146523c9c08e62455"
     },
     "b4/01-2 慧灯禅修课22 加行的修法-皈依2": {
       "id": 63,
-      "hash": "373ee3d6630f08abbef891e43473517b8061f44e"
+      "hash": "c40ea89fda880bbfbdf775f3f4c9e1022a4084f9"
     },
     "b4/01-3 慧灯禅修课23 加行的修法-皈依3": {
       "id": 64,
-      "hash": "c56ed58f163388df28f6efdaee0f128ef49d6f60"
+      "hash": "b182a354ee46d802e7dfb4374e40c594e10016a0"
     },
     "b4/02-1 慧灯禅修课24 加行的修法-菩提心1": {
       "id": 65,
-      "hash": "383fa863280212286d016d05fde3fe3f55b41730"
+      "hash": "1ff4e217d7b6c35d9385c1068cb85bc2febe8b13"
     },
     "b4/02-2 慧灯禅修课25 加行的修法-菩提心2": {
       "id": 66,
-      "hash": "3a7f684869c333c5bf7411272095c530bbf07e9d"
+      "hash": "a9037b0f0d601e9c3d53a2e608782f9ebdf1d78e"
     },
     "b4/02-3 慧灯禅修课26 加行的修法-菩提心3": {
       "id": 67,
-      "hash": "be6455a43fb1395dbf10936cebec1ac39dae640e"
+      "hash": "2d15027879fccc139c1756ef161a1293610ff058"
     },
     "b4/02-4 慧灯禅修课27 加行的修法-菩提心4": {
       "id": 68,
-      "hash": "e7a1990ee365bcaa2116bd404d34b9408ba516de"
+      "hash": "ff9ebb878831ce17e50d96500a05a67cf6741334"
     },
     "b4/03-1 慧灯禅修课28 加行的修法-金刚萨埵1": {
       "id": 69,
-      "hash": "680ccf01f5b4f751efedd5af372ba10c74d3eb2f"
+      "hash": "ffd0f60294716533678e05e476512885b560c3ef"
     },
     "b4/03-2 慧灯禅修课29 加行的修法-金刚萨埵2": {
       "id": 70,
-      "hash": "fe7376775a2e1cf99e855be40a71c8f459e6d577"
+      "hash": "3925c948043617e995e9d985a6da6c30e08a5850"
     },
     "b4/03-3 慧灯禅修课30 加行的修法-金刚萨埵3": {
       "id": 71,
-      "hash": "ad0d7760ab7d1a306370a5f8efa3029c46d49b35"
+      "hash": "640e76e6b58263d708a6674f0ffb96b4078c682c"
     },
     "b4/04-1 慧灯禅修课31 加行的修法-曼荼罗1": {
       "id": 72,
-      "hash": "b7de854e0897d778987472698c7e246754af8740"
+      "hash": "0d2a9b170e6f23f0eb6f5fab9cb0859c828d6490"
     },
     "b4/04-2 慧灯禅修课32 加行的修法-曼荼罗2": {
       "id": 73,
-      "hash": "56bc3ad94984e99d75414df279b64ff497b8cc65"
+      "hash": "a48ed8cccc33fd3b18f9e57568eefe7c1e776448"
     },
     "b4/05-1 慧灯禅修课33 加行的修法-上师瑜伽1": {
       "id": 74,
-      "hash": "3a83f210b7e125b4b6c3f672a72c6dd34cd262b9"
+      "hash": "a24d20367ecf639033091f4379cb980f2c43bd04"
     },
     "b4/05-2 慧灯禅修课34 加行的修法-上师瑜伽2": {
       "id": 75,
-      "hash": "b9b3e0fbb08d2d008a1aad39c98cacdb47423d39"
+      "hash": "3254f466481160dab9fec560f6ab8dcfafe10587"
     },
     "b4/05-3 慧灯禅修课35 加行的修法-上师瑜伽3": {
       "id": 76,
-      "hash": "b68cdcffe28167103d14ab2aad33c429f3cdb649"
+      "hash": "4e6a9a216779c806755e99e4e7808c65b6ab52b5"
     },
     "/books/b1/1-01#01三个差别": {
       "id": 77,
-      "hash": "dbfcfff9e8f01997dd3fb7b74f2279d83be210af"
+      "hash": "27b3ea71caebe5a65bc8b5836df260bf9e620ac5"
     },
     "/books/b1/1-02#02三殊胜--行善修心的究竟方法": {
       "id": 78,
@@ -319,7 +299,7 @@
     },
     "/books/b1/1-04#04佛教徒的生活模式": {
       "id": 80,
-      "hash": "300fa3aa8476995ff7b52b597226400f3c13a397"
+      "hash": "0cd950b3fc1a85956c735945b64fe2f834dd41e4"
     },
     "/books/b1/1-05#05如何做一个标准居士": {
       "id": 81,
@@ -327,27 +307,27 @@
     },
     "/books/b1/1-06#06浅谈因果关系": {
       "id": 82,
-      "hash": "937631a71b75720cf2f6c82422d2523d4fd9a559"
+      "hash": "77c10b3589d95cca5c687dcc2c7fd6f7aa9e01e1"
     },
     "/books/b1/1-07#07佛法融入生活": {
       "id": 83,
-      "hash": "4042d20eefe5cfbb7b1e86f77a01e895b2f4a14f"
+      "hash": "188728c70f7578e9e313a5e37b3cbb4ebc3d972a"
     },
     "/books/b1/1-08#08佛教的定义": {
       "id": 84,
-      "hash": "86fc12646cb131ff17297913013cf559339fa538"
+      "hash": "3b56a06f29943049493c6e8a0faf4fd167221045"
     },
     "/books/b1/1-09#09解脱的原理": {
       "id": 85,
-      "hash": "391e22c40dbd8a6c50e99b9e968ec9de6c460887"
+      "hash": "ee1401be4d678c901d87d3ccfe14dffe252d09c8"
     },
     "/books/b1/1-10#10对初学者的教诲": {
       "id": 86,
-      "hash": "feb00c4f8d13d1cffcc9722815463a10d42ea91d"
+      "hash": "6a05e77c66adc73d8fa8b85461a86f224f94bd77"
     },
     "/books/b2/2-01#01为什么现代人越来越没有幸福感": {
       "id": 87,
-      "hash": "360f43248f9d077af75f252831df46be2a28d6b6"
+      "hash": "6b7de37d83c550e2787fbabad1f8b7089dfca1d2"
     },
     "/books/b2/2-02#02如何面对痛苦和幸福": {
       "id": 88,
@@ -355,15 +335,15 @@
     },
     "/books/b2/2-03#03戒杀放生的功德": {
       "id": 89,
-      "hash": "e7a74d0268704d2bb6d717cc09823836ca065338"
+      "hash": "2118156e551b28eb5ea83e163e57b5b27f0e2706"
     },
     "/books/b2/2-04#04素食的意义": {
       "id": 90,
-      "hash": "0ce734eea674d06578321e097ebf66a07e6a54fe"
+      "hash": "fb951f9ace5ed3540a250ca2edfcaa3abd3eac44"
     },
     "/books/b2/2-05#05关于放生": {
       "id": 91,
-      "hash": "414e35e5abb46a6a99fda74a08bf901c697136b6"
+      "hash": "3631990b5931bf69b047c43b4bab9629e371d937"
     },
     "/books/b2/2-06#06世界和平共处的诀窍--平等生存": {
       "id": 92,
@@ -379,15 +359,15 @@
     },
     "/books/b2/2-09#09四谛--脱离生死的出路": {
       "id": 95,
-      "hash": "39e455395a71f24654b3bf11c9384d7d8ec1683e"
+      "hash": "18bcce2412438a6815bb712ab1ef4d3c6417820a"
     },
     "/books/b2/2-10#10二谛--开启中观门扉之钥匙": {
       "id": 96,
-      "hash": "84d9950a1380338d4645ccc510da50184b5eed0d"
+      "hash": "0edffe923826c813906da3a12cb2d1acfd58df3a"
     },
     "/books/b2/2-11#11十二缘起支--生命轮回的次序": {
       "id": 97,
-      "hash": "fe2e00409187f09bc5956d1369286243ae82f2ad"
+      "hash": "ef00abd498dd22de5f8fc676d6a9f64112193a4a"
     },
     "/books/b2/2-12#12梦幻世界": {
       "id": 98,
@@ -395,11 +375,11 @@
     },
     "/books/b2/2-13#13佛教的物种起源说": {
       "id": 99,
-      "hash": "ee13fed61541daf548fa769550f93845294e07d2"
+      "hash": "3d8d47297d6d350d9d5ea22744d6142038e4cdee"
     },
     "/books/b2/2-14#14佛教的世界观": {
       "id": 100,
-      "hash": "7048f526208c4eb23f1df61bbfe9f15bc6630e78"
+      "hash": "4102e35eda2b560193e64562e899d39a36768f77"
     },
     "/books/b2/2-15#15语加持的修法": {
       "id": 101,
@@ -407,7 +387,7 @@
     },
     "/books/b2/2-16#16金刚七句之上师瑜伽": {
       "id": 102,
-      "hash": "10287136b55b9cc66cea440281ac97f2c9dc15e6"
+      "hash": "453bfd7508d60b972775dfbfbbee0362622c9dce"
     },
     "/books/b3/3-01#01入坐与出坐": {
       "id": 103,
@@ -427,7 +407,7 @@
     },
     "/books/b3/3-05#05因果不虚": {
       "id": 107,
-      "hash": "0eb5c33cb95242ac8e1dc55a4524fdd12fd7c71c"
+      "hash": "576996a21e11cd51fe503abf4e77e808b039f87d"
     },
     "/books/b3/3-06#06解脱利益与依止上师": {
       "id": 108,
@@ -439,7 +419,7 @@
     },
     "/books/b3/3-08#08金刚上师与灌顶": {
       "id": 110,
-      "hash": "7e51430e89b2e165d1cb74a9deca31e47906f5a1"
+      "hash": "3c3a3cd48005dbbd1620673a842cb3fcf420f8c2"
     },
     "/books/b3/3-09#09前行念诵仪轨•开显解脱道": {
       "id": 111,
@@ -447,7 +427,7 @@
     },
     "/books/b4/4-01#01皈依": {
       "id": 112,
-      "hash": "ab6f74de9680868f6ec83eac4d1bfef87d30a5fb"
+      "hash": "9983001e4107af48bf9ccd684cdb78cdfefb3425"
     },
     "/books/b4/4-02#02菩提心的修法": {
       "id": 113,
@@ -459,7 +439,7 @@
     },
     "/books/b4/4-04#04曼茶罗修法--积累资粮之殊胜方便": {
       "id": 115,
-      "hash": "08fd27592cb6116f2a280fa38aeaddb852d14753"
+      "hash": "761c828f2e4240fd5b59d8e36f5a2e58e74c6473"
     },
     "/books/b4/4-05#05上师瑜伽": {
       "id": 116,
