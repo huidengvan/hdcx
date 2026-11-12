@@ -235,10 +235,12 @@ const VideoPlayer = ({ src, current, setCurrent, onNotFound }) => {
 
             const subIndex = findSubtitleIndex(subtitles, currentTime, currentIndexRef.current);
             if (subIndex !== -1 && subIndex !== currentIndexRef.current) {
+                // 首次定位（进入页面或字幕刚加载）直接跳到目标行，避免几百行的长滚动动画；之后正常播放才平滑滚动
+                const isFirstLocate = currentIndexRef.current === -1;
                 selectSubtitle(subIndex);
 
                 if (playInfo.subAlignCenter && subtitles.length - subIndex > 2) {
-                    scrollSubtitleToView(subIndex);
+                    scrollSubtitleToView(subIndex, isFirstLocate ? 'instant' : 'smooth');
                 }
             }
         };
@@ -250,13 +252,21 @@ const VideoPlayer = ({ src, current, setCurrent, onNotFound }) => {
         };
     }, [subtitles, playInfo?.subAlignCenter, setCurrent]);
 
+    // 重新开启时间轴同步时，当前行可能已离开好几百行，先直接跳过去对齐，之后播放再平滑滚动
+    useEffect(() => {
+        const index = currentIndexRef.current;
+        if (playInfo?.subAlignCenter && index !== -1 && subtitles.length - index > 2) {
+            scrollSubtitleToView(index, 'instant');
+        }
+    }, [playInfo?.subAlignCenter]);
+
     const handleVideoEnd = () => {
         if (videoSrc !== 'blank' && setCurrent) {
             setCurrent(prev => prev + 1);
         }
     };
 
-    const scrollSubtitleToView = (index) => {
+    const scrollSubtitleToView = (index, behavior = 'smooth', isRetry = false) => {
         const el = document.getElementById(`subtitle-${index}`);
         const list = listRef.current;
         if (!el || !list) return;
@@ -269,8 +279,13 @@ const VideoPlayer = ({ src, current, setCurrent, onNotFound }) => {
 
         list.scrollTo({
             top: Math.max(0, targetScrollTop),
-            behavior: 'smooth',
+            behavior,
         });
+
+        // 屏幕外的行用占位高度（content-visibility），跳过去后附近的行换成真实高度，位置可能偏一点，下一帧再对齐一次
+        if (behavior === 'instant' && !isRetry) {
+            requestAnimationFrame(() => scrollSubtitleToView(index, 'instant', true));
+        }
     };
 
     const handleSubtitleFetch = async (suburl) => {
