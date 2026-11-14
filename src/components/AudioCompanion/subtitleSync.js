@@ -10,9 +10,23 @@ const HIGHLIGHT_NAME = 'audio-subtitle';
 // 音频卡片之后、到下一个音频卡片为止，是这段音频的正文：录音可能跨过同级标题，字幕文字都在这个范围内（align_srt.py 取的是其中朗读的部分）
 const SKIP_SELECTOR = 'a[data-footnote-ref], [data-footnotes], .hash-link, script, style, button, svg';
 
+const zhNum = (s) => {
+  if (s.includes('尾义')) return 29;
+  const m = /第(二十|十)?([一二三四五六七八九])?/.exec(s);
+  return m ? (m[1] === '二十' ? 20 : m[1] === '十' ? 10 : 0) + Math.max(0, ' 一二三四五六七八九'.indexOf(m[2] || ' ')) : 0;
+};
+
 export function srtUrlFor(src) {
-  const m = /^([^?#]*?)(\.[^./?#]*)?([?#].*)?$/.exec(src);
-  return `${m[1]}.srt${m[3] || ''}`;
+  const dec = decodeURI(src);
+  let m = /《慧灯之光》系列\/《慧灯之光》(\d+)\/([^/?#]+)\.[^./?#]+/.exec(dec);
+  if (m) return `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/docs/慧灯之光有声书1-10册字幕/${m[1].padStart(2, '0')}/${encodeURIComponent(m[2])}.srt`;
+  m = /《慧灯之光》系列\/十一册十二册合集\/([^/?#]+)\.[^./?#]+/.exec(dec);
+  if (m) {
+    const n = zhNum(m[1]);
+    const prefix = n ? `${String(n).padStart(2, '0')} ` : '';
+    return `https://s3.ap-northeast-1.wasabisys.com/hdcx/hdv/a/sound/宝鬘庄严论/${encodeURIComponent(prefix + m[1])}.srt`;
+  }
+  return src.replace(/(\.[^./?#]*)?([?#].*)?$/, '.srt$2');
 }
 
 const toSeconds = (h, m, s, ms) => (+h) * 3600 + (+m) * 60 + (+s) + (+ms) / 1000;
@@ -35,9 +49,9 @@ const subtitleCache = new Map();
 
 // 依次走各条线路；404 说明确实没有字幕，不用再试，其他失败才换线路
 async function fetchSrt(src) {
-  for (const { url } of mediaSources(src)) {
+  for (const { url } of mediaSources(srtUrlFor(src))) {
     try {
-      const res = await fetch(srtUrlFor(url));
+      const res = await fetch(url);
       if (res.ok) return await res.text();
       if (res.status === 404) return '';
     } catch (e) {}
