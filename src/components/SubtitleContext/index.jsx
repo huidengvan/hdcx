@@ -60,14 +60,22 @@ const SubtitleItem = memo(function SubtitleItem({ sub, index, isActive, showTime
 });
 
 const VideoPlayer = ({ src, current, setCurrent, onNotFound }) => {
-    const baseUrl = typeof window !== 'undefined' && location.hash.includes('http')
-        ? ''
-        : VIDEO_BASE;
-
     // 短地址 /video/b1/1-01#t=62：文件名要先向网盘查，查到之前地址为空
     const alias = useMemo(() => (!src && typeof window !== 'undefined' ? parseAliasPath(location.pathname) : null), [src]);
 
-    const initialVideoSrc = src || (!alias && typeof window !== 'undefined' && location.hash ? `${baseUrl}${location.hash.slice(1)}` : '');
+    const resolveInitialSrc = () => {
+        if (src) return src;
+        if (typeof window === 'undefined' || !location.hash) return '';
+        const rawHash = location.hash.slice(1);
+        if (!rawHash) return '';
+        if (rawHash.startsWith('http')) return rawHash;
+        if (rawHash.startsWith('其他资料/') || rawHash.startsWith('/其他资料/')) {
+            return `https://box.hdcxb.net/d/${rawHash.replace(/^\//, '')}`;
+        }
+        return `${VIDEO_BASE}${rawHash}`;
+    };
+
+    const initialVideoSrc = !alias ? resolveInitialSrc() : '';
     const [videoSrc, setVideoSrc] = useState(initialVideoSrc);
     const [isResolving, setIsResolving] = useState(!!alias);
     const videoPageBase = useBaseUrl('/video');
@@ -104,7 +112,7 @@ const VideoPlayer = ({ src, current, setCurrent, onNotFound }) => {
     //   同时找出同一课的其他视频，供标题右侧切换
     const [parts, setParts] = useState([]); // [{ name, alias }]
     const [currentSeries, currentName] = useMemo(
-        () => (safeDecode(videoSrc).match(/([^/]+)\/([^/#?]+\.mp4)/) || []).slice(1),
+        () => (safeDecode(videoSrc).match(/([^/]+)\/([^/#?]+\.(?:mp4|webm|mp3|m4a))/i) || []).slice(1),
         [videoSrc],
     );
 
@@ -197,6 +205,18 @@ const VideoPlayer = ({ src, current, setCurrent, onNotFound }) => {
     }, [videoSrc]);
 
     useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const handleHashChange = () => {
+            const nextSrc = resolveInitialSrc();
+            if (nextSrc && nextSrc !== videoSrc) {
+                setVideoSrc(nextSrc);
+            }
+        };
+        window.addEventListener('hashchange', handleHashChange);
+        return () => window.removeEventListener('hashchange', handleHashChange);
+    }, [videoSrc]);
+
+    useEffect(() => {
         if (src && src !== videoSrc) {
             setVideoSrc(src);
         }
@@ -211,10 +231,13 @@ const VideoPlayer = ({ src, current, setCurrent, onNotFound }) => {
         fetchIdRef.current++;
         setSubtitles([]);
         selectSubtitle(-1);
-        const isHdcx = typeof window !== 'undefined' &&
-            [location.hash, videoSrc, src].some(s => safeDecode(s).includes('慧灯禅修课'));
+        const hasPotentialSub = typeof window !== 'undefined' &&
+            [location.hash, videoSrc, src].some(s => {
+                const dec = safeDecode(s);
+                return dec.includes('慧灯禅修课') || dec.includes('修心八颂') || dec.includes('饶益有情') || /\.(mp4|webm|mp3|m4a)/i.test(dec);
+            });
 
-        if (isHdcx) {
+        if (hasPotentialSub) {
             setIsSubLoading(true);
         } else {
             setIsSubLoading(false);
@@ -288,18 +311,24 @@ const VideoPlayer = ({ src, current, setCurrent, onNotFound }) => {
         }
     };
 
-    const handleSubtitleFetch = async (suburl) => {
+    const handleSubtitleFetch = async (suburls) => {
         // 只采用最新一次请求的结果，防止快速切换时旧视频的字幕晚到并覆盖
         const fetchId = ++fetchIdRef.current;
         setIsSubLoading(true);
         let subtitlesArray = [];
-        try {
-            const subText = await fetchText(suburl);
-            if (subText && subText.trim()) {
-                subtitlesArray = parseSubtitles(subText);
+        const urls = Array.isArray(suburls) ? suburls : [suburls];
+        for (const suburl of urls) {
+            try {
+                const subText = await fetchText(suburl);
+                if (subText && subText.trim() && subText.includes('-->')) {
+                    subtitlesArray = parseSubtitles(subText);
+                    if (subtitlesArray && subtitlesArray.length > 0) {
+                        break;
+                    }
+                }
+            } catch (e) {
+                // 忽略当前候选，继续尝试下一个候选
             }
-        } catch (e) {
-            console.error('获取字幕失败', e);
         }
         if (fetchId !== fetchIdRef.current) return;
         setSubtitles(subtitlesArray);
@@ -312,9 +341,38 @@ const VideoPlayer = ({ src, current, setCurrent, onNotFound }) => {
             videoRef?.current?.pause();
         }
 
-        const [, series, title] = safeDecode(videoSrc).match(/([^/]+)\/([^/]+?)\.mp4/) || [];
+        const [, series, title] = safeDecode(videoSrc).match(/([^/]+)\/([^/]+?)\.(mp4|webm|mp3|m4a)/i) || [];
+        const candidates = [];
         if (SRT_BOOKS[series]) {
-            handleSubtitleFetch(`${srtBase}${SRT_BOOKS[series]}/${encodeURIComponent(title)}.srt`);
+            candidates.push(`${srtBase}${SRT_BOOKS[series]}/${encodeURIComponent(title)}.srt`);
+        } else if (title && videoSrc.startsWith('http')) {
+            const baseDir = videoSrc.substring(0, videoSrc.lastIndexOf('/') + 1);
+            const numMap = { '一': '1', '二': '2', '三': '3', '四': '4', '五': '5', '六': '6', '七': '7', '八': '8', '九': '9', '十': '10' };
+            const titleNum = title.replace(/（([一二三四五六七八九十]+)）|\(([一二三四五六七八九十]+)\)/g, (_, c1, c2) => numMap[c1 || c2] || '');
+            const cleanTitle = title.replace(/^\d+[\s_-]*/, ''); // 去除前置数字序号，如 "08 饶益有情九观察1" -> "饶益有情九观察1"
+
+            // 1. 网盘上下文字幕专用目录：https://box.hdcxb.net/其他资料/docs/other_srt
+            const otherSrtBase = 'https://box.hdcxb.net/d/其他资料/docs/other_srt/';
+            candidates.push(`${otherSrtBase}${encodeURIComponent(title)}.srt`);
+            if (cleanTitle !== title) {
+                candidates.push(`${otherSrtBase}${encodeURIComponent(cleanTitle)}.srt`);
+            }
+            if (titleNum !== title) {
+                candidates.push(`${otherSrtBase}${encodeURIComponent(titleNum)}.srt`);
+            }
+
+            // 2. 媒体文件同级目录
+            if (titleNum !== title) {
+                candidates.push(`${baseDir}${encodeURIComponent(titleNum)}.srt`);
+            }
+            candidates.push(`${baseDir}${encodeURIComponent(title)}.srt`);
+            if (cleanTitle !== title) {
+                candidates.push(`${baseDir}${encodeURIComponent(cleanTitle)}.srt`);
+            }
+        }
+
+        if (candidates.length > 0) {
+            handleSubtitleFetch(candidates);
         } else {
             setIsSubLoading(false);
             setSubtitles([]);

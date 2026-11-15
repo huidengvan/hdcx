@@ -13,6 +13,14 @@ export const PauseIcon = ({ size = 20, fill = 'currentColor' }) => (
   </svg>
 );
 
+// 🎬 视频播放图标 (Video Play Icon)
+export const VideoPlayIcon = ({ size = 20, fill = 'currentColor' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" stroke={fill} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <polygon points="10 8 16 12 10 16 10 8" fill={fill} />
+  </svg>
+);
+
 // ⏪ 后退 10 秒图标
 export const Rewind10Icon = ({ size = 22, fill = 'currentColor' }) => (
   <svg width={size} height={size} viewBox="0 -960 960 960" fill={fill} xmlns="http://www.w3.org/2000/svg">

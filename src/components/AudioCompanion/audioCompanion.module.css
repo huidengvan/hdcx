@@ -935,3 +935,112 @@
     height: 16px;
   }
 }
+
+/* ─── 12. 页面内视频卡片 (SectionVideo) 专属样式 ─── */
+.videoCard {
+  cursor: pointer;
+}
+
+.videoCard:hover {
+  border-color: rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.5);
+}
+
+.videoWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #000000;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.videoElement {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.videoBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.1);
+  color: var(--ifm-color-primary);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.videoBadge:hover {
+  background: rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.18);
+}
+
+.collapseVideoBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--ifm-color-emphasis-300, rgba(0, 0, 0, 0.12));
+  background: var(--ifm-card-background-color, #ffffff);
+  color: var(--ifm-font-color-base);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.collapseVideoBtn:hover {
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+  background: rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.08);
+}
+
+.warningPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #d97706;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-left: 8px;
+  vertical-align: middle;
+  line-height: 1.4;
+}
+
+[data-theme='dark'] .warningPill {
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.18);
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.secretDharmaBanner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(245, 158, 11, 0.12);
+  border-left: 4px solid #f59e0b;
+  color: #b45309;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+[data-theme='dark'] .secretDharmaBanner {
+  background: rgba(245, 158, 11, 0.15);
+  border-left-color: #fbbf24;
+  color: #fde68a;
+}
