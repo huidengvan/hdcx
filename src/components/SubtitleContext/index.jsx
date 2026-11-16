@@ -6,6 +6,7 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 import { parseTime, parseSubtitles, fetchText } from '@site/src/utils';
 import { useVideo } from './VideoContext';
 import toast from 'react-hot-toast';
+import AudioPlayerView from './AudioPlayerView';
 import { BOOK_DIRS, DIR_BOOKS, listBookVideos, parseAliasPath, resolveAlias, aliasOf, lessonParts } from './videoAlias';
 
 // 四册课程视频的字幕在本站 static/docs/srts/b1~b4，文件名与视频相同
@@ -438,22 +439,14 @@ const VideoPlayer = ({ src, current, setCurrent, onNotFound }) => {
                             />
                         </div>
                     ) : (
-                        <div className={`${styles.audioWrapper} ${isFullWidth ? styles.audioWrapperFull : ''}`}>
-                            <img
-                                className={styles.audioCover}
-                                src="https://hdcx.s3.ap-northeast-1.wasabisys.com/hdv/p/上师.jpg"
-                                alt="音频封面"
-                            />
-                            <audio
-                                ref={videoRef}
-                                className={styles.audioPlayer}
-                                src={videoSrc}
-                                controls
-                                onLoadedMetadata={handleLoadedMetadata}
-                                onEnded={handleVideoEnd}
-                                autoPlay={current !== 0}
-                            />
-                        </div>
+                        <AudioPlayerView
+                            audioRef={videoRef}
+                            src={videoSrc}
+                            onLoadedMetadata={handleLoadedMetadata}
+                            onEnded={handleVideoEnd}
+                            autoPlay={current !== 0}
+                            isFullWidth={isFullWidth}
+                        />
                     )}
 
                     {/* 媒体标题栏 */}

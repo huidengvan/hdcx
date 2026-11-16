@@ -50,29 +50,316 @@
     width: 100%;
     border-radius: 14px;
     overflow: hidden;
-    background: linear-gradient(145deg, #181926 0%, #24273a 100%);
+    background: radial-gradient(circle at 50% 40%, #1c1d2b 0%, #0c0d14 100%);
     box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.35);
-    padding: 24px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    min-height: 420px;
+    padding: 0;
+}
+
+/* 封面容器：居中、原图比例不裁切、高度顶满 */
+.audioCoverContainer {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    position: relative;
+    display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    padding: 20px 24px 16px;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
+/* 柔和微焦背景光晕衬底 */
+.audioCoverBackdrop {
+    position: absolute;
+    inset: -30px;
+    background-size: cover;
+    background-position: center;
+    filter: blur(60px) brightness(0.2) saturate(1.2);
+    opacity: 0.55;
+    pointer-events: none;
+    transform: scale(1.15);
+}
+
+/* 封面图像：图片什么样就展示什么样，高度顶满居中 */
 .audioCover {
-    width: 180px;
-    height: 180px;
-    border-radius: 16px;
-    object-fit: cover;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    max-height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    display: block;
 }
 
-.audioPlayer {
+/* ─── 统一主题的音频播放器控制栏 ─── */
+.audioCustomPlayer {
     width: 100%;
-    max-width: 500px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    background: rgba(14, 15, 23, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* 进度条轨道容器：贴着最底端控制栏顶边，宽度100%撑满左分区 */
+.audioScrubberContainer {
+    position: relative;
+    width: 100%;
+    height: 14px;
+    margin-bottom: -4px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.audioRangeInput {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    border: none;
+    border-radius: 0;
+    background: rgba(255, 255, 255, 0.16);
     outline: none;
+    cursor: pointer;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    display: block;
+    transition: height 0.15s ease;
+}
+
+.audioScrubberContainer:hover .audioRangeInput {
+    height: 6px;
+}
+
+.audioRangeInput::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid var(--ifm-color-primary, #2e8555);
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.audioScrubberContainer:hover .audioRangeInput::-webkit-slider-thumb,
+.audioRangeInput:active::-webkit-slider-thumb {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.audioRangeInput::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid var(--ifm-color-primary, #2e8555);
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.audioScrubberContainer:hover .audioRangeInput::-moz-range-thumb,
+.audioRangeInput:active::-moz-range-thumb {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.audioScrubberTooltip {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    transform: translateX(-50%);
+    background: rgba(15, 17, 23, 0.95);
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    padding: 2px 7px;
+    border-radius: 4px;
+    pointer-events: none;
+    white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+}
+
+/* 控制按钮与信息行 */
+.audioControlsRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px 10px;
+    gap: 12px;
+}
+
+.audioControlsLeft {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.audioControlsRight {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.audioPlayBtn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    border-radius: 50%;
+    border: none;
+    background: var(--ifm-color-primary, #2e8555);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease;
+    box-shadow: 0 2px 10px rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.4);
+    padding: 0;
+}
+
+.audioPlayBtn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 14px rgba(var(--ifm-color-primary-rgb, 46, 133, 85), 0.55);
+}
+
+.audioPlayBtn:active {
+    transform: scale(0.94);
+}
+
+.audioIconBtn {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: #c9cdd4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+    padding: 0;
+}
+
+.audioIconBtn:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.08);
+}
+
+.audioIconBtn:active {
+    transform: scale(0.92);
+}
+
+.audioTimeText {
+    font-size: 13px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    color: #d1d5db;
+    white-space: nowrap;
+    margin-left: 4px;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.audioTimeDivider {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.audioRateBtn {
+    font-size: 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    padding: 3px 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.08);
+    color: #e5e7eb;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+
+.audioRateBtn:hover {
+    border-color: var(--ifm-color-primary, #2e8555);
+    color: var(--ifm-color-primary, #2e8555);
+    background: rgba(255, 255, 255, 0.14);
+    transform: scale(1.05);
+}
+
+.audioRateBtn:active {
+    transform: scale(0.94);
+}
+
+.audioVolumeGroup {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.audioVolumeInput {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 64px;
+    height: 4px;
+    border-radius: 2px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.2);
+    transition: height 0.15s ease;
+}
+
+.audioVolumeInput:hover {
+    height: 5px;
+}
+
+.audioVolumeInput::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.audioVolumeInput::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 /* 播放器下方信息条 */
@@ -508,38 +795,59 @@
 /* ─── 响应式自适应 ───────────────────────────────────── */
 @media screen and (max-width: 900px) {
     .container {
-        padding: 8px 12px;
+        padding: 6px 8px 8px;
     }
 
     .layout {
         flex-direction: column;
-        gap: 12px;
+        gap: 6px;
     }
 
     .playerCard {
         width: 100%;
-        gap: 8px;
+        gap: 6px;
+        max-height: 48vh;
+        max-height: 48dvh;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .audioWrapper {
+        min-height: 0 !important;
+        height: 38vh;
+        height: 38dvh;
+        max-height: calc(48dvh - 44px);
+        flex: 1;
+    }
+
+    .audioCoverContainer {
+        padding: 8px 12px 6px;
     }
 
     .mediaMeta {
-        padding: 8px 12px;
+        padding: 6px 10px;
+        min-height: 36px;
+        flex-shrink: 0;
     }
 
-    /* iPhone 竖屏等移动端视口：充分利用屏幕空间，支持展示 8~10 行以上字幕 */
+    /* 移动端视口：播放器最高不超过一半，字幕占用另一半，整体在屏内完整呈现 */
     .transcriptCard {
         width: 100%;
         min-width: 100%;
-        height: 60vh;
-        height: 60dvh;
-        min-height: 480px;
-        max-height: 75vh;
-        max-height: 75dvh;
+        min-height: 0;
+        height: 42vh;
+        height: 42dvh;
+        max-height: 46vh;
+        max-height: 46dvh;
+        flex: 1;
     }
 
     /* 手机端两个按钮竖排贴在右上角，只占一个小角，不再整行压住字幕 */
     .transcriptHeader {
         left: auto;
-        padding: 8px 10px;
+        padding: 6px 8px;
     }
 
     .transcriptActions {
@@ -548,7 +856,7 @@
     }
 
     .transcriptList {
-        padding: 8px 10px;
+        padding: 8px 10px 24px;
     }
 
     .transcriptItem {
@@ -568,11 +876,84 @@
     }
 }
 
+@media screen and (max-width: 600px) {
+    .audioVolumeInput {
+        display: none;
+    }
+    .audioControlsRow {
+        padding: 4px 10px 6px;
+    }
+    .audioTimeText {
+        font-size: 12px;
+    }
+    .audioCoverContainer {
+        padding: 6px 10px 4px;
+    }
+}
+
 /* 兼容移动设备横屏较矮视口 */
 @media screen and (max-width: 900px) and (max-height: 500px) {
     .transcriptCard {
-        height: 280px;
-        min-height: 240px;
+        height: 240px;
+        min-height: 180px;
+    }
+}
+
+/* ─── 独立播放页（/video）：移动端充满屏幕（导航栏以下），上播放器下字幕各占一半 ───────────── */
+@media screen and (max-width: 900px) {
+    .videoPage {
+        height: calc(100vh - var(--ifm-navbar-height, 60px));
+        height: calc(100dvh - var(--ifm-navbar-height, 60px));
+        max-height: calc(100dvh - var(--ifm-navbar-height, 60px));
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .videoPage .container,
+    .videoPage .containerFull {
+        height: 100% !important;
+        max-height: 100% !important;
+        padding: 6px 8px 8px !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .videoPage .layout,
+    .videoPage .layoutFull {
+        height: 100% !important;
+        max-height: 100% !important;
+        flex: 1 !important;
+        min-height: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+        overflow: hidden !important;
+    }
+
+    .videoPage .playerCard,
+    .videoPage .playerCardFull {
+        flex-shrink: 0 !important;
+        max-height: 48% !important;
+        max-height: 48dvh !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+        min-height: 0 !important;
+    }
+
+    .videoPage .transcriptCard,
+    .videoPage .transcriptCardFull {
+        flex: 1 !important;
+        min-height: 0 !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: hidden !important;
     }
 }
 /* ─── 独立播放页（/video）：桌面端固定铺满导航栏以下的整屏 ─────────────
