@@ -1327,6 +1327,12 @@ article h6,
   text-underline-offset: 0.25em;
 }
 
+/* iOS Safari 切换 ::highlight 时偶发不重绘上一句所在段落（留下残影划线），短暂切换极微弱纯绘制属性强制块级重绘，零重排 */
+[data-cue-repaint] {
+  outline: 1px solid rgba(128, 128, 128, 0.004);
+  text-shadow: 0 0 0 rgba(128, 128, 128, 0.004);
+}
+
 /* 鼠标移到正在朗读的句子上显示手形，点击可暂停 / 继续（AudioContext 只在进出这句时切换类名） */
 html.audio-cue-hover .markdown {
   cursor: pointer;

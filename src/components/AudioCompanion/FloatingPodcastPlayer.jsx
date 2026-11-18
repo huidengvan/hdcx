@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { useAudioCompanion } from './AudioContext';
+import { useSideDock } from '../../utils/sideDock';
 import {
   PlayIcon,
   PauseIcon,
@@ -48,6 +49,12 @@ export default function FloatingPodcastPlayer() {
 
   const deckRef = useRef(null);
   const orbRef = useRef(null);
+  const visible = Boolean(currentTrack && (isMiniVisible || isDeckOpen));
+  const collapseDeck = useCallback(() => setIsDeckOpen(false), [setIsDeckOpen]);
+  const { ready: dockReady, y: dockY, vh: dockVh, isDragging, dragX, bind: dockBind } = useSideDock('audio', {
+    active: visible,
+    onDragStart: collapseDeck,
+  });
 
   // 当点击外部区域时，自动收起展开的播客大控制台（保留侧边半露悬浮球）
   useEffect(() => {
@@ -66,13 +73,19 @@ export default function FloatingPodcastPlayer() {
     };
   }, [isDeckOpen, setIsDeckOpen]);
 
-  if (!currentTrack || (!isMiniVisible && !isDeckOpen)) {
+  if (!visible) {
     return null;
   }
 
   const progressPercent = duration > 0 ? Math.min(100, Math.max(0, (currentTime / duration) * 100)) : 0;
   // 悬浮侧边按钮的进度填充：每 3 秒离散更新一次，避免过于频繁跳动，平滑覆盖背景
   const orbProgressPercent = duration > 0 ? Math.min(100, Math.max(0, (Math.floor(currentTime / 3) * 3 / duration) * 100)) : 0;
+  const openBelow = dockReady && dockY < 240;
+  const deckStyle = dockReady
+    ? (openBelow
+      ? { top: `${dockY + 30}px`, bottom: 'auto' }
+      : { bottom: `${Math.max(12, Math.min(dockVh - dockY + 30, dockVh - 210))}px`, top: 'auto' })
+    : undefined;
 
   // 循环切换倍速
   const handleNextRate = (e) => {
@@ -86,7 +99,11 @@ export default function FloatingPodcastPlayer() {
     <div className={styles.floatingWrapper} aria-label="文章音频伴读悬浮控制器">
       {/* 呼出的全功能播客控制台 (紧凑简洁版) */}
       {isDeckOpen && (
-        <div ref={deckRef} className={styles.podcastDeck}>
+        <div
+          ref={deckRef}
+          style={deckStyle}
+          className={`${styles.podcastDeck} ${openBelow ? styles.deckBelow : ''}`}
+        >
           {/* 面板头部：左侧分类与标题，右侧集成定位、倍速、静音与收起按钮 */}
           <div className={styles.deckHeader}>
             <div
@@ -244,13 +261,19 @@ export default function FloatingPodcastPlayer() {
         </div>
       )}
 
-      {/* 吸附在右边缘的半露悬浮播放球/把手 (匹配主题调节 A 按钮风格) */}
+      {/* 吸附在右边缘的半露悬浮播放球/把手（支持手指拖出停靠侧边任意高度） */}
       <div
         ref={orbRef}
         id="audio-floating-orb"
-        className={`${styles.floatingOrb} ${isPlaying ? styles.orbPlaying : ''} ${isDeckOpen ? styles.orbActive : ''}`}
+        {...dockBind}
+        style={dockReady ? {
+          top: `${dockY}px`,
+          bottom: 'auto',
+          transform: `translate3d(${dragX}px, -50%, 0)`,
+        } : undefined}
+        className={`${styles.floatingOrb} ${isPlaying ? styles.orbPlaying : ''} ${isDeckOpen ? styles.orbActive : ''} ${isDragging ? styles.dragging : ''}`}
         onClick={() => setIsDeckOpen((prev) => !prev)}
-        title={isDeckOpen ? '收起播放面板' : `展开播放器: ${currentTrack.title}`}
+        title={isDeckOpen ? '收起播放面板' : `展开播放器: ${currentTrack.title}（可拖动调整高度）`}
         aria-label="音频伴读悬浮球"
       >
         {/* 从左向右覆盖背景的进度填充层 */}

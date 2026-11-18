@@ -212,12 +212,61 @@ export function alignSection(cardEl, cues) {
 
 const highlightSupported = () => typeof CSS !== 'undefined' && CSS.highlights && typeof Highlight !== 'undefined';
 
+let activeHighlight = null;
+let activePaintEl = null;
+const dirtyBlocks = new Set();
+let repaintRaf1 = 0;
+let repaintRaf2 = 0;
+
+function rangePaintTarget(range) {
+  const node = range?.commonAncestorContainer;
+  const el = node?.nodeType === 1 ? node : node?.parentElement;
+  return el ? (el.closest('p, li, blockquote, h1, h2, h3, h4, h5, h6, td') || el) : null;
+}
+
+// WebKit (iOS Safari) 在跨段更新 ::highlight 或平滑滚动合成期间偶发漏重绘旧段落，跨帧切换微弱绘制属性强制刷新瓦片
+function flushRepaint(el) {
+  if (!el?.isConnected || typeof requestAnimationFrame === 'undefined') return;
+  dirtyBlocks.add(el);
+  el.setAttribute('data-cue-repaint', '');
+  cancelAnimationFrame(repaintRaf1);
+  cancelAnimationFrame(repaintRaf2);
+  repaintRaf1 = requestAnimationFrame(() => {
+    repaintRaf2 = requestAnimationFrame(() => {
+      dirtyBlocks.forEach((node) => node.removeAttribute('data-cue-repaint'));
+      dirtyBlocks.clear();
+    });
+  });
+}
+
 export function showCueHighlight(range) {
-  if (highlightSupported()) CSS.highlights.set(HIGHLIGHT_NAME, new Highlight(range));
+  if (!highlightSupported()) return;
+  const prevEl = activePaintEl;
+  // 复用同一个 Highlight 实例先 clear 再 add：规避 WebKit HighlightRegistry.set 覆盖同名键时不重绘旧 Range 的缺陷
+  if (activeHighlight) {
+    activeHighlight.clear();
+  } else {
+    activeHighlight = new Highlight();
+  }
+  activeHighlight.add(range);
+  if (!CSS.highlights.has(HIGHLIGHT_NAME)) {
+    CSS.highlights.set(HIGHLIGHT_NAME, activeHighlight);
+  }
+  activePaintEl = rangePaintTarget(range);
+  if (prevEl) flushRepaint(prevEl);
 }
 
 export function clearCueHighlight() {
-  if (highlightSupported()) CSS.highlights.delete(HIGHLIGHT_NAME);
+  if (!highlightSupported()) return;
+  if (activeHighlight) {
+    activeHighlight.clear();
+    activeHighlight = null;
+  }
+  CSS.highlights.delete(HIGHLIGHT_NAME);
+  if (activePaintEl) {
+    flushRepaint(activePaintEl);
+    activePaintEl = null;
+  }
 }
 
 // 当前句各行的矩形，换成相对整个文档的坐标：页面滚动后仍然有效，只在换句或排版变化时才需要重算

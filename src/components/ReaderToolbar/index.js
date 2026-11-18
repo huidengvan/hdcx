@@ -1,9 +1,12 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react';
 import styles from './index.module.css';
 import useLocalStorageState from 'use-local-storage-state';
 import { useColorMode } from '@docusaurus/theme-common';
 import { useLocation } from '@docusaurus/router';
 import DownloadSection from './DownloadSection';
+import { useSideDock } from '../../utils/sideDock';
+
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 // ── 主题配置（背景色 + 文字色）──────────────────────────
 export const themes = [
@@ -287,14 +290,31 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
     const currentTheme = themes[safeThemeIndex] || themes[0];
     const currentThemeLabel = (isDark && safeThemeIndex === 0) ? '夜间模式' : currentTheme.name;
 
+    const panelRef = useRef(null);
+    const { ready: dockReady, y: dockY, vh: dockVh, isDragging, dragX, bind: dockBind } = useSideDock('reader', { active: true });
+
+    // 面板展开时跟随按钮所在高度就近对齐，并严格限制在导航栏下方与视口底边之内
+    useIsomorphicLayoutEffect(() => {
+        if (collapsed || !dockReady || !panelRef.current) return;
+        const half = panelRef.current.offsetHeight / 2;
+        const lo = 68 + half;
+        const hi = Math.max(lo, dockVh - 16 - half);
+        panelRef.current.style.top = `${Math.max(lo, Math.min(dockY, hi))}px`;
+    }, [collapsed, dockReady, dockY, dockVh, isTargetDoc]);
+
     return (
         <div ref={containerRef} id="reader-toolbar-root" className={`${styles.container} reader-toolbar-global no-print`}>
-            {/* 收起状态：右侧边缘仅展示简洁小巧的 'A' 按钮 */}
+            {/* 收起状态：右侧边缘展示 'A' 把手，支持手指拖出自由停靠任意高度 */}
             {collapsed && (
                 <button
-                    className={styles.fabTrigger}
+                    {...dockBind}
+                    className={`${styles.fabTrigger} ${isDragging ? styles.dragging : ''}`}
+                    style={dockReady ? {
+                        top: `${dockY}px`,
+                        transform: `translate3d(${dragX}px, -50%, 0)`,
+                    } : undefined}
                     onClick={() => setCollapsed(false)}
-                    title="阅读设置"
+                    title="阅读设置（可拖动调整高度）"
                     aria-label="打开阅读设置"
                 >
                     <span className={styles.fabLetter}>A</span>
@@ -303,7 +323,7 @@ export default function ReaderToolbar({ onToggleWidescreen, isWidescreen }) {
 
             {/* 展开状态：紧凑现代的阅读设置面板 */}
             {!collapsed && (
-                <div className={styles.panel}>
+                <div ref={panelRef} className={styles.panel}>
                     {/* 面板头部 */}
                     <div className={styles.header}>
                         <span className={styles.headerTitle}>阅读设置</span>

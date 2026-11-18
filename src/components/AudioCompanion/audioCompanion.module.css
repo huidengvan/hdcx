@@ -42,9 +42,12 @@
 }
 
 .playControlBtn:active,
-.deckPlayBtn:active,
-.floatingOrb:active {
+.deckPlayBtn:active {
   transform: scale(0.92);
+}
+
+.floatingOrb:active:not(.dragging) .orbCenter {
+  transform: scale(0.88);
 }
 
 /* 仅在支持鼠标悬浮的桌面端开启 hover 效果，防止移动端点击后永久粘滞 */
@@ -62,7 +65,7 @@
     color: var(--ifm-color-primary);
     transform: scale(1.08);
   }
-  .floatingOrb:hover {
+  .floatingOrb:hover:not(.dragging) {
     width: 34px;
     opacity: 1;
     background: var(--ifm-card-background-color, rgba(255, 255, 255, 0.92));
@@ -402,22 +405,18 @@
   padding: 0 1px;
 }
 
-/* ─── 2. 吸附在右边缘的半露悬浮播放把手 (与主题调节 A 按钮风格一致，半透明不挡字) ─── */
+/* ─── 2. 吸附在右边缘的半露悬浮播放把手（支持手指拖出停靠侧边任意高度） ─── */
 .floatingWrapper {
-  position: fixed;
-  bottom: 92px;
-  right: 0;
+  position: relative;
   z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  pointer-events: none;
 }
 
 .floatingOrb {
   pointer-events: auto;
-  position: relative;
+  position: fixed;
   right: 0;
+  bottom: 92px;
+  z-index: 1001;
   width: 28px;
   height: 42px;
   padding: 0;
@@ -434,9 +433,17 @@
   justify-content: center;
   color: var(--ifm-color-primary);
   opacity: 0.65;
-  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-              width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  touch-action: none;
   user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  transition: top 0.24s cubic-bezier(0.2, 0.9, 0.2, 1),
+              transform 0.24s cubic-bezier(0.2, 0.9, 0.2, 1),
+              opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+              width 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+              height 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+              border-radius 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.22s ease;
   overflow: hidden;
 }
 
@@ -464,6 +471,33 @@
   background: rgba(30, 34, 42, 0.95);
 }
 
+/* 手指/鼠标拖出边缘时的完整圆润悬浮球状态 */
+.floatingOrb.dragging {
+  width: 42px;
+  height: 42px;
+  border-radius: 21px;
+  border: 1.5px solid var(--ifm-color-primary);
+  opacity: 1;
+  background: var(--ifm-card-background-color, rgba(255, 255, 255, 0.96));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  cursor: grabbing;
+  z-index: 1005;
+  transition: width 0.15s ease,
+              height 0.15s ease,
+              border-radius 0.15s ease,
+              opacity 0.15s ease,
+              box-shadow 0.15s ease !important;
+}
+
+[data-theme='dark'] .floatingOrb.dragging {
+  background: rgba(30, 34, 42, 0.96);
+  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.48);
+}
+
+.floatingOrb.dragging .orbCenter {
+  margin-left: 0;
+}
+
 /* 从左向右覆盖背景的进度填充层 (有清晰对比度，每隔几秒平滑推进) */
 .orbProgressFill {
   position: absolute;
@@ -488,16 +522,19 @@
   justify-content: center;
   color: var(--ifm-color-primary);
   margin-left: 2px;
+  pointer-events: none;
+  transition: transform 0.15s ease;
 }
 
 /* ─── 3. 呼出的全功能播客悬浮面板 (Podcast Floating Deck - 紧致简洁) ─── */
 .podcastDeck {
   pointer-events: auto;
-  position: relative;
+  position: fixed;
+  right: 10px;
+  bottom: 142px;
+  z-index: 1002;
   width: 310px;
   max-width: calc(100vw - 20px);
-  margin-right: 10px;
-  margin-bottom: 8px;
   padding: 10px 14px 10px 14px;
   border-radius: 16px;
   background: var(--ifm-card-background-color, rgba(255, 255, 255, 0.96));
@@ -510,6 +547,11 @@
   flex-direction: column;
   gap: 6px;
   transform-origin: bottom right;
+}
+
+.podcastDeck.deckBelow {
+  transform-origin: top right;
+  animation-name: deckSlideDown;
 }
 
 [data-theme='dark'] .podcastDeck {
@@ -814,6 +856,11 @@
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
+@keyframes deckSlideDown {
+  from { opacity: 0; transform: translateY(-12px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 .equalizer {
   display: flex;
   align-items: flex-end;
@@ -846,12 +893,9 @@
 
 /* ─── 5. 移动端自适应 (Mobile Adaptations for iOS & Touch) ─── */
 @media (max-width: 768px) {
-  .floatingWrapper {
-    bottom: 84px;
-  }
-
   /* 悬浮把手尺寸符合 iOS 44pt 触控建议 */
   .floatingOrb {
+    bottom: 84px;
     width: 34px;
     height: 46px;
     border-radius: 23px 0 0 23px;
@@ -861,11 +905,17 @@
     width: 38px;
   }
 
+  .floatingOrb.dragging {
+    width: 46px;
+    height: 46px;
+    border-radius: 23px;
+  }
+
   .podcastDeck {
+    right: 10px;
+    bottom: 136px;
     width: calc(100vw - 20px);
     max-width: 324px;
-    margin-right: 10px;
-    margin-bottom: 10px;
     padding: 12px 14px;
     border-radius: 18px;
   }
